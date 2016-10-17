@@ -152,6 +152,14 @@ export default class LoginView extends React.Component {
                               onClick={(e) => this.login(e)}
                             />
 
+                            <RaisedButton
+                              title="Recover you account..."
+                              disabled={this.state.enabled}
+                              style={{ marginTop: 50 }}
+                              label="Recover"
+                              onClick={(e) => this.recover(e)}
+                            />
+
                         </div>
                     </form>
                 </Paper>
