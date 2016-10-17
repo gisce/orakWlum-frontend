@@ -10,6 +10,35 @@ import Divider from 'material-ui/Divider';
 
 import * as actionCreators from '../../actions/auth';
 
+
+//Colors
+import {
+    deepOrange500,
+    deepOrange300,
+    yellow500,
+    blue500,
+    white,
+
+    orange700,
+    orange400,
+    amber400,
+    amber200,
+
+} from 'material-ui/styles/colors';
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+
+const muiTheme = getMuiTheme({
+    palette: {
+        primary1Color: orange400,
+        primary2Color: orange400,
+        primary3Color: amber200,
+    },
+});
+
+
 function mapStateToProps(state) {
     return {
         token: state.auth.token,
@@ -64,39 +93,41 @@ export class Header extends Component {
 
     render() {
         return (
-            <header>
-                <LeftNav open={this.state.open}>
-                    {
-                        !this.props.isAuthenticated ?
-                            <div>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/login')}>
-                                    Login
-                                </MenuItem>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/register')}>
-                                    Register
-                                </MenuItem>
-                            </div>
-                            :
-                            <div>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/analytics')}>
-                                    Analytics
-                                </MenuItem>
-                                <Divider />
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <header>
+                    <LeftNav open={this.state.open}>
+                        {
+                            !this.props.isAuthenticated ?
+                                <div>
+                                    <MenuItem onClick={() => this.dispatchNewRoute('/login')}>
+                                        Login
+                                    </MenuItem>
+                                    <MenuItem onClick={() => this.dispatchNewRoute('/register')}>
+                                        Register
+                                    </MenuItem>
+                                </div>
+                                :
+                                <div>
+                                    <MenuItem onClick={() => this.dispatchNewRoute('/analytics')}>
+                                        Analytics
+                                    </MenuItem>
+                                    <Divider />
 
-                                <MenuItem onClick={(e) => this.logout(e)}>
-                                    Logout
-                                </MenuItem>
-                            </div>
-                    }
-                </LeftNav>
-                <AppBar
-                  title="oraKWlum"
-                  onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={
-                      <FlatButton label="Home" onClick={() => this.dispatchNewRoute('/')} />
-                    }
-                />
-            </header>
+                                    <MenuItem onClick={(e) => this.logout(e)}>
+                                        Logout
+                                    </MenuItem>
+                                </div>
+                        }
+                    </LeftNav>
+                    <AppBar
+                      title="oraKWlum"
+                      onLeftIconButtonTouchTap={() => this.openNav()}
+                      iconElementRight={
+                          <FlatButton label="Home" onClick={() => this.dispatchNewRoute('/')} />
+                        }
+                    />
+                </header>
+            </MuiThemeProvider>
 
         );
     }
