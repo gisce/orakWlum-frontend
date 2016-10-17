@@ -95,7 +95,12 @@ export class Header extends Component {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <header>
-                    <LeftNav open={this.state.open}>
+                    <LeftNav
+                        open={this.state.open}
+                        docked={false}
+                        onRequestChange={open => this.setState({open})}
+
+                    >
                         {
                             !this.props.isAuthenticated ?
                                 <div>
