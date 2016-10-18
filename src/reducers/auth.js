@@ -32,8 +32,9 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             isAuthenticating: false,
             isAuthenticated: true,
-            token: payload.token,
-            userName: jwtDecode(payload.token).email,
+            token: payload.access_token,
+            //userName: jwtDecode(payload.token).email,
+            userName: payload.access_token,
             statusText: 'You have been successfully logged in.',
         }),
     [LOGIN_USER_FAILURE]: (state, payload) =>
