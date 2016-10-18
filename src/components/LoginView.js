@@ -144,7 +144,7 @@ export default class LoginView extends React.Component {
                             </div>
 
                             <RaisedButton
-                              disabled={this.state.enabled}
+                              disabled={this.state.disabled}
                               style={{ marginTop: 50 }}
                               label="Submit"
                               onClick={(e) => this.login(e)}
@@ -152,7 +152,6 @@ export default class LoginView extends React.Component {
 
                             <RaisedButton
                               title="Recover you account..."
-                              disabled={this.state.enabled}
                               style={{ marginTop: 50 }}
                               label="Recover"
                               onClick={(e) => this.recover(e)}
