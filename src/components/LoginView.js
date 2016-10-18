@@ -128,10 +128,8 @@ export default class LoginView extends React.Component {
 
                             <div className="col-md-12">
                                 <TextField
-                                  hintText="Email"
-                                  floatingLabelText="Email"
-                                  type="email"
-                                  errorText={this.state.email_error_text}
+                                  hintText="Username"
+                                  floatingLabelText="Username"
                                   onChange={(e) => this.changeValue(e, 'email')}
                                 />
                             </div>
@@ -146,7 +144,7 @@ export default class LoginView extends React.Component {
                             </div>
 
                             <RaisedButton
-                              disabled={this.state.disabled}
+                              disabled={this.state.enabled}
                               style={{ marginTop: 50 }}
                               label="Submit"
                               onClick={(e) => this.login(e)}
