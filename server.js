@@ -26,9 +26,11 @@ app.use(require('morgan')('short'));
     app.use(express.static(path.join(__dirname, '/')));
 }());
 
+/*
 app.all(/^\/api\/(.*)/, (req, res) => {
     proxy.web(req, res, { target: 'https://api.orakwlum.local/oauth/management' });
 });
+*/
 
 app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
