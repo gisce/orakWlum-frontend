@@ -28,15 +28,25 @@ export function create_user(email, password) {
     });
 }
 
-export function get_token(email, password) {
-    return axios.post('api/get_token', {
-        email,
-        password,
+export function get_token(userName, password) {
+    return axios.post('https://api.orakwlum.local/oauth/token',
+        "client_id=1cZKwVZoC1Wv8YkmBEt7kju7FX9m3TrVAZVL9Gnf&grant_type=password&username=" + userName + "&password=" + password,
+    );
+/*
+    return axios.post('https://api.orakwlum.local/oauth/token', {
+        client_id:'1cZKwVZoC1Wv8YkmBEt7kju7FX9m3TrVAZVL9Gnf',
+        grant_type:'password',
+        username:"k",
+        password:"k",
     });
+
+    */
+    //return axios.post('api/get_token', {
 }
 
 export function has_github_token(token) {
-    return axios.get('api/has_github_token', tokenConfig(token));
+    return axios.get('https://api.orakwlum.local/oauth/management', tokenConfig(token));
+    //return axios.get('api/has_github_token', tokenConfig(token));
 }
 
 export function data_about_user(token) {
