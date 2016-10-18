@@ -30,8 +30,8 @@ export function loginUserFailure(error) {
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
-            status: error.status,
-            statusText: error.statusText,
+            status: (error.status===undefined)?"LoginError":error.status,
+            statusText: (error.statusText===undefined)?"The provided credentials are not correct":error.statusText,
         },
     };
 }
@@ -69,8 +69,9 @@ export function loginUser(email, password) {
             .then(parseJSON)
             .then(response => {
                 try {
-                    dispatch(loginUserSuccess(response.token));
-                    browserHistory.push('/main');
+                    console.log(response);
+                    dispatch(loginUserSuccess(response));
+                    browserHistory.push('/');
                 } catch (e) {
                     alert(e);
                     dispatch(loginUserFailure({
