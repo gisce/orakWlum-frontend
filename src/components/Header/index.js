@@ -65,7 +65,11 @@ export class Header extends Component {
     render() {
         return (
             <header>
-                <LeftNav open={this.state.open}>
+                <LeftNav
+                    open={this.state.open}
+                    docked={false}
+                    onRequestChange={open => this.setState({open})}>
+
                     {
                         !this.props.isAuthenticated ?
                             <div>
