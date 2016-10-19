@@ -13,7 +13,6 @@ import {
 import { parseJSON } from '../utils/misc';
 import { get_token, create_user } from '../utils/http_functions';
 
-
 export function loginUserSuccess(token) {
     localStorage.setItem('token', token);
     return {
@@ -24,14 +23,13 @@ export function loginUserSuccess(token) {
     };
 }
 
-
 export function loginUserFailure(error) {
     localStorage.removeItem('token');
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
-            status: error.status,
-            statusText: error.statusText,
+            status: (error.status===undefined)?"LoginError":error.status,
+            statusText: (error.statusText===undefined)?"The provided credentials are not correct":error.statusText,
         },
     };
 }
@@ -86,7 +84,6 @@ export function loginUser(email, password) {
             });
     };
 }
-
 
 export function registerUserRequest() {
     return {
