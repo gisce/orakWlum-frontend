@@ -44,6 +44,7 @@ export default class ProtectedView extends React.Component {
                         <ProposalsList
                             title="Last proposals"
                             proposals={this.props.data.data}
+                            path={this.props.location.pathname}
                         />
 
                         <h3>Proposals:</h3>

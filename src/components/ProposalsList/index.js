@@ -3,14 +3,10 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import AppBar from 'material-ui/AppBar';
-import LeftNav from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
-
-
 import {GridList, GridTile} from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/auth';
 
@@ -47,38 +43,9 @@ export class ProposalsList extends Component {
             open: false,
             proposals: props.proposals,
             title: props.title,
+            path: props.path + "/",
         };
 
-    }
-
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
-        this.setState({
-            open: false,
-        });
-
-    }
-
-
-    handleClickOutside() {
-        this.setState({
-            open: false,
-        });
-    }
-
-
-    logout(e) {
-        e.preventDefault();
-        this.props.logoutAndRedirect();
-        this.setState({
-            open: false,
-        });
-    }
-
-    openNav() {
-        this.setState({
-            open: true,
-        });
     }
 
     render() {
@@ -93,19 +60,24 @@ export class ProposalsList extends Component {
               padding={1}
               style={styles.gridList}
             >
+            <Subheader>{this.state.title}</Subheader>
               {data_received.map((tile, index) => (
-                <GridTile
-                  key={tile.name}
-                  title={"#" + (index+1) + " " + tile.name + "  .........  " + new Date(tile.creationDate).toLocaleString()}
-                  actionPosition="left"
-                  titlePosition="top"
-                  titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                  cols={index < 4 ? 2 : 1}
-                  rows={index < 4 ? 2 : 1}
-                >
-                <img src={tile.image} />
+                //<a href={this.state.path + index}>
+                    <GridTile
+                      key={tile.name}
+                      title={"#" + (index+1) + " " + tile.name}
+                      subtitle={<span>{new Date(tile.creationDate).toLocaleString()}</span>}
+                      actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                      actionPosition="right"
+                      titlePosition="top"
+                      titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+                      cols={index < 4 ? 2 : 1}
+                      rows={index < 4 ? 2 : 1}
+                    >
+                    <img src={tile.image} />
 
-                </GridTile>
+                    </GridTile>
+                //</a>
               ))}
             </GridList>
           </div>
@@ -113,7 +85,6 @@ export class ProposalsList extends Component {
 
         return (
             <div>
-                <h3>{this.state.title}</h3>
                 <ProposalsList />
             </div>
 
