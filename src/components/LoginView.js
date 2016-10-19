@@ -151,6 +151,12 @@ export default class LoginView extends React.Component {
                               label="Login"
                               onClick={(e) => this.login(e)}
                             />
+                            <RaisedButton
+                              disabled={this.state.disabled}
+                              style={{ marginTop: 50 }}
+                              label="Help"
+                              onClick={(e) => this.login(e)}
+                            />
 
                         </div>
                     </form>
