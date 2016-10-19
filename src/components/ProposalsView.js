@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/data';
 
+import { ProposalsList } from './ProposalsList';
+
+
 function mapStateToProps(state) {
     return {
         data: state.data,
@@ -40,6 +43,10 @@ export default class ProtectedView extends React.Component {
                         <h2>{this.props.userName}!</h2>
                         <h3>Proposals:</h3>
                         <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
+
+                        <ProposalsList
+                            proposals={this.props.data.data}
+                        />
 
                     </div>
                 }
