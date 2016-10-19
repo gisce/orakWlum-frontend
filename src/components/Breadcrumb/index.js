@@ -31,7 +31,7 @@ export default class Breadcrumb extends React.Component {
             path_list: "/proposals/new/quaranta_cinc_10".split("/"),
         });
 
-        console.log(this.state);
+        console.log(this.state.path_list);
     }
 
     fetchData() {
