@@ -128,7 +128,7 @@ export default class LoginView extends React.Component {
 
                             <div className="col-md-12">
                                 <TextField
-                                  hintText="Email"
+                                  hintText="user@domain.com"
                                   floatingLabelText="Email"
                                   type="email"
                                   errorText={this.state.email_error_text}
