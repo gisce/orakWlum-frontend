@@ -33,6 +33,7 @@ export function loginUserFailure(error) {
         payload: {
             status: (error.status===undefined)?"LoginError":error.status,
             statusText: (error.statusText===undefined)?"The provided credentials are not correct":error.statusText,
+            statusType: "danger",
         },
     };
 }
@@ -78,6 +79,7 @@ export function loginUser(email, password) {
                         response: {
                             status: 403,
                             statusText: 'Invalid token',
+                            statusType: "warning",
                         },
                     }));
                 }
@@ -111,6 +113,7 @@ export function registerUserFailure(error) {
         payload: {
             status: error.status,
             statusText: error.statusText,
+            statusType: "danger",
         },
     };
 }
@@ -129,6 +132,7 @@ export function registerUser(email, password) {
                         response: {
                             status: 403,
                             statusText: 'Invalid token',
+                            statusType: "warning",
                         },
                     }));
                 }
@@ -154,6 +158,7 @@ export function recoverUser(email) {
                         response: {
                             status: 403,
                             statusText: 'Invalid token',
+                            statusType: "warning",
                         },
                     }));
                 }
@@ -176,6 +181,7 @@ export function recoverUserFailure(error) {
         payload: {
             status: (error.status===undefined)?"":error.status,
             statusText: (error.statusText===undefined)?"This service is not available right now. Try it in a few minutes please.":error.statusText,
+            statusType: "danger",
         },
     };
 }

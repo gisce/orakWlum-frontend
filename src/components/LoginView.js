@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     return {
         isAuthenticating: state.auth.isAuthenticating,
         statusText: state.auth.statusText,
+        statusType: state.auth.statusType,
     };
 }
 
@@ -128,7 +129,7 @@ export default class LoginView extends React.Component {
                             <h2>Login to view protected content!</h2>
                             {
                                 this.props.statusText &&
-                                    <div className="alert alert-info">
+                                    <div className={"alert alert-info alert-" + this.props.statusType}>
                                         {this.props.statusText}
                                     </div>
                             }
@@ -178,4 +179,5 @@ export default class LoginView extends React.Component {
 LoginView.propTypes = {
     loginUser: React.PropTypes.func,
     statusText: React.PropTypes.string,
+    statusType: React.PropTypes.string,
 };

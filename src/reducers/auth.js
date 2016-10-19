@@ -89,5 +89,6 @@ export default createReducer(initialState, {
             token: null,
             userName: null,
             statusText: `Recovery Error: ${payload.status} ${payload.statusText}`,
+            statusType: `${payload.statusType}`,
         }),
 });
