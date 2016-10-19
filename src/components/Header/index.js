@@ -8,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
+import IconButton from 'material-ui/IconButton';
+
 import EuroIcon from 'material-ui/svg-icons/action/euro-symbol';
 import ProposalIcon from 'material-ui/svg-icons/action/assessment';
 import HistoryIcon from 'material-ui/svg-icons/action/history';
@@ -15,6 +17,7 @@ import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import LogoutIcon from 'material-ui/svg-icons/navigation/close';
 import LoginIcon from 'material-ui/svg-icons/social/person';
 import RegisterIcon from 'material-ui/svg-icons/social/person-add';
+import ProfileIcon from 'material-ui/svg-icons/action/perm-identity';
 
 import FontIcon from 'material-ui/FontIcon';
 
@@ -81,20 +84,24 @@ export class Header extends Component {
                     docked={false}
                     onRequestChange={open => this.setState({open})}>
 
-                    <MenuItem>oKW</MenuItem>
+                    <AppBar
+                      title="oKW"
+                      onClick={() => this.setState({open: false})}
+                      iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
+                    />
 
                     {
                         !this.props.isAuthenticated ?
                             <div>
 
                                 <MenuItem onClick={() => this.dispatchNewRoute('/login')}
-                                    rightIcon={<LoginIcon/>}>
+                                    leftIcon={<LoginIcon/>}
                                 >
                                     Login
                                 </MenuItem>
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/register')}
-                                    rightIcon={<RegisterIcon/>}>
+                                    leftIcon={<RegisterIcon/>}>
                                     Register
                                 </MenuItem>
                             </div>
@@ -105,14 +112,13 @@ export class Header extends Component {
                                     leftIcon={<ProposalIcon/>}
                                     primaryText="Proposals"
                                 />
+
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
                                     >
                                     Buys
                                 </MenuItem>
-
-                                <Divider />
 
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/history')}
@@ -122,6 +128,13 @@ export class Header extends Component {
                                 </MenuItem>
 
                                 <Divider />
+
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/settings')}
+                                    leftIcon={<ProfileIcon/>}
+                                >
+                                    Profile
+                                </MenuItem>
 
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/settings')}
