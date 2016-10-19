@@ -135,3 +135,34 @@ export function registerUser(email, password) {
             });
     };
 }
+
+export function recoverUser(email) {
+    return function (dispatch) {
+        dispatch(recoverUserRequest());
+        return ask_recover(email, password)
+            .then(parseJSON)
+            .then(response => {
+                try {
+                    dispatch(loginUserSuccess(response.token));
+                    browserHistory.push('/main');
+                } catch (e) {
+                    alert(e);
+                    dispatch(loginUserFailure({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token',
+                        },
+                    }));
+                }
+            })
+            .catch(error => {
+                dispatch(loginUserFailure(error));
+            });
+    };
+}
+
+export function recoverUserRequest() {
+    return {
+        type: RECOVER_USER_REQUEST,
+    };
+}
