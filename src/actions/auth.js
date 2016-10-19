@@ -31,7 +31,7 @@ export function loginUserFailure(error) {
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
-            status: (error.status===undefined)?"LoginError":error.status,
+            status: (error.status===undefined)?"403":error.status,
             statusText: (error.statusText===undefined)?"The provided credentials are not correct":error.statusText,
             statusType: "danger",
         },
