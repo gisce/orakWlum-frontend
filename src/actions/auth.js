@@ -8,10 +8,13 @@ import {
     REGISTER_USER_FAILURE,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
+    RECOVER_USER_REQUEST,
+    RECOVER_USER_SUCCESS,
+    RECOVER_USER_FAILURE,
 } from '../constants/index';
 
 import { parseJSON } from '../utils/misc';
-import { get_token, create_user } from '../utils/http_functions';
+import { get_token, create_user, ask_recover } from '../utils/http_functions';
 
 export function loginUserSuccess(token) {
     localStorage.setItem('token', token);
@@ -139,7 +142,7 @@ export function registerUser(email, password) {
 export function recoverUser(email) {
     return function (dispatch) {
         dispatch(recoverUserRequest());
-        return ask_recover(email, password)
+        return ask_recover(email)
             .then(parseJSON)
             .then(response => {
                 try {
@@ -147,7 +150,7 @@ export function recoverUser(email) {
                     browserHistory.push('/main');
                 } catch (e) {
                     alert(e);
-                    dispatch(loginUserFailure({
+                    dispatch(recoverUserFailure({
                         response: {
                             status: 403,
                             statusText: 'Invalid token',
@@ -156,7 +159,7 @@ export function recoverUser(email) {
                 }
             })
             .catch(error => {
-                dispatch(loginUserFailure(error));
+                dispatch(recoverUserFailure(error));
             });
     };
 }
@@ -164,5 +167,15 @@ export function recoverUser(email) {
 export function recoverUserRequest() {
     return {
         type: RECOVER_USER_REQUEST,
+    };
+}
+
+export function recoverUserFailure(error) {
+    return {
+        type: RECOVER_USER_FAILURE,
+        payload: {
+            status: (error.status===undefined)?"":error.status,
+            statusText: (error.statusText===undefined)?"This service is not available right now. Try it in a few minutes please.":error.statusText,
+        },
     };
 }
