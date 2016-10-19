@@ -112,6 +112,13 @@ export default class LoginView extends React.Component {
         this.props.loginUser(this.state.email, this.state.password, this.state.redirectTo);
     }
 
+    help(e) {
+        e.preventDefault();
+        this.props.recoverUser(this.state.email, this.state.redirectTo);
+    }
+
+
+
     render() {
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
@@ -155,7 +162,7 @@ export default class LoginView extends React.Component {
                               disabled={this.state.enabled}
                               style={{ marginTop: 50 }}
                               label="Help"
-                              onClick={(e) => this.login(e)}
+                              onClick={(e) => this.help(e)}
                             />
 
                         </div>
