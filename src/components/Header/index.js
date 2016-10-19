@@ -8,6 +8,17 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
+import EuroIcon from 'material-ui/svg-icons/action/euro-symbol';
+import ProposalIcon from 'material-ui/svg-icons/action/assessment';
+import HistoryIcon from 'material-ui/svg-icons/action/history';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import LogoutIcon from 'material-ui/svg-icons/navigation/close';
+import LoginIcon from 'material-ui/svg-icons/social/person';
+import RegisterIcon from 'material-ui/svg-icons/social/person-add';
+
+import FontIcon from 'material-ui/FontIcon';
+
+
 import * as actionCreators from '../../actions/auth';
 
 function mapStateToProps(state) {
@@ -70,40 +81,61 @@ export class Header extends Component {
                     docked={false}
                     onRequestChange={open => this.setState({open})}>
 
+                    <MenuItem>oKW</MenuItem>
+
                     {
                         !this.props.isAuthenticated ?
                             <div>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/login')}>
+
+                                <MenuItem onClick={() => this.dispatchNewRoute('/login')}
+                                    rightIcon={<LoginIcon/>}>
+                                >
                                     Login
                                 </MenuItem>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/register')}>
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/register')}
+                                    rightIcon={<RegisterIcon/>}>
                                     Register
                                 </MenuItem>
                             </div>
                             :
                             <div>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/proposals')}>
-                                    Proposals
-                                </MenuItem>
-                                <MenuItem onClick={() => this.dispatchNewRoute('/buys')}>
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/proposals')}
+                                    leftIcon={<ProposalIcon/>}
+                                    primaryText="Proposals"
+                                />
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/buys')}
+                                    leftIcon={<EuroIcon/>}
+                                    >
                                     Buys
                                 </MenuItem>
 
                                 <Divider />
 
-                                <MenuItem onClick={() => this.dispatchNewRoute('/history')}>
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/history')}
+                                    leftIcon={<HistoryIcon/>}
+                                    >
                                     History
                                 </MenuItem>
 
                                 <Divider />
 
-                                <MenuItem onClick={() => this.dispatchNewRoute('/settings')}>
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/settings')}
+                                    leftIcon={<SettingsIcon/>}
+                                >
                                     Settings
                                 </MenuItem>
 
                                 <Divider />
 
-                                <MenuItem onClick={(e) => this.logout(e)}>
+                                <MenuItem
+                                    onClick={(e) => this.logout(e)}
+                                    leftIcon={<LogoutIcon/>}
+                                >
                                     Logout
                                 </MenuItem>
                             </div>
