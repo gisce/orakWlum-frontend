@@ -18,6 +18,7 @@ import LogoutIcon from 'material-ui/svg-icons/navigation/close';
 import LoginIcon from 'material-ui/svg-icons/social/person';
 import RegisterIcon from 'material-ui/svg-icons/social/person-add';
 import ProfileIcon from 'material-ui/svg-icons/action/perm-identity';
+import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
 
 import FontIcon from 'material-ui/FontIcon';
 
@@ -107,6 +108,14 @@ export class Header extends Component {
                             </div>
                             :
                             <div>
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/dashboard')}
+                                    leftIcon={<DashboardIcon/>}
+                                    primaryText="Dashboard"
+                                />
+
+                                <Divider />
+
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/proposals')}
                                     leftIcon={<ProposalIcon/>}
