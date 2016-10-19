@@ -35,6 +35,12 @@ export function get_token(email, password) {
     });
 }
 
+export function ask_recover(email) {
+    return axios.post('api/recover', {
+        email,
+    });
+}
+
 export function has_github_token(token) {
     return axios.get('api/has_github_token', tokenConfig(token));
 }
