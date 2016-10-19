@@ -9,6 +9,9 @@ import {
     REGISTER_USER_FAILURE,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
+    RECOVER_USER_SUCCESS,
+    RECOVER_USER_FAILURE,
+
 } from '../constants/index';
 
 const initialState = {
@@ -70,5 +73,21 @@ export default createReducer(initialState, {
             token: null,
             userName: null,
             registerStatusText: `Register Error: ${payload.status} ${payload.statusText}`,
+        }),
+    [RECOVER_USER_SUCCESS]: (state, payload) =>
+        Object.assign({}, state, {
+            isAuthenticating: false,
+            isAuthenticated: false,
+            token: null,
+            userName: null,
+            statusText: 'If the provided account is valid, you will receive a recovery email.',
+        }),
+    [RECOVER_USER_FAILURE]: (state, payload) =>
+        Object.assign({}, state, {
+            isAuthenticating: false,
+            isAuthenticated: false,
+            token: null,
+            userName: null,
+            statusText: `Recovery Error: ${payload.status} ${payload.statusText}`,
         }),
 });
