@@ -22,6 +22,7 @@ import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
 
 import FontIcon from 'material-ui/FontIcon';
 
+import Breadcrumb from '../Breadcrumb';
 
 import * as actionCreators from '../../actions/auth';
 
@@ -94,13 +95,11 @@ export class Header extends Component {
                     {
                         !this.props.isAuthenticated ?
                             <div>
-
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/login')}
                                     leftIcon={<LoginIcon/>}
                                     primaryText="Login"
                                 />
-
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/register')}
                                     leftIcon={<RegisterIcon/>}
@@ -122,13 +121,11 @@ export class Header extends Component {
                                     leftIcon={<ProposalIcon/>}
                                     primaryText="Proposals"
                                 />
-
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
                                     primaryText="Buys"
                                 />
-
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/history')}
                                     leftIcon={<HistoryIcon/>}
@@ -142,7 +139,6 @@ export class Header extends Component {
                                     leftIcon={<ProfileIcon/>}
                                     primaryText="Profile"
                                 />
-
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/settings')}
                                     leftIcon={<SettingsIcon/>}
@@ -159,13 +155,15 @@ export class Header extends Component {
                             </div>
                     }
                 </LeftNav>
+
                 <AppBar
                   title="oraKWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={
-                      <FlatButton label="Home" onClick={() => this.dispatchNewRoute('/')} />
-                    }
+                  iconElementRight={<FlatButton label="Home" onClick={() => this.dispatchNewRoute('/')}/>}
                 />
+
+            <Breadcrumb/>
+
             </header>
 
         );
