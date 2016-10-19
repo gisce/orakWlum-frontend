@@ -23,7 +23,6 @@ const styles = {
   },
   gridList: {
     width: 1024,
-    height: 600,
     overflowY: 'none',
   },
 };
@@ -47,6 +46,7 @@ export class ProposalsList extends Component {
         this.state = {
             open: false,
             proposals: props.proposals,
+            title: props.title,
         };
 
     }
@@ -85,7 +85,7 @@ export class ProposalsList extends Component {
 
         const data_received = this.state.proposals
 
-        const OkwScreenshots = () => (
+        const ProposalsList = () => (
           <div style={styles.root}>
             <GridList
               cols={2}
@@ -96,7 +96,7 @@ export class ProposalsList extends Component {
               {data_received.map((tile, index) => (
                 <GridTile
                   key={tile.name}
-                  title={index + " " + tile.name + "  .........  " + new Date(tile.creationDate).toLocaleString()}
+                  title={"#" + (index+1) + " " + tile.name + "  .........  " + new Date(tile.creationDate).toLocaleString()}
                   actionPosition="left"
                   titlePosition="top"
                   titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
@@ -113,8 +113,8 @@ export class ProposalsList extends Component {
 
         return (
             <div>
-                Muhuhuhahaha
-                <OkwScreenshots />
+                <h3>{this.state.title}</h3>
+                <ProposalsList />
             </div>
 
         );

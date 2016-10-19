@@ -40,13 +40,15 @@ export default class ProtectedView extends React.Component {
                     :
                     <div>
                         <h1>Proposals list</h1>
-                        <h2>{this.props.userName}!</h2>
+
+                        <ProposalsList
+                            title="Last proposals"
+                            proposals={this.props.data.data}
+                        />
+
                         <h3>Proposals:</h3>
                         <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
 
-                        <ProposalsList
-                            proposals={this.props.data.data}
-                        />
 
                     </div>
                 }
