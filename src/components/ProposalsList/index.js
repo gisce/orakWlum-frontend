@@ -21,6 +21,9 @@ const styles = {
     width: 1024,
     overflowY: 'none',
   },
+  gridTile: {
+    cursor: 'pointer',
+  },
 };
 
 function mapStateToProps(state) {
@@ -48,6 +51,10 @@ export class ProposalsList extends Component {
 
     }
 
+    dispatchNewRoute(route) {
+        browserHistory.push(route);
+    }
+
     render() {
 
         const data_received = this.state.proposals
@@ -73,6 +80,8 @@ export class ProposalsList extends Component {
                       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                       cols={index < 4 ? 2 : 1}
                       rows={index < 4 ? 2 : 1}
+                      onClick={() => this.dispatchNewRoute(this.state.path + index)}
+                      style={styles.gridTile}
                     >
                     <img src={tile.image} />
 

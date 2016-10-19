@@ -21,11 +21,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ProtectedView extends React.Component {
+export default class ProposalsView extends React.Component {
     componentDidMount() {
         this.fetchData();
     }
-
 
     fetchData() {
         const token = this.props.token;
@@ -58,7 +57,7 @@ export default class ProtectedView extends React.Component {
     }
 }
 
-ProtectedView.propTypes = {
+ProposalsView.propTypes = {
     fetchProtectedDataProposals: React.PropTypes.func,
     fetchProtectedData: React.PropTypes.func,
     loaded: React.PropTypes.bool,
