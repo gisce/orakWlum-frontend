@@ -26,7 +26,7 @@ export default class ProtectedView extends React.Component {
 
     fetchData() {
         const token = this.props.token;
-        this.props.fetchProtectedData(token);
+        this.props.fetchProtectedDataProposals(token);
     }
 
     render() {
@@ -36,9 +36,11 @@ export default class ProtectedView extends React.Component {
                     ? <h1>Loading data...</h1>
                     :
                     <div>
-                        <h1>Proposals,
-                            {this.props.userName}!</h1>
-                        <h1>{this.props.data.data.email}</h1>
+                        <h1>Proposals list</h1>
+                        <h2>{this.props.userName}!</h2>
+                        <h3>Proposals:</h3>
+                        <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
+
                     </div>
                 }
             </div>
@@ -47,6 +49,7 @@ export default class ProtectedView extends React.Component {
 }
 
 ProtectedView.propTypes = {
+    fetchProtectedDataProposals: React.PropTypes.func,
     fetchProtectedData: React.PropTypes.func,
     loaded: React.PropTypes.bool,
     userName: React.PropTypes.string,

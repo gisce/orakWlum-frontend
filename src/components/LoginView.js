@@ -118,8 +118,6 @@ export default class LoginView extends React.Component {
         this.props.recoverUser(this.state.email, this.state.redirectTo);
     }
 
-
-
     render() {
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
