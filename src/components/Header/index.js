@@ -95,16 +95,17 @@ export class Header extends Component {
                         !this.props.isAuthenticated ?
                             <div>
 
-                                <MenuItem onClick={() => this.dispatchNewRoute('/login')}
+                                <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/login')}
                                     leftIcon={<LoginIcon/>}
-                                >
-                                    Login
-                                </MenuItem>
+                                    primaryText="Login"
+                                />
+
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/register')}
-                                    leftIcon={<RegisterIcon/>}>
-                                    Register
-                                </MenuItem>
+                                    leftIcon={<RegisterIcon/>}
+                                    primaryText="Register"
+                                />
                             </div>
                             :
                             <div>
@@ -125,41 +126,36 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
-                                    >
-                                    Buys
-                                </MenuItem>
+                                    primaryText="Buys"
+                                />
 
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/history')}
                                     leftIcon={<HistoryIcon/>}
-                                    >
-                                    History
-                                </MenuItem>
+                                    primaryText="History"
+                                />
 
                                 <Divider />
 
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/settings')}
                                     leftIcon={<ProfileIcon/>}
-                                >
-                                    Profile
-                                </MenuItem>
+                                    primaryText="Profile"
+                                />
 
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/settings')}
                                     leftIcon={<SettingsIcon/>}
-                                >
-                                    Settings
-                                </MenuItem>
+                                    primaryText="Settings"
+                                />
 
                                 <Divider />
 
                                 <MenuItem
                                     onClick={(e) => this.logout(e)}
                                     leftIcon={<LogoutIcon/>}
-                                >
-                                    Logout
-                                </MenuItem>
+                                    primaryText="Logout"
+                                />
                             </div>
                     }
                 </LeftNav>
