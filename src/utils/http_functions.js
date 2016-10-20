@@ -50,6 +50,5 @@ export function data_about_user(token) {
 }
 
 export function data_fetch_api_resource(token, resource) {
-    console.log("axios fetching:" + resource);
     return axios.get('/api/' + resource, tokenConfig(token));
 }

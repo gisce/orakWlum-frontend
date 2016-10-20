@@ -54,14 +54,11 @@ export function fetchProtectedDataProposals(token) {
 
 
 export function fetchProtectedDataProposal(token, proposal) {
-    console.log("fetching proposal");
     return (dispatch) => {
         dispatch(fetchProtectedDataRequest());
         data_fetch_api_resource(token, "proposals/" + proposal)
             .then(parseJSON)
             .then(response => {
-                console.log("received:");
-                console.dir(response);
                 dispatch(receiveProtectedData(response.result));
             })
             .catch(error => {

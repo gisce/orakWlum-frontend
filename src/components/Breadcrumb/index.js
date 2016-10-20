@@ -50,6 +50,7 @@ export default class Breadcrumb extends React.Component {
                                 if (breadcrumbLen === index + 1) {
                                     classActive="active";
                                 }
+                                
                                 section = section[0].toUpperCase() + section.slice(1);
                                 return <li
                                             onClick={() => this.dispatchNewRoute(sectionUrl[index])}

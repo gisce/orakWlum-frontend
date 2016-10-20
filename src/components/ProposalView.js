@@ -38,11 +38,7 @@ export default class ProposalView extends React.Component {
 
     render() {
         const proposalId = this.props.params.proposalId;
-
         const proposal = this.props.data.data;
-
-        console.log("proposal");
-        console.dir(proposal);
 
         return (
             <div>
@@ -71,10 +67,11 @@ export default class ProposalView extends React.Component {
                             avatar="/images/user.jpg"
                           />
 
-
                           <CardActions>
-                            <FlatButton label="Action1" />
-                            <FlatButton label="Action2" />
+                            <FlatButton label="Run" />
+                            <FlatButton label="Detail" />
+                            <FlatButton label="Edit" />
+                            <FlatButton label="Delete" />
                           </CardActions>
                         </Card>
 

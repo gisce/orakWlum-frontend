@@ -49,7 +49,6 @@ export default class ProposalsView extends React.Component {
                         <h3>Proposals:</h3>
                         <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
 
-
                     </div>
                 }
             </div>
