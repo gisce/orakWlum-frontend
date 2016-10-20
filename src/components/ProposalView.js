@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import * as actionCreators from '../actions/data';
 
-import { ProposalsList } from './ProposalsList';
-
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -89,7 +87,7 @@ export default class ProposalView extends React.Component {
 }
 
 ProposalView.propTypes = {
-    fetchProtectedDataProposals: React.PropTypes.func,
+    fetchProtectedDataProposal: React.PropTypes.func,
     fetchProtectedData: React.PropTypes.func,
     loaded: React.PropTypes.bool,
     userName: React.PropTypes.string,

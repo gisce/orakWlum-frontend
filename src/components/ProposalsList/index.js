@@ -57,7 +57,10 @@ export class ProposalsList extends Component {
 
     render() {
         const data_received = this.state.proposals;
+        console.log("render" , data_received);
+
         const ProposalsList = () => (
+
           <div style={styles.root}>
             <GridList
               cols={2}
