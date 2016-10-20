@@ -31,6 +31,7 @@ function mapStateToProps(state) {
         token: state.auth.token,
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
+        path: state.routing.locationBeforeTransitions.pathname,
     };
 }
 
@@ -56,13 +57,11 @@ export class Header extends Component {
 
     }
 
-
     handleClickOutside() {
         this.setState({
             open: false,
         });
     }
-
 
     logout(e) {
         e.preventDefault();
@@ -159,10 +158,10 @@ export class Header extends Component {
                 <AppBar
                   title="oraKWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={<FlatButton label="Home" onClick={() => this.dispatchNewRoute('/')}/>}
+                  iconElementRight={<FlatButton label={this.props.path} onClick={() => this.dispatchNewRoute('/')}/>}
                 />
 
-            <Breadcrumb/>
+            <Breadcrumb path={this.props.path}/>
 
             </header>
 
