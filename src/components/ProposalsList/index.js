@@ -78,7 +78,7 @@ export class ProposalsList extends Component {
                       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                       cols={index < 4 ? 2 : 1}
                       rows={index < 4 ? 2 : 1}
-                      onClick={() => this.dispatchNewRoute(this.state.path + index)}
+                      onClick={() => this.dispatchNewRoute(this.state.path + (index +1))}
                       style={styles.gridTile}
                     >
                     <img src={tile.image} />
