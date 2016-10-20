@@ -158,7 +158,7 @@ export class Header extends Component {
                 <AppBar
                   title="oraKWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={<FlatButton label={this.props.path} onClick={() => this.dispatchNewRoute('/')}/>}
+                  iconElementRight={<FlatButton label="Dashboard" onClick={() => this.dispatchNewRoute('/dashboard')}/>}
                 />
 
             <Breadcrumb path={this.props.path}/>
