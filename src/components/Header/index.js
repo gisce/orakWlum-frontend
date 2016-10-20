@@ -33,6 +33,7 @@ function mapStateToProps(state) {
         token: state.auth.token,
         userName: state.auth.userName,
         userRoles: state.auth.userRoles,
+        userImage: state.auth.userImage,
         isAuthenticated: state.auth.isAuthenticated,
         path: state.routing.locationBeforeTransitions.pathname,
     };
@@ -128,7 +129,7 @@ export class Header extends Component {
                                     <CardHeader
                                       title={this.props.userName}
                                       subtitle={this.props.userRoles}
-                                      avatar="images/user.jpg"
+                                      avatar={this.props.userImage}
                                     />
                                 </Card>
 
