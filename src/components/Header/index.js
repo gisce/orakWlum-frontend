@@ -97,20 +97,6 @@ export class Header extends Component {
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
 
-                {
-                    this.props.isAuthenticated?
-                    <Card>
-                        <CardHeader
-                          title={this.props.userName}
-                          subtitle={this.props.userRoles}
-                          avatar="images/user.jpg"
-                        />
-
-                    </Card>
-                    :
-                    <Card></Card>
-                }
-
                     {
                         !this.props.isAuthenticated ?
                             <div>
@@ -127,6 +113,14 @@ export class Header extends Component {
                             </div>
                             :
                             <div>
+                                <Card>
+                                    <CardHeader
+                                      title={this.props.userName}
+                                      subtitle={this.props.userRoles}
+                                      avatar="images/user.jpg"
+                                    />
+                                </Card>
+
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/dashboard')}
                                     leftIcon={<DashboardIcon/>}
