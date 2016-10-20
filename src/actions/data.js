@@ -38,9 +38,30 @@ export function fetchProtectedData(token) {
 export function fetchProtectedDataProposals(token) {
     return (dispatch) => {
         dispatch(fetchProtectedDataRequest());
-        data_fetch_api_resource(token, "proposal")
+        data_fetch_api_resource(token, "proposals/")
             .then(parseJSON)
             .then(response => {
+                dispatch(receiveProtectedData(response.result));
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+
+
+export function fetchProtectedDataProposal(token, proposal) {
+    console.log("fetching proposal");
+    return (dispatch) => {
+        dispatch(fetchProtectedDataRequest());
+        data_fetch_api_resource(token, "proposals/" + proposal)
+            .then(parseJSON)
+            .then(response => {
+                console.log("received:");
+                console.dir(response);
                 dispatch(receiveProtectedData(response.result));
             })
             .catch(error => {
