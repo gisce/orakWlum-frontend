@@ -17,6 +17,7 @@ import {
 const initialState = {
     token: null,
     userName: null,
+    userRoles: null,
     isAuthenticated: false,
     isAuthenticating: false,
     statusText: null,
@@ -37,6 +38,7 @@ export default createReducer(initialState, {
             isAuthenticated: true,
             token: payload.token,
             userName: jwtDecode(payload.token).email,
+            userRoles: jwtDecode(payload.token).roles,
             statusText: 'You have been successfully logged in.',
         }),
     [LOGIN_USER_FAILURE]: (state, payload) =>
@@ -45,6 +47,7 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
+            userRoles: null,
             statusText: `Authentication Error: ${payload.status} ${payload.statusText}`,
         }),
     [LOGOUT_USER]: (state) =>
@@ -52,6 +55,7 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
+            userRoles: null,
             statusText: 'You have been successfully logged out.',
         }),
     [REGISTER_USER_SUCCESS]: (state, payload) =>
@@ -61,6 +65,7 @@ export default createReducer(initialState, {
             isRegistering: false,
             token: payload.token,
             userName: jwtDecode(payload.token).email,
+            userRoles: jwtDecode(payload.token).roles,
             registerStatusText: 'You have been successfully logged in.',
         }),
     [REGISTER_USER_REQUEST]: (state) =>
@@ -72,6 +77,7 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
+            userRoles: null,
             registerStatusText: `Register Error: ${payload.status} ${payload.statusText}`,
         }),
     [RECOVER_USER_SUCCESS]: (state, payload) =>
@@ -80,6 +86,7 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
+            userRoles: null,
             statusText: 'If the provided account is valid, you will receive a recovery email.',
         }),
     [RECOVER_USER_FAILURE]: (state, payload) =>
@@ -88,6 +95,7 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
+            userRoles: null,
             statusText: `Recovery Error: ${payload.status} ${payload.statusText}`,
             statusType: `${payload.statusType}`,
         }),
