@@ -95,6 +95,14 @@ export class Header extends Component {
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
 
+                    <Card>
+                        <CardHeader
+                          title={this.props.userName}
+                          subtitle="Admin"
+                          avatar="images/user.jpg"
+                        />
+
+                    </Card>
 
                     {
                         !this.props.isAuthenticated ?
@@ -115,7 +123,7 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={() => this.dispatchNewRoute('/dashboard')}
                                     leftIcon={<DashboardIcon/>}
-                                    primaryText="Dashboard"
+                                    primaryText={"Dashboard"}
                                 />
 
                                 <Divider />
