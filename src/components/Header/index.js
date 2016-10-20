@@ -8,6 +8,8 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 import IconButton from 'material-ui/IconButton';
 
 import EuroIcon from 'material-ui/svg-icons/action/euro-symbol';
@@ -83,6 +85,8 @@ export class Header extends Component {
                 <LeftNav
                     open={this.state.open}
                     docked={false}
+                    disableSwipeToOpen={false}
+                    swipeAreaWidth={30}
                     onRequestChange={open => this.setState({open})}>
 
                     <AppBar
@@ -90,6 +94,7 @@ export class Header extends Component {
                       onClick={() => this.setState({open: false})}
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
+
 
                     {
                         !this.props.isAuthenticated ?
