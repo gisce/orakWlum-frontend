@@ -87,7 +87,8 @@ export class Header extends Component {
                     docked={false}
                     disableSwipeToOpen={false}
                     swipeAreaWidth={30}
-                    onRequestChange={open => this.setState({open})}>
+                    onRequestChange={open => this.setState({open})}
+                >
 
                     <AppBar
                       title="oKW"
@@ -95,14 +96,19 @@ export class Header extends Component {
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
 
+                {
+                    this.props.isAuthenticated?
                     <Card>
                         <CardHeader
                           title={this.props.userName}
-                          subtitle="Admin"
+                          subtitle=Admin
                           avatar="images/user.jpg"
                         />
 
                     </Card>
+                    :
+                    <Card></Card>
+                }
 
                     {
                         !this.props.isAuthenticated ?
