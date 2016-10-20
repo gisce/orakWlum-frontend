@@ -42,6 +42,14 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+
+const styles = {
+  userPanel: {
+    cursor: 'pointer',
+  },
+};
+
+
 @connect(mapStateToProps, mapDispatchToProps)
 export class Header extends Component {
     constructor(props) {
@@ -113,7 +121,10 @@ export class Header extends Component {
                             </div>
                             :
                             <div>
-                                <Card>
+                                <Card
+                                    style={styles.userPanel}
+                                    onClick={() => this.dispatchNewRoute('/profile')}
+                                >
                                     <CardHeader
                                       title={this.props.userName}
                                       subtitle={this.props.userRoles}
@@ -148,7 +159,7 @@ export class Header extends Component {
                                 <Divider />
 
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/settings')}
+                                    onClick={() => this.dispatchNewRoute('/profile')}
                                     leftIcon={<ProfileIcon/>}
                                     primaryText="Profile"
                                 />
