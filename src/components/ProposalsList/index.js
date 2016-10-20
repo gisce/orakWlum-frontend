@@ -56,9 +56,7 @@ export class ProposalsList extends Component {
     }
 
     render() {
-
-        const data_received = this.state.proposals
-
+        const data_received = this.state.proposals;
         const ProposalsList = () => (
           <div style={styles.root}>
             <GridList
