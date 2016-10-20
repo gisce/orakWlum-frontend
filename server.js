@@ -26,6 +26,9 @@ app.use(require('morgan')('short'));
     app.use(express.static(path.join(__dirname, '/')));
 }());
 
+
+app.use(express.static('public'));
+
 app.all(/^\/api\/(.*)/, (req, res) => {
     proxy.web(req, res, { target: 'http://localhost:5000' });
 });
