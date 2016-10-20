@@ -18,33 +18,33 @@ const styles = {
 
 const tilesData = [
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/chart.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart.png',
     title: 'Multiarea chart',
     featured: true,
   },
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/chart2.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart2.png',
     title: 'Multiline chart',
   },
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/chart3.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart3.png',
     title: 'Bars chart',
   },
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/chart4.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart4.png',
     title: 'All types',
     featured: true,
   },
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/table.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table.png',
     title: 'Text table',
   },
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/table2.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table2.png',
     title: 'Visual table',
   },
   {
-    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/screenshots/table3.png',
+    img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table3.png',
     title: 'Combined table',
     featured: true,
   },
