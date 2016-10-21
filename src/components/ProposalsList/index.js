@@ -9,6 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/proposals';
+import { ProposalTag } from '../ProposalTag';
 
 
 const styles = {
@@ -69,11 +70,12 @@ export class ProposalsList extends Component {
             <Subheader>{this.state.title}</Subheader>
               {data_received.map((tile, index) => (
                 //<a href={this.state.path + index}>
+
                     <GridTile
                       key={tile.name}
                       title={"#" + (index+1) + " " + tile.name}
                       subtitle={<span>{new Date(tile.creationDate).toLocaleString()}</span>}
-                      actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                      actionIcon={<ProposalTag tag={tile.status} />}
                       actionPosition="right"
                       titlePosition="top"
                       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
@@ -85,6 +87,7 @@ export class ProposalsList extends Component {
                     <img src={tile.image} />
 
                     </GridTile>
+                //*/
                 //</a>
               ))}
             </GridList>
