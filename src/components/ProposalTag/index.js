@@ -50,24 +50,39 @@ export class ProposalTag extends Component {
 
     render() {
         const tag = this.props.tag;
-        const ProposalTag = () => (
+        const lite = (this.props.lite!=null)?this.props.lite:false;
 
-          <div style={styles.wrapper}>
-              <Chip
-                  backgroundColor={colors[tag.color].soft}
-                  labelColor={colors[tag.color].text}
-                  onRequestDelete={handleRequestDelete}
-                  onTouchTap={handleTouchTap}
-                  style={styles.chip}
-              >
-              <Avatar size={32} color={colors[tag.color].soft} backgroundColor={colors[tag.color].hard}>
-                {tag.lite}
-              </Avatar>
-              {tag.full}
-              </Chip>
-          </div>
 
-        );
+        const ProposalTag = (lite)?
+            () => (
+
+              <div style={styles.wrapper}>
+                  <Avatar style={styles.chip} size={32} color={colors[tag.color].soft} backgroundColor={colors[tag.color].hard}>
+                    {tag.lite}
+                  </Avatar>
+              </div>
+            )
+            :
+            () => (
+
+              <div style={styles.wrapper}>
+                  <Chip
+                      backgroundColor={colors[tag.color].soft}
+                      labelColor={colors[tag.color].text}
+                      onRequestDelete={handleRequestDelete}
+                      onTouchTap={handleTouchTap}
+                      style={styles.chip}
+                  >
+                  <Avatar size={32} color={colors[tag.color].soft} backgroundColor={colors[tag.color].hard}>
+                    {tag.lite}
+                  </Avatar>
+
+                {tag.full}
+
+                  </Chip>
+              </div>
+          );
+
 
         return (
             <ProposalTag />
