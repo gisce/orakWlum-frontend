@@ -80,7 +80,7 @@ export class Proposal extends Component {
         const proposal = this.state.proposal;
         const Proposal = () => (
             <Card>
-              <CardTitle title={proposal[0].name} subtitle={<span>{new Date(proposal[0].creationDate).toLocaleString()}</span>} />
+              <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />
 
               <div style={styles.wrapper}>
                   <Chip
@@ -105,9 +105,9 @@ export class Proposal extends Component {
               </CardText>
 
               <CardMedia
-                overlay={<CardTitle title={proposal[0].name} subtitle={<span>{new Date(proposal[0].creationDate).toLocaleString()}</span>} />}
+                overlay={<CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />}
               >
-                <img src={proposal[0].image} />
+                <img src={proposal.image} />
               </CardMedia>
 
               <CardActions>

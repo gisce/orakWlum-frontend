@@ -5,7 +5,6 @@ import * as actionCreators from '../actions/proposals';
 
 import { ProposalsList } from './ProposalsList';
 
-
 function mapStateToProps(state) {
     return {
         data: state.proposals,
