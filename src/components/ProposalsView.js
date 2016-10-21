@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/data';
+import * as actionCreators from '../actions/proposals';
 
 import { ProposalsList } from './ProposalsList';
 
 
 function mapStateToProps(state) {
     return {
-        data: state.data,
+        data: state.proposals,
         token: state.auth.token,
-        loaded: state.data.loaded,
-        isFetching: state.data.isFetching,
+        loaded: state.proposals.loaded,
+        isFetching: state.proposals.isFetching,
     };
 }
 
@@ -32,6 +32,8 @@ export default class ProposalsView extends React.Component {
     }
 
     render() {
+
+        console.dir(this.props.data);
         return (
             <div>
                 {!this.props.loaded
