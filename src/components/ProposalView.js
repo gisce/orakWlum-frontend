@@ -35,16 +35,18 @@ export default class ProposalView extends React.Component {
         const proposalId = this.props.params.proposalId;
         const proposal = this.props.data.data;
 
-        return (
-            <div>
-                {!this.props.loaded
-                    ? <h1>Loading Proposal {proposalId}...</h1>
-                    :
-                    <Proposal proposal={proposal} />
-                }
-            </div>
-        );
-
+        if (proposal!=null && proposal[0].id == proposalId) {
+            return (
+                <div>
+                    {!this.props.loaded
+                        ? <h1>Loading Proposal {proposalId}...</h1>
+                        :
+                        <Proposal proposal={proposal} />
+                    }
+                </div>
+            );
+        }
+        return (<div></div>);
     }
 }
 
