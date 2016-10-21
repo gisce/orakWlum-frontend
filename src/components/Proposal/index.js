@@ -14,6 +14,7 @@ import {orange300, orange900, green300, green900, red300, red900} from 'material
 
 import * as actionCreators from '../../actions/proposal';
 
+import { ProposalTag } from '../ProposalTag';
 
 function handleRequestDelete() {
     alert('Treure TAG.');
@@ -82,20 +83,7 @@ export class Proposal extends Component {
             <Card>
               <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />
 
-              <div style={styles.wrapper}>
-                  <Chip
-                      backgroundColor={colors[proposal.status.color].soft}
-                      labelColor={colors[proposal.status.color].text}
-                      onRequestDelete={handleRequestDelete}
-                      onTouchTap={handleTouchTap}
-                      style={styles.chip}
-                  >
-                  <Avatar size={32} color={colors[proposal.status.color].soft} backgroundColor={colors[proposal.status.color].hard}>
-                    {proposal.status.lite}
-                  </Avatar>
-                  {proposal.status.full}
-                  </Chip>
-              </div>
+              <ProposalTag tag={proposal.status} />
 
               <CardText>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
