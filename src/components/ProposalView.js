@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actionCreators from '../actions/data';
+import * as actionCreators from '../actions/proposal';
 
 import { Proposal } from './Proposal';
 
 function mapStateToProps(state) {
     return {
-        data: state.data,
+        data: state.proposal,
         token: state.auth.token,
-        loaded: state.data.loaded,
-        isFetching: state.data.isFetching,
+        loaded: state.proposal.loaded,
+        isFetching: state.proposal.isFetching,
     };
 }
 
