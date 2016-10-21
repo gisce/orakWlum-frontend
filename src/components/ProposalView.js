@@ -35,7 +35,7 @@ export default class ProposalView extends React.Component {
         const proposalId = this.props.params.proposalId;
         const proposal = this.props.data.data;
 
-        if (proposal!=null && proposal[0].id == proposalId) {
+        if (proposal!=null && proposal.id == proposalId) {
             return (
                 <div>
                     {!this.props.loaded
