@@ -1,10 +1,10 @@
 # oraKWlum Frontend
 
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)]()
+[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)]()
 [![Status](https://img.shields.io/badge/status-dev-yellow.svg)]()
 [![Node](https://img.shields.io/badge/npm-3.10.3-blue.svg)]()
 
-Configure oKW-fr
+Configure oKW-frontend
 
 ### 1) Edit the configs at webpack/*.config.js
 
