@@ -23,7 +23,6 @@ function handleTouchTap() {
     alert('Filtrar per aquest TAG.');
 }
 
-
 const styles = {
     chip: {
       margin: 4,
@@ -71,7 +70,6 @@ export class Proposal extends Component {
         this.state = {
             proposal: props.proposal,
         };
-
     }
 
     dispatchNewRoute(route) {
@@ -80,9 +78,7 @@ export class Proposal extends Component {
 
     render() {
         const proposal = this.state.proposal;
-
         const Proposal = () => (
-
             <Card>
               <CardTitle title={proposal[0].name} subtitle={<span>{new Date(proposal[0].creationDate).toLocaleString()}</span>} />
 
@@ -108,7 +104,6 @@ export class Proposal extends Component {
                 Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
               </CardText>
 
-
               <CardMedia
                 overlay={<CardTitle title={proposal[0].name} subtitle={<span>{new Date(proposal[0].creationDate).toLocaleString()}</span>} />}
               >
@@ -122,13 +117,10 @@ export class Proposal extends Component {
                 <FlatButton label="Delete" />
               </CardActions>
             </Card>
-
-
         );
 
         return (
             <Proposal />
-
         );
     }
 }

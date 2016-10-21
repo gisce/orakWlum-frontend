@@ -40,8 +40,6 @@ export function fetchProtectedDataProposals(token) {
         data_fetch_api_resource(token, "proposals/")
             .then(parseJSON)
             .then(response => {
-                console.log("ENTro");
-                console.dir(response.result);
                 dispatch(receiveProtectedData(response.result));
             })
             .catch(error => {

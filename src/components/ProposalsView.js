@@ -32,8 +32,6 @@ export default class ProposalsView extends React.Component {
     }
 
     render() {
-
-        console.dir(this.props.data);
         return (
             <div>
                 {!this.props.loaded
