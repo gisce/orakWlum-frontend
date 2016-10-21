@@ -8,7 +8,7 @@ import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
-import * as actionCreators from '../../actions/auth';
+import * as actionCreators from '../../actions/proposals';
 
 
 const styles = {
