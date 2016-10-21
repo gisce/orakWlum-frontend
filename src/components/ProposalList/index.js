@@ -11,7 +11,6 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import * as actionCreators from '../../actions/proposals';
 import { ProposalTag } from '../ProposalTag';
 
-
 const styles = {
   root: {
     display: 'flex',
@@ -40,7 +39,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class ProposalsList extends Component {
+export class ProposalList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -58,7 +57,7 @@ export class ProposalsList extends Component {
 
     render() {
         const data_received = this.state.proposals;
-        const ProposalsList = () => (
+        const ProposalList = () => (
 
           <div style={styles.root}>
             <GridList
@@ -69,8 +68,6 @@ export class ProposalsList extends Component {
             >
             <Subheader>{this.state.title}</Subheader>
               {data_received.map((tile, index) => (
-                //<a href={this.state.path + index}>
-
                     <GridTile
                       key={tile.name}
                       title={"#" + (index+1) + " " + tile.name}
@@ -87,8 +84,6 @@ export class ProposalsList extends Component {
                     <img src={tile.image} />
 
                     </GridTile>
-                //*/
-                //</a>
               ))}
             </GridList>
           </div>
@@ -96,14 +91,14 @@ export class ProposalsList extends Component {
 
         return (
             <div>
-                <ProposalsList />
+                <ProposalList />
             </div>
 
         );
     }
 }
 
-ProposalsList.propTypes = {
+ProposalList.propTypes = {
     logoutAndRedirect: React.PropTypes.func,
     isAuthenticated: React.PropTypes.bool,
 };

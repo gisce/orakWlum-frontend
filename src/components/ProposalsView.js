@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposals';
 
-import { ProposalsList } from './ProposalsList';
+import { ProposalList } from './ProposalList';
 
 function mapStateToProps(state) {
     return {
@@ -13,7 +13,6 @@ function mapStateToProps(state) {
         isFetching: state.proposals.isFetching,
     };
 }
-
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
@@ -34,12 +33,12 @@ export default class ProposalsView extends React.Component {
         return (
             <div>
                 {!this.props.loaded
-                    ? <h1>Loading data...</h1>
+                    ? <h1>Loading Proposals...</h1>
                     :
                     <div>
                         <h1>Proposals list</h1>
 
-                        <ProposalsList
+                        <ProposalList
                             title="Last proposals"
                             proposals={this.props.data.data}
                             path={this.props.location.pathname}

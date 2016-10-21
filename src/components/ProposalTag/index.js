@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 
-
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
-
 
 function handleRequestDelete() {
     alert('Treure TAG.');
@@ -52,7 +50,6 @@ export class ProposalTag extends Component {
         const tag = this.props.tag;
         const lite = (this.props.lite!=null)?this.props.lite:false;
 
-
         const ProposalTag = (lite)?
             () => (
 
@@ -82,7 +79,6 @@ export class ProposalTag extends Component {
                   </Chip>
               </div>
           );
-
 
         return (
             <ProposalTag />
