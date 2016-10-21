@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import auth from './auth';
 import data from './data';
 import proposals from './proposals';
+import proposal from './proposal';
 
 const rootReducer = combineReducers({
     routing: routerReducer,
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     auth,
     data,
     proposals,
+    proposal,
 });
 
 export default rootReducer;
