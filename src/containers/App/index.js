@@ -18,7 +18,7 @@ import {
 
 } from 'material-ui/styles/colors';
 
-const muiTheme = getMuiTheme({
+const orangeWedge = getMuiTheme({
     palette: {
         primary1Color: orange400,
         primary2Color: orange400,
@@ -33,7 +33,6 @@ import { Footer } from '../../components/Footer';
 /* global styles for app */
 import './styles/app.scss';
 
-
 class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
     static propTypes = {
         children: React.PropTypes.node,
@@ -41,7 +40,7 @@ class App extends React.Component { // eslint-disable-line react/prefer-stateles
 
     render() {
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider muiTheme={orangeWedge}>
                 <section>
                     <Header />
                     <div

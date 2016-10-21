@@ -22,33 +22,33 @@ export function get_github_access() {
 }
 
 export function create_user(email, password) {
-    return axios.post('api/create_user', {
+    return axios.post('/api/create_user', {
         email,
         password,
     });
 }
 
-export function get_token(userName, password) {
-    return axios.post('https://api.orakwlum.local/oauth/token',
-        "client_id=1cZKwVZoC1Wv8YkmBEt7kju7FX9m3TrVAZVL9Gnf&grant_type=password&username=" + userName + "&password=" + password,
-    );
-/*
-    return axios.post('https://api.orakwlum.local/oauth/token', {
-        client_id:'1cZKwVZoC1Wv8YkmBEt7kju7FX9m3TrVAZVL9Gnf',
-        grant_type:'password',
-        username:"k",
-        password:"k",
+export function get_token(email, password) {
+    return axios.post('/api/get_token', {
+        email,
+        password,
     });
+}
 
-    */
-    //return axios.post('api/get_token', {
+export function ask_recover(email) {
+    return axios.post('/api/recover', {
+        email,
+    });
 }
 
 export function has_github_token(token) {
-    return axios.get('https://api.orakwlum.local/oauth/management', tokenConfig(token));
-    //return axios.get('api/has_github_token', tokenConfig(token));
+    return axios.get('/api/has_github_token', tokenConfig(token));
 }
 
 export function data_about_user(token) {
-    return axios.get('api/user', tokenConfig(token));
+    return axios.get('/api/user', tokenConfig(token));
+}
+
+export function data_fetch_api_resource(token, resource) {
+    return axios.get('/api/' + resource, tokenConfig(token));
 }

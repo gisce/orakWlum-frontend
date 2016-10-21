@@ -34,9 +34,9 @@ export function requireAuthentication(Component) {
             if (!props.isAuthenticated) {
                 const token = localStorage.getItem('token');
                 if (!token) {
-                    browserHistory.push('/home');
+                    browserHistory.push('/login');
                 } else {
-                    fetch('api/is_token_valid', {
+                    fetch('/api/is_token_valid', {
                         method: 'post',
                         credentials: 'include',
                         headers: {

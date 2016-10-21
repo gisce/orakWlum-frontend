@@ -6,6 +6,7 @@ import * as actionCreators from '../actions/auth';
 
 function mapStateToProps(state) {
     return {
+        data: state.data,
         token: state.auth.token,
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
@@ -22,6 +23,11 @@ class NotFound extends React.Component { // eslint-disable-line react/prefer-sta
         return (
             <div className="col-md-8">
                 <h1>Not Found</h1>
+
+                <h3>Detail:</h3>
+                <pre>{ JSON.stringify(this.props, null, 2) }</pre>
+
+
             </div>
         );
     }

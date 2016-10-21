@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     return {
         isAuthenticating: state.auth.isAuthenticating,
         statusText: state.auth.statusText,
+        statusType: state.auth.statusType,
     };
 }
 
@@ -112,6 +113,11 @@ export default class LoginView extends React.Component {
         this.props.loginUser(this.state.email, this.state.password, this.state.redirectTo);
     }
 
+    help(e) {
+        e.preventDefault();
+        this.props.recoverUser(this.state.email, this.state.redirectTo);
+    }
+
     render() {
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
@@ -121,15 +127,17 @@ export default class LoginView extends React.Component {
                             <h2>Login to oKW!</h2>
                             {
                                 this.props.statusText &&
-                                    <div className="alert alert-info">
+                                    <div className={"alert alert-info alert-" + this.props.statusType}>
                                         {this.props.statusText}
                                     </div>
                             }
 
                             <div className="col-md-12">
                                 <TextField
-                                  hintText="Username"
-                                  floatingLabelText="Username"
+                                  hintText="user@domain.com"
+                                  floatingLabelText="Email"
+                                  type="email"
+                                  errorText={this.state.email_error_text}
                                   onChange={(e) => this.changeValue(e, 'email')}
                                 />
                             </div>
@@ -146,15 +154,14 @@ export default class LoginView extends React.Component {
                             <RaisedButton
                               disabled={this.state.disabled}
                               style={{ marginTop: 50 }}
-                              label="Submit"
+                              label="Login"
                               onClick={(e) => this.login(e)}
                             />
-
                             <RaisedButton
-                              title="Recover you account..."
+                              disabled={this.state.enabled}
                               style={{ marginTop: 50 }}
-                              label="Recover"
-                              onClick={(e) => this.recover(e)}
+                              label="Help"
+                              onClick={(e) => this.help(e)}
                             />
 
                         </div>
@@ -170,4 +177,5 @@ export default class LoginView extends React.Component {
 LoginView.propTypes = {
     loginUser: React.PropTypes.func,
     statusText: React.PropTypes.string,
+    statusType: React.PropTypes.string,
 };
