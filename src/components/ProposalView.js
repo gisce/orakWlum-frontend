@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import * as actionCreators from '../actions/data';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-
+import { Proposal } from './Proposal';
 
 function mapStateToProps(state) {
     return {
@@ -16,7 +14,6 @@ function mapStateToProps(state) {
         isFetching: state.data.isFetching,
     };
 }
-
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
@@ -43,46 +40,11 @@ export default class ProposalView extends React.Component {
                 {!this.props.loaded
                     ? <h1>Loading Proposal {proposalId}...</h1>
                     :
-                    <div>
-                        <Card>
-                          <CardTitle title={proposal[0].name} subtitle={<span>{new Date(proposal[0].creationDate).toLocaleString()}</span>} />
-
-                          <CardText>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-                          </CardText>
-
-                          <CardMedia
-                            overlay={<CardTitle title={proposal[0].name} subtitle={<span>{new Date(proposal[0].creationDate).toLocaleString()}</span>} />}
-                          >
-                            <img src={proposal[0].image} />
-                          </CardMedia>
-                          <CardHeader
-                            title="Xav"
-                            subtitle="Admin"
-                            avatar="/images/user.jpg"
-                          />
-
-                          <CardActions>
-                            <FlatButton label="Run" />
-                            <FlatButton label="Detail" />
-                            <FlatButton label="Edit" />
-                            <FlatButton label="Delete" />
-                          </CardActions>
-                        </Card>
-
-
-                        <h3>Debugging:</h3>
-                        <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
-
-
-
-                    </div>
+                    <Proposal proposal={proposal} />
                 }
             </div>
         );
+
     }
 }
 
