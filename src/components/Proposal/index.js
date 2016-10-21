@@ -12,7 +12,7 @@ import Chip from 'material-ui/Chip';
 import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
 
 
-import * as actionCreators from '../../actions/auth';
+import * as actionCreators from '../../actions/proposal';
 
 
 function handleRequestDelete() {
