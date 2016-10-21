@@ -84,16 +84,16 @@ export class Proposal extends Component {
 
               <div style={styles.wrapper}>
                   <Chip
-                      backgroundColor={colors.accepted.soft}
-                      labelColor={colors.accepted.text}
+                      backgroundColor={colors[proposal.status.color].soft}
+                      labelColor={colors[proposal.status.color].text}
                       onRequestDelete={handleRequestDelete}
                       onTouchTap={handleTouchTap}
                       style={styles.chip}
                   >
-                  <Avatar size={32} color={colors.accepted.soft} backgroundColor={colors.accepted.hard}>
-                    OK
+                  <Avatar size={32} color={colors[proposal.status.color].soft} backgroundColor={colors[proposal.status.color].hard}>
+                    {proposal.status.lite}
                   </Avatar>
-                  Approved
+                  {proposal.status.full}
                   </Chip>
               </div>
 
