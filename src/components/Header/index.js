@@ -134,7 +134,6 @@ export class Header extends Component {
                                 </Card>
 
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/dashboard')}
                                     leftIcon={<DashboardIcon/>}
                                     primaryText={"Dashboard"}
                                 />
@@ -184,7 +183,7 @@ export class Header extends Component {
                 <AppBar
                   title="oraKWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={<FlatButton label="Dashboard" onClick={() => this.dispatchNewRoute('/dashboard')}/>}
+                  iconElementRight={<FlatButton label="Proposals" onClick={() => this.dispatchNewRoute('/proposals')}/>}
                 />
 
             <Breadcrumb path={this.props.path}/>
