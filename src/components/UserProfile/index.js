@@ -83,7 +83,6 @@ export class UserProfile extends Component {
     }
 
     edit_profile(e) {
-        console.log("EDIT");
         e.preventDefault();
         this.setState({
             editing: true,
@@ -92,9 +91,6 @@ export class UserProfile extends Component {
         this.setState({
             bckp_profile: JSON.parse(JSON.stringify(this.state.profile))
         });
-
-        console.log(" > BACKUP");
-        console.dir(this.props);
     }
 
     save_profile(e) {
@@ -102,15 +98,15 @@ export class UserProfile extends Component {
         this.setState({
             editing: false,
         });
-        console.dir(this.state);
+
+        const profile = JSON.parse(JSON.stringify(this.props.profile));
+        this.setState({
+            profile: profile,
+        });
     }
 
     tmpChangeValue(e, type) {
         const value = e.target.value;
-        const value_dict = {};
-        value_dict[type] = value;
-
-        console.log(this.props.profile.data[type]);
         this.props.profile.data[type] = value;
     }
 
