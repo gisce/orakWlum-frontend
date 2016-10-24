@@ -74,6 +74,7 @@ export class UserProfile extends Component {
         this.state = {
             profile: props.profile,
             editing: false,
+            bckp_profile: JSON.parse(JSON.stringify(props.profile))
         };
     }
 
@@ -82,10 +83,18 @@ export class UserProfile extends Component {
     }
 
     edit_profile(e) {
+        console.log("EDIT");
         e.preventDefault();
         this.setState({
             editing: true,
         });
+
+        this.setState({
+            bckp_profile: JSON.parse(JSON.stringify(this.state.profile))
+        });
+
+        console.log(" > BACKUP");
+        console.dir(this.props);
     }
 
     save_profile(e) {
@@ -93,12 +102,25 @@ export class UserProfile extends Component {
         this.setState({
             editing: false,
         });
+        console.dir(this.state);
+    }
+
+    tmpChangeValue(e, type) {
+        const value = e.target.value;
+        const value_dict = {};
+        value_dict[type] = value;
+
+        console.log(this.props.profile.data[type]);
+        this.props.profile.data[type] = value;
     }
 
     discard_edit_profile(e) {
         e.preventDefault();
+        const profile = JSON.parse(JSON.stringify(this.state.bckp_profile));
+
         this.setState({
             editing: false,
+            profile: profile,
         });
     }
 
@@ -112,7 +134,7 @@ export class UserProfile extends Component {
     render() {
         let editing = this.state.editing;;
 
-        const profile = this.props.profile.data;
+        const profile = this.state.profile.data;
         const UserProfile = () => (
             <Card>
                 <CardHeader
@@ -162,7 +184,7 @@ export class UserProfile extends Component {
 
                   <CardActions>
                     <FlatButton
-                        onClick={(e) => this.edit_profile(e)}
+                        onClick={(e) => this.edit_profile(e, {profile})}
                         label="Edit" />
                     <FlatButton
                         onClick={(e) => this.delete_profile(e)}
@@ -181,6 +203,7 @@ export class UserProfile extends Component {
                                     floatingLabelText="Name"
                                     defaultValue={profile.name}
                                     floatingLabelFixed={true}
+                                    onChange={(e) => this.tmpChangeValue(e, 'name')}
                                   />
                               </div>
 
@@ -190,6 +213,7 @@ export class UserProfile extends Component {
                                     floatingLabelText="Surname"
                                     defaultValue={profile.surname}
                                     floatingLabelFixed={true}
+                                    onChange={(e) => this.tmpChangeValue(e, 'surname')}
                                   />
                               </div>
                           </div>
@@ -201,6 +225,7 @@ export class UserProfile extends Component {
                                     floatingLabelText="Email"
                                     defaultValue={profile.email}
                                     floatingLabelFixed={true}
+                                    onChange={(e) => this.tmpChangeValue(e, 'email')}
                                   />
                               </div>
                           </div>
