@@ -81,26 +81,29 @@ export class UserProfile extends Component {
         browserHistory.push(route);
     }
 
-    edit_profile() {
+    edit_profile(e) {
+        e.preventDefault();
         this.setState({
             editing: true,
         });
-
     }
 
-    save_profile() {
+    save_profile(e) {
+        e.preventDefault();
         this.setState({
             editing: false,
         });
     }
 
-    discard_edit_profile() {
+    discard_edit_profile(e) {
+        e.preventDefault();
         this.setState({
             editing: false,
         });
     }
 
-    delete_profile() {
+    delete_profile(e) {
+        e.preventDefault();
         this.setState({
             editing: false,
         });
