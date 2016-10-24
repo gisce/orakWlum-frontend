@@ -26,7 +26,8 @@ export default class ProfileView extends React.Component {
 
     fetchData() {
         const token = this.props.token;
-        this.props.fetchProfiles(token);
+        const userName = this.props.userName;
+        this.props.fetchProfiles(token, userName);
     }
 
     render() {
