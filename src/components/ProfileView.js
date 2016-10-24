@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/proposals';
+import * as actionCreators from '../actions/profile';
 
-import { ProposalList } from './ProposalList';
 
 function mapStateToProps(state) {
     return {
