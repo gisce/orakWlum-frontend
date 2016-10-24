@@ -27,19 +27,21 @@ export default class ProfileView extends React.Component {
     fetchData() {
         const token = this.props.token;
         const userName = this.props.userName;
-        this.props.fetchProfile(token, userName);
+        this.props.fetchProfile(token);
     }
 
     render() {
         return (
             <div>
                 {!this.props.loaded
-                    ? <h1>Loading Profile...</h1>
+                    ? <h1>Loading Profile {this.props.userName}...</h1>
                     :
                     <div>
                         <h1>Profile</h1>
 
                         {this.props.data.data.groups}
+
+                        <UserProfile />
 
                         <h3>Debug:</h3>
                         <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
@@ -52,8 +54,7 @@ export default class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-    fetchProtectedDataProposals: React.PropTypes.func,
-    fetchProtectedData: React.PropTypes.func,
+    fetchProfile: React.PropTypes.func,
     loaded: React.PropTypes.bool,
     userName: React.PropTypes.string,
     data: React.PropTypes.any,
