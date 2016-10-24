@@ -6,10 +6,10 @@ import * as actionCreators from '../actions/profile';
 
 function mapStateToProps(state) {
     return {
-        data: state.proposals,
+        data: state.profile,
         token: state.auth.token,
-        loaded: state.proposals.loaded,
-        isFetching: state.proposals.isFetching,
+        loaded: state.profile.loaded,
+        isFetching: state.profile.isFetching,
     };
 }
 
@@ -26,7 +26,7 @@ export default class ProfileView extends React.Component {
     fetchData() {
         const token = this.props.token;
         const userName = this.props.userName;
-        this.props.fetchProfiles(token, userName);
+        this.props.fetchProfile(token, userName);
     }
 
     render() {
@@ -38,7 +38,7 @@ export default class ProfileView extends React.Component {
                     <div>
                         <h1>Profile</h1>
 
-                        {this.props.data.data}
+                        {this.props.data.data.groups}
 
                         <h3>Debug:</h3>
                         <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
