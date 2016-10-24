@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/profile';
 
+import { UserProfile } from './UserProfile';
 
 function mapStateToProps(state) {
     return {
