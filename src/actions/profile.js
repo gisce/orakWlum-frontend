@@ -1,5 +1,5 @@
 import { FETCH_PROFILE_REQUEST, RECEIVE_PROFILE } from '../constants/index'
-import { data_about_user, data_fetch_api_resource } from '../utils/http_functions'
+import { data_fetch_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
 
@@ -18,10 +18,10 @@ export function fetchProfileRequest() {
     };
 }
 
-export function fetchProfile(token, userName) {
+export function fetchProfile(token) {
     return (dispatch) => {
         dispatch(fetchProfileRequest());
-        data_fetch_api_resource(token, "user/" + userName)
+        data_fetch_api_resource(token, "user/" )
             .then(parseJSON)
             .then(response => {
                 dispatch(receiveProfile(response.result));
