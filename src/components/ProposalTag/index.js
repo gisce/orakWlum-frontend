@@ -85,17 +85,15 @@ export class ProposalTag extends Component {
                       onTouchTap={click_method}
                       style={styles.chip}
                   >
-                {
-                    (lite != "") ?
+            {
+              (lite != "") ?
                   <Avatar size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
                     {lite}
                   </Avatar>
                   :
                   <div></div>
-                }
-
-                {full}
-
+            }
+                  {full}
                   </Chip>
               </div>
           );
