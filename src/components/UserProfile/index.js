@@ -181,6 +181,17 @@ export class UserProfile extends Component {
                                   />
                               </div>
                           </div>
+
+                    {
+
+                        /*
+                        profile.groups.map((group, index) => (
+                          <ProposalTag tag={group} readOnly={true}/>
+                          )
+                        )
+                        */
+                        <ProposalTag tag={profile.groups} readOnly/>
+                    }
                       </form>
                   </CardText>
 
