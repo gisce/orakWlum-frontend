@@ -43,8 +43,7 @@ const colors = {
         soft: blue300,
         text: 'white',
     },
-
-}
+};
 
 export class ProposalTag extends Component {
     dispatchNewRoute(route) {
@@ -57,7 +56,7 @@ export class ProposalTag extends Component {
         const is_readOnly = (this.props.readOnly)?(this.props.readOnly):false;
 
         const color = (tag.color)? tag.color : "base";
-        const full = (tag.text)? tag.full : tag;
+        const full = (tag.full)? tag.full : tag;
         const lite = (tag.lite)? tag.lite : "";
 
         let delete_method = handleRequestDelete;
@@ -70,7 +69,6 @@ export class ProposalTag extends Component {
 
         const ProposalTag = (is_lite)?
             () => (
-
               <div style={styles.wrapper}>
                   <Avatar style={styles.chip} size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
                     {lite}
@@ -79,7 +77,6 @@ export class ProposalTag extends Component {
             )
             :
             () => (
-
               <div style={styles.wrapper}>
                   <Chip
                       backgroundColor={colors[color].soft}
@@ -88,7 +85,6 @@ export class ProposalTag extends Component {
                       onTouchTap={click_method}
                       style={styles.chip}
                   >
-
                 {
                     (lite != "") ?
                   <Avatar size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
