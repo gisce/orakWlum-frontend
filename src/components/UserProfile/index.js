@@ -56,9 +56,6 @@ const colors = {
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
-        userName: state.auth.userName,
-        isAuthenticated: state.auth.isAuthenticated,
         profile: state.profile,
     };
 }
@@ -66,7 +63,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
-
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class UserProfile extends Component {
@@ -131,7 +127,7 @@ export class UserProfile extends Component {
     }
 
     render() {
-        let editing = this.state.editing;;
+        let editing = this.state.editing;
 
         const profile = this.state.profile.data;
         const UserProfile = () => (
@@ -141,11 +137,10 @@ export class UserProfile extends Component {
                   subtitle={profile.groups}
                   avatar={profile.image}
                 />
-              <CardTitle
+                <CardTitle
                   title={profile.email}
                   subtitle={profile.groups}
-              />
-
+                />
           {
           ( !editing ) ?
                 <div>
@@ -207,7 +202,6 @@ export class UserProfile extends Component {
                         label="Delete" />
                   </CardActions>
               </div>
-
               :
               <div>
                   <CardText>
@@ -285,6 +279,4 @@ export class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
 };
