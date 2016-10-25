@@ -181,18 +181,21 @@ export class UserProfile extends Component {
                                   />
                               </div>
                           </div>
-
-                    {
-
-                        /*
-                        profile.groups.map((group, index) => (
-                          <ProposalTag tag={group} readOnly={true}/>
-                          )
-                        )
-                        */
-                        <ProposalTag tag={profile.groups} readOnly/>
-                    }
                       </form>
+                  </CardText>
+
+
+                  <CardText>
+                      <b>Groups</b>
+                  {
+                      /*
+                      profile.groups.map((group, index) => (
+                        <ProposalTag tag={group} readOnly={true}/>
+                        )
+                      )
+                      */
+                      <ProposalTag tag={profile.groups} readOnly/>
+                  }
                   </CardText>
 
                   <CardActions>
@@ -244,6 +247,20 @@ export class UserProfile extends Component {
                           </div>
                       </form>
                   </CardText>
+
+                  <CardText>
+                      <b>Groups</b>
+                  {
+                      /*
+                      profile.groups.map((group, index) => (
+                        <ProposalTag tag={group} readOnly={true}/>
+                        )
+                      )
+                      */
+                      <ProposalTag tag={profile.groups}/>
+                  }
+                  </CardText>
+
                   <CardActions>
                     <FlatButton
                         onClick={(e) => this.save_profile(e)}
