@@ -67,6 +67,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+
 @connect(mapStateToProps, mapDispatchToProps)
 export class UserProfile extends Component {
     constructor(props) {
@@ -91,6 +92,8 @@ export class UserProfile extends Component {
         this.setState({
             bckp_profile: JSON.parse(JSON.stringify(this.state.profile))
         });
+
+        e.target.focus();
     }
 
     save_profile(e) {
@@ -154,6 +157,7 @@ export class UserProfile extends Component {
                                     hintText="Your name..."
                                     floatingLabelText="Name"
                                     value={profile.name}
+                                    onDoubleClick={(e) => this.edit_profile(e)}
                                   />
                               </div>
 
@@ -162,6 +166,7 @@ export class UserProfile extends Component {
                                     hintText="Your surname..."
                                     floatingLabelText="Surname"
                                     value={profile.surname}
+                                    onDoubleClick={(e) => this.edit_profile(e)}
                                   />
                               </div>
                           </div>
@@ -172,6 +177,7 @@ export class UserProfile extends Component {
                                     hintText="user@domain.com"
                                     floatingLabelText="Email"
                                     value={profile.email}
+                                    onDoubleClick={(e) => this.edit_profile(e)}
                                   />
                               </div>
                           </div>
