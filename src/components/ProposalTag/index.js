@@ -60,6 +60,10 @@ export class ProposalTag extends Component {
         const full = (tag.text)? tag.full : tag;
         const lite = (tag.lite)? tag.lite : "";
 
+        let detele_method = handleRequestDelete;
+        if (is_readOnly)
+            detele_method = false;
+
         const ProposalTag = (is_lite)?
             () => (
 
@@ -76,7 +80,7 @@ export class ProposalTag extends Component {
                   <Chip
                       backgroundColor={colors[color].soft}
                       labelColor={colors[color].text}
-                      onRequestDelete={handleRequestDelete}
+                      onRequestDelete={detele_method}
                       onTouchTap={handleTouchTap}
                       style={styles.chip}
                   >
