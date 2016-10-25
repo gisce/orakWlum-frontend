@@ -189,7 +189,7 @@ export class UserProfile extends Component {
                         )
                       )
                       */
-                      <ProposalTag tag={profile.groups} readOnly/>
+                      <ProposalTag tag={profile.groups} readOnly />
                   }
                   </CardText>
 

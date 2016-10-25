@@ -93,7 +93,8 @@ export class Proposal extends Component {
               </CardText>
 
               <CardMedia
-                overlay={<CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />}
+                overlay={<CardTitle title={proposal.name}
+                subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />}
               >
                 <img src={proposal.image} />
               </CardMedia>

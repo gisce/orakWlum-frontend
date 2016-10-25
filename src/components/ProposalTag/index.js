@@ -63,8 +63,8 @@ export class ProposalTag extends Component {
         let click_method = handleTouchTap;
 
         if (is_readOnly) {
-            delete_method = false;
-            click_method = false;
+            delete_method = null;
+            click_method = null;
         }
 
         const ProposalTag = (is_lite)?
