@@ -138,8 +138,7 @@ export class UserProfile extends Component {
                   avatar={profile.image}
                 />
                 <CardTitle
-                  title={profile.email}
-                  subtitle={profile.groups}
+                  title="Personal data"
                 />
           {
           ( !editing ) ?
@@ -179,9 +178,11 @@ export class UserProfile extends Component {
                       </form>
                   </CardText>
 
+                  <CardTitle
+                    title="Groups"
+                  />
 
                   <CardText>
-                      <b>Groups</b>
                   {
                       /*
                       profile.groups.map((group, index) => (
@@ -242,8 +243,11 @@ export class UserProfile extends Component {
                       </form>
                   </CardText>
 
+                  <CardTitle
+                    title="Groups"
+                  />
+
                   <CardText>
-                      <b>Groups</b>
                   {
                       /*
                       profile.groups.map((group, index) => (
