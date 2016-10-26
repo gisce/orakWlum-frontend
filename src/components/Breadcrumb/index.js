@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/data';
 import { browserHistory } from 'react-router';
 
 function mapStateToProps(state) {
@@ -9,12 +8,6 @@ function mapStateToProps(state) {
     };
 }
 
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class Breadcrumb extends React.Component {
     dispatchNewRoute(route) {
         browserHistory.push(route);
@@ -50,7 +43,7 @@ export default class Breadcrumb extends React.Component {
                                 if (breadcrumbLen === index + 1) {
                                     classActive="active";
                                 }
-                                
+
                                 section = section[0].toUpperCase() + section.slice(1);
                                 return <li
                                             onClick={() => this.dispatchNewRoute(sectionUrl[index])}
