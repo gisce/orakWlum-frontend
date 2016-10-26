@@ -1,5 +1,6 @@
-import { browserHistory } from 'react-router';
-
+import {
+    browserHistory
+} from 'react-router'
 import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILURE,
@@ -10,11 +11,16 @@ import {
     REGISTER_USER_SUCCESS,
     RECOVER_USER_REQUEST,
     RECOVER_USER_SUCCESS,
-    RECOVER_USER_FAILURE,
-} from '../constants/index';
-
-import { parseJSON } from '../utils/misc';
-import { get_token, create_user, ask_recover } from '../utils/http_functions';
+    RECOVER_USER_FAILURE
+} from '../constants/index'
+import {
+    get_token,
+    create_user,
+    ask_recover
+} from '../utils/http_functions'
+import {
+    parseJSON
+} from '../utils/misc'
 
 export function loginUserSuccess(token) {
     localStorage.setItem('token', token);
@@ -31,8 +37,8 @@ export function loginUserFailure(error) {
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
-            status: (error.status===undefined)?"403":error.status,
-            statusText: (error.statusText===undefined)?"The provided credentials are not correct":error.statusText,
+            status: (error.status === undefined) ? "403" : error.status,
+            statusText: (error.statusText === undefined) ? "The provided credentials are not correct" : error.statusText,
             statusType: "danger",
         },
     };
@@ -65,7 +71,7 @@ export function redirectToRoute(route) {
 }
 
 export function loginUser(email, password) {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
             .then(parseJSON)
@@ -119,7 +125,7 @@ export function registerUserFailure(error) {
 }
 
 export function registerUser(email, password) {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch(registerUserRequest());
         return create_user(email, password)
             .then(parseJSON)
@@ -144,7 +150,7 @@ export function registerUser(email, password) {
 }
 
 export function recoverUser(email) {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch(recoverUserRequest());
         return ask_recover(email)
             .then(parseJSON)
@@ -179,8 +185,8 @@ export function recoverUserFailure(error) {
     return {
         type: RECOVER_USER_FAILURE,
         payload: {
-            status: (error.status===undefined)?"":error.status,
-            statusText: (error.statusText===undefined)?"This service is not available right now. Try it in a few minutes please.":error.statusText,
+            status: (error.status === undefined) ? "" : error.status,
+            statusText: (error.statusText === undefined) ? "This service is not available right now. Try it in a few minutes please." : error.statusText,
             statusType: "danger",
         },
     };
