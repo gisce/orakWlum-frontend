@@ -37,9 +37,7 @@ export default class ProfileView extends React.Component {
                     ? <h1>Loading Profile {this.props.userName}...</h1>
                     :
                     <div>
-                        <h1>Profile</h1>
-
-                        {this.props.data.data.groups}
+                        <h1>Your profile</h1>
 
                         <UserProfile />
 
