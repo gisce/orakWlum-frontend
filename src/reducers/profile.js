@@ -18,4 +18,14 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             isFetching: true,
         }),
+    [RECEIVE_UPDATE_PROFILE]: (state, payload) =>
+        Object.assign({}, state, {
+            data: payload.data,
+            isUpdating: false,
+            loaded: true,
+        }),
+    [UPDATE_PROFILE_REQUEST]: (state) =>
+        Object.assign({}, state, {
+            isUpdating: true,
+        }),
 });
