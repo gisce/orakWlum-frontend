@@ -84,11 +84,8 @@ export class UserProfile extends Component {
         e.preventDefault();
 
         this.groups = this.state.groups;
-
-        console.dir(this.groups);
-        const groupToDelete = this.groups.map((group) => map.key).indexOf(key)
-
-        this.groups.splice(groupToDelete, 1);
+        delete this.groups[key];
+        
         this.setState({groups: this.groups});
     }
 
