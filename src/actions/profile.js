@@ -1,5 +1,5 @@
 import { FETCH_PROFILE_REQUEST, RECEIVE_PROFILE, UPDATE_PROFILE_REQUEST, RECEIVE_UPDATE_PROFILE } from '../constants/index'
-import { data_fetch_api_resource } from '../utils/http_functions'
+import { data_fetch_api_resource, data_update_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
 
@@ -51,13 +51,13 @@ export function fetchProfile(token) {
 }
 
 
-export function updateProfile(token) {
+export function updateProfile(token, data) {
     return (dispatch) => {
         dispatch(updateProfileRequest());
-        data_fetch_api_resource(token, "user/" )
+        data_update_api_resource(token, "user/", data )
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProfile(response.result));
+                dispatch(receiveUpdateProfile(response.result));
             })
             .catch(error => {
                 if (error.status === 401) {
