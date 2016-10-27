@@ -118,9 +118,6 @@ export default class LoginView extends React.Component {
             redirectTo: next
         })
 
-        console.log("redirect to", this.state.redirectTo, next);
-
-
         this.props.loginUser(this.state.email, this.state.password, next);
     }
 

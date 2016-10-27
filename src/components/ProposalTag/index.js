@@ -58,7 +58,6 @@ export class ProposalTag extends Component {
         const is_readOnly = (this.props.readOnly)?(this.props.readOnly):false;
         const is_doubleClick = (this.props.onDoubleClick)?(this.props.onDoubleClick):false;
 
-        console.dir(this.props);
         const is_deletable = (this.props.handleRequestDelete)?(this.props.handleRequestDelete):handleRequestDelete;
 
         const color = (tag.color)? tag.color : "base";

@@ -71,7 +71,8 @@ export class UserProfile extends Component {
         this.state = {
             profile: props.profile,
             editing: false,
-            bckp_profile: JSON.parse(JSON.stringify(props.profile))
+            bckp_profile: JSON.parse(JSON.stringify(props.profile)),
+            groups: props.profile.data.groups,
         };
     }
 
@@ -79,9 +80,16 @@ export class UserProfile extends Component {
         browserHistory.push(route);
     }
 
-    delete_tag(e) {
+    delete_tag(e, key) {
         e.preventDefault();
-        alert("DELTE");
+
+        this.groups = this.state.groups;
+
+        console.dir(this.groups);
+        const groupToDelete = this.groups.map((group) => map.key).indexOf(key)
+
+        this.groups.splice(groupToDelete, 1);
+        this.setState({groups: this.groups});
     }
 
     edit_profile(e) {
@@ -135,6 +143,9 @@ export class UserProfile extends Component {
         let editing = this.state.editing;
 
         const profile = this.state.profile.data;
+
+        const groups = this.state.groups;
+
         const UserProfile = () => (
             <Card>
                 <CardHeader
@@ -189,16 +200,15 @@ export class UserProfile extends Component {
 
                   <CardText>
                   {
-                      /*
-                      profile.groups.map((group, index) => (
-                        <ProposalTag tag={group} readOnly={true}/>
-                        )
+                      groups.map((group, index) => (
+                          <ProposalTag
+                              key={"group_" + index}
+                              tag={profile.groups}
+                              readOnly onDoubleClick={(e) => this.edit_profile(e)}
+                              />
+                          )
                       )
-                      */
-                      <ProposalTag
-                          tag={profile.groups}
-                          readOnly onDoubleClick={(e) => this.edit_profile(e)}
-                          />
+
                   }
                   </CardText>
 
@@ -257,16 +267,16 @@ export class UserProfile extends Component {
 
                   <CardText>
                   {
-                      /*
-                      profile.groups.map((group, index) => (
-                        <ProposalTag tag={group} readOnly={true}/>
-                        )
+                      groups.map((group, index) => (
+                          <ProposalTag
+                              key={"group_" + index}
+                              tag={group}
+                              handleRequestDelete={(e) => this.delete_tag(e, index)}
+                              />
+
+                          )
                       )
-                      */
-                      <ProposalTag
-                          tag={profile.groups}
-                          handleRequestDelete={(e) => this.delete_tag(e)}
-                          />
+
                   }
                   </CardText>
 
