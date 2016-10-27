@@ -1,4 +1,4 @@
-import { RECEIVE_PROFILE, FETCH_PROFILE_REQUEST } from '../constants'
+import { RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, RECEIVE_UPDATE_PROFILE } from '../constants'
 import { createReducer } from '../utils/misc'
 
 const initialState = {
