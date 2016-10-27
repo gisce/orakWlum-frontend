@@ -4,14 +4,15 @@ import { orange300, orange900, green300, green900, red300, red900, blue300, blue
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 
+//Default detele method
 function handleRequestDelete() {
-    alert('Treure TAG.');
+    console.log('Drop TAG.');
 
 }
 
+//Default touch method
 function handleTouchTap() {
-    alert('Filtrar per aquest TAG.');
-
+    console.log('Filtering by this TAG.');
 }
 
 const styles = {
@@ -91,7 +92,7 @@ export class ProposalTag extends Component {
                       backgroundColor={colors[color].soft}
                       labelColor={colors[color].text}
                       onRequestDelete={delete_method}
-                      onTouchTap={click_method}
+                      onDoubleClick={click_method}
                       style={styles.chip}
                   >
             {
