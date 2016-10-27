@@ -82,10 +82,8 @@ export class UserProfile extends Component {
 
     delete_tag(e, key) {
         e.preventDefault();
-
         this.groups = this.state.groups;
-        delete this.groups[key];
-
+        this.groups.splice(key,1);
         this.setState({groups: this.groups});
     }
 
@@ -93,9 +91,6 @@ export class UserProfile extends Component {
         e.preventDefault();
         this.setState({
             editing: true,
-        });
-
-        this.setState({
             bckp_profile: JSON.parse(JSON.stringify(this.state.profile))
         });
 
@@ -205,7 +200,7 @@ export class UserProfile extends Component {
                       groups.map((group, index) => (
                           <ProposalTag
                               key={"group_" + index}
-                              tag={profile.groups}
+                              tag={group}
                               readOnly onDoubleClick={(e) => this.edit_profile(e)}
                               />
                           )
