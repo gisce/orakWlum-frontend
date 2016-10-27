@@ -19,10 +19,6 @@ const styles = {
     chip: {
       margin: 4,
     },
-    wrapper: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
 };
 
 const colors = {
@@ -79,7 +75,7 @@ export class ProposalTag extends Component {
 
         const ProposalTag = (is_lite)?
             () => (
-              <div style={styles.wrapper}>
+              <div>
                   <Avatar style={styles.chip} size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
                     {lite}
                   </Avatar>
@@ -87,7 +83,7 @@ export class ProposalTag extends Component {
             )
             :
             () => (
-              <div style={styles.wrapper}>
+              <div>
                   <Chip
                       backgroundColor={colors[color].soft}
                       labelColor={colors[color].text}
