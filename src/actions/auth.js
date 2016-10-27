@@ -70,7 +70,7 @@ export function redirectToRoute(route) {
     };
 }
 
-export function loginUser(email, password) {
+export function loginUser(email, password, redirect) {
     return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
@@ -78,7 +78,7 @@ export function loginUser(email, password) {
             .then(response => {
                 try {
                     dispatch(loginUserSuccess(response.token));
-                    browserHistory.push('/proposals');
+                    browserHistory.push(redirect);
                 } catch (e) {
                     alert(e);
                     dispatch(loginUserFailure({
