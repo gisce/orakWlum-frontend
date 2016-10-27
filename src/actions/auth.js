@@ -70,7 +70,7 @@ export function redirectToRoute(route) {
     };
 }
 
-export function loginUser(email, password, redirect) {
+export function loginUser(email, password, redirect="/proposals") {
     return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
