@@ -6,10 +6,12 @@ import { browserHistory } from 'react-router'
 
 function handleRequestDelete() {
     alert('Treure TAG.');
+
 }
 
 function handleTouchTap() {
     alert('Filtrar per aquest TAG.');
+
 }
 
 const styles = {
@@ -54,17 +56,25 @@ export class ProposalTag extends Component {
         const tag = this.props.tag;
         const is_lite = (this.props.lite!=null)?this.props.lite:false;
         const is_readOnly = (this.props.readOnly)?(this.props.readOnly):false;
+        const is_doubleClick = (this.props.onDoubleClick)?(this.props.onDoubleClick):false;
+
+        console.dir(this.props);
+        const is_deletable = (this.props.handleRequestDelete)?(this.props.handleRequestDelete):handleRequestDelete;
 
         const color = (tag.color)? tag.color : "base";
         const full = (tag.full)? tag.full : tag;
         const lite = (tag.lite)? tag.lite : "";
 
-        let delete_method = handleRequestDelete;
+        let delete_method = is_deletable;
         let click_method = handleTouchTap;
 
         if (is_readOnly) {
             delete_method = null;
             click_method = null;
+        }
+
+        if (is_doubleClick) {
+            click_method = is_doubleClick;
         }
 
         const ProposalTag = (is_lite)?
