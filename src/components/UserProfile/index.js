@@ -85,7 +85,7 @@ export class UserProfile extends Component {
 
         this.groups = this.state.groups;
         delete this.groups[key];
-        
+
         this.setState({groups: this.groups});
     }
 
@@ -147,7 +147,7 @@ export class UserProfile extends Component {
             <Card>
                 <CardHeader
                   title={profile.email}
-                  subtitle={profile.groups}
+                  subtitle={profile.roles}
                   avatar={profile.image}
                 />
                 <CardTitle
