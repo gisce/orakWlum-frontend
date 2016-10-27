@@ -30,6 +30,12 @@ export default class ProfileView extends React.Component {
         this.props.fetchProfile(token);
     }
 
+    updateData(data) {
+        const token = this.props.token;
+
+        this.props.updateProfile(token, data);
+    }
+
     render() {
         return (
             <div>
@@ -39,7 +45,7 @@ export default class ProfileView extends React.Component {
                     <div>
                         <h1>Your profile</h1>
 
-                        <UserProfile />
+                        <UserProfile onUpdate={(changed_data) => this.updateData(changed_data)}/>
 
                         <h3>Debug:</h3>
                         <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
