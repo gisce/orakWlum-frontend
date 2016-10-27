@@ -1,4 +1,4 @@
-import { RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, RECEIVE_UPDATE_PROFILE } from '../constants'
+import { RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO } from '../constants'
 import { createReducer } from '../utils/misc'
 
 const initialState = {
@@ -18,11 +18,25 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             isFetching: true,
         }),
-    [RECEIVE_UPDATE_PROFILE]: (state, payload) =>
+
+
+
+    [UPDATE_PROFILE_OK]: (state, payload) =>
         Object.assign({}, state, {
             data: payload.data,
             isUpdating: false,
             loaded: true,
+            statusText: payload.statusText,
+            statusType: payload.statusType,
+        }),
+    [UPDATE_PROFILE_KO]: (state, payload) =>
+        Object.assign({}, state, {
+            data: payload.data,
+            isUpdating: false,
+            loaded: true,
+            status: payload.status,
+            statusText: payload.statusText,
+            statusType: payload.statusType,
         }),
     [UPDATE_PROFILE_REQUEST]: (state) =>
         Object.assign({}, state, {
