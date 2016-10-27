@@ -58,6 +58,9 @@ const colors = {
 function mapStateToProps(state) {
     return {
         profile: state.profile,
+        statusText: state.profile.statusText,
+        statusType: state.profile.statusType,
+        status: state.profile.status,
     };
 }
 
@@ -74,7 +77,7 @@ export class UserProfile extends Component {
             editing: false,
             bckp_profile: JSON.parse(JSON.stringify(props.profile)),
             groups: props.profile.data.groups,
-            bckp_groups: Object.assign([], props.profile.data.groups)
+            bckp_groups: Object.assign([], props.profile.data.groups),
         };
     }
 
@@ -110,10 +113,13 @@ export class UserProfile extends Component {
             this.props.onUpdate(this.props.profile.data);
         }
 
+        /*
         const profile = JSON.parse(JSON.stringify(this.props.profile));
+
         this.setState({
             profile: profile,
         });
+        */
     }
 
     tmpChangeValue(e, type) {
@@ -148,156 +154,167 @@ export class UserProfile extends Component {
         const groups = this.state.groups;
 
         const UserProfile = () => (
-            <Card>
-                <CardHeader
-                  title={profile.email}
-                  subtitle={profile.roles}
-                  avatar={profile.image}
-                />
-                <CardTitle
-                  title="Personal data"
-                />
-          {
-          ( !editing ) ?
-                <div>
-                  <CardText>
-                      <form role="form">
-                          <div className="row">
-                              <div className="col-md-4">
-                                  <TextField
-                                    hintText="Your name..."
-                                    floatingLabelText="Name"
-                                    value={profile.name}
-                                    onDoubleClick={(e) => this.edit_profile(e)}
-                                  />
+
+            <div>
+                {
+                    this.props.statusText &&
+                        <div className={"alert alert-info alert-" + this.props.statusType}>
+                            {this.props.statusText}
+                        </div>
+                }
+
+
+                <Card>
+                    <CardHeader
+                      title={profile.email}
+                      subtitle={profile.roles}
+                      avatar={profile.image}
+                    />
+                    <CardTitle
+                      title="Personal data"
+                    />
+              {
+              ( !editing ) ?
+                    <div>
+                      <CardText>
+                          <form role="form">
+                              <div className="row">
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="Your name..."
+                                        floatingLabelText="Name"
+                                        value={profile.name}
+                                        onDoubleClick={(e) => this.edit_profile(e)}
+                                      />
+                                  </div>
+
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="Your surname..."
+                                        floatingLabelText="Surname"
+                                        value={profile.surname}
+                                        onDoubleClick={(e) => this.edit_profile(e)}
+                                      />
+                                  </div>
                               </div>
 
-                              <div className="col-md-4">
-                                  <TextField
-                                    hintText="Your surname..."
-                                    floatingLabelText="Surname"
-                                    value={profile.surname}
-                                    onDoubleClick={(e) => this.edit_profile(e)}
-                                  />
+                              <div className="row">
+                                  <div className="col-md-12">
+                                      <TextField
+                                        hintText="user@domain.com"
+                                        floatingLabelText="Email"
+                                        value={profile.email}
+                                        onDoubleClick={(e) => this.edit_profile(e)}
+                                      />
+                                  </div>
                               </div>
-                          </div>
+                          </form>
+                      </CardText>
 
-                          <div className="row">
-                              <div className="col-md-12">
-                                  <TextField
-                                    hintText="user@domain.com"
-                                    floatingLabelText="Email"
-                                    value={profile.email}
-                                    onDoubleClick={(e) => this.edit_profile(e)}
-                                  />
-                              </div>
-                          </div>
-                      </form>
-                  </CardText>
+                      <CardTitle
+                        title="Groups"
+                      />
 
-                  <CardTitle
-                    title="Groups"
-                  />
-
-                  <CardText>
-                      <div style={styles.wrapper}>
-                      {
-                          groups.map((group, index) => (
-                              <ProposalTag
-                                  key={"group_" + index}
-                                  tag={group}
-                                  readOnly onDoubleClick={(e) => this.edit_profile(e)}
-                                  />
+                      <CardText>
+                          <div style={styles.wrapper}>
+                          {
+                              groups.map((group, index) => (
+                                  <ProposalTag
+                                      key={"group_" + index}
+                                      tag={group}
+                                      readOnly onDoubleClick={(e) => this.edit_profile(e)}
+                                      />
+                                  )
                               )
-                          )
-                      }
-                      </div>
-                  </CardText>
-
-                  <CardActions>
-                    <FlatButton
-                        onClick={(e) => this.edit_profile(e, {profile})}
-                        label="Edit" />
-                    <FlatButton
-                        onClick={(e) => this.delete_profile(e)}
-                        label="Delete" />
-                  </CardActions>
-              </div>
-              :
-              <div>
-                  <CardText>
-                      <form role="form">
-                          <div className="row">
-                              <div className="col-md-4">
-                                  <TextField
-                                    hintText="Your name..."
-                                    floatingLabelText="Name"
-                                    defaultValue={profile.name}
-                                    floatingLabelFixed={true}
-                                    onChange={(e) => this.tmpChangeValue(e, 'name')}
-                                  />
-                              </div>
-
-                              <div className="col-md-4">
-                                  <TextField
-                                    hintText="Your surname..."
-                                    floatingLabelText="Surname"
-                                    defaultValue={profile.surname}
-                                    floatingLabelFixed={true}
-                                    onChange={(e) => this.tmpChangeValue(e, 'surname')}
-                                  />
-                              </div>
+                          }
                           </div>
+                      </CardText>
 
-                          <div className="row">
-                              <div className="col-md-12">
-                                  <TextField
-                                    hintText="user@domain.com"
-                                    floatingLabelText="Email"
-                                    defaultValue={profile.email}
-                                    floatingLabelFixed={true}
-                                    onChange={(e) => this.tmpChangeValue(e, 'email')}
-                                  />
+                      <CardActions>
+                        <FlatButton
+                            onClick={(e) => this.edit_profile(e, {profile})}
+                            label="Edit" />
+                        <FlatButton
+                            onClick={(e) => this.delete_profile(e)}
+                            label="Delete" />
+                      </CardActions>
+                  </div>
+                  :
+                  <div>
+                      <CardText>
+                          <form role="form">
+                              <div className="row">
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="Your name..."
+                                        floatingLabelText="Name"
+                                        defaultValue={profile.name}
+                                        floatingLabelFixed={true}
+                                        onChange={(e) => this.tmpChangeValue(e, 'name')}
+                                      />
+                                  </div>
+
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="Your surname..."
+                                        floatingLabelText="Surname"
+                                        defaultValue={profile.surname}
+                                        floatingLabelFixed={true}
+                                        onChange={(e) => this.tmpChangeValue(e, 'surname')}
+                                      />
+                                  </div>
                               </div>
-                          </div>
-                      </form>
-                  </CardText>
 
-                  <CardTitle
-                    title="Groups"
-                  />
+                              <div className="row">
+                                  <div className="col-md-12">
+                                      <TextField
+                                        hintText="user@domain.com"
+                                        floatingLabelText="Email"
+                                        defaultValue={profile.email}
+                                        floatingLabelFixed={true}
+                                        onChange={(e) => this.tmpChangeValue(e, 'email')}
+                                      />
+                                  </div>
+                              </div>
+                          </form>
+                      </CardText>
 
-                  <CardText>
-                      <div style={styles.wrapper}>
-                      {
-                          groups.map((group, index) => (
-                              <ProposalTag
-                                  key={"group_" + index}
-                                  tag={group}
-                                  handleRequestDelete={(e) => this.delete_tag(e, index)}
-                                  />
+                      <CardTitle
+                        title="Groups"
+                      />
+
+                      <CardText>
+                          <div style={styles.wrapper}>
+                          {
+                              groups.map((group, index) => (
+                                  <ProposalTag
+                                      key={"group_" + index}
+                                      tag={group}
+                                      handleRequestDelete={(e) => this.delete_tag(e, index)}
+                                      />
+                                  )
                               )
-                          )
 
-                      }
-                      </div>
-                  </CardText>
+                          }
+                          </div>
+                      </CardText>
 
-                  <CardActions>
-                    <FlatButton
-                        onClick={(e) => this.save_profile(e)}
-                        label="Save" />
-                    <FlatButton
-                        onClick={(e) => this.discard_edit_profile(e)}
-                        label="Cancel" />
-                    <FlatButton
-                        onClick={(e) => this.delete_profile(e)}
-                        label="Delete" />
-                  </CardActions>
-              </div>
-          }
+                      <CardActions>
+                        <FlatButton
+                            onClick={(e) => this.save_profile(e)}
+                            label="Save" />
+                        <FlatButton
+                            onClick={(e) => this.discard_edit_profile(e)}
+                            label="Cancel" />
+                        <FlatButton
+                            onClick={(e) => this.delete_profile(e)}
+                            label="Delete" />
+                      </CardActions>
+                  </div>
+              }
 
-            </Card>
+                </Card>
+            </div>
         );
 
         return (
