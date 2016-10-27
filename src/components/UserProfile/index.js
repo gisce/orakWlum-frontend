@@ -79,6 +79,11 @@ export class UserProfile extends Component {
         browserHistory.push(route);
     }
 
+    delete_tag(e) {
+        e.preventDefault();
+        alert("DELTE");
+    }
+
     edit_profile(e) {
         e.preventDefault();
         this.setState({
@@ -190,7 +195,10 @@ export class UserProfile extends Component {
                         )
                       )
                       */
-                      <ProposalTag tag={profile.groups} readOnly />
+                      <ProposalTag
+                          tag={profile.groups}
+                          readOnly onDoubleClick={(e) => this.edit_profile(e)}
+                          />
                   }
                   </CardText>
 
@@ -255,7 +263,10 @@ export class UserProfile extends Component {
                         )
                       )
                       */
-                      <ProposalTag tag={profile.groups}/>
+                      <ProposalTag
+                          tag={profile.groups}
+                          handleRequestDelete={(e) => this.delete_tag(e)}
+                          />
                   }
                   </CardText>
 
