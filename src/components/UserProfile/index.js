@@ -74,6 +74,7 @@ export class UserProfile extends Component {
             editing: false,
             bckp_profile: JSON.parse(JSON.stringify(props.profile)),
             groups: props.profile.data.groups,
+            bckp_groups: Object.assign([], props.profile.data.groups)
         };
     }
 
@@ -92,7 +93,8 @@ export class UserProfile extends Component {
         e.preventDefault();
         this.setState({
             editing: true,
-            bckp_profile: JSON.parse(JSON.stringify(this.state.profile))
+            bckp_profile: JSON.parse(JSON.stringify(this.state.profile)),
+            bckp_groups: Object.assign([], this.state.groups)
         });
 
         e.target.focus();
@@ -102,7 +104,6 @@ export class UserProfile extends Component {
         this.setState({
             editing: false,
         });
-
 
         // Try to update data
         if (this.props.onUpdate) {
@@ -124,9 +125,11 @@ export class UserProfile extends Component {
         e.preventDefault();
 
         const profile = JSON.parse(JSON.stringify(this.state.bckp_profile));
+        const groups = this.state.bckp_groups;
         this.setState({
             editing: false,
             profile: profile,
+            groups: groups,
         });
     }
 
