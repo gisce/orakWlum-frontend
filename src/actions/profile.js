@@ -1,4 +1,4 @@
-import { FETCH_PROFILE_REQUEST, RECEIVE_PROFILE, UPDATE_PROFILE_REQUEST, RECEIVE_UPDATE_PROFILE } from '../constants/index'
+import { FETCH_PROFILE_REQUEST, RECEIVE_PROFILE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO } from '../constants/index'
 import { data_fetch_api_resource, data_update_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
@@ -21,9 +21,23 @@ export function fetchProfileRequest() {
 
 export function receiveUpdateProfile(data) {
     return {
-        type: RECEIVE_UPDATE_PROFILE,
+        type: UPDATE_PROFILE_OK,
         payload: {
             data,
+            statusText: "Changes applied correctly",
+            statusType: "info",
+
+        },
+    };
+}
+
+export function receiveUpdateProfileKO(error) {
+    return {
+        type: UPDATE_PROFILE_KO,
+        payload: {
+            status: (error.status === undefined) ? "403" : error.status,
+            statusText: (error.statusText === undefined) ? "The provided credentials are not correct" : error.statusText,
+            statusType: "danger",
         },
     };
 }
@@ -57,7 +71,18 @@ export function updateProfile(token, data) {
         data_update_api_resource(token, "user/", data )
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveUpdateProfile(response.result));
+
+                if (response.result.was_updated)
+                    dispatch(receiveUpdateProfile(response.result));
+                else
+                    dispatch(receiveUpdateProfileKO({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token',
+                            statusType: "warning",
+                        },
+                    }));
+
             })
             .catch(error => {
                 if (error.status === 401) {
