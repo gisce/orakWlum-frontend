@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 
-import axios from 'axios';
+import axios  from 'axios'
 
 const tokenConfig = (token) => ({
     headers: {
@@ -51,4 +51,10 @@ export function data_about_user(token) {
 
 export function data_fetch_api_resource(token, resource) {
     return axios.get('/api/' + resource, tokenConfig(token));
+}
+
+export function data_update_api_resource(token, resource, new_data) {
+    var token = tokenConfig(token);
+    var data = Object.assign({}, token, new_data);
+    return axios.put('/api/' + resource, data);
 }
