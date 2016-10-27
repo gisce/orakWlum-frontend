@@ -102,11 +102,16 @@ export class UserProfile extends Component {
         e.target.focus();
     }
 
-    save_profile(e) {
-        e.preventDefault();
+    save_profile() {
         this.setState({
             editing: false,
         });
+
+
+        // Try to update data
+        if (this.props.onUpdate) {
+            this.props.onUpdate(this.props.profile.data);
+        }
 
         const profile = JSON.parse(JSON.stringify(this.props.profile));
         this.setState({
@@ -121,8 +126,8 @@ export class UserProfile extends Component {
 
     discard_edit_profile(e) {
         e.preventDefault();
-        const profile = JSON.parse(JSON.stringify(this.state.bckp_profile));
 
+        const profile = JSON.parse(JSON.stringify(this.state.bckp_profile));
         this.setState({
             editing: false,
             profile: profile,
