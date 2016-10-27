@@ -36,6 +36,7 @@ const styles = {
     },
 };
 
+
 const colors = {
     pending: {
         hard: orange900,
@@ -196,17 +197,18 @@ export class UserProfile extends Component {
                   />
 
                   <CardText>
-                  {
-                      groups.map((group, index) => (
-                          <ProposalTag
-                              key={"group_" + index}
-                              tag={group}
-                              readOnly onDoubleClick={(e) => this.edit_profile(e)}
-                              />
+                      <div style={styles.wrapper}>
+                      {
+                          groups.map((group, index) => (
+                              <ProposalTag
+                                  key={"group_" + index}
+                                  tag={group}
+                                  readOnly onDoubleClick={(e) => this.edit_profile(e)}
+                                  />
+                              )
                           )
-                      )
-
-                  }
+                      }
+                      </div>
                   </CardText>
 
                   <CardActions>
@@ -263,18 +265,19 @@ export class UserProfile extends Component {
                   />
 
                   <CardText>
-                  {
-                      groups.map((group, index) => (
-                          <ProposalTag
-                              key={"group_" + index}
-                              tag={group}
-                              handleRequestDelete={(e) => this.delete_tag(e, index)}
-                              />
-
+                      <div style={styles.wrapper}>
+                      {
+                          groups.map((group, index) => (
+                              <ProposalTag
+                                  key={"group_" + index}
+                                  tag={group}
+                                  handleRequestDelete={(e) => this.delete_tag(e, index)}
+                                  />
+                              )
                           )
-                      )
 
-                  }
+                      }
+                      </div>
                   </CardText>
 
                   <CardActions>
