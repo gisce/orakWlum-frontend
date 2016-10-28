@@ -5,8 +5,7 @@ import { parseJSON } from '../utils/misc'
 import axios  from 'axios'
 
 export function loginUserSuccess(token) {
-    localStorage.setItem('token', token);
-    axios.defaults.headers.common['Authorization'] = token;
+    define_token('token', token);
 
     return {
         type: LOGIN_USER_SUCCESS,
