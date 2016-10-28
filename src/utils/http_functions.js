@@ -13,6 +13,12 @@ export function define_token(token) {
     axios.defaults.headers.common['Authorization'] = token;
 }
 
+export function undefine_token() {
+    localStorage.removeItem('token');
+    axios.defaults.headers.common['Authorization'] = None;
+}
+
+
 export function validate_token(token) {
     return axios.post('/api/is_token_valid', {
         token,
