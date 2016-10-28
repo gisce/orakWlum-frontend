@@ -33,7 +33,7 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-    localStorage.removeItem('token');
+    undefine_token();
     return {
         type: LOGOUT_USER,
     };
