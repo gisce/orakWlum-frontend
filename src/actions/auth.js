@@ -1,29 +1,13 @@
-import {
-    browserHistory
-} from 'react-router'
-import {
-    LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAILURE,
-    LOGIN_USER_REQUEST,
-    LOGOUT_USER,
-    REGISTER_USER_FAILURE,
-    REGISTER_USER_REQUEST,
-    REGISTER_USER_SUCCESS,
-    RECOVER_USER_REQUEST,
-    RECOVER_USER_SUCCESS,
-    RECOVER_USER_FAILURE
-} from '../constants/index'
-import {
-    get_token,
-    create_user,
-    ask_recover
-} from '../utils/http_functions'
-import {
-    parseJSON
-} from '../utils/misc'
+import { browserHistory } from 'react-router'
+import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER, REGISTER_USER_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, RECOVER_USER_REQUEST, RECOVER_USER_SUCCESS, RECOVER_USER_FAILURE } from '../constants/index'
+import { get_token, create_user, ask_recover } from '../utils/http_functions'
+import { parseJSON } from '../utils/misc'
+import axios  from 'axios'
 
 export function loginUserSuccess(token) {
     localStorage.setItem('token', token);
+    axios.defaults.headers.common['Authorization'] = token;
+
     return {
         type: LOGIN_USER_SUCCESS,
         payload: {
