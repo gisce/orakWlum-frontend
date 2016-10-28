@@ -54,9 +54,5 @@ export function data_fetch_api_resource(token, resource) {
 }
 
 export function data_update_api_resource(token, resource, new_data) {
-    var token = tokenConfig(token);
-    var data = Object.assign({}, token, new_data);
-    return axios.put('/api/' + resource, token);
-    console.log(data);
-    return axios.put('/api/' + resource, data);
+    return axios.put('/api/' + resource, new_data);
 }
