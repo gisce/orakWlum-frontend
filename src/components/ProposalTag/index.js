@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
+import Avatar  from 'material-ui/Avatar'
+import Chip  from 'material-ui/Chip'
+import { orange300, orange900, green300, green900, red300, red900, blue300, blue900 } from 'material-ui/styles/colors'
+import React, { Component } from 'react'
+import { browserHistory } from 'react-router'
 
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
-
+//Default detele method
 function handleRequestDelete() {
-    alert('Treure TAG.');
+    console.log('Drop TAG.');
+
 }
 
+//Default touch method
 function handleTouchTap() {
-    alert('Filtrar per aquest TAG.');
+    console.log('Filtering by this TAG.');
 }
 
 const styles = {
     chip: {
       margin: 4,
-    },
-    wrapper: {
-      display: 'flex',
-      flexWrap: 'wrap',
     },
 };
 
@@ -39,7 +37,12 @@ const colors = {
         soft: red300,
         text: 'white',
     },
-}
+    base: {
+        hard: blue900,
+        soft: blue300,
+        text: 'white',
+    },
+};
 
 export class ProposalTag extends Component {
     dispatchNewRoute(route) {
@@ -48,34 +51,55 @@ export class ProposalTag extends Component {
 
     render() {
         const tag = this.props.tag;
-        const lite = (this.props.lite!=null)?this.props.lite:false;
+        const is_lite = (this.props.lite!=null)?this.props.lite:false;
+        const is_readOnly = (this.props.readOnly)?(this.props.readOnly):false;
+        const is_doubleClick = (this.props.onDoubleClick)?(this.props.onDoubleClick):false;
 
-        const ProposalTag = (lite)?
+        const is_deletable = (this.props.handleRequestDelete)?(this.props.handleRequestDelete):handleRequestDelete;
+
+        const color = (tag.color)? tag.color : "base";
+        const full = (tag.full)? tag.full : tag;
+        const lite = (tag.lite)? tag.lite : "";
+
+        let delete_method = is_deletable;
+        let click_method = handleTouchTap;
+
+        if (is_readOnly) {
+            delete_method = null;
+            click_method = null;
+        }
+
+        if (is_doubleClick) {
+            click_method = is_doubleClick;
+        }
+
+        const ProposalTag = (is_lite)?
             () => (
-
-              <div style={styles.wrapper}>
-                  <Avatar style={styles.chip} size={32} color={colors[tag.color].soft} backgroundColor={colors[tag.color].hard}>
-                    {tag.lite}
+              <div>
+                  <Avatar style={styles.chip} size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
+                    {lite}
                   </Avatar>
               </div>
             )
             :
             () => (
-
-              <div style={styles.wrapper}>
+              <div>
                   <Chip
-                      backgroundColor={colors[tag.color].soft}
-                      labelColor={colors[tag.color].text}
-                      onRequestDelete={handleRequestDelete}
-                      onTouchTap={handleTouchTap}
+                      backgroundColor={colors[color].soft}
+                      labelColor={colors[color].text}
+                      onRequestDelete={delete_method}
+                      onDoubleClick={click_method}
                       style={styles.chip}
                   >
-                  <Avatar size={32} color={colors[tag.color].soft} backgroundColor={colors[tag.color].hard}>
-                    {tag.lite}
+            {
+              (lite != "") ?
+                  <Avatar size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
+                    {lite}
                   </Avatar>
-
-                {tag.full}
-
+                  :
+                  <div></div>
+            }
+                  {full}
                   </Chip>
               </div>
           );

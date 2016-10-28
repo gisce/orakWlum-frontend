@@ -1,12 +1,23 @@
 /* eslint camelcase: 0 */
 
-import axios from 'axios';
+import axios  from 'axios'
 
 const tokenConfig = (token) => ({
     headers: {
         'Authorization': token, // eslint-disable-line quote-props
     },
 });
+
+export function define_token(token) {
+    localStorage.setItem('token', token);
+    axios.defaults.headers.common['Authorization'] = token;
+}
+
+export function undefine_token() {
+    localStorage.removeItem('token');
+    axios.defaults.headers.common['Authorization'] = '';
+}
+
 
 export function validate_token(token) {
     return axios.post('/api/is_token_valid', {
@@ -46,9 +57,13 @@ export function has_github_token(token) {
 }
 
 export function data_about_user(token) {
-    return axios.get('/api/user', tokenConfig(token));
+    return axios.get('/api/user/', tokenConfig(token));
 }
 
 export function data_fetch_api_resource(token, resource) {
-    return axios.get('/api/' + resource, tokenConfig(token));
+    return axios.get('/api/' + resource);
+}
+
+export function data_update_api_resource(token, resource, new_data) {
+    return axios.put('/api/' + resource, new_data);
 }

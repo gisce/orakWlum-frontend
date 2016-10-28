@@ -83,8 +83,10 @@ export class Proposal extends Component {
             <Card>
               <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />
 
-              <ProposalTag tag={proposal.status} />
-
+              <div style={styles.wrapper}>
+                  <ProposalTag tag={proposal.status} />
+              </div>
+              
               <CardText>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
@@ -93,7 +95,8 @@ export class Proposal extends Component {
               </CardText>
 
               <CardMedia
-                overlay={<CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />}
+                overlay={<CardTitle title={proposal.name}
+                subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />}
               >
                 <img src={proposal.image} />
               </CardMedia>

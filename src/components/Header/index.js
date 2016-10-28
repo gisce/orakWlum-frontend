@@ -33,6 +33,7 @@ function mapStateToProps(state) {
         token: state.auth.token,
         userName: state.auth.userName,
         userRoles: state.auth.userRoles,
+        userGroups: state.auth.userGroups,
         userImage: state.auth.userImage,
         isAuthenticated: state.auth.isAuthenticated,
         path: state.routing.locationBeforeTransitions.pathname,

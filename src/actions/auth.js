@@ -1,23 +1,11 @@
-import { browserHistory } from 'react-router';
-
-import {
-    LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAILURE,
-    LOGIN_USER_REQUEST,
-    LOGOUT_USER,
-    REGISTER_USER_FAILURE,
-    REGISTER_USER_REQUEST,
-    REGISTER_USER_SUCCESS,
-    RECOVER_USER_REQUEST,
-    RECOVER_USER_SUCCESS,
-    RECOVER_USER_FAILURE,
-} from '../constants/index';
-
-import { parseJSON } from '../utils/misc';
-import { get_token, create_user, ask_recover } from '../utils/http_functions';
+import axios  from 'axios'
+import { browserHistory } from 'react-router'
+import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER, REGISTER_USER_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, RECOVER_USER_REQUEST, RECOVER_USER_SUCCESS, RECOVER_USER_FAILURE } from '../constants/index'
+import { define_token, undefine_token, get_token, create_user, ask_recover } from '../utils/http_functions'
+import { parseJSON } from '../utils/misc'
 
 export function loginUserSuccess(token) {
-    localStorage.setItem('token', token);
+    define_token(token);
     return {
         type: LOGIN_USER_SUCCESS,
         payload: {
@@ -27,12 +15,12 @@ export function loginUserSuccess(token) {
 }
 
 export function loginUserFailure(error) {
-    localStorage.removeItem('token');
+    undefine_token();
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
-            status: (error.status===undefined)?"403":error.status,
-            statusText: (error.statusText===undefined)?"The provided credentials are not correct":error.statusText,
+            status: (error.status === undefined) ? "403" : error.status,
+            statusText: (error.statusText === undefined) ? "The provided credentials are not correct" : error.statusText,
             statusType: "danger",
         },
     };
@@ -45,7 +33,7 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-    localStorage.removeItem('token');
+    undefine_token();
     return {
         type: LOGOUT_USER,
     };
@@ -54,7 +42,7 @@ export function logout() {
 export function logoutAndRedirect() {
     return (dispatch) => {
         dispatch(logout());
-        browserHistory.push('/');
+        browserHistory.push('/home');
     };
 }
 
@@ -64,15 +52,15 @@ export function redirectToRoute(route) {
     };
 }
 
-export function loginUser(email, password) {
-    return function (dispatch) {
+export function loginUser(email, password, redirect="/proposals") {
+    return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
             .then(parseJSON)
             .then(response => {
                 try {
                     dispatch(loginUserSuccess(response.token));
-                    browserHistory.push('/proposals');
+                    browserHistory.push(redirect);
                 } catch (e) {
                     alert(e);
                     dispatch(loginUserFailure({
@@ -97,7 +85,7 @@ export function registerUserRequest() {
 }
 
 export function registerUserSuccess(token) {
-    localStorage.setItem('token', token);
+    define_token(token);
     return {
         type: REGISTER_USER_SUCCESS,
         payload: {
@@ -107,7 +95,7 @@ export function registerUserSuccess(token) {
 }
 
 export function registerUserFailure(error) {
-    localStorage.removeItem('token');
+    undefine_token();
     return {
         type: REGISTER_USER_FAILURE,
         payload: {
@@ -119,7 +107,7 @@ export function registerUserFailure(error) {
 }
 
 export function registerUser(email, password) {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch(registerUserRequest());
         return create_user(email, password)
             .then(parseJSON)
@@ -144,7 +132,7 @@ export function registerUser(email, password) {
 }
 
 export function recoverUser(email) {
-    return function (dispatch) {
+    return function(dispatch) {
         dispatch(recoverUserRequest());
         return ask_recover(email)
             .then(parseJSON)
@@ -179,8 +167,8 @@ export function recoverUserFailure(error) {
     return {
         type: RECOVER_USER_FAILURE,
         payload: {
-            status: (error.status===undefined)?"":error.status,
-            statusText: (error.statusText===undefined)?"This service is not available right now. Try it in a few minutes please.":error.statusText,
+            status: (error.status === undefined) ? "" : error.status,
+            statusText: (error.statusText === undefined) ? "This service is not available right now. Try it in a few minutes please." : error.statusText,
             statusType: "danger",
         },
     };

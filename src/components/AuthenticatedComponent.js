@@ -34,7 +34,7 @@ export function requireAuthentication(Component) {
             if (!props.isAuthenticated) {
                 const token = localStorage.getItem('token');
                 if (!token) {
-                    browserHistory.push('/login');
+                    browserHistory.push('/login?next=' + props.route.path);
                 } else {
                     fetch('/api/is_token_valid', {
                         method: 'post',
@@ -53,8 +53,7 @@ export function requireAuthentication(Component) {
                                 });
 
                             } else {
-                                browserHistory.push('/home');
-
+                                browserHistory.push('/login?next=' + props.route.path);
                             }
                         });
 
