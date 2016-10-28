@@ -15,7 +15,7 @@ export function define_token(token) {
 
 export function undefine_token() {
     localStorage.removeItem('token');
-    axios.defaults.headers.common['Authorization'] = None;
+    axios.defaults.headers.common['Authorization'] = '';
 }
 
 
