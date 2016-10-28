@@ -15,7 +15,7 @@ export function loginUserSuccess(token) {
 }
 
 export function loginUserFailure(error) {
-    localStorage.removeItem('token');
+    undefine_token();
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
