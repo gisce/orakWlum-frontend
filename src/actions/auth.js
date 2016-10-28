@@ -88,6 +88,7 @@ export function registerUserRequest() {
 
 export function registerUserSuccess(token) {
     localStorage.setItem('token', token);
+    axios.defaults.headers.common['Authorization'] = token;
     return {
         type: REGISTER_USER_SUCCESS,
         payload: {
