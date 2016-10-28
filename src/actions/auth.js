@@ -6,7 +6,6 @@ import axios  from 'axios'
 
 export function loginUserSuccess(token) {
     define_token('token', token);
-
     return {
         type: LOGIN_USER_SUCCESS,
         payload: {
@@ -86,8 +85,7 @@ export function registerUserRequest() {
 }
 
 export function registerUserSuccess(token) {
-    localStorage.setItem('token', token);
-    axios.defaults.headers.common['Authorization'] = token;
+    define_token('token', token);
     return {
         type: REGISTER_USER_SUCCESS,
         payload: {
