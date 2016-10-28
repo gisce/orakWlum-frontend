@@ -5,7 +5,7 @@ import { define_token, undefine_token, get_token, create_user, ask_recover } fro
 import { parseJSON } from '../utils/misc'
 
 export function loginUserSuccess(token) {
-    define_token('token', token);
+    define_token(token);
     return {
         type: LOGIN_USER_SUCCESS,
         payload: {
@@ -85,7 +85,7 @@ export function registerUserRequest() {
 }
 
 export function registerUserSuccess(token) {
-    define_token('token', token);
+    define_token(token);
     return {
         type: REGISTER_USER_SUCCESS,
         payload: {
