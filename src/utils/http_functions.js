@@ -8,6 +8,11 @@ const tokenConfig = (token) => ({
     },
 });
 
+export function define_token(token) {
+    localStorage.setItem('token', token);
+    axios.defaults.headers.common['Authorization'] = token;
+}
+
 export function validate_token(token) {
     return axios.post('/api/is_token_valid', {
         token,
