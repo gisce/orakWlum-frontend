@@ -37,7 +37,6 @@ app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-
 const server = http.createServer(app);
 server.listen(process.env.PORT || 3000, () => {
     const address = server.address();

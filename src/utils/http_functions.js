@@ -1,5 +1,8 @@
 /* eslint camelcase: 0 */
 
+const API_SPECIFICATION = 1;
+const API_PREFIX = "/api/v" + API_SPECIFICATION;
+
 import axios  from 'axios'
 
 const tokenConfig = (token) => ({
@@ -7,10 +10,6 @@ const tokenConfig = (token) => ({
         'Authorization': token, // eslint-disable-line quote-props
     },
 });
-
-
-const API_SPECIFICATION = 1;
-const API_PREFIX = "/api/v" + API_SPECIFICATION;
 
 export function define_token(token) {
     localStorage.setItem('token', token);
@@ -21,7 +20,6 @@ export function undefine_token() {
     localStorage.removeItem('token');
     axios.defaults.headers.common['Authorization'] = '';
 }
-
 
 export function validate_token(token) {
     return axios.post(API_PREFIX + '/is_token_valid', {
