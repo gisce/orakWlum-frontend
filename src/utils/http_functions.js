@@ -8,6 +8,10 @@ const tokenConfig = (token) => ({
     },
 });
 
+
+const API_SPECIFICATION = 1;
+const API_PREFIX = "/api/v" + API_SPECIFICATION;
+
 export function define_token(token) {
     localStorage.setItem('token', token);
     axios.defaults.headers.common['Authorization'] = token;
@@ -20,7 +24,7 @@ export function undefine_token() {
 
 
 export function validate_token(token) {
-    return axios.post('/api/is_token_valid', {
+    return axios.post(API_PREFIX + '/is_token_valid', {
         token,
     });
 }
@@ -33,37 +37,37 @@ export function get_github_access() {
 }
 
 export function create_user(email, password) {
-    return axios.post('/api/create_user', {
+    return axios.post(API_PREFIX + '/create_user', {
         email,
         password,
     });
 }
 
 export function get_token(email, password) {
-    return axios.post('/api/get_token', {
+    return axios.post(API_PREFIX + '/get_token', {
         email,
         password,
     });
 }
 
 export function ask_recover(email) {
-    return axios.post('/api/recover', {
+    return axios.post(API_PREFIX + '/recover', {
         email,
     });
 }
 
 export function has_github_token(token) {
-    return axios.get('/api/has_github_token', tokenConfig(token));
+    return axios.get(API_PREFIX + '/has_github_token', tokenConfig(token));
 }
 
 export function data_about_user(token) {
-    return axios.get('/api/user/', tokenConfig(token));
+    return axios.get(API_PREFIX + '/user/', tokenConfig(token));
 }
 
 export function data_fetch_api_resource(token, resource) {
-    return axios.get('/api/' + resource);
+    return axios.get(API_PREFIX + "/" + resource);
 }
 
 export function data_update_api_resource(token, resource, new_data) {
-    return axios.put('/api/' + resource, new_data);
+    return axios.put(API_PREFIX + "/" + resource, new_data);
 }
