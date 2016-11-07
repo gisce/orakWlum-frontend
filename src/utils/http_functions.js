@@ -33,7 +33,7 @@ export function get_github_access() {
 }
 
 export function create_user(email, password) {
-    return axios.post(API_PREFIX + '/create_user', {
+    return axios.post(API_PREFIX + '/user/', {
         email,
         password,
     });
