@@ -13,6 +13,7 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
 
+import Snackbar from 'material-ui/Snackbar';
 
 import * as actionCreators from '../../actions/proposal';
 
@@ -61,6 +62,7 @@ function mapStateToProps(state) {
         statusText: state.profile.statusText,
         statusType: state.profile.statusType,
         status: state.profile.status,
+        message_open: state.profile.message_open,
     };
 }
 
@@ -78,6 +80,7 @@ export class UserProfile extends Component {
             bckp_profile: JSON.parse(JSON.stringify(props.profile)),
             groups: props.profile.data.groups,
             bckp_groups: Object.assign([], props.profile.data.groups),
+            statusText: props.statusText,
         };
     }
 
@@ -109,13 +112,14 @@ export class UserProfile extends Component {
         this.setState({
             editing: false,
             profile: profile,
-
         });
 
         // Try to update data
         if (this.props.onUpdate) {
             this.props.onUpdate(this.props.profile.data);
         }
+
+        this.activateSnack()
     }
 
     tmpChangeValue(e, type) {
@@ -133,7 +137,10 @@ export class UserProfile extends Component {
             editing: false,
             profile: profile,
             groups: groups,
+            statusText: 'Changes discarted',
         });
+
+        this.activateSnack()
     }
 
     delete_profile(e) {
@@ -143,6 +150,26 @@ export class UserProfile extends Component {
         });
     }
 
+  activateSnack = () => {
+    this.setState({
+      message_open: true,
+    });
+  };
+
+  undoChanges = () => {
+    this.setState({
+      message_open: false,
+    });
+    alert('Undo changes!!!.');
+  };
+
+  deactivateSnack = () => {
+    this.setState({
+      message_open: false,
+    });
+  };
+
+
     render() {
         let editing = this.state.editing;
 
@@ -150,14 +177,28 @@ export class UserProfile extends Component {
 
         const groups = this.state.groups;
 
+        const message_open = this.state.message_open;
+
         const UserProfile = () => (
 
             <div>
+                        <Snackbar
+                          open={this.state.message_open}
+                          message={this.props.statusText}
+                          action="undo"
+                          autoHideDuration={4000}
+                          onActionTouchTap={this.undoChanges}
+                          onRequestClose={this.deactivateSnack}
+                        />
+
+
                 {
+/*
                     this.props.statusText &&
                         <div className={"alert alert-info alert-" + this.props.statusType}>
                             {this.props.statusText}
                         </div>
+*/
                 }
 
                 <Card>
