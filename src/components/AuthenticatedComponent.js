@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import * as actionCreators from '../actions/auth';
 
+import { validate_token } from '../utils/http_functions'
+
 function mapStateToProps(state) {
     return {
         token: state.auth.token,
@@ -36,15 +38,8 @@ export function requireAuthentication(Component) {
                 if (!token) {
                     browserHistory.push('/login?next=' + props.route.path);
                 } else {
-                    fetch('/api/is_token_valid', {
-                        method: 'post',
-                        credentials: 'include',
-                        headers: {
-                            'Accept': 'application/json', // eslint-disable-line quote-props
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ token }),
-                    })
+
+                    validate_token(token)
                         .then(res => {
                             if (res.status === 200) {
                                 this.props.loginUserSuccess(token);
