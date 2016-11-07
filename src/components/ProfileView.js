@@ -34,7 +34,6 @@ export default class ProfileView extends React.Component {
 
     updateData(data) {
         const token = this.props.token;
-
         this.props.updateProfile(token, data);
     }
 

@@ -35,7 +35,6 @@ export function receiveUpdateProfile(data) {
             data,
             statusText: "Changes applied correctly",
             statusType: "info",
-
         },
     };
 }

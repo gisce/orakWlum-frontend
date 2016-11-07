@@ -104,22 +104,18 @@ export class UserProfile extends Component {
     }
 
     save_profile() {
+        const profile = JSON.parse(JSON.stringify(this.props.profile));
+
         this.setState({
             editing: false,
+            profile: profile,
+
         });
 
         // Try to update data
         if (this.props.onUpdate) {
             this.props.onUpdate(this.props.profile.data);
         }
-
-        /*
-        const profile = JSON.parse(JSON.stringify(this.props.profile));
-
-        this.setState({
-            profile: profile,
-        });
-        */
     }
 
     tmpChangeValue(e, type) {
@@ -132,6 +128,7 @@ export class UserProfile extends Component {
 
         const profile = JSON.parse(JSON.stringify(this.state.bckp_profile));
         const groups = this.state.bckp_groups;
+
         this.setState({
             editing: false,
             profile: profile,
@@ -163,7 +160,6 @@ export class UserProfile extends Component {
                         </div>
                 }
 
-
                 <Card>
                     <CardHeader
                       title={profile.email}
@@ -173,6 +169,7 @@ export class UserProfile extends Component {
                     <CardTitle
                       title="Personal data"
                     />
+
               {
               ( !editing ) ?
                     <div>
