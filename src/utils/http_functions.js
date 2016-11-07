@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 
-const API_SPECIFICATION = 1;
-const API_PREFIX = "/api/v" + API_SPECIFICATION;
+import { API_SPECIFICATION, API_PREFIX } from '../constants/index'
+
 
 import axios  from 'axios'
 
