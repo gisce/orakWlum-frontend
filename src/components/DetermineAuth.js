@@ -16,7 +16,6 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 export function DetermineAuth(Component) {
 
     class AuthenticatedComponent extends React.Component {

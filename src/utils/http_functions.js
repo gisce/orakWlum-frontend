@@ -1,8 +1,6 @@
 /* eslint camelcase: 0 */
 
-import { API_SPECIFICATION, API_PREFIX } from '../constants/index'
-
-
+import { API_PREFIX } from '../constants/index'
 import axios  from 'axios'
 
 const tokenConfig = (token) => ({

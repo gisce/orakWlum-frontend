@@ -17,7 +17,6 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 export function requireNoAuthentication(Component) {
 
     class notAuthenticatedComponent extends React.Component {
@@ -49,7 +48,6 @@ export function requireNoAuthentication(Component) {
                             if (res.status === 200) {
                                 this.props.loginUserSuccess(token);
                                 browserHistory.push('/main');
-
                             } else {
                                 this.setState({
                                     loaded: true,
@@ -83,5 +81,4 @@ export function requireNoAuthentication(Component) {
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(notAuthenticatedComponent);
-
 }

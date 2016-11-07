@@ -18,7 +18,6 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 export function requireAuthentication(Component) {
     class AuthenticatedComponent extends React.Component {
         componentWillMount() {
