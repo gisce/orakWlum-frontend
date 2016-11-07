@@ -11,6 +11,8 @@ function mapStateToProps(state) {
         token: state.auth.token,
         loaded: state.profile.loaded,
         isFetching: state.profile.isFetching,
+        error: state.profile.error,
+        errorMessage: state.profile.data,
     };
 }
 
@@ -40,18 +42,26 @@ export default class ProfileView extends React.Component {
         return (
             <div>
                 {!this.props.loaded
-                    ? <h1>Loading Profile {this.props.userName}...</h1>
+                    ?
+                    this.props.error?
+                        <div>
+                            <h1>There was an error</h1>
+                            {this.props.errorMessage.message}
+                        </div>
+                        :
+                        <div>
+                            <h1>Loading Profile {this.props.userName}...</h1>
+                        </div>
                     :
+
                     <div>
                         <h1>Your profile</h1>
-
                         <UserProfile onUpdate={(changed_data) => this.updateData(changed_data)}/>
-
-                        <h3>Debug:</h3>
-                        <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
-
                     </div>
                 }
+
+                <h3>Debug:</h3>
+                <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
             </div>
         );
     }
