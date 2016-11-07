@@ -1,4 +1,4 @@
-import { FETCH_PROFILE_REQUEST, RECEIVE_PROFILE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO } from '../constants/index'
+import { FETCH_PROFILE_REQUEST, RECEIVE_PROFILE, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO } from '../constants/index'
 import { data_fetch_api_resource, data_update_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
@@ -6,6 +6,15 @@ import { logoutAndRedirect } from './auth'
 export function receiveProfile(data) {
     return {
         type: RECEIVE_PROFILE,
+        payload: {
+            data,
+        },
+    };
+}
+
+export function receiveProfileError(data) {
+    return {
+        type: RECEIVE_PROFILE_KO,
         payload: {
             data,
         },
@@ -57,8 +66,11 @@ export function fetchProfile(token) {
                 dispatch(receiveProfile(response.result));
             })
             .catch(error => {
+                if (error.response.status === 409 || error.status === 409) {
+                    dispatch(receiveProfileError(error.response.data));
+                }
                 if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
+                    dispatch(logoutAndRedirect());
                 }
             });
     };
@@ -71,7 +83,6 @@ export function updateProfile(token, data) {
         data_update_api_resource(token, "user/", data )
             .then(parseJSON)
             .then(response => {
-
                 if (response.result.was_updated)
                     dispatch(receiveUpdateProfile(response.result));
                 else
