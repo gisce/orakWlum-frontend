@@ -135,9 +135,7 @@ export class PasswordStepper extends Component {
             <StepLabel>New password</StepLabel>
           </Step>
         </Stepper>
-        <ExpandTransition loading={loading} open={true}>
           {this.renderContent()}
-        </ExpandTransition>
       </div>
     );
   }
