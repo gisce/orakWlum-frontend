@@ -36,12 +36,7 @@ export class PasswordChanger extends Component {
 
         const actions = [
           <FlatButton
-            label="Cancel"
-            primary={true}
-            onTouchTap={this.handleClose}
-          />,
-          <FlatButton
-            label="Submit"
+            label="Done"
             primary={true}
             onTouchTap={this.handleClose}
           />,
