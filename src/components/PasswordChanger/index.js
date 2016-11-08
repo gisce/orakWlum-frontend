@@ -48,9 +48,10 @@ export class PasswordChanger extends Component {
             <Dialog
               title="Change your password"
               actions={actions}
-              modal={true}
               contentStyle={styles.dialog}
               open={open}
+              modal={false}
+              onRequestClose={this.handleClose}
             >
                   <TextField
                     hintText="************"
