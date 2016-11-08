@@ -8,6 +8,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 
 import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
 
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
@@ -18,6 +19,8 @@ import Snackbar from 'material-ui/Snackbar';
 import * as actionCreators from '../../actions/proposal';
 
 import { ProposalTag } from '../ProposalTag';
+
+import { PasswordChanger } from '../PasswordChanger';
 
 function handleRequestDelete() {
     alert('Treure TAG.');
@@ -80,7 +83,6 @@ export class UserProfile extends Component {
             bckp_profile: JSON.parse(JSON.stringify(props.profile)),
             groups: props.profile.data.groups,
             bckp_groups: Object.assign([], props.profile.data.groups),
-            statusText: props.statusText,
         };
     }
 
@@ -137,10 +139,7 @@ export class UserProfile extends Component {
             editing: false,
             profile: profile,
             groups: groups,
-            statusText: 'Changes discarted',
         });
-
-        this.activateSnack()
     }
 
     delete_profile(e) {
@@ -182,6 +181,8 @@ export class UserProfile extends Component {
         const UserProfile = () => (
 
             <div>
+            {
+                this.props.statusText &&
                         <Snackbar
                           open={this.state.message_open}
                           message={this.props.statusText}
@@ -190,7 +191,7 @@ export class UserProfile extends Component {
                           onActionTouchTap={this.undoChanges}
                           onRequestClose={this.deactivateSnack}
                         />
-
+            }
 
                 {
 /*
@@ -210,6 +211,8 @@ export class UserProfile extends Component {
                     <CardTitle
                       title="Personal data"
                     />
+
+            <PasswordChanger open={true}/>
 
               {
               ( !editing ) ?
@@ -234,7 +237,9 @@ export class UserProfile extends Component {
                                         onDoubleClick={(e) => this.edit_profile(e)}
                                       />
                                   </div>
+
                               </div>
+
 
                               <div className="row">
                                   <div className="col-md-12">
@@ -268,10 +273,37 @@ export class UserProfile extends Component {
                           </div>
                       </CardText>
 
+
+                      <CardTitle
+                        title="Password"
+                      />
+
+                      <CardText>
+                          <form role="form">
+                              <div className="row">
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="************"
+                                        value="************"
+                                        floatingLabelText="Your password"
+                                        floatingLabelFixed={true}
+                                        readOnly onDoubleClick={(e) => this.edit_password(e)}
+                                      />
+                                  </div>
+                              </div>
+                          </form>
+                      </CardText>
+
+
+
+
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.edit_profile(e, {profile})}
                             label="Edit" />
+                        <FlatButton
+                            onClick={(e) => this.edit_password(e, {profile})}
+                            label="Change password" />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
                             label="Delete" />
@@ -336,6 +368,38 @@ export class UserProfile extends Component {
                           }
                           </div>
                       </CardText>
+
+
+                      <CardTitle
+                        title="Password"
+                      />
+
+                      <CardText>
+                          <form role="form">
+                              <div className="row">
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="Your name..."
+                                        floatingLabelText="Name"
+                                        floatingLabelFixed={true}
+                                        onChange={(e) => this.tmpChangeValue(e, 'password')}
+                                      />
+                                  </div>
+
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="Your surname..."
+                                        floatingLabelText="Surname"
+                                        defaultValue={profile.surname}
+                                        floatingLabelFixed={true}
+                                        onChange={(e) => this.tmpChangeValue(e, 'surname')}
+                                      />
+                                  </div>
+                              </div>
+                          </form>
+                      </CardText>
+
+
 
                       <CardActions>
                         <FlatButton
