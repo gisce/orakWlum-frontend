@@ -108,6 +108,13 @@ export class UserProfile extends Component {
         e.target.focus();
     }
 
+    edit_password(e) {
+        e.preventDefault();
+        this.setState({
+            password_open: true,
+        });
+    }
+
     save_profile() {
         const profile = JSON.parse(JSON.stringify(this.props.profile));
 
@@ -212,7 +219,7 @@ export class UserProfile extends Component {
                       title="Personal data"
                     />
 
-            <PasswordChanger open={true}/>
+                    <PasswordChanger open={this.state.password_open}/>
 
               {
               ( !editing ) ?
