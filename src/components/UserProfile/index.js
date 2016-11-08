@@ -220,7 +220,10 @@ export class UserProfile extends Component {
                       title="Personal data"
                     />
 
+                {
+                    this.state.password_open &&
                     <PasswordChanger open={this.state.password_open}/>
+                }
 
               {
               ( !editing ) ?
@@ -232,7 +235,6 @@ export class UserProfile extends Component {
                                       <TextField
                                         autoFocus={true}
                                         id="changeName"
-                                        idNext="changeNameEdit"
                                         hintText="Your name..."
                                         floatingLabelText="Name"
                                         value={profile.name}
@@ -244,7 +246,6 @@ export class UserProfile extends Component {
                                   <div className="col-md-4">
                                       <TextField
                                         id="changeSurname"
-                                        idNext="changeSurnameEdit"
                                         hintText="Your surname..."
                                         floatingLabelText="Surname"
                                         value={profile.surname}
