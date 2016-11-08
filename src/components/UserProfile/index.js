@@ -1,25 +1,14 @@
 import React, { Component } from 'react';
-
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import * as actionCreators from '../../actions/profile';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-
 import TextField from 'material-ui/TextField';
-
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
-
 import Snackbar from 'material-ui/Snackbar';
 
-import * as actionCreators from '../../actions/proposal';
-
 import { ProposalTag } from '../ProposalTag';
-
 import { PasswordChanger } from '../PasswordChanger';
 
 function handleRequestDelete() {
@@ -31,33 +20,11 @@ function handleTouchTap() {
 }
 
 const styles = {
-    chip: {
-      margin: 4,
-    },
     wrapper: {
       display: 'flex',
       flexWrap: 'wrap',
     },
 };
-
-
-const colors = {
-    pending: {
-        hard: orange900,
-        soft: orange300,
-        text: 'white',
-    },
-    accepted: {
-        hard: green900,
-        soft: green300,
-        text: 'white',
-    },
-    denied: {
-        hard: red900,
-        soft: red300,
-        text: 'white',
-    },
-}
 
 function mapStateToProps(state) {
     return {
@@ -86,17 +53,6 @@ export class UserProfile extends Component {
         };
     }
 
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
-    }
-
-    delete_tag(e, key) {
-        e.preventDefault();
-        this.groups = this.state.groups;
-        this.groups.splice(key,1);
-        this.setState({groups: this.groups});
-    }
-
     edit_profile(e) {
         e.preventDefault();
         this.setState({
@@ -114,7 +70,8 @@ export class UserProfile extends Component {
         });
     }
 
-    save_profile() {
+    save_profile(e) {
+        e.preventDefault();
         const profile = JSON.parse(JSON.stringify(this.props.profile));
 
         this.setState({
@@ -130,7 +87,7 @@ export class UserProfile extends Component {
 
         this.activateSnack()
     }
-
+    
     tmpChangeValue(e, type) {
         const value = e.target.value;
         this.props.profile.data[type] = value;
@@ -150,31 +107,39 @@ export class UserProfile extends Component {
         });
     }
 
+    delete_tag(e, key) {
+        e.preventDefault();
+        this.groups = this.state.groups;
+        this.groups.splice(key,1);
+        this.setState({groups: this.groups});
+    }
+
     delete_profile(e) {
         e.preventDefault();
+        alert("Are you sure? WIP");
         this.setState({
             editing: false,
         });
     }
 
-  activateSnack = () => {
-    this.setState({
-      message_open: true,
-    });
-  };
+    activateSnack = () => {
+        this.setState({
+            message_open: true,
+        });
+    };
 
-  undoChanges = () => {
-    this.setState({
-      message_open: false,
-    });
-    alert('Undo changes!!!.');
-  };
+    undoChanges = () => {
+        this.setState({
+            message_open: false,
+        });
+        alert('Undo changes!!!.');
+    };
 
-  deactivateSnack = () => {
-    this.setState({
-      message_open: false,
-    });
-  };
+    deactivateSnack = () => {
+        this.setState({
+            message_open: false,
+        });
+    };
 
 
     render() {
@@ -201,14 +166,6 @@ export class UserProfile extends Component {
                         />
             }
 
-                {
-/*
-                    this.props.statusText &&
-                        <div className={"alert alert-info alert-" + this.props.statusType}>
-                            {this.props.statusText}
-                        </div>
-*/
-                }
 
                 <Card>
                     <CardHeader
@@ -220,13 +177,13 @@ export class UserProfile extends Component {
                       title="Personal data"
                     />
 
-                {
-                    this.state.password_open &&
+            {
+                this.state.password_open &&
                     <PasswordChanger open={this.state.password_open}/>
-                }
+            }
 
-              {
-              ( !editing ) ?
+            {
+                ( !editing ) ?
                     <div>
                       <CardText>
                           <form role="form">
@@ -274,7 +231,6 @@ export class UserProfile extends Component {
                       <CardTitle
                         title="Groups"
                       />
-
                       <CardText>
                           <div style={styles.wrapper}>
                           {
@@ -294,7 +250,6 @@ export class UserProfile extends Component {
                       <CardTitle
                         title="Password"
                       />
-
                       <CardText>
                           <form role="form">
                               <div className="row">
@@ -311,9 +266,6 @@ export class UserProfile extends Component {
                           </form>
                       </CardText>
 
-
-
-
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.edit_profile(e, {profile})}
@@ -325,9 +277,9 @@ export class UserProfile extends Component {
                             onClick={(e) => this.delete_profile(e)}
                             label="Delete" />
                       </CardActions>
-                  </div>
-                  :
-                  <div>
+                    </div>
+                :
+                    <div>
                       <CardText>
                           <form role="form">
                               <div className="row">
@@ -370,7 +322,6 @@ export class UserProfile extends Component {
                       <CardTitle
                         title="Groups"
                       />
-
                       <CardText>
                           <div style={styles.wrapper}>
                           {
@@ -391,7 +342,6 @@ export class UserProfile extends Component {
                       <CardTitle
                         title="Password"
                       />
-
                       <CardText>
                           <form role="form">
                               <div className="row">
@@ -408,8 +358,6 @@ export class UserProfile extends Component {
                           </form>
                       </CardText>
 
-
-
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.save_profile(e)}
@@ -422,7 +370,7 @@ export class UserProfile extends Component {
                             label="Delete" />
                       </CardActions>
                   </div>
-              }
+                }
 
                 </Card>
             </div>
