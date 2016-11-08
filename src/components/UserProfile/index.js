@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import * as actionCreators from '../../actions/profile';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-
 import TextField from 'material-ui/TextField';
-
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
-
-
-import * as actionCreators from '../../actions/proposal';
+import Snackbar from 'material-ui/Snackbar';
 
 import { ProposalTag } from '../ProposalTag';
+import { PasswordChanger } from '../PasswordChanger';
 
 function handleRequestDelete() {
     alert('Treure TAG.');
@@ -27,33 +20,11 @@ function handleTouchTap() {
 }
 
 const styles = {
-    chip: {
-      margin: 4,
-    },
     wrapper: {
       display: 'flex',
       flexWrap: 'wrap',
     },
 };
-
-
-const colors = {
-    pending: {
-        hard: orange900,
-        soft: orange300,
-        text: 'white',
-    },
-    accepted: {
-        hard: green900,
-        soft: green300,
-        text: 'white',
-    },
-    denied: {
-        hard: red900,
-        soft: red300,
-        text: 'white',
-    },
-}
 
 function mapStateToProps(state) {
     return {
@@ -61,6 +32,7 @@ function mapStateToProps(state) {
         statusText: state.profile.statusText,
         statusType: state.profile.statusType,
         status: state.profile.status,
+        message_open: state.profile.message_open,
     };
 }
 
@@ -81,31 +53,31 @@ export class UserProfile extends Component {
         };
     }
 
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
-    }
-
-    delete_tag(e, key) {
-        e.preventDefault();
-        this.groups = this.state.groups;
-        this.groups.splice(key,1);
-        this.setState({groups: this.groups});
-    }
-
     edit_profile(e) {
         e.preventDefault();
         this.setState({
+            password_open: false,
             editing: true,
             bckp_profile: JSON.parse(JSON.stringify(this.state.profile)),
             bckp_groups: Object.assign([], this.state.groups)
         });
-
-        e.target.focus();
     }
 
-    save_profile() {
+    edit_password(e) {
+        e.preventDefault();
         this.setState({
+            password_open: true,
+        });
+    }
+
+    save_profile(e) {
+        e.preventDefault();
+        const profile = JSON.parse(JSON.stringify(this.props.profile));
+
+        this.setState({
+            password_open: false,
             editing: false,
+            profile: profile,
         });
 
         // Try to update data
@@ -113,15 +85,9 @@ export class UserProfile extends Component {
             this.props.onUpdate(this.props.profile.data);
         }
 
-        /*
-        const profile = JSON.parse(JSON.stringify(this.props.profile));
-
-        this.setState({
-            profile: profile,
-        });
-        */
+        this.activateSnack()
     }
-
+    
     tmpChangeValue(e, type) {
         const value = e.target.value;
         this.props.profile.data[type] = value;
@@ -132,19 +98,49 @@ export class UserProfile extends Component {
 
         const profile = JSON.parse(JSON.stringify(this.state.bckp_profile));
         const groups = this.state.bckp_groups;
+
         this.setState({
             editing: false,
             profile: profile,
             groups: groups,
+            password_open: false,
         });
+    }
+
+    delete_tag(e, key) {
+        e.preventDefault();
+        this.groups = this.state.groups;
+        this.groups.splice(key,1);
+        this.setState({groups: this.groups});
     }
 
     delete_profile(e) {
         e.preventDefault();
+        alert("Are you sure? WIP");
         this.setState({
             editing: false,
         });
     }
+
+    activateSnack = () => {
+        this.setState({
+            message_open: true,
+        });
+    };
+
+    undoChanges = () => {
+        this.setState({
+            message_open: false,
+        });
+        alert('Undo changes!!!.');
+    };
+
+    deactivateSnack = () => {
+        this.setState({
+            message_open: false,
+        });
+    };
+
 
     render() {
         let editing = this.state.editing;
@@ -153,15 +149,22 @@ export class UserProfile extends Component {
 
         const groups = this.state.groups;
 
+        const message_open = this.state.message_open;
+
         const UserProfile = () => (
 
             <div>
-                {
-                    this.props.statusText &&
-                        <div className={"alert alert-info alert-" + this.props.statusType}>
-                            {this.props.statusText}
-                        </div>
-                }
+            {
+                this.props.statusText &&
+                        <Snackbar
+                          open={this.state.message_open}
+                          message={this.props.statusText}
+                          action="undo"
+                          autoHideDuration={4000}
+                          onActionTouchTap={this.undoChanges}
+                          onRequestClose={this.deactivateSnack}
+                        />
+            }
 
 
                 <Card>
@@ -173,38 +176,52 @@ export class UserProfile extends Component {
                     <CardTitle
                       title="Personal data"
                     />
-              {
-              ( !editing ) ?
+
+            {
+                this.state.password_open &&
+                    <PasswordChanger open={this.state.password_open}/>
+            }
+
+            {
+                ( !editing ) ?
                     <div>
                       <CardText>
                           <form role="form">
                               <div className="row">
                                   <div className="col-md-4">
                                       <TextField
+                                        autoFocus={true}
+                                        id="changeName"
                                         hintText="Your name..."
                                         floatingLabelText="Name"
                                         value={profile.name}
                                         onDoubleClick={(e) => this.edit_profile(e)}
+                                        onKeyPress={(e) => this.edit_profile(e)}
                                       />
                                   </div>
 
                                   <div className="col-md-4">
                                       <TextField
+                                        id="changeSurname"
                                         hintText="Your surname..."
                                         floatingLabelText="Surname"
                                         value={profile.surname}
                                         onDoubleClick={(e) => this.edit_profile(e)}
+                                        onKeyPress={(e) => this.edit_profile(e)}
                                       />
                                   </div>
+
                               </div>
 
                               <div className="row">
                                   <div className="col-md-12">
                                       <TextField
+                                        id="changeEmail"
                                         hintText="user@domain.com"
                                         floatingLabelText="Email"
                                         value={profile.email}
                                         onDoubleClick={(e) => this.edit_profile(e)}
+                                        onKeyPress={(e) => this.edit_profile(e)}
                                       />
                                   </div>
                               </div>
@@ -214,7 +231,6 @@ export class UserProfile extends Component {
                       <CardTitle
                         title="Groups"
                       />
-
                       <CardText>
                           <div style={styles.wrapper}>
                           {
@@ -230,22 +246,46 @@ export class UserProfile extends Component {
                           </div>
                       </CardText>
 
-                      <CardActions>
-                        <FlatButton
-                            onClick={(e) => this.edit_profile(e, {profile})}
-                            label="Edit" />
-                        <FlatButton
-                            onClick={(e) => this.delete_profile(e)}
-                            label="Delete" />
-                      </CardActions>
-                  </div>
-                  :
-                  <div>
+
+                      <CardTitle
+                        title="Password"
+                      />
                       <CardText>
                           <form role="form">
                               <div className="row">
                                   <div className="col-md-4">
                                       <TextField
+                                        hintText="************"
+                                        value="************"
+                                        floatingLabelText="Your password"
+                                        floatingLabelFixed={true}
+                                        readOnly onDoubleClick={(e) => this.edit_password(e)}
+                                      />
+                                  </div>
+                              </div>
+                          </form>
+                      </CardText>
+
+                      <CardActions>
+                        <FlatButton
+                            onClick={(e) => this.edit_profile(e, {profile})}
+                            label="Edit" />
+                        <FlatButton
+                            onClick={(e) => this.edit_password(e)}
+                            label="Change password" />
+                        <FlatButton
+                            onClick={(e) => this.delete_profile(e)}
+                            label="Delete" />
+                      </CardActions>
+                    </div>
+                :
+                    <div>
+                      <CardText>
+                          <form role="form">
+                              <div className="row">
+                                  <div className="col-md-4">
+                                      <TextField
+                                        autoFocus={true}
                                         hintText="Your name..."
                                         floatingLabelText="Name"
                                         defaultValue={profile.name}
@@ -282,7 +322,6 @@ export class UserProfile extends Component {
                       <CardTitle
                         title="Groups"
                       />
-
                       <CardText>
                           <div style={styles.wrapper}>
                           {
@@ -299,6 +338,26 @@ export class UserProfile extends Component {
                           </div>
                       </CardText>
 
+
+                      <CardTitle
+                        title="Password"
+                      />
+                      <CardText>
+                          <form role="form">
+                              <div className="row">
+                                  <div className="col-md-4">
+                                      <TextField
+                                        hintText="************"
+                                        value="************"
+                                        floatingLabelText="Your password"
+                                        floatingLabelFixed={true}
+                                        readOnly onDoubleClick={(e) => this.edit_password(e)}
+                                      />
+                                  </div>
+                              </div>
+                          </form>
+                      </CardText>
+
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.save_profile(e)}
@@ -311,7 +370,7 @@ export class UserProfile extends Component {
                             label="Delete" />
                       </CardActions>
                   </div>
-              }
+                }
 
                 </Card>
             </div>

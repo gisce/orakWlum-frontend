@@ -34,6 +34,7 @@ export default createReducer(initialState, {
             loaded: true,
             statusText: payload.statusText,
             statusType: payload.statusType,
+            message_open: true,
         }),
     [UPDATE_PROFILE_KO]: (state, payload) =>
         Object.assign({}, state, {
@@ -43,6 +44,7 @@ export default createReducer(initialState, {
             status: payload.status,
             statusText: payload.statusText,
             statusType: payload.statusType,
+            message_open: true,
         }),
     [UPDATE_PROFILE_REQUEST]: (state) =>
         Object.assign({}, state, {
