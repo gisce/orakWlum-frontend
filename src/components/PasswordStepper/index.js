@@ -57,7 +57,7 @@ export class PasswordStepper extends Component {
       case 0:
         return (
             <div>
-                <p>Your current password is needed to ensure that you are authorized to made the change.</p>
+                <p>Your current password is needed to ensure that you're authorized to change it.</p>
                 <p>Please, <b>insert your password</b> in the following field:</p>
                 <TextField style={{marginTop: 0}} floatingLabelText="Your current password" />
             </div>
@@ -75,7 +75,7 @@ export class PasswordStepper extends Component {
             </div>
         );
       default:
-        return 'You\'re a long way from home sonny jim!';
+        return 'Mmmm.... that\'s embracing...';
     }
   }
 
@@ -94,9 +94,10 @@ export class PasswordStepper extends Component {
                 this.setState({stepIndex: 0, finished: false});
               }}
             >
-              Click here
-            </a> to reset the example.
+              Change again
+            </a>.
           </p>
+          <p>Password change status</p>
         </div>
       );
     }
