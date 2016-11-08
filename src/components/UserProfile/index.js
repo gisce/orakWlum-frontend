@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -99,12 +100,11 @@ export class UserProfile extends Component {
     edit_profile(e) {
         e.preventDefault();
         this.setState({
+            password_open: false,
             editing: true,
             bckp_profile: JSON.parse(JSON.stringify(this.state.profile)),
             bckp_groups: Object.assign([], this.state.groups)
         });
-
-        e.target.focus();
     }
 
     edit_password(e) {
@@ -118,6 +118,7 @@ export class UserProfile extends Component {
         const profile = JSON.parse(JSON.stringify(this.props.profile));
 
         this.setState({
+            password_open: false,
             editing: false,
             profile: profile,
         });
@@ -145,6 +146,7 @@ export class UserProfile extends Component {
             editing: false,
             profile: profile,
             groups: groups,
+            password_open: false,
         });
     }
 
@@ -228,32 +230,40 @@ export class UserProfile extends Component {
                               <div className="row">
                                   <div className="col-md-4">
                                       <TextField
+                                        autoFocus={true}
+                                        id="changeName"
+                                        idNext="changeNameEdit"
                                         hintText="Your name..."
                                         floatingLabelText="Name"
                                         value={profile.name}
                                         onDoubleClick={(e) => this.edit_profile(e)}
+                                        onKeyPress={(e) => this.edit_profile(e)}
                                       />
                                   </div>
 
                                   <div className="col-md-4">
                                       <TextField
+                                        id="changeSurname"
+                                        idNext="changeSurnameEdit"
                                         hintText="Your surname..."
                                         floatingLabelText="Surname"
                                         value={profile.surname}
                                         onDoubleClick={(e) => this.edit_profile(e)}
+                                        onKeyPress={(e) => this.edit_profile(e)}
                                       />
                                   </div>
 
                               </div>
 
-
                               <div className="row">
                                   <div className="col-md-12">
                                       <TextField
+                                        id="changeEmail"
                                         hintText="user@domain.com"
                                         floatingLabelText="Email"
                                         value={profile.email}
                                         onDoubleClick={(e) => this.edit_profile(e)}
+                                        onKeyPress={(e) => this.edit_profile(e)}
                                       />
                                   </div>
                               </div>
@@ -308,7 +318,7 @@ export class UserProfile extends Component {
                             onClick={(e) => this.edit_profile(e, {profile})}
                             label="Edit" />
                         <FlatButton
-                            onClick={(e) => this.edit_password(e, {profile})}
+                            onClick={(e) => this.edit_password(e)}
                             label="Change password" />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
@@ -322,6 +332,7 @@ export class UserProfile extends Component {
                               <div className="row">
                                   <div className="col-md-4">
                                       <TextField
+                                        autoFocus={true}
                                         hintText="Your name..."
                                         floatingLabelText="Name"
                                         defaultValue={profile.name}
@@ -385,20 +396,11 @@ export class UserProfile extends Component {
                               <div className="row">
                                   <div className="col-md-4">
                                       <TextField
-                                        hintText="Your name..."
-                                        floatingLabelText="Name"
+                                        hintText="************"
+                                        value="************"
+                                        floatingLabelText="Your password"
                                         floatingLabelFixed={true}
-                                        onChange={(e) => this.tmpChangeValue(e, 'password')}
-                                      />
-                                  </div>
-
-                                  <div className="col-md-4">
-                                      <TextField
-                                        hintText="Your surname..."
-                                        floatingLabelText="Surname"
-                                        defaultValue={profile.surname}
-                                        floatingLabelFixed={true}
-                                        onChange={(e) => this.tmpChangeValue(e, 'surname')}
+                                        readOnly onDoubleClick={(e) => this.edit_password(e)}
                                       />
                                   </div>
                               </div>
