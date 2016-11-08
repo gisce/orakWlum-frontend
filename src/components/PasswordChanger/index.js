@@ -50,6 +50,7 @@ export class PasswordChanger extends Component {
               open={open}
               modal={false}
               onRequestClose={this.handleClose}
+              autoScrollBodyContent={true}
             >
 
                 <PasswordStepper />
