@@ -8,7 +8,6 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 
 import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
 
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';

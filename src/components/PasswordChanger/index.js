@@ -4,6 +4,9 @@ import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+import { PasswordStepper } from '../PasswordStepper';
+
+
 const styles = {
     dialog: {
       width: '80%',
@@ -53,13 +56,8 @@ export class PasswordChanger extends Component {
               modal={false}
               onRequestClose={this.handleClose}
             >
-                  <TextField
-                    hintText="************"
-                    value="************"
-                    floatingLabelText="Your current password"
-                    floatingLabelFixed={true}
-                    readOnly onDoubleClick={(e) => this.edit_password(e)}
-                  />
+
+                <PasswordStepper />
             </Dialog>
         );
     }
