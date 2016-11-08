@@ -1,4 +1,4 @@
-import { RECEIVE_PROPOSAL, FETCH_PROPOSAL_REQUEST } from '../constants';
+import { RECEIVE_PROPOSAL0, FETCH_PROPOSAL0_REQUEST } from '../constants';
 import { createReducer } from '../utils/misc';
 
 const initialState = {
