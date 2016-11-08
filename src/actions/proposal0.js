@@ -1,31 +1,31 @@
-import { FETCH_PROPOSAL_REQUEST, RECEIVE_PROPOSAL } from '../constants/index'
+import { FETCH_PROPOSAL0_REQUEST, RECEIVE_PROPOSAL0 } from '../constants/index'
 import { data_fetch_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
 
-export function receiveProtectedData(data) {
+export function receiveProposal(data) {
     return {
-        type: RECEIVE_PROPOSAL,
+        type: RECEIVE_PROPOSAL0,
         payload: {
             data,
         },
     };
 }
 
-export function fetchProtectedDataRequest() {
+export function fetchProposalRequest() {
     return {
-        type: FETCH_PROPOSAL_REQUEST,
+        type: FETCH_PROPOSAL0_REQUEST,
     };
 }
 
 
-export function fetchProtectedDataProposal(token, proposal) {
+export function fetchProposal(token, proposal) {
     return (dispatch) => {
-        dispatch(fetchProtectedDataRequest());
-        data_fetch_api_resource(token, "proposals/" + proposal)
+        dispatch(fetchProposalRequest());
+        data_fetch_api_resource(token, "proposal/" + proposal)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProtectedData(response.result));
+                dispatch(receiveProposal(response.result));
             })
             .catch(error => {
                 if (error.status === 401) {
