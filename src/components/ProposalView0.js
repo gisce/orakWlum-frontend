@@ -4,14 +4,14 @@ import { bindActionCreators } from 'redux';
 
 import * as actionCreators from '../actions/proposal0';
 
-import { Proposal } from './Proposal';
+import { Proposal0 } from './Proposal0';
 
 function mapStateToProps(state) {
     return {
-        data: state.proposal,
+        data: state.proposal0,
         token: state.auth.token,
-        loaded: state.proposal.loaded,
-        isFetching: state.proposal.isFetching,
+        loaded: state.proposal0.loaded,
+        isFetching: state.proposal0.isFetching,
     };
 }
 
@@ -35,18 +35,21 @@ export default class ProposalView extends React.Component {
         const proposalId = this.props.params.proposalId;
         const proposal = this.props.data.data;
 
-        if (proposal!=null && proposal.id == proposalId) {
+        console.dir(this.props.data);
+
+        //if (proposal!=null && proposal.id == proposalId) {
             return (
                 <div>
                     {!this.props.loaded
                         ? <h1>Loading Proposal {proposalId}...</h1>
                         :
-                        <Proposal proposal={proposal} />
+                        <Proposal0 proposal={proposal} />
                     }
+                    <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
                 </div>
             );
-        }
-        return (<div></div>);
+        //}
+        return (<div><pre>{this.props}</pre></div>);
     }
 }
 
