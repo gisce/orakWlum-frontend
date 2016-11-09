@@ -10,6 +10,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/proposals';
 import { ProposalTag } from '../ProposalTag';
+import { ProposalGraph } from '../ProposalGraph';
 
 const styles = {
   root: {
@@ -61,6 +62,15 @@ export class ProposalList extends Component {
 
     render() {
         const data_received = this.state.proposals;
+        data_received.map((tile, index) => {
+                console.dir(tile);
+        })
+
+        const width=1024;
+        const height=300;
+
+        const howManyBig=1;
+
         const ProposalList = () => (
 
           <div style={styles.root}>
@@ -73,19 +83,20 @@ export class ProposalList extends Component {
             <Subheader>{this.state.title}</Subheader>
               {data_received.map((tile, index) => (
                     <GridTile
-                      key={tile.name}
+                      key={tile.id}
                       title={"#" + (index+1) + " " + tile.name}
-                      subtitle={<span>{new Date(tile.creationDate).toLocaleString()}</span>}
+                      subtitle={<span>{new Date(tile.creation_date).toLocaleString()}</span>}
                       actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
                       actionPosition="right"
                       titlePosition="top"
                       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                      cols={index < 4 ? 2 : 1}
-                      rows={index < 4 ? 2 : 1}
+                      cols={index < howManyBig ? 2 : 1}
+                      rows={index < howManyBig ? 2 : 1}
                       onClick={() => this.dispatchNewRoute(this.state.path + (index +1))}
                       style={styles.gridTile}
                     >
-                    <img src={tile.image} />
+                    <div><br/><br/><br/><br/></div>
+                    <ProposalGraph stacked={true} proposal={tile} width={ index < howManyBig ? width : width/2} height={ index < howManyBig ? height : height/2.3} />
 
                     </GridTile>
               ))}
