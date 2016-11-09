@@ -15,7 +15,6 @@ import {orange300, orange900, green300, green900, red300, red900} from 'material
 import * as actionCreators from '../../actions/proposal';
 
 import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
 
 function handleRequestDelete() {
     alert('Treure TAG.');
@@ -83,11 +82,6 @@ export class Proposal extends Component {
         const Proposal = () => (
             <Card>
               <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />
-              <CardMedia
-                overlay={<CardTitle title={proposal.name}
-                subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />}
-              >
-              </CardMedia>
 
               <div style={styles.wrapper}>
                   <ProposalTag tag={proposal.status} />
@@ -100,8 +94,12 @@ export class Proposal extends Component {
                 Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
               </CardText>
 
-
-              <ProposalGraph proposal={proposal}/>
+              <CardMedia
+                overlay={<CardTitle title={proposal.name}
+                subtitle={<span>{new Date(proposal.creationDate).toLocaleString()}</span>} />}
+              >
+                <img src={proposal.image} />
+              </CardMedia>
 
               <CardActions>
                 <FlatButton label="Run" />
