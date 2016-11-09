@@ -28,10 +28,10 @@ export default (
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
-        <Route path="proposals" component={requireAuthentication(Proposals)} />
-        <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
-        <Route path="proposalz" component={requireAuthentication(Proposals0)} />
-        <Route path="proposalz/:proposalId" component={requireAuthentication(Proposal0)} />
+        <Route path="proposalsOld" component={requireAuthentication(Proposals)} />
+        <Route path="proposalsOld/:proposalId" component={requireAuthentication(Proposal)} />
+        <Route path="proposals" component={requireAuthentication(Proposals0)} />
+        <Route path="proposals/:proposalId" component={requireAuthentication(Proposal0)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
