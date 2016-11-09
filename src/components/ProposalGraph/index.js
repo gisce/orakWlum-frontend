@@ -52,5 +52,5 @@ export class ProposalGraph extends Component {
 }
 
 ProposalGraph.propTypes = {
-    proposal: React.PropTypes.list,
+    proposal: React.PropTypes.object,
 };
