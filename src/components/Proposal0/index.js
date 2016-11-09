@@ -15,17 +15,8 @@ import {orange300, orange900, green300, green900, red300, red900} from 'material
 import * as actionCreators from '../../actions/proposal';
 
 import { ProposalTag } from '../ProposalTag';
-
-
 import { ProposalGraph } from '../ProposalGraph';
 
-function handleRequestDelete() {
-    alert('Treure TAG.');
-}
-
-function handleTouchTap() {
-    alert('Filtrar per aquest TAG.');
-}
 
 const styles = {
     chip: {
@@ -104,7 +95,7 @@ export class Proposal0 extends Component {
                 Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
               </CardText>
 
-              <ProposalGraph proposal={proposal}/>
+              <ProposalGraph stacked={true} proposal={proposal}/>
 
               <CardActions>
                 <FlatButton label="Run" />
