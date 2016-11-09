@@ -147,6 +147,11 @@ export class Header extends Component {
                                     primaryText="Proposals"
                                 />
                                 <MenuItem
+                                    onClick={() => this.dispatchNewRoute('/proposalsOld')}
+                                    leftIcon={<ProposalIcon/>}
+                                    primaryText="Proposals v0"
+                                />
+                                <MenuItem
                                     onClick={() => this.dispatchNewRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
                                     primaryText="Buys"
