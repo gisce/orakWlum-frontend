@@ -26,16 +26,17 @@ export class ProposalGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: props.open,
         };
     }
 
     render() {
         const prediction = this.props.proposal.prediction;
+        const stacked = (this.props.stacked)?"1":null;
+
         const data=adaptProposalData(prediction);
 
         const areas = prediction.map(function(day, i) {
-            return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId="1" stroke={colors[i]} fill={colors[i]} />
+            return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
         });
 
         return (
