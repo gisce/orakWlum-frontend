@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 
-import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/ProposalGraph';
+//import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
 import {adaptProposalData} from '../../utils/graph';
 
