@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 
 import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/ProposalGraph';
 
@@ -9,9 +9,14 @@ import {adaptProposalData} from '../../utils/graph';
 
 const styles = {
     dialog: {
-      width: '80%',
-      maxWidth: 'none',
+        width: '80%',
+        maxWidth: 'none',
+    },
+    graphContainer: {
+        maxWidth: '500px',
+        maxHeight: '200px',
     }
+
 };
 
 const colors = [
@@ -32,7 +37,7 @@ export class ProposalGraph extends Component {
         const prediction = this.props.proposal.prediction;
         const stacked = (this.props.stacked)?"1":null;
 
-        const height = (this.props.height)?this.props.height:600;
+        const height = (this.props.height)?this.props.height:500;
         const width = (this.props.width)?this.props.width:1024;
 
         const data=adaptProposalData(prediction);
@@ -42,14 +47,18 @@ export class ProposalGraph extends Component {
         });
 
         return (
-        	<AreaChart width={width} height={height} data={data}
-                margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-            <XAxis dataKey="name"/>
-            <YAxis/>
-            <CartesianGrid strokeDasharray="3 3"/>
-            <Tooltip/>
-            {areas}
-          </AreaChart>
+            <div >
+                <ResponsiveContainer height={height} >
+                	<AreaChart  data={data}
+                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                        <XAxis dataKey="name"/>
+                        <YAxis/>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <Tooltip/>
+                        {areas}
+                    </AreaChart>
+                </ResponsiveContainer>
+            </div>
         );
     }
 }
