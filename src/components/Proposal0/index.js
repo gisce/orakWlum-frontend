@@ -86,6 +86,13 @@ export class Proposal0 extends Component {
             <Card>
               <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />
 
+                  <CardMedia
+                    overlay={<CardTitle title={proposal.name}
+                    subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />}
+                  >
+                  </CardMedia>
+
+
               <div style={styles.wrapper}>
                   <ProposalTag tag={proposal.status} />
               </div>
@@ -97,12 +104,7 @@ export class Proposal0 extends Component {
                 Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
               </CardText>
 
-              <CardMedia
-                overlay={<CardTitle title={proposal.name}
-                subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />}
-              >
-                <img src={proposal.image} />
-              </CardMedia>
+              <ProposalGraph proposal={proposal}/>
 
               <CardActions>
                 <FlatButton label="Run" />
@@ -117,10 +119,9 @@ export class Proposal0 extends Component {
             <div>
 
                 <div>
-                    <ProposalGraph />
                 </div>
 
-                <Proposal />
+                <Proposal/>
             </div>
         );
     }
