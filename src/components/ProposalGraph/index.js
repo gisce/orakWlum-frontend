@@ -22,7 +22,6 @@ const colors = [
 ]
 
 export class ProposalGraph extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +32,9 @@ export class ProposalGraph extends Component {
         const prediction = this.props.proposal.prediction;
         const stacked = (this.props.stacked)?"1":null;
 
+        const height = (this.props.height)?this.props.height:600;
+        const width = (this.props.width)?this.props.width:1024;
+
         const data=adaptProposalData(prediction);
 
         const areas = prediction.map(function(day, i) {
@@ -40,7 +42,7 @@ export class ProposalGraph extends Component {
         });
 
         return (
-        	<AreaChart width={1024} height={600} data={data}
+        	<AreaChart width={width} height={height} data={data}
                 margin={{top: 10, right: 30, left: 0, bottom: 0}}>
             <XAxis dataKey="name"/>
             <YAxis/>
@@ -54,4 +56,7 @@ export class ProposalGraph extends Component {
 
 ProposalGraph.propTypes = {
     proposal: React.PropTypes.object,
+    stacked: React.PropTypes.bool,
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
 };
