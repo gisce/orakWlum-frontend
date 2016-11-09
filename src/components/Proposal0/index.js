@@ -95,7 +95,7 @@ export class Proposal0 extends Component {
                 Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
               </CardText>
 
-              <ProposalGraph stacked={true} proposal={proposal} width={1024} height={600} />
+              <ProposalGraph stacked={true} proposal={proposal} height={500} />
 
               <CardActions>
                 <FlatButton label="Run" />
