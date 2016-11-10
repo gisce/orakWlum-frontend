@@ -242,7 +242,7 @@ export class ProposalDefinition extends Component {
             style={{marginRight: 12}}
           />
           <RaisedButton
-            label={stepIndex === this.steps.length-1 ? 'Finish' : 'Next'}
+            label={stepIndex === this.steps.length-1 ? 'Create' : 'Next'}
             primary={true}
             onTouchTap={this.handleNext}
           />
