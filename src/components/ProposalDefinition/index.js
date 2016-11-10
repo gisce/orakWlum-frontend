@@ -33,49 +33,61 @@ export class ProposalDefinition extends Component {
       };
 
       this.steps = [
-              {
-                  title: "Name",
-                  content: (
-                      <div>
-                          <p>We need some details to create a new Proposal.</p>
-                          <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
-                          <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
-                      </div>
-                  )
-              },
-              {
-                  title: "Dates",
-                  content: (
-                      <div>
-                          <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
+          {
+              key: "0",
+              title: "Name",
+              content: (
+                  <div>
+                      <p>We need some details to create a new Proposal.</p>
+                      <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
+                      <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
+                  </div>
+              )
+          },
+          {
+              key: "1",
+              title: "Dates",
+              content: (
+                  <div>
+                      <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
 
-                          <DatePicker
-                              floatingLabelText="Start date"
-                              hintText="Start date"
-                              value={this.state.date_start}
-                              onChange={this.handleChangeStartDate}
-                          />
+                      <DatePicker
+                          floatingLabelText="Start date"
+                          hintText="Start date"
+                          value={this.state.date_start}
+                          onChange={this.handleChangeStartDate}
+                      />
 
-                          <DatePicker
-                              floatingLabelText="End date"
-                              hintText="End date"
-                              value={this.state.date_end}
-                              onChange={this.handleChangeEndDate}
-                          />
+                      <DatePicker
+                          floatingLabelText="End date"
+                          hintText="End date"
+                          value={this.state.date_end}
+                          onChange={this.handleChangeEndDate}
+                      />
 
-                      </div>
-                  )
-              },
-              {
-                  title: "Aggregations",
-                  content: (
-                      <div>
-                          <p>Great! Now <b>select the aggregations</b> to perform:</p>
-                      </div>
-                  )
-              },
+                  </div>
+              )
+          },
+          {
+              key: "2",
+              title: "Aggregations",
+              content: (
+                  <div>
+                      <p>Great! Now <b>select the aggregations</b> to perform:</p>
+                  </div>
+              )
+          },
+          {
+              key: "3",
+              title: "Confirmation",
+              content: (
+                  <div>
+                      <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
+                  </div>
+              )
+          },
 
-          ];
+      ];
     }
 
     dummyAsync = (cb) => {
@@ -107,11 +119,15 @@ export class ProposalDefinition extends Component {
 
     handleNext = () => {
         const {stepIndex} = this.state;
+        const max = this.steps.length;
+
+        console.log(stepIndex, max, stepIndex >= max);
+
         if (!this.state.loading) {
             this.dummyAsync(() => this.setState({
                 loading: false,
                 stepIndex: stepIndex + 1,
-                finished: stepIndex >= 1,
+                finished: stepIndex >= max,
             }));
         }
     };
@@ -184,8 +200,8 @@ export class ProposalDefinition extends Component {
         <Stepper activeStep={stepIndex}>
             {this.steps.map(function(step, index) {
                 return (
-                    <Step>
-                        <StepLabel>{step.title}</StepLabel>
+                    <Step key={"step"+step.key}>
+                        <StepLabel key={"stepLabel"+step.key}>{step.title}</StepLabel>
                     </Step>
                 )
             })}
