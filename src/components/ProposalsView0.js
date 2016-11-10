@@ -4,9 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposals';
 
 import { ProposalList } from './ProposalList';
-
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import { ContentHeader } from './ContentHeader';
 
 function mapStateToProps(state) {
     return {
@@ -48,22 +46,13 @@ export default class ProposalsView extends React.Component {
     }
 
     render() {
-        const addProposal = (
-            <FloatingActionButton style={style.buttonAdd} onClick={() => this.addProposal()}>
-              <ContentAdd />
-            </FloatingActionButton>
-        )
-
         return (
             <div>
                 {!this.props.loaded
                     ? <h1>Loading Proposals...</h1>
                     :
                     <div>
-                        <div className='row'>
-                            <div className="col-md-6"><h1>Proposals list</h1></div>
-                            <div className="col-md-6" style={style.buttonPosition}>{addProposal}</div>
-                        </div>
+                        <ContentHeader title="Proposals List" addButton={true} buttonClickMethod={() => this.addProposal()} />
 
                         <ProposalList
                             title="Last proposals"

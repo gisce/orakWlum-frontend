@@ -37,7 +37,6 @@ export default class ProposalsView extends React.Component {
                     :
                     <div>
                         <h1>Proposals list</h1>
-
                         <ProposalList
                             title="Last proposals"
                             proposals={this.props.data.data}
