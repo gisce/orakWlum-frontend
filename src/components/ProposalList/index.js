@@ -62,9 +62,6 @@ export class ProposalList extends Component {
 
     render() {
         const data_received = this.state.proposals;
-        data_received.map((tile, index) => {
-                console.dir(tile);
-        })
 
         const width=1024;
         const height=300;
