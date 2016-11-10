@@ -10,6 +10,9 @@ const tokenConfig = (token) => ({
 });
 
 export function define_token(token) {
+    //Activate debug mode
+    localStorage.setItem('debug', true);
+
     localStorage.setItem('token', token);
     axios.defaults.headers.common['Authorization'] = token;
 }
