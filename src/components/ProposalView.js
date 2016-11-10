@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actionCreators from '../actions/proposal0';
+import * as actionCreators from '../actions/proposal';
 import { debug } from '../utils/debug';
 
 import { Proposal } from './Proposal';
