@@ -9,10 +9,10 @@ import { Proposal } from './Proposal';
 
 function mapStateToProps(state) {
     return {
-        data: state.proposal0,
+        data: state.proposal,
         token: state.auth.token,
-        loaded: state.proposal0.loaded,
-        isFetching: state.proposal0.isFetching,
+        loaded: state.proposal.loaded,
+        isFetching: state.proposal.isFetching,
     };
 }
 
@@ -36,9 +36,7 @@ export default class ProposalView extends React.Component {
         const proposalId = this.props.params.proposalId;
         const proposal = this.props.data.data;
 
-        console.dir(this.props.data);
-
-        //if (proposal!=null && proposal.id == proposalId) {
+        if (proposal!=null && proposal.id == proposalId) {
             return (
                 <div>
                     {!this.props.loaded
@@ -49,8 +47,8 @@ export default class ProposalView extends React.Component {
                     {debug(this.props.data)}
                 </div>
             );
-        //}
-        //return (<div><pre>{this.props}</pre></div>);
+        }
+        return (<div>{debug(this.props.data.data)}</div>);
     }
 }
 
