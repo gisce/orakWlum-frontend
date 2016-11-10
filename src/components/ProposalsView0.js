@@ -2,11 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposals';
+import { debug } from '../utils/debug';
 
 import { ProposalList } from './ProposalList';
 import { ContentHeader } from './ContentHeader';
-
-import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
@@ -29,8 +28,6 @@ const style = {
         textAlign: 'right',
     }
 };
-
-
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalsView extends React.Component {
@@ -75,7 +72,6 @@ ProposalsView.propTypes = {
     fetchProtectedDataProposals: React.PropTypes.func,
     fetchProtectedData: React.PropTypes.func,
     loaded: React.PropTypes.bool,
-    userName: React.PropTypes.string,
     data: React.PropTypes.any,
     token: React.PropTypes.string,
 };
