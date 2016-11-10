@@ -89,6 +89,33 @@ export class ProposalDefinition extends Component {
               content: (
                   <div>
                       <p>Great! Now <b>select the aggregations</b> to perform:</p>
+                      <Table
+                          fixedHeader={true}
+                          selectable={true}
+                          multiSelectable={true}
+                          onRowSelection={this.handleRowSelection}
+                      >
+                          <TableHeader>
+                            <TableRow>
+                              <TableHeaderColumn>Name</TableHeaderColumn>
+                            </TableRow>
+                          </TableHeader>
+
+                          <TableBody
+                              deselectOnClickaway={false}
+                              stripedRows={true}
+                          >
+                          {
+                              aggregations.map(function(agg, index) {
+                                  return (
+                                      <TableRow key={"tableRow_"+index}>
+                                        <TableRowColumn>{agg.name}</TableRowColumn>
+                                      </TableRow>
+                                  )
+                              })
+                          }
+                          </TableBody>
+                      </Table>
                   </div>
               )
           },
