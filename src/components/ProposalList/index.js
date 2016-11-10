@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -35,9 +34,6 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
-        userName: state.auth.userName,
-        isAuthenticated: state.auth.isAuthenticated,
     };
 }
 
@@ -107,6 +103,4 @@ export class ProposalList extends Component {
 }
 
 ProposalList.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
 };
