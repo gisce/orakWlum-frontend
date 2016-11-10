@@ -129,12 +129,26 @@ export class ProposalDefinition extends Component {
                 content: (
                     <div>
                         <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
-                        <TextField style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
+                        <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
+
+                        <br/><br/>
+
+                        <DatePicker
+                            floatingLabelText="Start date"
+                            hintText="Start date"
+                            value={this.state.date_start}
+                            disabled={true}
+                        />
+
+                        <DatePicker
+                            floatingLabelText="End date"
+                            hintText="End date"
+                            value={this.state.date_end}
+                            disabled={true}
+                        />
+
                         <br/>
-                        <TextField style={{marginTop: 0}} floatingLabelText="Start date" value={this.state.date_start}/>
-                        <TextField style={{marginTop: 0}} floatingLabelText="End date" value={this.state.date_end}/>
-                        <br/>
-                        <TextField style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregations}/>
+                        <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregations}/>
 
                     </div>
                 )
