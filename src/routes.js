@@ -28,8 +28,8 @@ export default (
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
         <Route path="proposals" component={requireAuthentication(Proposals)} />
-        <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
+        <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
