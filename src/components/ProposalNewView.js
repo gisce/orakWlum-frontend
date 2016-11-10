@@ -5,6 +5,8 @@ import { debug } from '../utils/debug';
 
 import * as actionCreators from '../actions/proposal';
 
+import { ProposalDefinition } from './ProposalDefinition';
+
 function mapStateToProps(state) {
     return {
         data: state.proposal,
@@ -31,6 +33,8 @@ export default class ProfileView extends React.Component {
             <div>
                 <div>
                     <h1>New proposal</h1>
+
+                    <ProposalDefinition />
                 </div>
 
                 {debug(this.props.data)}
