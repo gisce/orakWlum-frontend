@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as actionCreators from '../actions/proposal0';
+import { debug } from '../utils/debug';
 
 import { Proposal0 } from './Proposal0';
 
@@ -45,19 +46,16 @@ export default class ProposalView extends React.Component {
                         :
                         <Proposal0 proposal={proposal} />
                     }
-                    <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
+                    {debug(this.props.data)}
                 </div>
             );
         //}
-        return (<div><pre>{this.props}</pre></div>);
+        //return (<div><pre>{this.props}</pre></div>);
     }
 }
 
 ProposalView.propTypes = {
-    fetchProtectedDataProposal: React.PropTypes.func,
-    fetchProtectedData: React.PropTypes.func,
     loaded: React.PropTypes.bool,
-    userName: React.PropTypes.string,
     data: React.PropTypes.any,
     token: React.PropTypes.string,
 };
