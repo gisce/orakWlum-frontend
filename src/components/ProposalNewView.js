@@ -33,7 +33,6 @@ export default class ProfileView extends React.Component {
             <div>
                 <div>
                     <h1>New proposal</h1>
-
                     <ProposalDefinition />
                 </div>
 

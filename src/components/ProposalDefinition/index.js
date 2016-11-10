@@ -18,15 +18,29 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 const styles = {
 };
 
-export class ProposalDefinition extends Component {
+const aggregations = [
+    {
+        name: 'Agg A',
+        id: '0001',
+    },
+    {
+        name: 'Agg B',
+        id: '0002',
+    },
+    {
+        name: 'Agg C',
+        id: '0003',
+    },
+]
 
+export class ProposalDefinition extends Component {
     constructor(props) {
       super(props);
 
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 0,
+          stepIndex: 2,
           name: "",
           date_start: null,
           date_end: null,
@@ -89,6 +103,9 @@ export class ProposalDefinition extends Component {
           },
 
       ];
+    }
+
+    handleRowSelection = (selectedRows) => {
     }
 
     dummyAsync = (cb) => {
