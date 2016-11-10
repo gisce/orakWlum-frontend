@@ -11,42 +11,76 @@ import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Divider from 'material-ui/Divider';
 
+
+import DatePicker from 'material-ui/DatePicker';
+
 const styles = {
 };
 
 export class ProposalDefinition extends Component {
-  state = {
-    loading: false,
-    finished: false,
-    stepIndex: 0,
-  };
+    constructor(props) {
+      super(props);
 
-  dummyAsync = (cb) => {
-    this.setState({loading: true}, () => {
-      this.asyncTimer = setTimeout(cb, 500);
-    });
-  };
-
-  handleNext = () => {
-    const {stepIndex} = this.state;
-    if (!this.state.loading) {
-      this.dummyAsync(() => this.setState({
-        loading: false,
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 1,
-      }));
+      this.state = {
+          loading: false,
+          finished: false,
+          stepIndex: 0,
+          name: "",
+          date_start: null,
+          date_end: null,
+          controlledDate: null,
+      };
     }
-  };
 
-  handlePrev = () => {
-    const {stepIndex} = this.state;
-    if (!this.state.loading) {
-      this.dummyAsync(() => this.setState({
-        loading: false,
-        stepIndex: stepIndex - 1,
-      }));
-    }
-  };
+
+    dummyAsync = (cb) => {
+        this.setState({loading: true}, () => {
+            this.asyncTimer = setTimeout(cb, 500);
+        });
+    };
+
+    handleChangeName = (event, name) => {
+        //validate name
+        this.setState({
+            name: name,
+        });
+    };
+
+    handleChangeStartDate = (event, date_start) => {
+        //validate date
+        this.setState({
+            date_start: date_start,
+        });
+    };
+
+    handleChangeEndDate = (event, date_end) => {
+        //validate date
+        this.setState({
+            date_end: date_end,
+        });
+        console.log(this.state.date_end);
+    };
+
+    handleNext = () => {
+        const {stepIndex} = this.state;
+        if (!this.state.loading) {
+            this.dummyAsync(() => this.setState({
+                loading: false,
+                stepIndex: stepIndex + 1,
+                finished: stepIndex >= 1,
+            }));
+        }
+    };
+
+    handlePrev = () => {
+        const {stepIndex} = this.state;
+        if (!this.state.loading) {
+            this.dummyAsync(() => this.setState({
+                loading: false,
+                stepIndex: stepIndex - 1,
+            }));
+        }
+    };
 
   getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -55,13 +89,28 @@ export class ProposalDefinition extends Component {
             <div>
                 <p>We need some details to create a new Proposal.</p>
                 <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
-                <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" />
+                <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
             </div>
         );
       case 1:
         return (
             <div>
-                <p>Perfect! Now insert the desired <b>range of dates</b>:</p>
+                <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
+
+                <DatePicker
+                    floatingLabelText="Start date"
+                    hintText="Start date"
+                    value={this.state.date_start}
+                    onChange={this.handleChangeStartDate}
+                />
+
+                <DatePicker
+                    floatingLabelText="End date"
+                    hintText="End date"
+                    value={this.state.date_end}
+                    onChange={this.handleChangeEndDate}
+                />
+
             </div>
         );
       default:
