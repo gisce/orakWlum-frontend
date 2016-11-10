@@ -6,6 +6,8 @@ import * as actionCreators from '../actions/proposals';
 import { ProposalList } from './ProposalList';
 import { ContentHeader } from './ContentHeader';
 
+import { debug } from '../utils/debug';
+
 function mapStateToProps(state) {
     return {
         data: state.proposals,
@@ -33,6 +35,7 @@ const style = {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalsView extends React.Component {
     componentDidMount() {
+        const debug = localStorage.getItem('debug');
         this.fetchData();
     }
 
@@ -60,11 +63,9 @@ export default class ProposalsView extends React.Component {
                             path={this.props.location.pathname}
                         />
 
-                        <h3>Proposals:</h3>
-                        <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
-
                     </div>
                 }
+            {debug(this.props.data)}
             </div>
         );
     }
