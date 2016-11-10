@@ -40,11 +40,11 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 2,
+          stepIndex: 3,
           name: "",
           date_start: null,
           date_end: null,
-          controlledDate: null,
+          aggregations: "",
       };
 
       this.steps = [
@@ -125,6 +125,13 @@ export class ProposalDefinition extends Component {
               content: (
                   <div>
                       <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
+                      <TextField style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
+                      <br/>
+                      <TextField style={{marginTop: 0}} floatingLabelText="Start date" value={this.state.date_start}/>
+                      <TextField style={{marginTop: 0}} floatingLabelText="End date" value={this.state.date_end}/>
+                      <br/>
+                      <TextField style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregations}/>
+
                   </div>
               )
           },
