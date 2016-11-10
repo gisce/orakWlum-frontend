@@ -133,13 +133,21 @@ export class ProposalDefinition extends Component {
     }
 
     handleRowSelection = (selectedRows) => {
-        let aggreg = []
-        selectedRows.map(function(row, i){
-            aggreg.push( aggregations[row].id );
-        });
+        let aggregations_list = [];
+
+        if (selectedRows == "all") {
+            console.dir(selectedRows);
+            aggregations.map(function(agg, i){
+                aggregations_list.push( agg.id );
+            });
+        } else {
+            selectedRows.map(function(row, i){
+                aggregations_list.push( aggregations[row].id );
+            });
+        }
 
         this.setState({
-            aggregations: aggreg,
+            aggregations: aggregations_list,
         });
     }
 
