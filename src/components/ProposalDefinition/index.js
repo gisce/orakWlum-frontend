@@ -40,104 +40,110 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 3,
+          stepIndex: 0,
           name: "",
           date_start: null,
           date_end: null,
           aggregations: "",
       };
-
-      this.steps = [
-          {
-              key: "0",
-              title: "Name",
-              content: (
-                  <div>
-                      <p>We need some details to create a new Proposal.</p>
-                      <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
-                      <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
-                  </div>
-              )
-          },
-          {
-              key: "1",
-              title: "Dates",
-              content: (
-                  <div>
-                      <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
-
-                      <DatePicker
-                          floatingLabelText="Start date"
-                          hintText="Start date"
-                          value={this.state.date_start}
-                          onChange={this.handleChangeStartDate}
-                      />
-
-                      <DatePicker
-                          floatingLabelText="End date"
-                          hintText="End date"
-                          value={this.state.date_end}
-                          onChange={this.handleChangeEndDate}
-                      />
-
-                  </div>
-              )
-          },
-          {
-              key: "2",
-              title: "Aggregations",
-              content: (
-                  <div>
-                      <p>Great! Now <b>select the aggregations</b> to perform:</p>
-                      <Table
-                          fixedHeader={true}
-                          selectable={true}
-                          multiSelectable={true}
-                          onRowSelection={this.handleRowSelection}
-                      >
-                          <TableHeader>
-                            <TableRow>
-                              <TableHeaderColumn>Name</TableHeaderColumn>
-                            </TableRow>
-                          </TableHeader>
-
-                          <TableBody
-                              deselectOnClickaway={false}
-                              stripedRows={true}
-                          >
-                          {
-                              aggregations.map(function(agg, index) {
-                                  return (
-                                      <TableRow key={"tableRow_"+index}>
-                                        <TableRowColumn>{agg.name}</TableRowColumn>
-                                      </TableRow>
-                                  )
-                              })
-                          }
-                          </TableBody>
-                      </Table>
-                  </div>
-              )
-          },
-          {
-              key: "3",
-              title: "Confirmation",
-              content: (
-                  <div>
-                      <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
-                      <TextField style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
-                      <br/>
-                      <TextField style={{marginTop: 0}} floatingLabelText="Start date" value={this.state.date_start}/>
-                      <TextField style={{marginTop: 0}} floatingLabelText="End date" value={this.state.date_end}/>
-                      <br/>
-                      <TextField style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregations}/>
-
-                  </div>
-              )
-          },
-
-      ];
+      this.stepsLength = this.getSteps().length;
     }
+
+    getSteps = () => {
+
+        return [
+            {
+                key: "0",
+                title: "Name",
+                content: (
+                    <div>
+                        <p>We need some details to create a new Proposal.</p>
+                        <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
+                        <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
+                    </div>
+                )
+            },
+            {
+                key: "1",
+                title: "Dates",
+                content: (
+                    <div>
+                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
+
+                        <DatePicker
+                            floatingLabelText="Start date"
+                            hintText="Start date"
+                            value={this.state.date_start}
+                            onChange={this.handleChangeStartDate}
+                        />
+
+                        <DatePicker
+                            floatingLabelText="End date"
+                            hintText="End date"
+                            value={this.state.date_end}
+                            onChange={this.handleChangeEndDate}
+                        />
+
+                    </div>
+                )
+            },
+            {
+                key: "2",
+                title: "Aggregations",
+                content: (
+                    <div>
+                        <p>Great! Now <b>select the aggregations</b> to perform:</p>
+                        <Table
+                            fixedHeader={true}
+                            selectable={true}
+                            multiSelectable={true}
+                            onRowSelection={this.handleRowSelection}
+                        >
+                            <TableHeader>
+                              <TableRow>
+                                <TableHeaderColumn>Name</TableHeaderColumn>
+                              </TableRow>
+                            </TableHeader>
+
+                            <TableBody
+                                deselectOnClickaway={false}
+                                stripedRows={true}
+                            >
+                            {
+                                aggregations.map(function(agg, index) {
+                                    return (
+                                        <TableRow key={"tableRow_"+index}>
+                                          <TableRowColumn>{agg.name}</TableRowColumn>
+                                        </TableRow>
+                                    )
+                                })
+                            }
+                            </TableBody>
+                        </Table>
+                    </div>
+                )
+            },
+            {
+                key: "3",
+                title: "Confirmation",
+                content: (
+                    <div>
+                        <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
+                        <TextField style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
+                        <br/>
+                        <TextField style={{marginTop: 0}} floatingLabelText="Start date" value={this.state.date_start}/>
+                        <TextField style={{marginTop: 0}} floatingLabelText="End date" value={this.state.date_end}/>
+                        <br/>
+                        <TextField style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregations}/>
+
+                    </div>
+                )
+            },
+
+        ];
+    }
+
+
 
     handleRowSelection = (selectedRows) => {
         let aggregations_list = [];
@@ -165,10 +171,13 @@ export class ProposalDefinition extends Component {
     };
 
     handleChangeName = (event, name) => {
+        console.log("changing name", name);
         //validate name
         this.setState({
             name: name,
         });
+        console.log(this.state.name);
+
     };
 
     handleChangeStartDate = (event, date_start) => {
@@ -187,7 +196,7 @@ export class ProposalDefinition extends Component {
 
     handleNext = () => {
         const {stepIndex} = this.state;
-        const max = this.steps.length - 1;
+        const max = this.stepsLength - 1;
 
         if (!this.state.loading) {
             this.dummyAsync(() => this.setState({
@@ -209,8 +218,8 @@ export class ProposalDefinition extends Component {
     };
 
   getStepContent(stepIndex) {
-      return (stepIndex < this.steps.length)?
-           this.steps[stepIndex].content
+      return (stepIndex < this.stepsLength)?
+           this.getSteps()[stepIndex].content
            :
            'Mmmm.... that\'s embracing...';
   }
@@ -249,7 +258,7 @@ export class ProposalDefinition extends Component {
             style={{marginRight: 12}}
           />
           <RaisedButton
-            label={stepIndex === this.steps.length-1 ? 'Create' : 'Next'}
+            label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
             primary={true}
             onTouchTap={this.handleNext}
           />
@@ -261,10 +270,12 @@ export class ProposalDefinition extends Component {
   render() {
     const {loading, stepIndex} = this.state;
 
+    const steps = this.getSteps();
+
     return (
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
         <Stepper activeStep={stepIndex}>
-            {this.steps.map(function(step, index) {
+            {steps.map(function(step, index) {
                 return (
                     <Step key={"step"+step.key}>
                         <StepLabel key={"stepLabel"+step.key}>{step.title}</StepLabel>
