@@ -12,6 +12,8 @@ import * as actionCreators from '../../actions/proposals';
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 
+import { dispatchNewRoute} from '../../utils/http_functions';
+
 const styles = {
   root: {
     display: 'flex',
@@ -53,11 +55,6 @@ export class ProposalList extends Component {
             title: props.title,
             path: props.path + "/",
         };
-
-    }
-
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
     }
 
     render() {
@@ -89,7 +86,7 @@ export class ProposalList extends Component {
                       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                       cols={index < howManyBig ? 2 : 1}
                       rows={index < howManyBig ? 2 : 1}
-                      onClick={() => this.dispatchNewRoute(this.state.path + (tile.id))}
+                      onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
                       style={styles.gridTile}
                     >
                     <div><br/><br/><br/><br/></div>
@@ -105,7 +102,6 @@ export class ProposalList extends Component {
             <div>
                 <ProposalList />
             </div>
-
         );
     }
 }
