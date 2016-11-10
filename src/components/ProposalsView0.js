@@ -5,6 +5,9 @@ import * as actionCreators from '../actions/proposals';
 
 import { ProposalList } from './ProposalList';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
 function mapStateToProps(state) {
     return {
         data: state.proposals,
@@ -18,6 +21,17 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const style = {
+    buttonAdd: {
+        marginRight: 20,
+    },
+    buttonPosition: {
+        textAlign: 'right',
+    }
+};
+
+
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalsView extends React.Component {
     componentDidMount() {
@@ -29,14 +43,27 @@ export default class ProposalsView extends React.Component {
         this.props.fetchProtectedDataProposals(token);
     }
 
+    addProposal() {
+        console.log("add new proposal");
+    }
+
     render() {
+        const addProposal = (
+            <FloatingActionButton style={style.buttonAdd} onClick={() => this.addProposal()}>
+              <ContentAdd />
+            </FloatingActionButton>
+        )
+
         return (
             <div>
                 {!this.props.loaded
                     ? <h1>Loading Proposals...</h1>
                     :
                     <div>
-                        <h1>Proposals list</h1>
+                        <div className='row'>
+                            <div className="col-md-6"><h1>Proposals list</h1></div>
+                            <div className="col-md-6" style={style.buttonPosition}>{addProposal}</div>
+                        </div>
 
                         <ProposalList
                             title="Last proposals"
