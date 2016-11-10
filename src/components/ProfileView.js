@@ -5,6 +5,8 @@ import * as actionCreators from '../actions/profile';
 
 import { UserProfile } from './UserProfile';
 
+import { debug } from '../utils/debug';
+
 function mapStateToProps(state) {
     return {
         data: state.profile,
@@ -59,8 +61,7 @@ export default class ProfileView extends React.Component {
                     </div>
                 }
 
-                <h3>Debug:</h3>
-                <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
+                {debug(this.props.data)}
             </div>
         );
     }

@@ -3,13 +3,23 @@
 import { API_PREFIX } from '../constants/index'
 import axios  from 'axios'
 
+import { browserHistory } from 'react-router';
+
+
 const tokenConfig = (token) => ({
     headers: {
         'Authorization': token, // eslint-disable-line quote-props
     },
 });
 
+export function dispatchNewRoute(route) {
+    browserHistory.push(route);
+}
+
 export function define_token(token) {
+    //Activate debug mode
+    localStorage.setItem('debug', true);
+
     localStorage.setItem('token', token);
     axios.defaults.headers.common['Authorization'] = token;
 }

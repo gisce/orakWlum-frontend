@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AppBar from 'material-ui/AppBar';
@@ -25,6 +24,8 @@ import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
 import FontIcon from 'material-ui/FontIcon';
 
 import Breadcrumb from '../Breadcrumb';
+
+import { dispatchNewRoute} from '../../utils/http_functions';
 
 import * as actionCreators from '../../actions/auth';
 
@@ -62,8 +63,8 @@ export class Header extends Component {
 
     }
 
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
+    dispatchRoute(route) {
+        dispatchNewRoute(route);
         this.setState({
             open: false,
         });
@@ -111,12 +112,12 @@ export class Header extends Component {
                         !this.props.isAuthenticated ?
                             <div>
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/login')}
+                                    onClick={() => this.dispatchRoute('/login')}
                                     leftIcon={<LoginIcon/>}
                                     primaryText="Login"
                                 />
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/register')}
+                                    onClick={() => this.dispatchRoute('/register')}
                                     leftIcon={<RegisterIcon/>}
                                     primaryText="Register"
                                 />
@@ -125,7 +126,7 @@ export class Header extends Component {
                             <div>
                                 <Card
                                     style={styles.userPanel}
-                                    onClick={() => this.dispatchNewRoute('/profile')}
+                                    onClick={() => this.dispatchRoute('/profile')}
                                 >
                                     <CardHeader
                                       title={this.props.userName}
@@ -142,17 +143,17 @@ export class Header extends Component {
                                 <Divider />
 
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/proposals')}
+                                    onClick={() => this.dispatchRoute('/proposals')}
                                     leftIcon={<ProposalIcon/>}
                                     primaryText="Proposals"
                                 />
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/buys')}
+                                    onClick={() => this.dispatchRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
                                     primaryText="Buys"
                                 />
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/history')}
+                                    onClick={() => this.dispatchRoute('/history')}
                                     leftIcon={<HistoryIcon/>}
                                     primaryText="History"
                                 />
@@ -160,12 +161,12 @@ export class Header extends Component {
                                 <Divider />
 
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/profile')}
+                                    onClick={() => this.dispatchRoute('/profile')}
                                     leftIcon={<ProfileIcon/>}
                                     primaryText="Profile"
                                 />
                                 <MenuItem
-                                    onClick={() => this.dispatchNewRoute('/settings')}
+                                    onClick={() => this.dispatchRoute('/settings')}
                                     leftIcon={<SettingsIcon/>}
                                     primaryText="Settings"
                                 />
@@ -184,7 +185,7 @@ export class Header extends Component {
                 <AppBar
                   title="oraKWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={<FlatButton label="Proposals" onClick={() => this.dispatchNewRoute('/proposals')}/>}
+                  iconElementRight={<FlatButton label="Proposals" onClick={() => this.dispatchRoute('/proposals')}/>}
                 />
 
             <Breadcrumb path={this.props.path}/>
