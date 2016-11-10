@@ -119,9 +119,7 @@ export class ProposalDefinition extends Component {
 
     handleNext = () => {
         const {stepIndex} = this.state;
-        const max = this.steps.length;
-
-        console.log(stepIndex, max, stepIndex >= max);
+        const max = this.steps.length - 1;
 
         if (!this.state.loading) {
             this.dummyAsync(() => this.setState({
@@ -143,7 +141,7 @@ export class ProposalDefinition extends Component {
     };
 
   getStepContent(stepIndex) {
-      return (stepIndex <= this.steps.length)?
+      return (stepIndex < this.steps.length)?
            this.steps[stepIndex].content
            :
            'Mmmm.... that\'s embracing...';
@@ -183,7 +181,7 @@ export class ProposalDefinition extends Component {
             style={{marginRight: 12}}
           />
           <RaisedButton
-            label={stepIndex === 1 ? 'Finish' : 'Next'}
+            label={stepIndex === this.steps.length-1 ? 'Finish' : 'Next'}
             primary={true}
             onTouchTap={this.handleNext}
           />
