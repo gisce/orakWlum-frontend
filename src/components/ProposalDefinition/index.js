@@ -133,6 +133,14 @@ export class ProposalDefinition extends Component {
     }
 
     handleRowSelection = (selectedRows) => {
+        let aggreg = []
+        selectedRows.map(function(row, i){
+            aggreg.push( aggregations[row].id );
+        });
+
+        this.setState({
+            aggregations: aggreg,
+        });
     }
 
     dummyAsync = (cb) => {
