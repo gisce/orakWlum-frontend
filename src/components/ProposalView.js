@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposal0';
 import { debug } from '../utils/debug';
 
-import { Proposal0 } from './Proposal0';
+import { Proposal } from './Proposal';
 
 function mapStateToProps(state) {
     return {
@@ -44,7 +44,7 @@ export default class ProposalView extends React.Component {
                     {!this.props.loaded
                         ? <h1>Loading Proposal {proposalId}...</h1>
                         :
-                        <Proposal0 proposal={proposal} />
+                        <Proposal proposal={proposal} />
                     }
                     {debug(this.props.data)}
                 </div>
