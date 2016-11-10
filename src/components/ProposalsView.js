@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposals';
 import { debug } from '../utils/debug';
 
+import { dispatchNewRoute} from '../utils/http_functions';
+
 import { ProposalList } from './ProposalList';
 import { ContentHeader } from './ContentHeader';
 
@@ -43,6 +45,7 @@ export default class ProposalsView extends React.Component {
 
     addProposal() {
         console.log("add new proposal");
+        dispatchNewRoute("/proposals/new");
     }
 
     render() {
