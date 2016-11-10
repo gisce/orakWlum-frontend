@@ -59,7 +59,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class Proposal0 extends Component {
+export class Proposal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -118,7 +118,7 @@ export class Proposal0 extends Component {
     }
 }
 
-Proposal0.propTypes = {
+Proposal.propTypes = {
     logoutAndRedirect: React.PropTypes.func,
     isAuthenticated: React.PropTypes.bool,
 };
