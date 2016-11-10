@@ -13,6 +13,7 @@ import Analytics from './components/Analytics';
 import NotFound from './components/NotFound';
 import Proposals from './components/ProposalsView';
 import Proposal from './components/ProposalView';
+import ProposalNew from './components/ProposalNewView';
 import Profile from './components/ProfileView';
 
 import { DetermineAuth } from './components/DetermineAuth';
@@ -28,6 +29,7 @@ export default (
         <Route path="history" component={requireAuthentication(Analytics)} />
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
+        <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
