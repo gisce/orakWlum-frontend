@@ -18,6 +18,7 @@ const styles = {
 };
 
 export class ProposalDefinition extends Component {
+
     constructor(props) {
       super(props);
 
@@ -30,8 +31,52 @@ export class ProposalDefinition extends Component {
           date_end: null,
           controlledDate: null,
       };
-    }
 
+      this.steps = [
+              {
+                  title: "Name",
+                  content: (
+                      <div>
+                          <p>We need some details to create a new Proposal.</p>
+                          <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
+                          <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
+                      </div>
+                  )
+              },
+              {
+                  title: "Dates",
+                  content: (
+                      <div>
+                          <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
+
+                          <DatePicker
+                              floatingLabelText="Start date"
+                              hintText="Start date"
+                              value={this.state.date_start}
+                              onChange={this.handleChangeStartDate}
+                          />
+
+                          <DatePicker
+                              floatingLabelText="End date"
+                              hintText="End date"
+                              value={this.state.date_end}
+                              onChange={this.handleChangeEndDate}
+                          />
+
+                      </div>
+                  )
+              },
+              {
+                  title: "Aggregations",
+                  content: (
+                      <div>
+                          <p>Great! Now <b>select the aggregations</b> to perform:</p>
+                      </div>
+                  )
+              },
+
+          ];
+    }
 
     dummyAsync = (cb) => {
         this.setState({loading: true}, () => {
@@ -58,7 +103,6 @@ export class ProposalDefinition extends Component {
         this.setState({
             date_end: date_end,
         });
-        console.log(this.state.date_end);
     };
 
     handleNext = () => {
@@ -83,39 +127,10 @@ export class ProposalDefinition extends Component {
     };
 
   getStepContent(stepIndex) {
-    switch (stepIndex) {
-      case 0:
-        return (
-            <div>
-                <p>We need some details to create a new Proposal.</p>
-                <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
-                <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
-            </div>
-        );
-      case 1:
-        return (
-            <div>
-                <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
-
-                <DatePicker
-                    floatingLabelText="Start date"
-                    hintText="Start date"
-                    value={this.state.date_start}
-                    onChange={this.handleChangeStartDate}
-                />
-
-                <DatePicker
-                    floatingLabelText="End date"
-                    hintText="End date"
-                    value={this.state.date_end}
-                    onChange={this.handleChangeEndDate}
-                />
-
-            </div>
-        );
-      default:
-        return 'Mmmm.... that\'s embracing...';
-    }
+      return (stepIndex <= this.steps.length)?
+           this.steps[stepIndex].content
+           :
+           'Mmmm.... that\'s embracing...';
   }
 
   renderContent() {
@@ -167,12 +182,13 @@ export class ProposalDefinition extends Component {
     return (
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
         <Stepper activeStep={stepIndex}>
-          <Step>
-            <StepLabel>Name</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Dates</StepLabel>
-          </Step>
+            {this.steps.map(function(step, index) {
+                return (
+                    <Step>
+                        <StepLabel>{step.title}</StepLabel>
+                    </Step>
+                )
+            })}
         </Stepper>
           {this.renderContent()}
       </div>
