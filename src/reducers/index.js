@@ -4,7 +4,6 @@ import auth  from './auth'
 import data  from './data'
 import profile  from './profile'
 import proposal  from './proposal'
-import proposal0  from './proposal0'
 import proposals  from './proposals'
 
 const rootReducer = combineReducers({
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
     data,
     proposals,
     proposal,
-    proposal0,
     profile,
 });
 
