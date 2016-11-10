@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -10,6 +9,9 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/proposals';
 import { ProposalTag } from '../ProposalTag';
+import { ProposalGraph } from '../ProposalGraph';
+
+import { dispatchNewRoute} from '../../utils/http_functions';
 
 const styles = {
   root: {
@@ -32,9 +34,6 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
-        userName: state.auth.userName,
-        isAuthenticated: state.auth.isAuthenticated,
     };
 }
 
@@ -52,15 +51,16 @@ export class ProposalList extends Component {
             title: props.title,
             path: props.path + "/",
         };
-
-    }
-
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
     }
 
     render() {
         const data_received = this.state.proposals;
+
+        const width=1024;
+        const height=300;
+
+        const howManyBig=1;
+
         const ProposalList = () => (
 
           <div style={styles.root}>
@@ -73,19 +73,20 @@ export class ProposalList extends Component {
             <Subheader>{this.state.title}</Subheader>
               {data_received.map((tile, index) => (
                     <GridTile
-                      key={tile.name}
+                      key={tile.id}
                       title={"#" + (index+1) + " " + tile.name}
-                      subtitle={<span>{new Date(tile.creationDate).toLocaleString()}</span>}
+                      subtitle={<span>{new Date(tile.creation_date).toLocaleString()}</span>}
                       actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
                       actionPosition="right"
                       titlePosition="top"
                       titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                      cols={index < 4 ? 2 : 1}
-                      rows={index < 4 ? 2 : 1}
-                      onClick={() => this.dispatchNewRoute(this.state.path + (index +1))}
+                      cols={index < howManyBig ? 2 : 1}
+                      rows={index < howManyBig ? 2 : 1}
+                      onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
                       style={styles.gridTile}
                     >
-                    <img src={tile.image} />
+                    <div><br/><br/><br/><br/></div>
+                    <ProposalGraph stacked={true} proposal={tile} width={ index < howManyBig ? width : width/2} height={ index < howManyBig ? height : height/2.3} />
 
                     </GridTile>
               ))}
@@ -97,12 +98,9 @@ export class ProposalList extends Component {
             <div>
                 <ProposalList />
             </div>
-
         );
     }
 }
 
 ProposalList.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
 };

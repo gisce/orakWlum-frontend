@@ -99,8 +99,8 @@ export function registerUserFailure(error) {
     return {
         type: REGISTER_USER_FAILURE,
         payload: {
-            status: error.status,
-            statusText: error.statusText,
+            status: error.response.status,
+            statusText: error.response.statusText,
             statusType: "danger",
         },
     };
@@ -126,7 +126,13 @@ export function registerUser(email, password) {
                 }
             })
             .catch(error => {
-                dispatch(registerUserFailure(error));
+                dispatch(registerUserFailure({
+                    response: {
+                        statusType: "warning",
+                        status: 403,
+                        statusText: error.response.data.message,
+                    }
+                }));
             });
     };
 }

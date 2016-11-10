@@ -2,8 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposals';
+import { debug } from '../utils/debug';
+
+import { dispatchNewRoute} from '../utils/http_functions';
 
 import { ProposalList } from './ProposalList';
+import { ContentHeader } from './ContentHeader';
 
 function mapStateToProps(state) {
     return {
@@ -18,15 +22,30 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const style = {
+    buttonAdd: {
+        marginRight: 20,
+    },
+    buttonPosition: {
+        textAlign: 'right',
+    }
+};
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalsView extends React.Component {
     componentDidMount() {
+        const debug = localStorage.getItem('debug');
         this.fetchData();
     }
 
     fetchData() {
         const token = this.props.token;
         this.props.fetchProtectedDataProposals(token);
+    }
+
+    addProposal() {
+        console.log("add new proposal");
+        dispatchNewRoute("/proposals/new");
     }
 
     render() {
@@ -36,7 +55,7 @@ export default class ProposalsView extends React.Component {
                     ? <h1>Loading Proposals...</h1>
                     :
                     <div>
-                        <h1>Proposals list</h1>
+                        <ContentHeader title="Proposals List" addButton={true} buttonClickMethod={() => this.addProposal()} />
 
                         <ProposalList
                             title="Last proposals"
@@ -44,11 +63,9 @@ export default class ProposalsView extends React.Component {
                             path={this.props.location.pathname}
                         />
 
-                        <h3>Proposals:</h3>
-                        <pre>{ JSON.stringify(this.props.data, null, 2) }</pre>
-
                     </div>
                 }
+            {debug(this.props.data)}
             </div>
         );
     }
@@ -58,7 +75,6 @@ ProposalsView.propTypes = {
     fetchProtectedDataProposals: React.PropTypes.func,
     fetchProtectedData: React.PropTypes.func,
     loaded: React.PropTypes.bool,
-    userName: React.PropTypes.string,
     data: React.PropTypes.any,
     token: React.PropTypes.string,
 };

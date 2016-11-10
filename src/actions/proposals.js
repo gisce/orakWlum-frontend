@@ -30,7 +30,7 @@ export function fetchProtectedDataRequest() {
 export function fetchProtectedDataProposals(token) {
     return (dispatch) => {
         dispatch(fetchProtectedDataRequest());
-        data_fetch_api_resource(token, "proposals/")
+        data_fetch_api_resource(token, "proposal/")
             .then(parseJSON)
             .then(response => {
                 dispatch(receiveProtectedData(response.result));

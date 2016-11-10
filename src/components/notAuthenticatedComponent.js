@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import * as actionCreators from '../actions/auth';
+import { validate_token } from '../utils/http_functions'
 
 function mapStateToProps(state) {
     return {
@@ -15,7 +16,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
-
 
 export function requireNoAuthentication(Component) {
 
@@ -43,20 +43,11 @@ export function requireNoAuthentication(Component) {
             } else {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    fetch('/api/is_token_valid', {
-                        method: 'post',
-                        credentials: 'include',
-                        headers: {
-                            'Accept': 'application/json', // eslint-disable-line quote-props
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ token }),
-                    })
+                    validate_token(token)
                         .then(res => {
                             if (res.status === 200) {
                                 this.props.loginUserSuccess(token);
                                 browserHistory.push('/main');
-
                             } else {
                                 this.setState({
                                     loaded: true,
@@ -90,5 +81,4 @@ export function requireNoAuthentication(Component) {
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(notAuthenticatedComponent);
-
 }

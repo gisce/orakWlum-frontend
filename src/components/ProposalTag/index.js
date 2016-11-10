@@ -45,10 +45,6 @@ const colors = {
 };
 
 export class ProposalTag extends Component {
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
-    }
-
     render() {
         const tag = this.props.tag;
         const is_lite = (this.props.lite!=null)?this.props.lite:false;
@@ -111,6 +107,4 @@ export class ProposalTag extends Component {
 }
 
 ProposalTag.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
 };
