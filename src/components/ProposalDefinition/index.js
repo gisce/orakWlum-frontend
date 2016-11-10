@@ -106,7 +106,6 @@ export class ProposalDefinition extends Component {
                             </TableHeader>
 
                             <TableBody
-                                deselectOnClickaway={false}
                                 stripedRows={true}
                             >
                             {
@@ -157,25 +156,35 @@ export class ProposalDefinition extends Component {
         ];
     }
 
-
-
     handleRowSelection = (selectedRows) => {
         let aggregations_list = [];
 
-        if (selectedRows == "all") {
-            console.dir(selectedRows);
-            aggregations.map(function(agg, i){
-                aggregations_list.push( agg.id );
-            });
-        } else {
-            selectedRows.map(function(row, i){
-                aggregations_list.push( aggregations[row].id );
-            });
+        console.dir(selectedRows);
+        console.log("toDo BUG SELECTING UN")
+
+        /*
+        if (selectedRows == "none")
+            aggregations_list = [];
+        else {
+            if (selectedRows == "all") {
+                aggregations.map(function(agg, i){
+                    aggregations_list.push( agg.id );
+                });
+            } else {
+                console.log("BUG ")
+                selectedRows.map(function(row, i){
+                    aggregations_list.push( aggregations[row].id );
+                });
+            }
         }
 
         this.setState({
             aggregations: aggregations_list,
         });
+
+        */
+
+        console.dir(aggregations_list);
     }
 
     dummyAsync = (cb) => {
