@@ -11,8 +11,9 @@ import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Divider from 'material-ui/Divider';
 
-
 import DatePicker from 'material-ui/DatePicker';
+
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 const styles = {
 };
@@ -165,7 +166,7 @@ export class ProposalDefinition extends Component {
               Change again
             </a>.
           </p>
-          <p>Password change status</p>
+          <p>Create new proposal status</p>
         </div>
       );
     }
