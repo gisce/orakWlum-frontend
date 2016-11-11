@@ -25,7 +25,7 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 0,
+          stepIndex: 2,
           name: "",
           date_start: null,
           date_end: null,
@@ -91,7 +91,7 @@ export class ProposalDefinition extends Component {
                             </TableHeader>
 
                             <TableBody
-                                stripedRows={true}
+                                stripedRows={false}
                             >
                             {
                                 this.props.aggregationsList.map(function(agg, index) {
