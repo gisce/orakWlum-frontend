@@ -23,11 +23,11 @@ export class ProposalDefinition extends Component {
       super(props);
 
       let aggregations_list=[];
-      //initialize list with all deselected
-      props.aggregationsList.map(function(agg, i){
-          aggregations_list.push( false );
-      });
 
+      //initialize list with all selected by default
+      props.aggregationsList.map(function(agg, i){
+          aggregations_list.push( true );
+      });
 
       this.state = {
           loading: false,
@@ -183,8 +183,6 @@ export class ProposalDefinition extends Component {
                 selectedRows.map(function(agg, i){
                     aggregations_list[agg] = true;
                 });
-
-
 
         //Extract names to facilitate render of the summary
         let aggregationsNames = [];
