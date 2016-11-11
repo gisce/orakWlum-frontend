@@ -18,21 +18,6 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 const styles = {
 };
 
-const aggregations = [
-    {
-        name: 'Agg A',
-        id: '0001',
-    },
-    {
-        name: 'Agg B',
-        id: '0002',
-    },
-    {
-        name: 'Agg C',
-        id: '0003',
-    },
-]
-
 export class ProposalDefinition extends Component {
     constructor(props) {
       super(props);
