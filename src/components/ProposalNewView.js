@@ -37,9 +37,17 @@ export default class ProfileView extends React.Component {
     render() {
         return (
             <div>
+
+
                 <div>
+
                     <h1>New proposal</h1>
-                    <ProposalDefinition aggregationsList={this.props.data.aggregations_list}/>
+
+                    {!this.props.data.loaded
+                        ? <h1>Loading New proposal...</h1>
+                        :
+                        <ProposalDefinition aggregationsList={this.props.data.aggregations_list}/>
+                    }
                 </div>
 
                 {debug(this.props.data)}
