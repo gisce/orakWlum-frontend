@@ -21,6 +21,7 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProfileView extends React.Component {
     componentDidMount() {
+        this.fetchAggregations();
     }
 
     updateData(data) {
@@ -28,12 +29,17 @@ export default class ProfileView extends React.Component {
         this.props.updateProfile(token, data);
     }
 
+    fetchAggregations() {
+        const token = this.props.token;
+        this.props.fetchAggregations(token);
+    }
+
     render() {
         return (
             <div>
                 <div>
                     <h1>New proposal</h1>
-                    <ProposalDefinition />
+                    <ProposalDefinition aggregationsList={this.props.data.aggregations_list}/>
                 </div>
 
                 {debug(this.props.data)}
