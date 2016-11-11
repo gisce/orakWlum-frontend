@@ -22,6 +22,13 @@ export class ProposalDefinition extends Component {
     constructor(props) {
       super(props);
 
+      let aggregations_list=[];
+      //initialize list with all deselected
+      props.aggregationsList.map(function(agg, i){
+          aggregations_list.push( false );
+      });
+
+
       this.state = {
           loading: false,
           finished: false,
@@ -29,14 +36,27 @@ export class ProposalDefinition extends Component {
           name: "",
           date_start: null,
           date_end: null,
-          aggregations: "",
+          aggregations: aggregations_list,
           aggregations_all: props.aggregationsList,
       };
       this.stepsLength = this.getSteps().length;
     }
 
     getSteps = () => {
-        const aggregationsAllKeys = this.props.aggregationsList;
+        const aggregationsList = this.state.aggregations_all;
+
+        let aggregationsWithStatus = [];
+        for (var i=0; i<aggregationsList.length; i++) {
+            let agg = aggregationsList[i];
+
+            aggregationsWithStatus.push(
+                {
+                    name:agg.name,
+                    selected:this.state.aggregations[i],
+                }
+            );
+        }
+
         return [
             {
                 key: "0",
@@ -93,13 +113,13 @@ export class ProposalDefinition extends Component {
 
                             <TableBody
                                 stripedRows={false}
+                                deselectOnClickaway={false}
                             >
                             {
-
-                                Object.keys(aggregationsAllKeys).map(function(agg,i) {
+                                aggregationsWithStatus.map(function(agg, index) {
                                     return (
-                                        <TableRow key={"tableRow_"+i}>
-                                          <TableRowColumn key={agg}>{aggregationsAllKeys[agg].name}</TableRowColumn>
+                                        <TableRow key={"tableRow_"+index} selected={agg.selected}>
+                                          <TableRowColumn>{agg.name}</TableRowColumn>
                                         </TableRow>
                                     )
                                 })
@@ -145,34 +165,28 @@ export class ProposalDefinition extends Component {
 
     handleRowSelection = (selectedRows) => {
         let aggregations_list = [];
-
         const aggregationsAll = this.props.aggregationsList;
 
-        console.dir(selectedRows);
+        //initialize list with all deselected
+        aggregationsAll.map(function(agg, i){
+            aggregations_list.push( false );
+        });
 
-        //*
-        if (selectedRows == "none")
-            aggregations_list = [];
-        else {
-            if (selectedRows == "all") {
-                Object.keys(aggregationsAll).map(function(agg, i){
-                    aggregations_list.push( aggregationsAll[agg].id );
+        if (selectedRows == "all")
+            //mark all as selected
+            aggregationsAll.map(function(agg, i){
+                aggregations_list[i] =  true;
+            });
+        else
+            if (selectedRows != "none")
+                //mark the selected
+                selectedRows.map(function(agg, i){
+                    aggregations_list[agg] = true;
                 });
-            } else {
-                console.log("BUG ")
-                selectedRows.map(function(row, i){
-                    aggregations_list.push( aggregationsAll[row].id );
-                });
-            }
-        }
 
         this.setState({
             aggregations: aggregations_list,
         });
-
-        // */
-
-        console.dir(aggregations_list);
     }
 
     dummyAsync = (cb) => {
