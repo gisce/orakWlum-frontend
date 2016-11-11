@@ -72,6 +72,7 @@ export class Proposal extends Component {
     }
 
     render() {
+        const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
         const Proposal = () => (
             <Card>
@@ -102,12 +103,16 @@ export class Proposal extends Component {
               <ProposalGraph stacked={true} proposal={proposal} height={500} />
           }
 
+          {
+              !readOnly &&
               <CardActions>
                 <FlatButton label="Run" />
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Delete" />
               </CardActions>
+          }
+
             </Card>
         );
 
@@ -124,6 +129,5 @@ export class Proposal extends Component {
 }
 
 Proposal.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
+    readOnly: React.PropTypes.bool,
 };
