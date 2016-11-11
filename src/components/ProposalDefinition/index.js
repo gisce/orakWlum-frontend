@@ -194,7 +194,7 @@ export class ProposalDefinition extends Component {
         //Extract names to facilitate render of the summary
         let aggregationsNames = [];
         aggregationsAll.map( (agg,i) => {
-            aggregations_list[i] && aggregationsNames.push(agg.lite);
+            aggregations_list[i] && aggregationsNames.push(agg);
         });
 
         this.setState({
