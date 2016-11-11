@@ -48,7 +48,6 @@ export class ProposalDefinition extends Component {
     }
 
     getSteps = () => {
-
         const aggregationsList = this.state.aggregations_all;
 
         let aggregationsWithStatus = [];
@@ -111,7 +110,8 @@ export class ProposalDefinition extends Component {
                             multiSelectable={true}
                             onRowSelection={this.handleRowSelection}
                         >
-                            <TableHeader>
+                            <TableHeader
+                                enableSelectAll={false}>
                               <TableRow>
                                 <TableHeaderColumn>Name</TableHeaderColumn>
                               </TableRow>
@@ -178,17 +178,20 @@ export class ProposalDefinition extends Component {
             aggregations_list.push( false );
         });
 
-        if (selectedRows == "all")
+        if (selectedRows == "all") {
             //mark all as selected
             aggregationsAll.map(function(agg, i){
                 aggregations_list[i] =  true;
             });
-        else
+            selectedRows = aggregations_list;
+        }
+        else {
             if (selectedRows != "none")
                 //mark the selected ones
                 selectedRows.map(function(agg, i){
                     aggregations_list[agg] = true;
                 });
+        }
 
         //Extract names to facilitate render of the summary
         let aggregationsNames = [];
