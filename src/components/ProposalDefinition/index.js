@@ -35,7 +35,7 @@ export class ProposalDefinition extends Component {
           loading: false,
           finished: false,
           stepIndex: 3,
-          name: "Xav",
+          name: "Proposal new",
           date_start: null,
           date_end: null,
           aggregations: aggregations_list,
@@ -44,7 +44,7 @@ export class ProposalDefinition extends Component {
       this.stepsLength = this.getSteps().length;
     }
 
-    componentDidMount = () => {
+    componentWillMount = () => {
         //select all by default
         this.handleRowSelection("all");
     }
@@ -160,27 +160,6 @@ export class ProposalDefinition extends Component {
 
                         <Proposal proposal={proposalSummary} readOnly/>
 
-                        <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
-
-                        <br/><br/>
-
-                        <DatePicker
-                            floatingLabelText="Start date"
-                            hintText="Start date"
-                            value={this.state.date_start}
-                            disabled={true}
-                        />
-
-                        <DatePicker
-                            floatingLabelText="End date"
-                            hintText="End date"
-                            value={this.state.date_end}
-                            disabled={true}
-                        />
-
-                        <br/>
-                        <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregationsNames}/>
-
                     </div>
                 )
             },
@@ -215,7 +194,7 @@ export class ProposalDefinition extends Component {
         //Extract names to facilitate render of the summary
         let aggregationsNames = [];
         aggregationsAll.map( (agg,i) => {
-            aggregations_list[i] && aggregationsNames.push(agg.name);
+            aggregations_list[i] && aggregationsNames.push(agg.lite);
         });
 
         this.setState({
