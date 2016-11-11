@@ -154,7 +154,7 @@ export class ProposalDefinition extends Component {
                         />
 
                         <br/>
-                        <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregations}/>
+                        <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Aggregations" value={this.state.aggregationsNames}/>
 
                     </div>
                 )
@@ -179,13 +179,22 @@ export class ProposalDefinition extends Component {
             });
         else
             if (selectedRows != "none")
-                //mark the selected
+                //mark the selected ones
                 selectedRows.map(function(agg, i){
                     aggregations_list[agg] = true;
                 });
 
+
+
+        //Extract names to facilitate render of the summary
+        let aggregationsNames = [];
+        aggregationsAll.map( (agg,i) => {
+            aggregations_list[i] && aggregationsNames.push(agg.name);
+        });
+
         this.setState({
             aggregations: aggregations_list,
+            aggregationsNames: aggregationsNames,
         });
     }
 
