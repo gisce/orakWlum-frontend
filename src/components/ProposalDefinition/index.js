@@ -45,12 +45,12 @@ export class ProposalDefinition extends Component {
           date_start: null,
           date_end: null,
           aggregations: "",
+          aggregations_all: props.aggregationsList,
       };
       this.stepsLength = this.getSteps().length;
     }
 
     getSteps = () => {
-
         return [
             {
                 key: "0",
@@ -109,7 +109,7 @@ export class ProposalDefinition extends Component {
                                 stripedRows={true}
                             >
                             {
-                                aggregations.map(function(agg, index) {
+                                this.props.aggregationsList.map(function(agg, index) {
                                     return (
                                         <TableRow key={"tableRow_"+index}>
                                           <TableRowColumn>{agg.name}</TableRowColumn>
@@ -159,7 +159,6 @@ export class ProposalDefinition extends Component {
     handleRowSelection = (selectedRows) => {
         let aggregations_list = [];
 
-        console.dir(selectedRows);
         console.log("toDo BUG SELECTING UN")
 
         /*
@@ -167,13 +166,13 @@ export class ProposalDefinition extends Component {
             aggregations_list = [];
         else {
             if (selectedRows == "all") {
-                aggregations.map(function(agg, i){
+                this.props.aggregationsList.map(function(agg, i){
                     aggregations_list.push( agg.id );
                 });
             } else {
                 console.log("BUG ")
                 selectedRows.map(function(row, i){
-                    aggregations_list.push( aggregations[row].id );
+                    aggregations_list.push( this.props.aggregationsList[row].id );
                 });
             }
         }
