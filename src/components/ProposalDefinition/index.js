@@ -24,9 +24,9 @@ export class ProposalDefinition extends Component {
 
       let aggregations_list=[];
 
-      //initialize list with all selected by default
+      //initialize list
       props.aggregationsList.map(function(agg, i){
-          aggregations_list.push( true );
+          aggregations_list.push( false );
       });
 
       this.state = {
@@ -42,7 +42,13 @@ export class ProposalDefinition extends Component {
       this.stepsLength = this.getSteps().length;
     }
 
+    componentDidMount = () => {
+        //select all by default
+        this.handleRowSelection("all");
+    }
+
     getSteps = () => {
+
         const aggregationsList = this.state.aggregations_all;
 
         let aggregationsWithStatus = [];
