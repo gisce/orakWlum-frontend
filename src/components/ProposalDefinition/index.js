@@ -6,14 +6,16 @@ import {
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Divider from 'material-ui/Divider';
-
 import DatePicker from 'material-ui/DatePicker';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+
+import {Proposal} from '../Proposal'
 
 const styles = {
 };
@@ -32,8 +34,8 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 2,
-          name: "",
+          stepIndex: 3,
+          name: "Xav",
           date_start: null,
           date_end: null,
           aggregations: aggregations_list,
@@ -60,6 +62,17 @@ export class ProposalDefinition extends Component {
                     selected:this.state.aggregations[i],
                 }
             );
+        }
+
+        const proposalSummary = {
+            name:this.state.name,
+            aggregations:this.state.aggregationsNames,
+            "creation_date": "Fri, 11 Nov 2016 13:28:33 GMT",
+            "days_range": [
+              "2017-09-03",
+              "2017-09-06"
+            ],
+
         }
 
         return [
@@ -111,7 +124,8 @@ export class ProposalDefinition extends Component {
                             onRowSelection={this.handleRowSelection}
                         >
                             <TableHeader
-                                enableSelectAll={false}>
+                                enableSelectAll={false}
+                            >
                               <TableRow>
                                 <TableHeaderColumn>Name</TableHeaderColumn>
                               </TableRow>
@@ -141,6 +155,11 @@ export class ProposalDefinition extends Component {
                 content: (
                     <div>
                         <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
+
+                        <br/><br/>
+
+                        <Proposal proposal={proposalSummary} readOnly/>
+
                         <TextField disabled={true} style={{marginTop: 0}} floatingLabelText="Name" value={this.state.name}/>
 
                         <br/><br/>
