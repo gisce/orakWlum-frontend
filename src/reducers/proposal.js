@@ -27,6 +27,7 @@ export default createReducer(initialState, {
     [FETCH_AGGREGATIONS_REQUEST]: (state) =>
         Object.assign({}, state, {
             isFetching: true,
+            loaded: false,
         }),
 
 });
