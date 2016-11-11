@@ -36,6 +36,7 @@ export class ProposalDefinition extends Component {
     }
 
     getSteps = () => {
+        const aggregationsAllKeys = this.props.aggregationsList;
         return [
             {
                 key: "0",
@@ -94,10 +95,11 @@ export class ProposalDefinition extends Component {
                                 stripedRows={false}
                             >
                             {
-                                this.props.aggregationsList.map(function(agg, index) {
+
+                                Object.keys(aggregationsAllKeys).map(function(agg,i) {
                                     return (
-                                        <TableRow key={"tableRow_"+index}>
-                                          <TableRowColumn>{agg.name}</TableRowColumn>
+                                        <TableRow key={"tableRow_"+i}>
+                                          <TableRowColumn key={agg}>{aggregationsAllKeys[agg].name}</TableRowColumn>
                                         </TableRow>
                                     )
                                 })
@@ -144,20 +146,22 @@ export class ProposalDefinition extends Component {
     handleRowSelection = (selectedRows) => {
         let aggregations_list = [];
 
-        console.log("toDo BUG SELECTING UN")
+        const aggregationsAll = this.props.aggregationsList;
 
-        /*
+        console.dir(selectedRows);
+
+        //*
         if (selectedRows == "none")
             aggregations_list = [];
         else {
             if (selectedRows == "all") {
-                this.props.aggregationsList.map(function(agg, i){
-                    aggregations_list.push( agg.id );
+                Object.keys(aggregationsAll).map(function(agg, i){
+                    aggregations_list.push( aggregationsAll[agg].id );
                 });
             } else {
                 console.log("BUG ")
                 selectedRows.map(function(row, i){
-                    aggregations_list.push( this.props.aggregationsList[row].id );
+                    aggregations_list.push( aggregationsAll[row].id );
                 });
             }
         }
@@ -166,7 +170,7 @@ export class ProposalDefinition extends Component {
             aggregations: aggregations_list,
         });
 
-        */
+        // */
 
         console.dir(aggregations_list);
     }
