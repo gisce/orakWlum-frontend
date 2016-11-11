@@ -20,7 +20,7 @@ export default createReducer(initialState, {
         }),
     [RECEIVE_AGGREGATIONS]: (state, payload) =>
         Object.assign({}, state, {
-            aggregations: payload.data,
+            aggregations_list: payload.data,
             isFetching: false,
             loaded: true,
         }),
