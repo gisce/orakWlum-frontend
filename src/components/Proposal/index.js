@@ -94,11 +94,11 @@ export class Proposal extends Component {
           }
           {
               proposal.aggregations &&
-              <div style={styles.wrapper}>xxx
+              <div style={styles.wrapper}>
                   {
                   proposal.aggregations.map( function(agg, i) {
                       return (
-                           <ProposalTag key={"aggregationTag_"+i} tag={agg} />
+                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} />
                        );
                   })
                   }
