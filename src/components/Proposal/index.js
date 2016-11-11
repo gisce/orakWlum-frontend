@@ -74,6 +74,7 @@ export class Proposal extends Component {
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
+
         const Proposal = () => (
             <Card>
               <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />
@@ -91,6 +92,19 @@ export class Proposal extends Component {
                   <ProposalTag tag={proposal.status} />
               </div>
           }
+          {
+              proposal.aggregations &&
+              <div style={styles.wrapper}>xxx
+                  {
+                  proposal.aggregations.map( function(agg, i) {
+                      return (
+                           <ProposalTag key={"aggregationTag_"+i} tag={agg} />
+                       );
+                  })
+                  }
+              </div>
+          }
+
               <CardText>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
