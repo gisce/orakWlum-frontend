@@ -90,7 +90,7 @@ export class Proposal extends Component {
         const proposal = this.state.proposal;
 
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
-        const lastExecution = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
+        const lastExecution = new Date(proposal.executionDate).toLocaleString(locale, hourOptions);
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
         const subtitle = <span>{daysRange}</span>;
@@ -126,7 +126,10 @@ export class Proposal extends Component {
           }
 
               <CardText>
-                  Last execution was done at {lastExecution}
+
+          {       proposal.executionDate &&
+                  <span>Last execution was done at {lastExecution}</span>
+          }
               </CardText>
 
           {
