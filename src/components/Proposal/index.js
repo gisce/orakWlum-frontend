@@ -95,6 +95,7 @@ export class Proposal extends Component {
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
         const subtitle = <span>{daysRange}</span>;
 
+
         const Proposal = () => (
             <Card>
               <CardTitle title={title} subtitle={subtitle} />
@@ -118,7 +119,7 @@ export class Proposal extends Component {
                   {
                   proposal.aggregations.map( function(agg, i) {
                       return (
-                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} />
+                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
                        );
                   })
                   }
