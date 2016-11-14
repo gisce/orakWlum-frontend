@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import TextField from 'material-ui/TextField';
 import {
@@ -281,7 +281,13 @@ export class ProposalDefinition extends Component {
     };
 
     handleChangeStartDate = (event, date_start) => {
-        const date_end = this.state.date_end;
+        const date_end = (this.state.date_end == null)? date_start : this.state.date_end;
+
+        (this.state.date_end == null) &&
+            this.setState({
+                date_end: date_end,
+            });
+
         this.setState({
             date_start: date_start,
         });
@@ -297,7 +303,6 @@ export class ProposalDefinition extends Component {
             date_end: date_end,
         });
 
-
         this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
         this.validateDatesRange(date_start, date_end);
     };
@@ -305,7 +310,7 @@ export class ProposalDefinition extends Component {
     validateDatesRange = (date_start, date_end) => {
         console.log(date_start);
         console.log(date_end);
-        
+
         if (date_start > date_end) {
             this.setState({
                 date_end_error_text: "End date must be >= the starting one.",
@@ -318,17 +323,6 @@ export class ProposalDefinition extends Component {
             });
 
         }
-/*
-const date_limit_inf = Date();
-const date_limit_sup = Date();
-
-        else if (date_start < date_limit_inf) {
-            this.setState({
-                date_end_error_text: "End date must be greater than the starting one.",
-                date_end_validation: false,
-            });
-        }
-*/
     }
 
     handleNext = () => {
