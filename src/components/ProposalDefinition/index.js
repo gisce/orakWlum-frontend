@@ -273,7 +273,6 @@ export class ProposalDefinition extends Component {
     }
 
     handleChangeName = (event, name) => {
-        //validate name
         this.setState({
             name: name,
         });
@@ -282,7 +281,6 @@ export class ProposalDefinition extends Component {
     };
 
     handleChangeStartDate = (event, date_start) => {
-        //validate date
         this.setState({
             date_start: date_start,
         });
@@ -295,6 +293,8 @@ export class ProposalDefinition extends Component {
         this.setState({
             date_end: date_end,
         });
+
+        this.validateField({date_start: this.state.date_start, date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
     };
 
     handleNext = () => {
