@@ -231,7 +231,7 @@ export class ProposalDefinition extends Component {
                     type: 'string',
                     minLength: 3,
                     maxLength: 4,
-                    allowEmpty: false
+                    allowEmpty: false,
                 },
             }
         }
@@ -259,7 +259,7 @@ export class ProposalDefinition extends Component {
                 });
             } else {
                 this.setState({
-                    [state_error_text]: "Name " + name_validation.errors[0].message,
+                    [state_error_text]: field_name[0].toUpperCase() + field_name.slice(1) + " " + name_validation.errors[0].message,
                     [state_validation]: false,
                 });
             }
