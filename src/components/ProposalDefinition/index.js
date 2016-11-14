@@ -224,41 +224,46 @@ export class ProposalDefinition extends Component {
             name: name,
         });
 
-        this.validateName(name);
+        const validations = {
+            properties: {
+                name: {
+                    description: 'Name of the New Proposal',
+                    type: 'string',
+                    minLength: 3,
+                    maxLength: 4,
+                    allowEmpty: false
+                },
+            }
+        }
+
+        this.validateField({name: name}, "name", validations);
     };
 
-    validateName = (name) => {
-        if (name === '' || name.length == 0 || !name) {
+    validateField = (field, field_name, validations) => {
+        const state_error_text = field_name + "_error_text";
+        const state_validation = field_name + "_validation";
+
+        if (field === '' || field.length == 0 || !field) {
             this.setState({
-                name_error_text: null,
-                name_validation: false,
+                [state_error_text]: null,
+                [state_validation]: false,
             });
 
         } else {
-            const name_validation = revalidator.validate({name: name}, {
-                properties: {
-                    name: {
-                        description: 'Name of the New Proposal',
-                        type: 'string',
-                        minLength: 3,
-                        maxLength: 4,
-                        allowEmpty: false
-                    },
-                }
-                }
-            );
+            const name_validation = revalidator.validate(field, validations);
 
             if (name_validation.valid) {
                 this.setState({
-                    name_error_text: null,
-                    name_validation: true,
+                    [state_error_text]: null,
+                    [state_validation]: true,
                 });
             } else {
                 this.setState({
-                    name_error_text: "Name " + name_validation.errors[0].message,
-                    name_validation: false,
+                    [state_error_text]: "Name " + name_validation.errors[0].message,
+                    [state_validation]: false,
                 });
             }
+            console.log(name_validation);
         }
     }
 
