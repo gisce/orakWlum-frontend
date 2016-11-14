@@ -21,6 +21,17 @@ const revalidator = require('revalidator');
 const styles = {
 };
 
+const validations = {
+    name: {
+        description: 'Name of the New Proposal',
+        type: 'string',
+        minLength: 3,
+        maxLength: 4,
+        allowEmpty: false,
+    },
+}
+
+
 export class ProposalDefinition extends Component {
     constructor(props) {
       super(props);
@@ -218,27 +229,6 @@ export class ProposalDefinition extends Component {
         });
     };
 
-    handleChangeName = (event, name) => {
-        //validate name
-        this.setState({
-            name: name,
-        });
-
-        const validations = {
-            properties: {
-                name: {
-                    description: 'Name of the New Proposal',
-                    type: 'string',
-                    minLength: 3,
-                    maxLength: 4,
-                    allowEmpty: false,
-                },
-            }
-        }
-
-        this.validateField({name: name}, "name", validations);
-    };
-
     validateField = (field, field_name, validations) => {
         const state_error_text = field_name + "_error_text";
         const state_validation = field_name + "_validation";
@@ -267,6 +257,14 @@ export class ProposalDefinition extends Component {
         }
     }
 
+    handleChangeName = (event, name) => {
+        //validate name
+        this.setState({
+            name: name,
+        });
+
+        this.validateField({name: name}, "name", { properties: { name: validations.name} } );
+    };
 
     handleChangeStartDate = (event, date_start) => {
         //validate date
