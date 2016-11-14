@@ -23,6 +23,14 @@ const dateOptions = {
     year: 'numeric',
     month: '2-digit',
 };
+const hourOptions = {
+    day: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+};
+
 
 const styles = {
     chip: {
@@ -82,10 +90,10 @@ export class Proposal extends Component {
         const proposal = this.state.proposal;
 
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
-        const creationDate = new Date(proposal.creation_date).toLocaleString(locale, dateOptions);
+        const lastExecution = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>{daysRange}<span><br/>Last execution <u>{creationDate}</u></span></span>;
+        const subtitle = <span>{daysRange}</span>;
 
         const Proposal = () => (
             <Card>
@@ -118,10 +126,7 @@ export class Proposal extends Component {
           }
 
               <CardText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                  Last execution was done at {lastExecution}
               </CardText>
 
           {
