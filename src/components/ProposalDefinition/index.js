@@ -34,6 +34,11 @@ const validations = {
         type: 'date',
         allowEmpty: false,
     },
+    date_end: {
+        description: 'End Date of the New Proposal',
+        type: 'date',
+        allowEmpty: false,
+    },
 }
 
 
