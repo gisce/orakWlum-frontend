@@ -251,6 +251,7 @@ export class ProposalDefinition extends Component {
                 [state_error_text]: null,
                 [state_validation]: false,
             });
+            return false;
 
         } else {
             const name_validation = revalidator.validate(field, validations);
@@ -260,11 +261,13 @@ export class ProposalDefinition extends Component {
                     [state_error_text]: null,
                     [state_validation]: true,
                 });
+                return true;
             } else {
                 this.setState({
                     [state_error_text]: field_name[0].toUpperCase() + field_name.slice(1) + " " + name_validation.errors[0].message,
                     [state_validation]: false,
                 });
+                return false;
             }
             console.log(name_validation);
         }
@@ -290,16 +293,19 @@ export class ProposalDefinition extends Component {
             date_start: date_start,
         });
 
-        this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
+        const basicValidation = this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
 
-        if (date_start < date_limit_inf) {
-            this.setState({
-                date_start_error_text: "Start date must be higher than " + date_limit_inf.toLocaleDateString("en"),
-                date_start_validation: false,
-            });
+        if (basicValidation) {
+
+            if (date_start < date_limit_inf) {
+                this.setState({
+                    date_start_error_text: "Start date must be higher than " + date_limit_inf.toLocaleDateString("en"),
+                    date_start_validation: false,
+                });
+            }
+
+            this.validateDatesRange(date_start, date_end);
         }
-
-        this.validateDatesRange(date_start, date_end);
     };
 
     handleChangeEndDate = (event, date_end) => {
@@ -309,16 +315,17 @@ export class ProposalDefinition extends Component {
             date_end: date_end,
         });
 
-        this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
+        const basicValidation = this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
 
-        if (date_end > date_limit_sup) {
-            this.setState({
-                date_end_error_text: "End date must be lower than " + date_limit_sup.toLocaleDateString("en"),
-                date_end_validation: false,
-            });
+        if (basicValidation) {
+            if (date_end > date_limit_sup) {
+                this.setState({
+                    date_end_error_text: "End date must be lower than " + date_limit_sup.toLocaleDateString("en"),
+                    date_end_validation: false,
+                });
+            }
+            this.validateDatesRange(date_start, date_end);
         }
-
-        this.validateDatesRange(date_start, date_end);
     };
 
     validateDatesRange = (date_start, date_end) => {
@@ -365,25 +372,27 @@ export class ProposalDefinition extends Component {
             aggregationsNames: aggregationsNames,
         });
 
-        this.validateField({aggregations: aggregations_list}, "aggregations_list", { properties: { aggregations: validations.aggregations} } );
+        const basicValidation = this.validateField({aggregations: aggregations_list}, "aggregations_list", { properties: { aggregations: validations.aggregations} } );
 
-        // review that at least, one element is selected
-        let anySelected = false;
-        aggregations_list.map( (agg, i) => {
-                if (agg) anySelected=true;
+        if (basicValidation) {
+            // review that at least, one element is selected
+            let anySelected = false;
+            aggregations_list.map( (agg, i) => {
+                    if (agg) anySelected=true;
+                }
+            );
+            if (!anySelected) {
+                this.setState({
+                    aggregations_error_text: "Select at least one aggregation",
+                    aggregations_validation: false,
+                });
             }
-        );
-        if (!anySelected) {
-            this.setState({
-                aggregations_error_text: "Select at least one aggregation",
-                aggregations_validation: false,
-            });
-        }
-        else {
-            this.setState({
-                aggregations_error_text: null,
-                aggregations_validation: true,
-            });
+            else {
+                this.setState({
+                    aggregations_error_text: null,
+                    aggregations_validation: true,
+                });
+            }
         }
     }
 
