@@ -21,6 +21,10 @@ const revalidator = require('revalidator');
 const styles = {
 };
 
+const today = new Date();
+const date_limit_inf = new Date(today.getFullYear() - 4, 1, 1);
+const date_limit_sup = new Date(today.getFullYear() + 4, 12, 31);
+
 const validations = {
     name: {
         description: 'Name of the New Proposal',
@@ -295,6 +299,14 @@ export class ProposalDefinition extends Component {
         });
 
         this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
+
+        if (date_start < date_limit_inf) {
+            this.setState({
+                date_start_error_text: "Start date must be higher than " + date_limit_inf.toLocaleDateString("en"),
+                date_start_validation: false,
+            });
+        }
+
         this.validateDatesRange(date_start, date_end);
     };
 
@@ -306,24 +318,23 @@ export class ProposalDefinition extends Component {
         });
 
         this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
+
+        if (date_end > date_limit_sup) {
+            this.setState({
+                date_end_error_text: "End date must be lower than " + date_limit_sup.toLocaleDateString("en"),
+                date_end_validation: false,
+            });
+        }
+
         this.validateDatesRange(date_start, date_end);
     };
 
     validateDatesRange = (date_start, date_end) => {
-        console.log(date_start);
-        console.log(date_end);
-
         if (date_start > date_end) {
             this.setState({
                 date_end_error_text: "End date must be >= the starting one.",
                 date_end_validation: false,
             });
-        } else {
-            this.setState({
-                date_end_error_text: null,
-                date_end_validation: true,
-            });
-
         }
     }
 
