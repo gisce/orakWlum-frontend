@@ -29,6 +29,11 @@ const validations = {
         maxLength: 4,
         allowEmpty: false,
     },
+    date_start: {
+        description: 'Start Date of the New Proposal',
+        type: 'date',
+        allowEmpty: false,
+    },
 }
 
 
@@ -119,6 +124,7 @@ export class ProposalDefinition extends Component {
                             hintText="Start date"
                             value={this.state.date_start}
                             onChange={this.handleChangeStartDate}
+                            errorText={this.state.date_start_error_text}
                         />
 
                         <DatePicker
@@ -126,6 +132,7 @@ export class ProposalDefinition extends Component {
                             hintText="End date"
                             value={this.state.date_end}
                             onChange={this.handleChangeEndDate}
+                            errorText={this.state.date_end_error_text}
                         />
 
                     </div>
@@ -271,6 +278,8 @@ export class ProposalDefinition extends Component {
         this.setState({
             date_start: date_start,
         });
+
+        this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
     };
 
     handleChangeEndDate = (event, date_end) => {
