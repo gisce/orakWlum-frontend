@@ -77,6 +77,12 @@ export class ProposalDefinition extends Component {
           aggregations_all: props.aggregationsList,
           name_validation: false,
           name_error_text: null,
+          date_start_validation: false,
+          date_start_error_text: null,
+          date_end_validation: false,
+          date_end_error_text: null,
+          aggregations_validation: false,
+          aggregations_error_text: null,
       };
       this.stepsLength = this.getSteps().length;
     }
@@ -182,17 +188,33 @@ export class ProposalDefinition extends Component {
                                 stripedRows={false}
                                 deselectOnClickaway={false}
                             >
-                            {
-                                aggregationsWithStatus.map(function(agg, index) {
-                                    return (
-                                        <TableRow key={"tableRow_"+index} selected={agg.selected}>
-                                          <TableRowColumn>{agg.name}</TableRowColumn>
-                                        </TableRow>
-                                    )
-                                })
-                            }
+                        {
+                            aggregationsWithStatus.map(function(agg, index) {
+                                return (
+                                    <TableRow key={"tableRow_"+index} selected={agg.selected}>
+                                      <TableRowColumn>{agg.name}</TableRowColumn>
+                                    </TableRow>
+                                )
+                            })
+                        }
                             </TableBody>
                         </Table>
+
+                    {
+                            this.state.aggregations_error_text &&
+                            <div>
+                                <TextField
+                                    id="aggregationError"
+                                    style={{marginTop: 0}}
+                                    floatingLabelText=""
+                                    value=""
+                                    errorText={this.state.aggregations_error_text}
+                                />
+                                <br/>
+                                <br/>
+                            </div>
+                    }
+
                     </div>
                 )
             },
@@ -302,7 +324,7 @@ export class ProposalDefinition extends Component {
     validateDatesRange = (date_start, date_end) => {
         if (date_start > date_end) {
             this.setState({
-                date_end_error_text: "End date must be >= the starting one.",
+                date_end_error_text: "End date must be >= the starting one",
                 date_end_validation: false,
             });
         }
@@ -344,7 +366,25 @@ export class ProposalDefinition extends Component {
         });
 
         this.validateField({aggregations: aggregations_list}, "aggregations_list", { properties: { aggregations: validations.aggregations} } );
-        console.log(aggregations_list);
+
+        // review that at least, one element is selected
+        let anySelected = false;
+        aggregations_list.map( (agg, i) => {
+                if (agg) anySelected=true;
+            }
+        );
+        if (!anySelected) {
+            this.setState({
+                aggregations_error_text: "Select at least one aggregation",
+                aggregations_validation: false,
+            });
+        }
+        else {
+            this.setState({
+                aggregations_error_text: null,
+                aggregations_validation: true,
+            });
+        }
     }
 
     handleNext = () => {
