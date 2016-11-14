@@ -30,7 +30,7 @@ const validations = {
         description: 'Name of the New Proposal',
         type: 'string',
         minLength: 3,
-        maxLength: 4,
+        maxLength: 200,
         allowEmpty: false,
         required: true,
     },
