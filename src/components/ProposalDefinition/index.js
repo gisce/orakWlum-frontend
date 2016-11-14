@@ -110,12 +110,11 @@ export class ProposalDefinition extends Component {
         const proposalSummary = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
-            "creation_date": "Fri, 11 Nov 2016 13:28:33 GMT",
+            "isNew": true,
             "days_range": [
-              "2017-09-03",
-              "2017-09-06"
+                this.state.date_start,
+                this.state.date_end,
             ],
-
         }
 
         return [
@@ -296,14 +295,12 @@ export class ProposalDefinition extends Component {
         const basicValidation = this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
 
         if (basicValidation) {
-
             if (date_start < date_limit_inf) {
                 this.setState({
                     date_start_error_text: "Start date must be higher than " + date_limit_inf.toLocaleDateString("en"),
                     date_start_validation: false,
                 });
             }
-
             this.validateDatesRange(date_start, date_end);
         }
     };
