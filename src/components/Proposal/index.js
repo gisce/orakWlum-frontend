@@ -72,7 +72,9 @@ export class Proposal extends Component {
     }
 
     render() {
+        const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
+
         const Proposal = () => (
             <Card>
               <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />
@@ -84,9 +86,24 @@ export class Proposal extends Component {
                   </CardMedia>
 
 
+          {
+              proposal.status &&
               <div style={styles.wrapper}>
                   <ProposalTag tag={proposal.status} />
               </div>
+          }
+          {
+              proposal.aggregations &&
+              <div style={styles.wrapper}>
+                  {
+                  proposal.aggregations.map( function(agg, i) {
+                      return (
+                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} />
+                       );
+                  })
+                  }
+              </div>
+          }
 
               <CardText>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -95,14 +112,21 @@ export class Proposal extends Component {
                 Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
               </CardText>
 
+          {
+              proposal.prediction &&
               <ProposalGraph stacked={true} proposal={proposal} height={500} />
+          }
 
+          {
+              !readOnly &&
               <CardActions>
                 <FlatButton label="Run" />
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Delete" />
               </CardActions>
+          }
+
             </Card>
         );
 
@@ -119,6 +143,5 @@ export class Proposal extends Component {
 }
 
 Proposal.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
+    readOnly: React.PropTypes.bool,
 };
