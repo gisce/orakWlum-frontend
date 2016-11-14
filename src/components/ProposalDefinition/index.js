@@ -10,7 +10,6 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
-import Divider from 'material-ui/Divider';
 import DatePicker from 'material-ui/DatePicker';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -40,6 +39,8 @@ export class ProposalDefinition extends Component {
           date_end: null,
           aggregations: aggregations_list,
           aggregations_all: props.aggregationsList,
+          name_validation: false,
+          name_error_text: null,
       };
       this.stepsLength = this.getSteps().length;
     }
@@ -48,6 +49,28 @@ export class ProposalDefinition extends Component {
         //select all by default
         this.handleRowSelection("all");
     }
+
+     validateName() {
+        if (this.state.name === '' || !this.state.name) {
+            this.setState({
+                name_error_text: null,
+                name_validation: false,
+            });
+        } else {
+            if (this.state.name.length >= 3 && this.state.name.length < 200) {
+                this.setState({
+                    name_error_text: null,
+                    name_validation: true,
+                });
+            } else {
+                this.setState({
+                    name_error_text: 'Name must be ',
+                    name_validation: false,
+                });
+            }
+        }
+    }
+
 
     getSteps = () => {
         const aggregationsList = this.state.aggregations_all;
