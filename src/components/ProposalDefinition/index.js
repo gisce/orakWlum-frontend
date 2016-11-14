@@ -281,11 +281,13 @@ export class ProposalDefinition extends Component {
     };
 
     handleChangeStartDate = (event, date_start) => {
+        const date_end = this.state.date_end;
         this.setState({
             date_start: date_start,
         });
 
         this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
+        this.validateDatesRange(date_start, date_end);
     };
 
     handleChangeEndDate = (event, date_end) => {
@@ -295,23 +297,39 @@ export class ProposalDefinition extends Component {
             date_end: date_end,
         });
 
-        this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
 
+        this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
+        this.validateDatesRange(date_start, date_end);
+    };
+
+    validateDatesRange = (date_start, date_end) => {
+        console.log(date_start);
+        console.log(date_end);
+        
         if (date_start > date_end) {
             this.setState({
-                date_end_error_text: "End date must be greater (or the same) than the starting one.",
+                date_end_error_text: "End date must be >= the starting one.",
                 date_end_validation: false,
             });
-        }
+        } else {
+            this.setState({
+                date_end_error_text: null,
+                date_end_validation: true,
+            });
 
-        else if (date_start > date_end) {
+        }
+/*
+const date_limit_inf = Date();
+const date_limit_sup = Date();
+
+        else if (date_start < date_limit_inf) {
             this.setState({
                 date_end_error_text: "End date must be greater than the starting one.",
                 date_end_validation: false,
             });
         }
-
-    };
+*/
+    }
 
     handleNext = () => {
         const {stepIndex} = this.state;
