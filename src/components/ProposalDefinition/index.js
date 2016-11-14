@@ -289,12 +289,28 @@ export class ProposalDefinition extends Component {
     };
 
     handleChangeEndDate = (event, date_end) => {
-        //validate date
+        const date_start = this.state.date_start;
+
         this.setState({
             date_end: date_end,
         });
 
-        this.validateField({date_start: this.state.date_start, date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
+        this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
+
+        if (date_start > date_end) {
+            this.setState({
+                date_end_error_text: "End date must be greater (or the same) than the starting one.",
+                date_end_validation: false,
+            });
+        }
+
+        else if (date_start > date_end) {
+            this.setState({
+                date_end_error_text: "End date must be greater than the starting one.",
+                date_end_validation: false,
+            });
+        }
+
     };
 
     handleNext = () => {
