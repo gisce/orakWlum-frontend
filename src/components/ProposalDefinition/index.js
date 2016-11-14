@@ -33,8 +33,8 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 3,
-          name: "Proposal new",
+          stepIndex: 0,
+          name: "",
           date_start: null,
           date_end: null,
           aggregations: aggregations_list,
@@ -106,7 +106,13 @@ export class ProposalDefinition extends Component {
                     <div>
                         <p>We need some details to create a new Proposal.</p>
                         <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
-                        <TextField style={{marginTop: 0}} floatingLabelText="Proposal name" value={this.state.name} onChange={this.handleChangeName}/>
+                        <TextField
+                            style={{marginTop: 0}}
+                            floatingLabelText="Proposal name"
+                            value={this.state.name}
+                            onChange={this.handleChangeName}
+                            errorText={this.state.name_error_text}
+                        />
                     </div>
                 )
             },
@@ -238,8 +244,9 @@ export class ProposalDefinition extends Component {
         this.setState({
             name: name,
         });
-        console.log(this.state.name);
 
+        this.validateName();
+        console.log(this.state.name);
     };
 
     handleChangeStartDate = (event, date_start) => {
