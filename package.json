@@ -115,7 +115,8 @@
     "webpack-hot-middleware": "^2.6.0",
     "webpack-merge": "^0.14.1",
     "yargs": "^5.0.0",
-    "recharts": "^0.17.0"
+    "recharts": "^0.17.0",
+    "revalidator": "^0.3.1"
   },
   "dependencies": {}
 }
