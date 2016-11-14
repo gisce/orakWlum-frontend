@@ -50,28 +50,6 @@ export class ProposalDefinition extends Component {
         this.handleRowSelection("all");
     }
 
-     validateName() {
-        if (this.state.name === '' || !this.state.name) {
-            this.setState({
-                name_error_text: null,
-                name_validation: false,
-            });
-        } else {
-            if (this.state.name.length >= 3 && this.state.name.length < 200) {
-                this.setState({
-                    name_error_text: null,
-                    name_validation: true,
-                });
-            } else {
-                this.setState({
-                    name_error_text: 'Name must be ',
-                    name_validation: false,
-                });
-            }
-        }
-    }
-
-
     getSteps = () => {
         const aggregationsList = this.state.aggregations_all;
 
@@ -239,15 +217,36 @@ export class ProposalDefinition extends Component {
     };
 
     handleChangeName = (event, name) => {
-        console.log("changing name", name);
         //validate name
         this.setState({
             name: name,
         });
 
-        this.validateName();
-        console.log(this.state.name);
+        this.validateName(name);
     };
+
+    validateName = (name) => {
+        if (name === '' || name.length == 0 || !name) {
+            this.setState({
+                name_error_text: null,
+                name_validation: false,
+            });
+
+        } else {
+            if (name.length >= 3 && name.length < 200) {
+                this.setState({
+                    name_error_text: null,
+                    name_validation: true,
+                });
+            } else {
+                this.setState({
+                    name_error_text: 'The name must be between 3 and 200 chars.',
+                    name_validation: false,
+                });
+            }
+        }
+    }
+
 
     handleChangeStartDate = (event, date_start) => {
         //validate date
