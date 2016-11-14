@@ -17,6 +17,12 @@ import * as actionCreators from '../../actions/proposal';
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 
+const locale = 'es';
+const dateOptions = {
+    day: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+};
 
 const styles = {
     chip: {
@@ -75,13 +81,19 @@ export class Proposal extends Component {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
 
+        const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
+        const creationDate = new Date(proposal.creation_date).toLocaleString(locale, dateOptions);
+
+        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
+        const subtitle = <span>{daysRange}<span><br/>Last execution <u>{creationDate}</u></span></span>;
+
         const Proposal = () => (
             <Card>
-              <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />
+              <CardTitle title={title} subtitle={subtitle} />
 
                   <CardMedia
-                    overlay={<CardTitle title={proposal.name}
-                    subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />}
+                    overlay={<CardTitle title={title}
+                    subtitle={subtitle} />}
                   >
                   </CardMedia>
 
