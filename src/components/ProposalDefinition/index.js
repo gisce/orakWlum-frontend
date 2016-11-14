@@ -16,6 +16,8 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 import {Proposal} from '../Proposal'
 
+const revalidator = require('revalidator');
+
 const styles = {
 };
 
