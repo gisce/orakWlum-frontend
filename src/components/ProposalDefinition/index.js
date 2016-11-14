@@ -46,6 +46,12 @@ const validations = {
         allowEmpty: false,
         required: true,
     },
+    aggregations: {
+        description: 'Aggregations of the New Proposal',
+        type: 'array',
+        allowEmpty: false,
+        required: true,
+    },
 }
 
 
@@ -63,7 +69,7 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 0,
+          stepIndex: 2,
           name: "",
           date_start: null,
           date_end: null,
@@ -77,7 +83,7 @@ export class ProposalDefinition extends Component {
 
     componentWillMount = () => {
         //select all by default
-        this.handleRowSelection("all");
+        this.handleAggregations("all");
     }
 
     getSteps = () => {
@@ -162,7 +168,7 @@ export class ProposalDefinition extends Component {
                             fixedHeader={true}
                             selectable={true}
                             multiSelectable={true}
-                            onRowSelection={this.handleRowSelection}
+                            onRowSelection={this.handleAggregations}
                         >
                             <TableHeader
                                 enableSelectAll={false}
@@ -206,42 +212,6 @@ export class ProposalDefinition extends Component {
             },
 
         ];
-    }
-
-    handleRowSelection = (selectedRows) => {
-        let aggregations_list = [];
-        const aggregationsAll = this.props.aggregationsList;
-
-        //initialize list with all deselected
-        aggregationsAll.map(function(agg, i){
-            aggregations_list.push( false );
-        });
-
-        if (selectedRows == "all") {
-            //mark all as selected
-            aggregationsAll.map(function(agg, i){
-                aggregations_list[i] =  true;
-            });
-            selectedRows = aggregations_list;
-        }
-        else {
-            if (selectedRows != "none")
-                //mark the selected ones
-                selectedRows.map(function(agg, i){
-                    aggregations_list[agg] = true;
-                });
-        }
-
-        //Extract names to facilitate render of the summary
-        let aggregationsNames = [];
-        aggregationsAll.map( (agg,i) => {
-            aggregations_list[i] && aggregationsNames.push(agg);
-        });
-
-        this.setState({
-            aggregations: aggregations_list,
-            aggregationsNames: aggregationsNames,
-        });
     }
 
     dummyAsync = (cb) => {
@@ -338,6 +308,45 @@ export class ProposalDefinition extends Component {
         }
     }
 
+    handleAggregations = (selectedRows) => {
+        let aggregations_list = [];
+        const aggregationsAll = this.props.aggregationsList;
+
+        //initialize list with all deselected
+        aggregationsAll.map(function(agg, i){
+            aggregations_list.push( false );
+        });
+
+        if (selectedRows == "all") {
+            //mark all as selected
+            aggregationsAll.map(function(agg, i){
+                aggregations_list[i] =  true;
+            });
+            selectedRows = aggregations_list;
+        }
+        else {
+            if (selectedRows != "none")
+                //mark the selected ones
+                selectedRows.map(function(agg, i){
+                    aggregations_list[agg] = true;
+                });
+        }
+
+        //Extract names to facilitate render of the summary
+        let aggregationsNames = [];
+        aggregationsAll.map( (agg,i) => {
+            aggregations_list[i] && aggregationsNames.push(agg);
+        });
+
+        this.setState({
+            aggregations: aggregations_list,
+            aggregationsNames: aggregationsNames,
+        });
+
+        this.validateField({aggregations: aggregations_list}, "aggregations_list", { properties: { aggregations: validations.aggregations} } );
+        console.log(aggregations_list);
+    }
+
     handleNext = () => {
         const {stepIndex} = this.state;
         const max = this.stepsLength - 1;
@@ -361,76 +370,75 @@ export class ProposalDefinition extends Component {
         }
     };
 
-  getStepContent(stepIndex) {
-      return (stepIndex < this.stepsLength)?
+    getStepContent(stepIndex) {
+        return (stepIndex < this.stepsLength)?
            this.getSteps()[stepIndex].content
            :
            'Mmmm.... that\'s embracing...';
-  }
-
-  renderContent() {
-    const {finished, stepIndex} = this.state;
-    const contentStyle = {margin: '0 16px', overflow: 'hidden'};
-
-    if (finished) {
-      return (
-        <div style={contentStyle}>
-          <p>
-            <a
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-                this.setState({stepIndex: 0, finished: false});
-              }}
-            >
-              Change again
-            </a>.
-          </p>
-          <p>Create new proposal status</p>
-        </div>
-      );
     }
 
-    return (
-      <div style={contentStyle}>
-        <div>{this.getStepContent(stepIndex)}</div>
-        <div style={{marginTop: 24, marginBottom: 12}}>
-          <FlatButton
-            label="Back"
-            disabled={stepIndex === 0}
-            onTouchTap={this.handlePrev}
-            style={{marginRight: 12}}
-          />
-          <RaisedButton
-            label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
-            primary={true}
-            onTouchTap={this.handleNext}
-          />
-        </div>
-      </div>
-    );
-  }
+    renderContent() {
+        const {finished, stepIndex} = this.state;
+        const contentStyle = {margin: '0 16px', overflow: 'hidden'};
 
-  render() {
-    const {loading, stepIndex} = this.state;
+        if (finished) {
+            return (
+                <div style={contentStyle}>
+                  <p>
+                    <a
+                      href="#"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        this.setState({stepIndex: 0, finished: false});
+                      }}
+                    >
+                      Change again
+                    </a>.
+                  </p>
+                  <p>Create new proposal status</p>
+                </div>
+            );
+        }
 
-    const steps = this.getSteps();
+        return (
+          <div style={contentStyle}>
+            <div>{this.getStepContent(stepIndex)}</div>
+            <div style={{marginTop: 24, marginBottom: 12}}>
+              <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this.handlePrev}
+                style={{marginRight: 12}}
+              />
+              <RaisedButton
+                label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
+                primary={true}
+                onTouchTap={this.handleNext}
+              />
+            </div>
+          </div>
+        );
+    }
 
-    return (
-      <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-        <Stepper activeStep={stepIndex}>
-            {steps.map(function(step, index) {
-                return (
-                    <Step key={"step"+step.key}>
-                        <StepLabel key={"stepLabel"+step.key}>{step.title}</StepLabel>
-                    </Step>
-                )
-            })}
-        </Stepper>
-          {this.renderContent()}
-      </div>
-    );
-  }
+    render() {
+        const {loading, stepIndex} = this.state;
+        const steps = this.getSteps();
+
+        return (
+          <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+            <Stepper activeStep={stepIndex}>
+                {steps.map(function(step, index) {
+                    return (
+                        <Step key={"step"+step.key}>
+                            <StepLabel key={"stepLabel"+step.key}>{step.title}</StepLabel>
+                        </Step>
+                    )
+                })}
+            </Stepper>
+              {this.renderContent()}
+          </div>
+        );
+    }
 }
 
 ProposalDefinition.propTypes = {
