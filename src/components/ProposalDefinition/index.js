@@ -235,14 +235,27 @@ export class ProposalDefinition extends Component {
             });
 
         } else {
-            if (name.length >= 3 && name.length < 200) {
+            const name_validation = revalidator.validate({name: name}, {
+                properties: {
+                    name: {
+                        description: 'Name of the New Proposal',
+                        type: 'string',
+                        minLength: 3,
+                        maxLength: 4,
+                        allowEmpty: false
+                    },
+                }
+                }
+            );
+
+            if (name_validation.valid) {
                 this.setState({
                     name_error_text: null,
                     name_validation: true,
                 });
             } else {
                 this.setState({
-                    name_error_text: 'The name must be between 3 and 200 chars.',
+                    name_error_text: "Name " + name_validation.errors[0].message,
                     name_validation: false,
                 });
             }
