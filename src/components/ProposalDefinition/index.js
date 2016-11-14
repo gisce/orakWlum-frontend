@@ -28,16 +28,19 @@ const validations = {
         minLength: 3,
         maxLength: 4,
         allowEmpty: false,
+        required: true,
     },
     date_start: {
         description: 'Start Date of the New Proposal',
         type: 'date',
         allowEmpty: false,
+        required: true,
     },
     date_end: {
         description: 'End Date of the New Proposal',
         type: 'date',
         allowEmpty: false,
+        required: true,
     },
 }
 
