@@ -133,6 +133,7 @@ export class ProposalDefinition extends Component {
                             value={this.state.date_start}
                             onChange={this.handleChangeStartDate}
                             errorText={this.state.date_start_error_text}
+                            autoOk={true}
                         />
 
                         <DatePicker
@@ -141,6 +142,7 @@ export class ProposalDefinition extends Component {
                             value={this.state.date_end}
                             onChange={this.handleChangeEndDate}
                             errorText={this.state.date_end_error_text}
+                            autoOk={true}
                         />
 
                     </div>
