@@ -40,21 +40,23 @@ const styles = {
     wrapper: {
         display: 'flex',
     },
-
-    aggregationsLeft: {
+    aggregationsRight: {
         display: 'flex',
         justifyContent: 'flex-end',
+    },
+    aggregationsCenter: {
+        display: 'flex',
+        justifyContent: 'center',
     },
     aggregations: {
         display: 'flex',
     },
     toggle: {
-        marginTop: 7,
-      marginLeft: 7,
-      textAlign: "right",
+      marginTop: 7,
     },
-    toRight: {
-        textAlign: "right",
+    labelToggle: {
+        marginTop: 7,
+        marginLeft: 7,
     }
 };
 
@@ -135,11 +137,14 @@ export class Proposal extends Component {
             </div>
         )
 
-        const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsLeft;
+        const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
 
         const proposalAggregations = (
             proposal.aggregations &&
-                <div id="aggregationsList" className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size} style={aggregationsStyle}>
+                <div
+                    id="aggregationsList"
+                    className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size}
+                    style={aggregationsStyle}>
                 {
                     proposal.aggregations.map( function(agg, i) {
                         return (
@@ -153,24 +158,50 @@ export class Proposal extends Component {
 
         const proposalPictureToggle = (
             (withPicture) &&
-            <div className="col-xs-offset-0 col-xs-2 col-sm-offset-0 col-sm-1 col-md-1 col-md-offset-0 col-lg-offset-0 col-lg-1" style={styles.toRight}>
+            <div
+                className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2"
+                style={styles.to_ri}>
               {
               (proposalTable)?
-                  <Toggle
-                      label="Chart"
-                      labelPosition="left"
-                      onToggle={this.toogleProposalRender}
-                      style={styles.toggle}
-                      toggled={proposalTable}
-                  />
+              <div
+                  id="togglePicture"
+                  className="row"
+                  style={styles.aggregationsCenter}
+              >
+                  <div className="col-xs-2" style={styles.labelToggle}>
+                      Chart
+                  </div>
+                  <div id="toogleElement" className="col-xs-3">
+                      <Toggle
+                          onToggle={this.toogleProposalRender}
+                          style={styles.toggle}
+                          toggled={proposalTable}
+                      />
+                  </div>
+                  <div className="col-xs-2" style={styles.toggle}>
+                      <b>Table</b>
+                  </div>
+              </div>
               :
-                  <Toggle
-                      label="Table"
-                      labelPosition="right"
-                      onToggle={this.toogleProposalRender}
-                      style={styles.toggle}
-                      toggled={proposalTable}
-                  />
+              <div
+                  id="togglePicture"
+                  className="row"
+                  style={styles.aggregationsCenter}
+              >
+                  <div className="col-xs-2" style={styles.labelToggle}>
+                      <b>Chart</b>
+                  </div>
+                  <div id="toogleElement" className="col-xs-3">
+                      <Toggle
+                          onToggle={this.toogleProposalRender}
+                          style={styles.toggle}
+                          toggled={proposalTable}
+                      />
+                  </div>
+                  <div className="col-xs-2" style={styles.toggle}>
+                      Table
+                  </div>
+              </div>
               }
             </div>
             )
