@@ -39,13 +39,14 @@ const styles = {
     },
     wrapper: {
       display: 'flex',
-      flexWrap: 'wrap',
     },
     toggle: {
-      marginBottom: 16,
+        marginTop: 7,
+      marginLeft: 7,
+      textAlign: "right",
     },
     toRight: {
-        textAlign: 'right',
+        textAlign: "right",
     }
 };
 
@@ -128,7 +129,7 @@ export class Proposal extends Component {
                   <div className="row">
                   {
                       proposal.status &&
-                      <div className="col-md-4" style={styles.wrapper}>
+                      <div className="col-md-3 col-lg-4" style={styles.wrapper}>
                           <ProposalTag tag={proposal.status} />
                       </div>
                   }
@@ -136,7 +137,7 @@ export class Proposal extends Component {
                   {
                       proposal.aggregations &&
                       <div>
-                          <div className="col-md-4" style={styles.wrapper}>
+                          <div className="col-md-offset-1 col-md-5 col-lg-offset-0 col-lg-4" style={styles.wrapper}>
                           {
                               proposal.aggregations.map( function(agg, i) {
                                   return (
@@ -145,22 +146,22 @@ export class Proposal extends Component {
                               })
                           }
                           </div>
-                          <div className="col-md-2 col-md-offset-2 col-sm-offset-0 col-lg-offset-2" style={styles.wrapper}>
+                          <div className="col-xs-offset-0 col-xs-2 col-sm-offset-0 col-sm-1 col-md-1 col-md-offset-1 col-lg-offset-2 col-lg-1" style={styles.toRight}>
                             {
                             (proposalTable)?
                                 <Toggle
                                     label="Chart"
                                     labelPosition="left"
-                                    style={styles.toggle}
                                     onToggle={this.toogleProposalRender}
+                                    style={styles.toggle}
                                     toggled={proposalTable}
                                 />
                             :
                                 <Toggle
                                     label="Table"
                                     labelPosition="right"
-                                    style={styles.toggle}
                                     onToggle={this.toogleProposalRender}
+                                    style={styles.toggle}
                                     toggled={proposalTable}
                                 />
                             }
