@@ -106,6 +106,7 @@ export class Proposal extends Component {
 
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
         const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
+        const ownerText = (proposal.owner)?"by " + proposal.owner:"";
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
         const subtitle = <span>{daysRange}</span>;
@@ -164,7 +165,7 @@ export class Proposal extends Component {
 
 
           {       proposal.creation_date &&
-                  <p><span>Proposal was created on {creationDate}</span></p>
+                  <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
           }
 
           {       proposal.execution_date &&
