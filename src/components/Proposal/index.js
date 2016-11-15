@@ -41,10 +41,13 @@ const styles = {
         display: 'flex',
     },
 
+    aggregationsLeft: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
     aggregations: {
         display: 'flex',
     },
-
     toggle: {
         marginTop: 7,
       marginLeft: 7,
@@ -132,9 +135,11 @@ export class Proposal extends Component {
             </div>
         )
 
+        const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsLeft;
+
         const proposalAggregations = (
             proposal.aggregations &&
-                <div id="aggregationsList" className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size} style={styles.aggregations}>
+                <div id="aggregationsList" className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size} style={aggregationsStyle}>
                 {
                     proposal.aggregations.map( function(agg, i) {
                         return (
