@@ -130,6 +130,7 @@ export class Proposal extends Component {
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
 
+        // The Proposal status!
         const proposalStatus = (
             proposal.status &&
             <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
@@ -137,8 +138,8 @@ export class Proposal extends Component {
             </div>
         )
 
+        // The Proposal Aggregations List
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
-
         const proposalAggregations = (
             proposal.aggregations &&
                 <div
@@ -156,6 +157,7 @@ export class Proposal extends Component {
 
         )
 
+        // The Proposal graph toogle! //to switch between table and chart
         const proposalPictureToggle = (
             (withPicture) &&
             <div
@@ -206,10 +208,7 @@ export class Proposal extends Component {
             </div>
             )
 
-
-
-
-
+        // The Proposal graph!
         const proposalPicture =
             (withPicture)?
                 (proposal.prediction) &&
@@ -219,10 +218,7 @@ export class Proposal extends Component {
                       <ProposalGraph stacked={true} proposal={proposal} height={500} />
                   :null
 
-
-
-        console.log(withPicture);
-
+        // The resulting Proposal element
         const Proposal = () => (
             <Card>
               <CardTitle title={title} subtitle={subtitle} />
@@ -243,8 +239,6 @@ export class Proposal extends Component {
                   </div>
 
               <CardText>
-
-
           {       proposal.creation_date &&
                   <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
           }
