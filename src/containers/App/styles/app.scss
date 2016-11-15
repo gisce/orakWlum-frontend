@@ -12,6 +12,12 @@
 
 }
 
+@media (max-width: 991px) {
+    :global(#aggregationsList) {
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
+}
 
 @media (min-width: 992px) {
     :global(#aggregationsList) {
