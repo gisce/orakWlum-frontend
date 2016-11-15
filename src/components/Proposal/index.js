@@ -16,6 +16,7 @@ import * as actionCreators from '../../actions/proposal';
 
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
+import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
 const locale = 'es';
 const dateOptions = {
@@ -136,6 +137,11 @@ export class Proposal extends Component {
           {
               proposal.prediction &&
               <ProposalGraph stacked={true} proposal={proposal} height={500} />
+          }
+
+          {
+              proposal.prediction &&
+              <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
           }
 
           {
