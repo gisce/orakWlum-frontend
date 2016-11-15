@@ -69,7 +69,7 @@ export class ProposalDefinition extends Component {
       this.state = {
           loading: false,
           finished: false,
-          stepIndex: 2,
+          stepIndex: 0,
           name: "",
           date_start: null,
           date_end: null,
@@ -110,11 +110,16 @@ export class ProposalDefinition extends Component {
         const proposalSummary = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
-            "isNew": true,
-            "days_range": [
+            isNew: true,
+            days_range: [
                 this.state.date_start,
                 this.state.date_end,
             ],
+            status: {
+              "color": "pending",
+              "full": "Pending",
+              "lite": "WIP"
+            },
         }
 
         return [
@@ -140,7 +145,7 @@ export class ProposalDefinition extends Component {
                 title: "Dates",
                 content: (
                     <div>
-                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p> {this.state.name}
+                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p>
 
                         <DatePicker
                             floatingLabelText="Start date"
