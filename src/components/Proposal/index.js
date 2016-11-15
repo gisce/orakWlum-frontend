@@ -11,6 +11,7 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
 
+import Toggle from 'material-ui/Toggle';
 
 import * as actionCreators from '../../actions/proposal';
 
@@ -32,7 +33,6 @@ const hourOptions = {
     minute: '2-digit',
 };
 
-
 const styles = {
     chip: {
       margin: 4,
@@ -40,6 +40,9 @@ const styles = {
     wrapper: {
       display: 'flex',
       flexWrap: 'wrap',
+    },
+    toggle: {
+      marginBottom: 16,
     },
 };
 
@@ -87,6 +90,12 @@ export class Proposal extends Component {
         browserHistory.push(route);
     }
 
+    toogleProposalRender = (event, status) => {
+        this.setState({
+            proposalTable: status,
+        });
+    };
+
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
@@ -98,7 +107,6 @@ export class Proposal extends Component {
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
         const subtitle = <span>{daysRange}</span>;
-
 
         const Proposal = () => (
             <Card>
@@ -120,18 +128,37 @@ export class Proposal extends Component {
           {
               proposal.aggregations &&
               <div style={styles.wrapper}>
-                  {
+              {
                   proposal.aggregations.map( function(agg, i) {
                       return (
                            <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
                        );
                   })
-                  }
+              }
+                <div>
+                {
+                (proposalTable)?
+                    <Toggle
+                        label="Chart"
+                        labelPosition="left"
+                        style={styles.toggle}
+                        onToggle={this.toogleProposalRender}
+                        toggled={proposalTable}
+                    />
+                :
+                    <Toggle
+                        label="Table"
+                        labelPosition="right"
+                        style={styles.toggle}
+                        onToggle={this.toogleProposalRender}
+                        toggled={proposalTable}
+                    />
+                }
+                </div>
               </div>
           }
 
               <CardText>
-
           {       proposal.executionDate &&
                   <span>Last execution was done at {lastExecution}</span>
           }
@@ -160,10 +187,6 @@ export class Proposal extends Component {
 
         return (
             <div>
-
-                <div>
-                </div>
-
                 <Proposal/>
             </div>
         );
