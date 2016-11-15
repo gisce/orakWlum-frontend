@@ -8,18 +8,9 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import {adaptProposalData} from '../../utils/graph';
 
 const styles = {
-    dialog: {
-        width: '80%',
-        maxWidth: 'none',
-    },
-    graphContainer: {
-        maxWidth: '500px',
-        maxHeight: '200px',
-    }
-
 };
 
-const colors = [
+const baseColors = [
     '#db4939',
     '#f29913',
     '#3c8cba',
@@ -37,16 +28,13 @@ export class ProposalTableMaterial extends Component {
         const prediction = this.props.proposal.prediction;
         const type = (this.props.type)?this.props.type:null;
 
-        const height = (this.props.height)?this.props.height:500;
-        const width = (this.props.width)?this.props.width:1024;
-
         //Adapt proposal data (transpose data to days and columns dimension)
         const data=adaptProposalData(prediction);
 
         //Prepare headers
         const headers = prediction.map(function(day, i) {
             return (
-                <TableRowColumn key={"header"+i} stroke={colors[i]} fill={colors[i]}>
+                <TableRowColumn key={"header"+i} stroke={baseColors[i]} fill={baseColors[i]}>
                     <b>{day.day}</b>
                 </TableRowColumn>
             )
@@ -79,12 +67,14 @@ export class ProposalTableMaterial extends Component {
         return (
             <div >
                 <Table>
-                    <TableHeader displaySelectAll={false}>
+                    <TableHeader
+                        displaySelectAll={false}
+                        adjustForCheckbox={false}
+                        >
                         <TableRow key="headersRow">
                             <TableRowColumn key={"headerHour"}>
                                 <b>Hour</b>
                             </TableRowColumn>
-
                             {headers}
                         </TableRow>
                     </TableHeader>
@@ -99,8 +89,6 @@ export class ProposalTableMaterial extends Component {
 
 ProposalTableMaterial.propTypes = {
     proposal: React.PropTypes.object.isRequired,
+    colors: React.PropTypes.object,
     type: React.PropTypes.bool,
-    isLite: React.PropTypes.bool,
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
 };
