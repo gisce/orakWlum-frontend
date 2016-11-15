@@ -83,6 +83,7 @@ export class ProposalDefinition extends Component {
           date_end_error_text: null,
           aggregations_validation: false,
           aggregations_error_text: null,
+          readyToNext: false,
       };
       this.stepsLength = this.getSteps().length;
     }
@@ -90,6 +91,13 @@ export class ProposalDefinition extends Component {
     componentWillMount = () => {
         //select all by default
         this.handleAggregations("all");
+    }
+
+    componentDidMount = () => {
+        //override the readyToNext=true setted indirectly by componentWillMount
+        this.setState({
+            readyToNext: false,
+        });
     }
 
     getSteps = () => {
@@ -264,12 +272,14 @@ export class ProposalDefinition extends Component {
                 this.setState({
                     [state_error_text]: null,
                     [state_validation]: true,
+                    readyToNext: true,
                 });
                 return true;
             } else {
                 this.setState({
                     [state_error_text]: field_name[0].toUpperCase() + field_name.slice(1) + " " + name_validation.errors[0].message,
                     [state_validation]: false,
+                    readyToNext: false,
                 });
                 return false;
             }
@@ -287,7 +297,6 @@ export class ProposalDefinition extends Component {
 
     handleChangeStartDate = (event, date_start) => {
         const date_end = (this.state.date_end == null)? date_start : this.state.date_end;
-
         (this.state.date_end == null) &&
             this.setState({
                 date_end: date_end,
@@ -304,6 +313,7 @@ export class ProposalDefinition extends Component {
                 this.setState({
                     date_start_error_text: "Start date must be higher than " + date_limit_inf.toLocaleDateString("en"),
                     date_start_validation: false,
+                    readyToNext: false,
                 });
             }
             this.validateDatesRange(date_start, date_end);
@@ -312,6 +322,7 @@ export class ProposalDefinition extends Component {
 
     handleChangeEndDate = (event, date_end) => {
         const date_start = this.state.date_start;
+        console.log("handleChangeStartDate");
 
         this.setState({
             date_end: date_end,
@@ -324,6 +335,7 @@ export class ProposalDefinition extends Component {
                 this.setState({
                     date_end_error_text: "End date must be lower than " + date_limit_sup.toLocaleDateString("en"),
                     date_end_validation: false,
+                    readyToNext: false,
                 });
             }
             this.validateDatesRange(date_start, date_end);
@@ -331,10 +343,12 @@ export class ProposalDefinition extends Component {
     };
 
     validateDatesRange = (date_start, date_end) => {
+        
         if (date_start > date_end) {
             this.setState({
                 date_end_error_text: "End date must be >= the starting one",
                 date_end_validation: false,
+                readyToNext: false,
             });
         }
     }
@@ -387,36 +401,65 @@ export class ProposalDefinition extends Component {
                 this.setState({
                     aggregations_error_text: "Select at least one aggregation",
                     aggregations_validation: false,
+                    readyToNext: false,
                 });
             }
             else {
                 this.setState({
                     aggregations_error_text: null,
                     aggregations_validation: true,
+                    readyToNext: true,
                 });
             }
         }
     }
+
+    validateNext = (index) => {
+        let x = event;
+        switch(index) {
+            case 0:
+                this.handleChangeName(x, this.state.name);
+                break;
+
+            case 1:
+                if (this.state.date_start && this.state.date_end) {
+                    this.handleChangeStartDate(x, this.state.date_start);
+                    this.handleChangeEndDate(x, this.state.date_end);
+                }
+                break;
+
+        }
+
+        console.log("ready?",this.state.readyToNext);
+    }
+
 
     handleNext = () => {
         const {stepIndex} = this.state;
         const max = this.stepsLength - 1;
 
         if (!this.state.loading) {
-            this.dummyAsync(() => this.setState({
+            this.setState({
                 loading: false,
                 stepIndex: stepIndex + 1,
                 finished: stepIndex >= max,
-            }));
+                readyToNext: false,
+                readyToNextPrev: true,
+            });
         }
+
+        this.validateNext(stepIndex + 1);
     };
 
     handlePrev = () => {
         const {stepIndex} = this.state;
+
+        console.log("x"+this.state.readyToNextPrev);
         if (!this.state.loading) {
             this.dummyAsync(() => this.setState({
                 loading: false,
                 stepIndex: stepIndex - 1,
+                readyToNext: this.state.readyToNextPrev,
             }));
         }
     };
@@ -429,8 +472,10 @@ export class ProposalDefinition extends Component {
     }
 
     renderContent() {
-        const {finished, stepIndex} = this.state;
+        const {finished, stepIndex, readyToNext} = this.state;
         const contentStyle = {margin: '0 16px', overflow: 'hidden'};
+
+        console.log(this.state.readyToNext);
 
         if (finished) {
             return (
@@ -465,6 +510,7 @@ export class ProposalDefinition extends Component {
                 label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
+                disabled={!readyToNext}
               />
             </div>
           </div>
@@ -472,11 +518,12 @@ export class ProposalDefinition extends Component {
     }
 
     render() {
-        const {loading, stepIndex} = this.state;
+        const {loading, stepIndex, readyToNext} = this.state;
         const steps = this.getSteps();
 
         return (
           <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+              xx{readyToNext}xx
             <Stepper activeStep={stepIndex}>
                 {steps.map(function(step, index) {
                     return (
