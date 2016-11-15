@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {ResponsiveContainer} from 'recharts';
-
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
@@ -37,20 +35,19 @@ export class ProposalTableMaterial extends Component {
 
     render() {
         const prediction = this.props.proposal.prediction;
-        const stacked = (this.props.stacked)?"1":null;
+        const type = (this.props.type)?this.props.type:null;
 
         const height = (this.props.height)?this.props.height:500;
         const width = (this.props.width)?this.props.width:1024;
 
-        const isLite = (this.props.isLite)?this.props.isLite:false;
-
+        //Adapt proposal data (transpose data to days and columns dimension)
         const data=adaptProposalData(prediction);
 
         //Prepare headers
         const headers = prediction.map(function(day, i) {
             return (
                 <TableRowColumn key={"header"+i} stroke={colors[i]} fill={colors[i]}>
-                    {day.day}
+                    <b>{day.day}</b>
                 </TableRowColumn>
             )
         });
@@ -79,21 +76,13 @@ export class ProposalTableMaterial extends Component {
             );
         }
 
-        return (isLite)?
-        (
-            <div >
-                <ResponsiveContainer height={height} >
-                </ResponsiveContainer>
-            </div>
-        )
-        :
-        (
+        return (
             <div >
                 <Table>
                     <TableHeader displaySelectAll={false}>
                         <TableRow key="headersRow">
                             <TableRowColumn key={"headerHour"}>
-                                Hour
+                                <b>Hour</b>
                             </TableRowColumn>
 
                             {headers}
