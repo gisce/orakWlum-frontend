@@ -44,6 +44,9 @@ const styles = {
     toggle: {
       marginBottom: 16,
     },
+    toRight: {
+        textAlign: 'right',
+    }
 };
 
 const colors = {
@@ -122,44 +125,49 @@ export class Proposal extends Component {
                   </CardMedia>
 
 
-          {
-              proposal.status &&
-              <div style={styles.wrapper}>
-                  <ProposalTag tag={proposal.status} />
-              </div>
-          }
-          {
-              proposal.aggregations &&
-              <div style={styles.wrapper}>
-              {
-                  proposal.aggregations.map( function(agg, i) {
-                      return (
-                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
-                       );
-                  })
-              }
-                <div>
-                {
-                (proposalTable)?
-                    <Toggle
-                        label="Chart"
-                        labelPosition="left"
-                        style={styles.toggle}
-                        onToggle={this.toogleProposalRender}
-                        toggled={proposalTable}
-                    />
-                :
-                    <Toggle
-                        label="Table"
-                        labelPosition="right"
-                        style={styles.toggle}
-                        onToggle={this.toogleProposalRender}
-                        toggled={proposalTable}
-                    />
-                }
-                </div>
-              </div>
-          }
+                  <div className="row">
+                  {
+                      proposal.status &&
+                      <div className="col-md-4" style={styles.wrapper}>
+                          <ProposalTag tag={proposal.status} />
+                      </div>
+                  }
+
+                  {
+                      proposal.aggregations &&
+                      <div>
+                          <div className="col-md-4" style={styles.wrapper}>
+                          {
+                              proposal.aggregations.map( function(agg, i) {
+                                  return (
+                                       <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
+                                   );
+                              })
+                          }
+                          </div>
+                          <div className="col-md-2 col-md-offset-2 col-sm-offset-0 col-lg-offset-2" style={styles.wrapper}>
+                            {
+                            (proposalTable)?
+                                <Toggle
+                                    label="Chart"
+                                    labelPosition="left"
+                                    style={styles.toggle}
+                                    onToggle={this.toogleProposalRender}
+                                    toggled={proposalTable}
+                                />
+                            :
+                                <Toggle
+                                    label="Table"
+                                    labelPosition="right"
+                                    style={styles.toggle}
+                                    onToggle={this.toogleProposalRender}
+                                    toggled={proposalTable}
+                                />
+                            }
+                          </div>
+                      </div>
+                  }
+                  </div>
 
               <CardText>
 
