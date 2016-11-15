@@ -283,7 +283,6 @@ export class ProposalDefinition extends Component {
                 });
                 return false;
             }
-            console.log(name_validation);
         }
     }
 
@@ -323,7 +322,6 @@ export class ProposalDefinition extends Component {
 
     handleChangeEndDate = (event, date_end) => {
         const date_start = this.state.date_start;
-        console.log("handleChangeStartDate");
 
         this.setState({
             date_end: date_end,
@@ -443,8 +441,6 @@ export class ProposalDefinition extends Component {
                 break;
 
         }
-
-        console.log("ready?",this.state.readyToNext);
     }
 
 
@@ -468,7 +464,6 @@ export class ProposalDefinition extends Component {
     handlePrev = () => {
         const {stepIndex} = this.state;
 
-        console.log("x"+this.state.readyToNextPrev);
         if (!this.state.loading) {
             this.dummyAsync(() => this.setState({
                 loading: false,
@@ -488,8 +483,6 @@ export class ProposalDefinition extends Component {
     renderContent() {
         const {finished, stepIndex, readyToNext} = this.state;
         const contentStyle = {margin: '0 16px', overflow: 'hidden'};
-
-        console.log(this.state.readyToNext);
 
         if (finished) {
             return (
@@ -537,7 +530,6 @@ export class ProposalDefinition extends Component {
 
         return (
           <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-              xx{readyToNext}xx
             <Stepper activeStep={stepIndex}>
                 {steps.map(function(step, index) {
                     return (
