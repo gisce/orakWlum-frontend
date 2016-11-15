@@ -43,7 +43,6 @@ export class ProposalGraph extends Component {
         const isLite = (this.props.isLite)?this.props.isLite:false;
 
         if (prediction) {
-            console.dir(prediction);
             const data=adaptProposalData(prediction);
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
