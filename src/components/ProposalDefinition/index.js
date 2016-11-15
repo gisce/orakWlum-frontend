@@ -189,6 +189,7 @@ export class ProposalDefinition extends Component {
                             onRowSelection={this.handleAggregations}
                         >
                             <TableHeader
+                                displaySelectAll={false}
                                 enableSelectAll={false}
                             >
                               <TableRow>
