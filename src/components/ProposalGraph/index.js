@@ -40,13 +40,31 @@ export class ProposalGraph extends Component {
         const height = (this.props.height)?this.props.height:500;
         const width = (this.props.width)?this.props.width:1024;
 
+        const isLite = (this.props.isLite)?this.props.isLite:false;
+
         const data=adaptProposalData(prediction);
 
         const areas = prediction.map(function(day, i) {
             return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
         });
 
-        return (
+
+        return (isLite)?
+        (
+            <div >
+                <ResponsiveContainer height={height} >
+                    <AreaChart  data={data}
+                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                        <XAxis dataKey="name"/>
+                        <YAxis/>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        {areas}
+                    </AreaChart>
+                </ResponsiveContainer>
+            </div>
+        )
+        :
+        (
             <div >
                 <ResponsiveContainer height={height} >
                 	<AreaChart  data={data}
@@ -66,6 +84,7 @@ export class ProposalGraph extends Component {
 ProposalGraph.propTypes = {
     proposal: React.PropTypes.object,
     stacked: React.PropTypes.bool,
+    isLite: React.PropTypes.bool,
     width: React.PropTypes.number,
     height: React.PropTypes.number,
 };

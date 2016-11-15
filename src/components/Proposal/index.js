@@ -17,6 +17,20 @@ import * as actionCreators from '../../actions/proposal';
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 
+const locale = 'es';
+const dateOptions = {
+    day: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+};
+const hourOptions = {
+    day: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+};
+
 
 const styles = {
     chip: {
@@ -75,13 +89,20 @@ export class Proposal extends Component {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
 
+        const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
+        const lastExecution = new Date(proposal.executionDate).toLocaleString(locale, hourOptions);
+
+        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
+        const subtitle = <span>{daysRange}</span>;
+
+
         const Proposal = () => (
             <Card>
-              <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />
+              <CardTitle title={title} subtitle={subtitle} />
 
                   <CardMedia
-                    overlay={<CardTitle title={proposal.name}
-                    subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />}
+                    overlay={<CardTitle title={title}
+                    subtitle={subtitle} />}
                   >
                   </CardMedia>
 
@@ -98,7 +119,7 @@ export class Proposal extends Component {
                   {
                   proposal.aggregations.map( function(agg, i) {
                       return (
-                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} />
+                           <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
                        );
                   })
                   }
@@ -106,10 +127,10 @@ export class Proposal extends Component {
           }
 
               <CardText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+
+          {       proposal.executionDate &&
+                  <span>Last execution was done at {lastExecution}</span>
+          }
               </CardText>
 
           {
