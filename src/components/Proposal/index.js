@@ -38,8 +38,13 @@ const styles = {
       margin: 4,
     },
     wrapper: {
-      display: 'flex',
+        display: 'flex',
     },
+
+    aggregations: {
+        display: 'flex',
+    },
+
     toggle: {
         marginTop: 7,
       marginLeft: 7,
@@ -112,8 +117,75 @@ export class Proposal extends Component {
         const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
         const ownerText = (proposal.owner)?"by " + proposal.owner:"";
 
+        const withPicture = (proposal.isNew)?!proposal.isNew:true;
+
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>{daysRange}</span>;
+        const subtitle = <span>{daysRange + withPicture}</span>;
+
+        const offset = (withPicture)?0:1;
+        const size = (withPicture)?8:9;
+
+        const proposalStatus = (
+            proposal.status &&
+            <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
+                <ProposalTag tag={proposal.status} />
+            </div>
+        )
+
+        const proposalAggregations = (
+            proposal.aggregations &&
+                <div id="aggregationsList" className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size} style={styles.aggregations}>
+                {
+                    proposal.aggregations.map( function(agg, i) {
+                        return (
+                             <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
+                         );
+                    })
+                }
+                </div>
+
+        )
+
+        const proposalPictureToggle = (
+            (withPicture) &&
+            <div className="col-xs-offset-0 col-xs-2 col-sm-offset-0 col-sm-1 col-md-1 col-md-offset-0 col-lg-offset-0 col-lg-1" style={styles.toRight}>
+              {
+              (proposalTable)?
+                  <Toggle
+                      label="Chart"
+                      labelPosition="left"
+                      onToggle={this.toogleProposalRender}
+                      style={styles.toggle}
+                      toggled={proposalTable}
+                  />
+              :
+                  <Toggle
+                      label="Table"
+                      labelPosition="right"
+                      onToggle={this.toogleProposalRender}
+                      style={styles.toggle}
+                      toggled={proposalTable}
+                  />
+              }
+            </div>
+            )
+
+
+
+
+
+        const proposalPicture =
+            (withPicture)?
+                (proposal.prediction) &&
+                  (proposalTable)?
+                      <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
+                      :
+                      <ProposalGraph stacked={true} proposal={proposal} height={500} />
+                  :null
+
+
+
+        console.log(withPicture);
 
         const Proposal = () => (
             <Card>
@@ -127,47 +199,11 @@ export class Proposal extends Component {
 
 
                   <div className="row">
-                  {
-                      proposal.status &&
-                      <div className="col-md-3 col-lg-4" style={styles.wrapper}>
-                          <ProposalTag tag={proposal.status} />
-                      </div>
-                  }
+                      {proposalStatus}
 
-                  {
-                      proposal.aggregations &&
-                      <div>
-                          <div className="col-md-offset-1 col-md-5 col-lg-offset-0 col-lg-4" style={styles.wrapper}>
-                          {
-                              proposal.aggregations.map( function(agg, i) {
-                                  return (
-                                       <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
-                                   );
-                              })
-                          }
-                          </div>
-                          <div className="col-xs-offset-0 col-xs-2 col-sm-offset-0 col-sm-1 col-md-1 col-md-offset-1 col-lg-offset-2 col-lg-1" style={styles.toRight}>
-                            {
-                            (proposalTable)?
-                                <Toggle
-                                    label="Chart"
-                                    labelPosition="left"
-                                    onToggle={this.toogleProposalRender}
-                                    style={styles.toggle}
-                                    toggled={proposalTable}
-                                />
-                            :
-                                <Toggle
-                                    label="Table"
-                                    labelPosition="right"
-                                    onToggle={this.toogleProposalRender}
-                                    style={styles.toggle}
-                                    toggled={proposalTable}
-                                />
-                            }
-                          </div>
-                      </div>
-                  }
+                      {proposalAggregations}
+
+                      {proposalPictureToggle}
                   </div>
 
               <CardText>
@@ -182,13 +218,7 @@ export class Proposal extends Component {
           }
               </CardText>
 
-          {
-              proposal.prediction &&
-                (proposalTable)?
-                    <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
-                    :
-                    <ProposalGraph stacked={true} proposal={proposal} height={500} />
-          }
+          {proposalPicture}
 
           {
               !readOnly &&
