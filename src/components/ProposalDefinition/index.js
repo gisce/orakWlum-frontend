@@ -304,6 +304,7 @@ export class ProposalDefinition extends Component {
 
         this.setState({
             date_start: date_start,
+            date_start_error_text: null,
         });
 
         const basicValidation = this.validateField({date_start: date_start}, "date_start", { properties: { date_start: validations.date_start} } );
@@ -326,6 +327,7 @@ export class ProposalDefinition extends Component {
 
         this.setState({
             date_end: date_end,
+            date_end_error_text: null,
         });
 
         const basicValidation = this.validateField({date_end: date_end}, "date_end", { properties: { date_end: validations.date_end} } );
@@ -337,13 +339,25 @@ export class ProposalDefinition extends Component {
                     date_end_validation: false,
                     readyToNext: false,
                 });
-            }
-            this.validateDatesRange(date_start, date_end);
+            } else
+                this.validateDatesRange(date_start, date_end);
         }
     };
 
     validateDatesRange = (date_start, date_end) => {
-        
+        this.setState({
+            date_end_error_text: null,
+        });
+
+
+        if (date_start == null) {
+            this.setState({
+                date_start_error_text: "Start date must be defined",
+                date_end_validation: false,
+                readyToNext: false,
+            });
+        }
+
         if (date_start > date_end) {
             this.setState({
                 date_end_error_text: "End date must be >= the starting one",
