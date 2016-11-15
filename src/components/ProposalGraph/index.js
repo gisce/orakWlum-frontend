@@ -42,42 +42,44 @@ export class ProposalGraph extends Component {
 
         const isLite = (this.props.isLite)?this.props.isLite:false;
 
-        const data=adaptProposalData(prediction);
+        if (prediction) {
+            console.dir(prediction);
+            const data=adaptProposalData(prediction);
+            const areas = prediction.map(function(day, i) {
+                return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+            });
 
-        const areas = prediction.map(function(day, i) {
-            return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
-        });
-
-
-        return (isLite)?
-        (
-            <div >
-                <ResponsiveContainer height={height} >
-                    <AreaChart  data={data}
-                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-                        <XAxis dataKey="name"/>
-                        <YAxis/>
-                        <CartesianGrid strokeDasharray="3 3"/>
-                        {areas}
-                    </AreaChart>
-                </ResponsiveContainer>
-            </div>
-        )
-        :
-        (
-            <div >
-                <ResponsiveContainer height={height} >
-                	<AreaChart  data={data}
-                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-                        <XAxis dataKey="name"/>
-                        <YAxis/>
-                        <CartesianGrid strokeDasharray="3 3"/>
-                        <Tooltip/>
-                        {areas}
-                    </AreaChart>
-                </ResponsiveContainer>
-            </div>
-        );
+            return (isLite)?
+            (
+                <div >
+                    <ResponsiveContainer height={height} >
+                        <AreaChart  data={data}
+                            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                            <XAxis dataKey="name"/>
+                            <YAxis/>
+                            <CartesianGrid strokeDasharray="3 3"/>
+                            {areas}
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
+            )
+            :
+            (
+                <div >
+                    <ResponsiveContainer height={height} >
+                    	<AreaChart  data={data}
+                            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                            <XAxis dataKey="name"/>
+                            <YAxis/>
+                            <CartesianGrid strokeDasharray="3 3"/>
+                            <Tooltip/>
+                            {areas}
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </div>
+            );
+        }
+        return null;
     }
 }
 

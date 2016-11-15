@@ -11,3 +11,31 @@
   }
 
 }
+
+//Fixing aggregationsList of <Proposal>
+@media (max-width: 991px) {
+    :global(#aggregationsList) {
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
+}
+@media (min-width: 992px) {
+    :global(#aggregationsList) {
+      align-items: center;
+      justify-content: center;
+    }
+}
+
+//Fixing tooglePicture of <Proposal>
+@media (max-width: 1199px) {
+    :global(#togglePicture) {
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
+}
+@media (min-width: 992px) {
+    :global(#togglePicture #toogleElement) {
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+}
