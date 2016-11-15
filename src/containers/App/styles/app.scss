@@ -11,3 +11,11 @@
   }
 
 }
+
+
+@media (min-width: 992px) {
+    :global(#aggregationsList) {
+      align-items: center;
+      justify-content: center;
+    }
+}
