@@ -366,7 +366,9 @@ export class ProposalDefinition extends Component {
     }
 
     handleAggregations = (selectedRows) => {
+        console.log(selectedRows);
         let aggregations_list = [];
+        let aggregations_selected = [];
         const aggregationsAll = this.props.aggregationsList;
 
         //initialize list with all deselected
@@ -378,6 +380,7 @@ export class ProposalDefinition extends Component {
             //mark all as selected
             aggregationsAll.map(function(agg, i){
                 aggregations_list[i] =  true;
+                aggregations_selected.push(i);
             });
             selectedRows = aggregations_list;
         }
@@ -386,6 +389,7 @@ export class ProposalDefinition extends Component {
                 //mark the selected ones
                 selectedRows.map(function(agg, i){
                     aggregations_list[agg] = true;
+                    aggregations_selected.push(agg);
                 });
         }
 
@@ -398,6 +402,7 @@ export class ProposalDefinition extends Component {
         this.setState({
             aggregations: aggregations_list,
             aggregationsNames: aggregationsNames,
+            aggregationsSelectedRows: aggregations_selected,
         });
 
         const basicValidation = this.validateField({aggregations: aggregations_list}, "aggregations_list", { properties: { aggregations: validations.aggregations} } );
@@ -426,6 +431,7 @@ export class ProposalDefinition extends Component {
         }
     }
 
+    // auxiliar method responsible of validate the next step (for x -> prev -> next flows)
     validateNext = (index) => {
         let x = event;
         switch(index) {
@@ -440,6 +446,9 @@ export class ProposalDefinition extends Component {
                 }
                 break;
 
+            case 2:
+                this.handleAggregations(this.state.aggregationsSelectedRows);
+                break;
         }
     }
 
