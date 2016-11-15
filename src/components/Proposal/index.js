@@ -79,6 +79,7 @@ export class Proposal extends Component {
         super(props);
         this.state = {
             proposal: props.proposal,
+            proposalTable: false,
         };
     }
 
@@ -89,6 +90,8 @@ export class Proposal extends Component {
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
+
+        const proposalTable = this.state.proposalTable;
 
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
         const lastExecution = new Date(proposal.executionDate).toLocaleString(locale, hourOptions);
@@ -136,12 +139,10 @@ export class Proposal extends Component {
 
           {
               proposal.prediction &&
-              <ProposalGraph stacked={true} proposal={proposal} height={500} />
-          }
-
-          {
-              proposal.prediction &&
-              <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
+                (proposalTable)?
+                    <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
+                    :
+                    <ProposalGraph stacked={true} proposal={proposal} height={500} />
           }
 
           {
