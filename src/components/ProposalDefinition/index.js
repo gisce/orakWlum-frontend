@@ -366,7 +366,6 @@ export class ProposalDefinition extends Component {
     }
 
     handleAggregations = (selectedRows) => {
-        console.log(selectedRows);
         let aggregations_list = [];
         let aggregations_selected = [];
         const aggregationsAll = this.props.aggregationsList;
@@ -526,7 +525,7 @@ export class ProposalDefinition extends Component {
                 label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
                 primary={true}
                 onTouchTap={this.handleNext}
-                disabled={!readyToNext}
+                disabled={!readyToNext && stepIndex !== this.stepsLength-1}
               />
             </div>
           </div>
