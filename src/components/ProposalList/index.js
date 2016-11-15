@@ -86,7 +86,13 @@ export class ProposalList extends Component {
                       style={styles.gridTile}
                     >
                     <div><br/><br/><br/><br/></div>
-                    <ProposalGraph stacked={true} proposal={tile} width={ index < howManyBig ? width : width/2} height={ index < howManyBig ? height : height/2.3} />
+                    <ProposalGraph
+                        stacked={true}
+                        proposal={tile}
+                        width={ index < howManyBig ? width : width/2}
+                        height={ index < howManyBig ? height : height/2.3}
+                        isLite
+                    />
 
                     </GridTile>
               ))}

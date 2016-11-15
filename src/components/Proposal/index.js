@@ -11,21 +11,53 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {orange300, orange900, green300, green900, red300, red900} from 'material-ui/styles/colors';
 
+import Toggle from 'material-ui/Toggle';
 
 import * as actionCreators from '../../actions/proposal';
 
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
+import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+const locale = 'es';
+const dateOptions = {
+    day: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+};
+const hourOptions = {
+    day: '2-digit',
+    year: 'numeric',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+};
 
 const styles = {
     chip: {
       margin: 4,
     },
     wrapper: {
-      display: 'flex',
-      flexWrap: 'wrap',
+        display: 'flex',
     },
+    aggregationsRight: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    aggregationsCenter: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    aggregations: {
+        display: 'flex',
+    },
+    toggle: {
+      marginTop: 7,
+    },
+    labelToggle: {
+        marginTop: 7,
+        marginLeft: 7,
+    }
 };
 
 const colors = {
@@ -64,6 +96,7 @@ export class Proposal extends Component {
         super(props);
         this.state = {
             proposal: props.proposal,
+            proposalTable: false,
         };
     }
 
@@ -71,47 +104,167 @@ export class Proposal extends Component {
         browserHistory.push(route);
     }
 
+    toogleProposalRender = (event, status) => {
+        this.setState({
+            proposalTable: status,
+        });
+    };
+
     render() {
+        const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
+
+        const proposalTable = this.state.proposalTable;
+
+        const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
+
+        const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
+        const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
+        const ownerText = (proposal.owner)?"by " + proposal.owner:"";
+
+        const withPicture = (proposal.isNew)?!proposal.isNew:true;
+
+        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
+        const subtitle = <span>{daysRange + withPicture}</span>;
+
+        const offset = (withPicture)?0:1;
+        const size = (withPicture)?8:9;
+
+        // The Proposal status!
+        const proposalStatus = (
+            proposal.status &&
+            <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
+                <ProposalTag tag={proposal.status} />
+            </div>
+        )
+
+        // The Proposal Aggregations List
+        const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
+        const proposalAggregations = (
+            proposal.aggregations &&
+                <div
+                    id="aggregationsList"
+                    className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size}
+                    style={aggregationsStyle}>
+                {
+                    proposal.aggregations.map( function(agg, i) {
+                        return (
+                             <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
+                         );
+                    })
+                }
+                </div>
+
+        )
+
+        // The Proposal graph toogle! //to switch between table and chart
+        const proposalPictureToggle = (
+            (withPicture) &&
+            <div
+                className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2"
+                style={styles.to_ri}>
+              {
+              (proposalTable)?
+              <div
+                  id="togglePicture"
+                  className="row"
+                  style={styles.aggregationsCenter}
+              >
+                  <div className="col-xs-2" style={styles.labelToggle}>
+                      Chart
+                  </div>
+                  <div id="toogleElement" className="col-xs-3">
+                      <Toggle
+                          onToggle={this.toogleProposalRender}
+                          style={styles.toggle}
+                          toggled={proposalTable}
+                      />
+                  </div>
+                  <div className="col-xs-2" style={styles.toggle}>
+                      <b>Table</b>
+                  </div>
+              </div>
+              :
+              <div
+                  id="togglePicture"
+                  className="row"
+                  style={styles.aggregationsCenter}
+              >
+                  <div className="col-xs-2" style={styles.labelToggle}>
+                      <b>Chart</b>
+                  </div>
+                  <div id="toogleElement" className="col-xs-3">
+                      <Toggle
+                          onToggle={this.toogleProposalRender}
+                          style={styles.toggle}
+                          toggled={proposalTable}
+                      />
+                  </div>
+                  <div className="col-xs-2" style={styles.toggle}>
+                      Table
+                  </div>
+              </div>
+              }
+            </div>
+            )
+
+        // The Proposal graph!
+        const proposalPicture =
+            (withPicture)?
+                (proposal.prediction) &&
+                  (proposalTable)?
+                      <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
+                      :
+                      <ProposalGraph stacked={true} proposal={proposal} height={500} />
+                  :null
+
+        // The resulting Proposal element
         const Proposal = () => (
             <Card>
-              <CardTitle title={proposal.name} subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />
+              <CardTitle title={title} subtitle={subtitle} />
 
                   <CardMedia
-                    overlay={<CardTitle title={proposal.name}
-                    subtitle={<span>{new Date(proposal.creation_date).toLocaleString()}</span>} />}
+                    overlay={<CardTitle title={title}
+                    subtitle={subtitle} />}
                   >
                   </CardMedia>
 
 
-              <div style={styles.wrapper}>
-                  <ProposalTag tag={proposal.status} />
-              </div>
+                  <div className="row">
+                      {proposalStatus}
+
+                      {proposalAggregations}
+
+                      {proposalPictureToggle}
+                  </div>
 
               <CardText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+          {       proposal.creation_date &&
+                  <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
+          }
+
+          {       proposal.execution_date &&
+                  <p><span>Last execution was done at {lastExecution}</span></p>
+          }
               </CardText>
 
-              <ProposalGraph stacked={true} proposal={proposal} height={500} />
+          {proposalPicture}
 
+          {
+              !readOnly &&
               <CardActions>
                 <FlatButton label="Run" />
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Delete" />
               </CardActions>
+          }
+
             </Card>
         );
 
         return (
             <div>
-
-                <div>
-                </div>
-
                 <Proposal/>
             </div>
         );
@@ -119,6 +272,5 @@ export class Proposal extends Component {
 }
 
 Proposal.propTypes = {
-    logoutAndRedirect: React.PropTypes.func,
-    isAuthenticated: React.PropTypes.bool,
+    readOnly: React.PropTypes.bool,
 };
