@@ -6,7 +6,7 @@ import profile  from './profile'
 import proposal  from './proposal'
 import proposals  from './proposals'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     routing: routerReducer,
     auth,
     data,
@@ -14,5 +14,9 @@ const rootReducer = combineReducers({
     proposal,
     profile,
 });
+
+const rootReducer = (state, action) => {
+  return appReducer(state, action)
+}
 
 export default rootReducer;
