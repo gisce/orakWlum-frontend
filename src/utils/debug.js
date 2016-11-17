@@ -1,9 +1,10 @@
 /* eslint max-len: 0, no-param-reassign: 0 */
 import React from 'react';
 
+import { DEBUG } from '../constants';
+
 export function debug(what) {
-    var debug = false;
-    debug = localStorage.getItem('debug');
+    var debug = DEBUG;
 
     return (
         debug &&
