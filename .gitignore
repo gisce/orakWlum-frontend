@@ -1,3 +1,6 @@
+# Avoiding DEBUG definition
+src/constants/debug.js
+
 # Avoid swap files
 *.sw*
 
