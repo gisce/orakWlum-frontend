@@ -1,3 +1,6 @@
+# Avoid swap files
+*.sw*
+
 # PyCharm
 .idea
 
