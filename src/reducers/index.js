@@ -18,12 +18,11 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
   if (action.type === 'LOGOUT_USER') {
-    //state = undefined;
-    state.auth = undefined;
-    state.data = undefined;
-    state.proposals = undefined;
-    state.proposal = undefined;
-    state.profile = undefined;
+    // Clear all states except routing
+    Object.keys(state).forEach(function(oneState,index) {
+        if (oneState != "routing")
+            state[oneState] = undefined;
+    });
   }
   return appReducer(state, action);
 }
