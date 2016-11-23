@@ -17,6 +17,7 @@ import * as actionCreators from '../../actions/proposal';
 
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
+import { ProposalGraphOld } from '../ProposalGraphOld';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
 const locale = 'es';
@@ -113,6 +114,8 @@ export class Proposal extends Component {
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
+
+        const proposalOld = (this.props.proposalOld)?this.props.proposalOld:false;
 
         const proposalTable = this.state.proposalTable;
 
@@ -215,7 +218,10 @@ export class Proposal extends Component {
                   (proposalTable)?
                       <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
                       :
-                      <ProposalGraph stacked={true} proposal={proposal} height={500} />
+                      (proposalOld)?
+                          <ProposalGraphOld stacked={true} proposal={proposal} height={500} />
+                          :
+                          <ProposalGraph stacked={true} proposal={proposal} height={500} />
                   :null
 
         // The resulting Proposal element
@@ -273,4 +279,5 @@ export class Proposal extends Component {
 
 Proposal.propTypes = {
     readOnly: React.PropTypes.bool,
+    proposalOld: React.PropTypes.bool,
 };
