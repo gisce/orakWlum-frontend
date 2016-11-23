@@ -34,7 +34,9 @@ export class ProposalGraph extends Component {
     }
 
     render() {
-        const prediction = this.props.proposal.aggregationz;
+        const data = this.props.data;
+        const components = this.props.components;
+
         const stacked = (this.props.stacked)?"1":null;
 
         const height = (this.props.height)?this.props.height:500;
@@ -42,13 +44,7 @@ export class ProposalGraph extends Component {
 
         const isLite = (this.props.isLite)?this.props.isLite:false;
 
-        if (prediction) {
-            const predictionAdapted=adaptProposalData(prediction);
-
-            const current = predictionAdapted["001"];
-            const data = current.result;
-            const components = current.components;
-
+        if (data && components) {
             const areas = Object.keys(components).map(function(component, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
@@ -96,7 +92,8 @@ export class ProposalGraph extends Component {
 }
 
 ProposalGraph.propTypes = {
-    proposal: React.PropTypes.object,
+    data: React.PropTypes.array.isRequired,
+    components: React.PropTypes.object.isRequired,
     stacked: React.PropTypes.bool,
     isLite: React.PropTypes.bool,
     width: React.PropTypes.number,

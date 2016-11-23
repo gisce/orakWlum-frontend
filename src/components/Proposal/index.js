@@ -20,6 +20,9 @@ import { ProposalGraph } from '../ProposalGraph';
 import { ProposalGraphOld } from '../ProposalGraphOld';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+import {adaptProposalData, adaptProposalDataOld} from '../../utils/graph';
+
+
 const locale = 'es';
 const dateOptions = {
     day: '2-digit',
@@ -133,6 +136,18 @@ export class Proposal extends Component {
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
 
+        const prediction = proposal.aggregationz;
+
+        let data=null;
+        let components=null;
+
+        if (prediction) {
+            const predictionAdapted=adaptProposalData(prediction);
+            const current = predictionAdapted["001"];
+            data = current.result;
+            components = current.components;
+        }
+
         // The Proposal status!
         const proposalStatus = (
             proposal.status &&
@@ -221,7 +236,7 @@ export class Proposal extends Component {
                       (proposalOld)?
                           <ProposalGraphOld stacked={true} proposal={proposal} height={500} />
                           :
-                          <ProposalGraph stacked={true} proposal={proposal} height={500} />
+                          <ProposalGraph stacked={true} data={data} components={components} height={500} />
                   :null
 
         // The resulting Proposal element
