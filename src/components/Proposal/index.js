@@ -101,6 +101,7 @@ export class Proposal extends Component {
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
+            aggregationSelected: "001",
         };
     }
 
@@ -111,6 +112,21 @@ export class Proposal extends Component {
     toogleProposalRender = (event, status) => {
         this.setState({
             proposalTable: status,
+        });
+    };
+
+    changeProposalAggregation = (event, agg) => {
+        //initialize selection of all elements
+        this.state.proposal.aggregations.map( function(agg, i) {
+            agg.selected = false;
+        });
+
+        //select current
+        agg.selected=true;
+
+        //save it to change the graph
+        this.setState({
+            aggregationSelected: agg.id,
         });
     };
 
@@ -138,12 +154,15 @@ export class Proposal extends Component {
 
         const prediction = proposal.aggregationz;
 
+        const aggregationSelected = this.state.aggregationSelected;
+        const changeProposalAggregation=this.changeProposalAggregation;
+
         let data=null;
         let components=null;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
-            const current = predictionAdapted["001"];
+            const current = predictionAdapted[aggregationSelected];
             data = current.result;
             components = current.components;
         }
@@ -167,7 +186,13 @@ export class Proposal extends Component {
                 {
                     proposal.aggregations.map( function(agg, i) {
                         return (
-                             <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
+                            <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
+                                 <ProposalTag
+                                     key={"aggregationTag_"+i}
+                                     tag={agg.lite}
+                                     selected={agg.selected}
+                                     readOnly/>
+                             </div>
                          );
                     })
                 }
