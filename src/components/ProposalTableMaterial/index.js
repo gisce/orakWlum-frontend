@@ -8,6 +8,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import {adaptProposalData} from '../../utils/graph';
 
 const styles = {
+    selectedElement: {
+        color: 'white',
+        backgroundColor: '#808080',
+    }
 };
 
 const baseColors = [
@@ -79,7 +83,10 @@ export class ProposalTableMaterial extends Component {
 
             // Push the total for this row
             cells.push(
-                <TableRowColumn key={"Column"+i+"TOTAL"}>
+                <TableRowColumn
+                    key={"Column"+i+"TOTAL"}
+                    style={styles.selectedElement}
+                >
                     <b>{totalSum}</b>
                 </TableRowColumn>
             )
@@ -104,7 +111,10 @@ export class ProposalTableMaterial extends Component {
         })
 
         rows.push (
-            <TableRow key={"tableRowTotal"}>
+            <TableRow
+                key={"tableRowTotal"}
+                style={styles.selectedElement}
+                selectable={false}>
                 <TableRowColumn key={"tableRowTotalHeader"}>
                     <b>TOTAL</b>
                 </TableRowColumn>
@@ -116,8 +126,6 @@ export class ProposalTableMaterial extends Component {
                 </TableRowColumn>
             </TableRow>
         );
-
-
 
         return (
             <div >
