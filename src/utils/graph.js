@@ -12,7 +12,7 @@ export function adaptProposalData(proposalData, hour=25) {
         result[j]['result']=[];
 
         //the stacked components for the aggregation values ie F1, F5D, ... or F1,girona; F5D,girona; F1,barcelona; F5D,barcelona
-        result[j]['components']=[];
+        result[j]['components']={};
 
         //initialize hours
         for (var i=0; i<hour; i++)
@@ -48,6 +48,12 @@ export function adaptProposalData(proposalData, hour=25) {
             console.log(hourExact,hourAggregation);
 
             result[i]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
+
+            //append aggregation value if so far not exist
+
+            const componentName = "" + hourAggregation.toString();
+            result[i]['components'][componentName] = componentName;
+            console.log(componentName);
         })
     });
     console.dir(result)
