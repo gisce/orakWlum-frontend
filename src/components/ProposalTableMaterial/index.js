@@ -25,23 +25,31 @@ export class ProposalTableMaterial extends Component {
     }
 
     render() {
-        const prediction = this.props.proposal.prediction;
+        const data = this.props.data;
+        const components = this.props.components;
         const type = (this.props.type)?this.props.type:null;
 
-        //Adapt proposal data (transpose data to days and columns dimension)
-        const data=adaptProposalData(prediction);
+        console.log(components);
 
         //Prepare headers
-        const headers = prediction.map(function(day, i) {
+        const headers = Object.keys(components).map(function(component, i) {
             return (
                 <TableRowColumn key={"header"+i} stroke={baseColors[i]} fill={baseColors[i]}>
-                    <b>{day.day}</b>
+                    <b>{component}</b>
                 </TableRowColumn>
             )
         });
 
+        const headerTotal = (
+            <TableRowColumn key={"headerTotal"}>
+                <b>TOTAL</b>
+            </TableRowColumn>
+        );
+
         //Prepare rows and cells
         let rows=[];
+
+        const componentsKeys=Object.keys(components);
         for (var i=0; i<data.length; i++) {
             let cells=[];
             cells.push(
@@ -49,13 +57,25 @@ export class ProposalTableMaterial extends Component {
                     {data[i].name}
                 </TableRowColumn>
             );
-            for (var j=0; j<prediction.length; j++) {
+
+            let totalSum = 0;
+            componentsKeys.map(function (comp, j) {
+                let value = (data[i][comp])?data[i][comp]:0;
                 cells.push(
                     <TableRowColumn key={"Column"+i+j}>
-                        {data[i][prediction[j].day]}
+                        {value}
                     </TableRowColumn>
                 );
-            }
+
+                totalSum += value;
+            })
+
+            // Push the total for this row
+            cells.push(
+                <TableRowColumn key={"Column"+i+"TOTAL"}>
+                    <b>{totalSum}</b>
+                </TableRowColumn>
+            )
 
             rows.push (
                 <TableRow key={"tableRow"+i}>
@@ -76,6 +96,7 @@ export class ProposalTableMaterial extends Component {
                                 <b>Hour</b>
                             </TableRowColumn>
                             {headers}
+                            {headerTotal}
                         </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
@@ -88,7 +109,8 @@ export class ProposalTableMaterial extends Component {
 }
 
 ProposalTableMaterial.propTypes = {
-    proposal: React.PropTypes.object.isRequired,
+    data: React.PropTypes.array.isRequired,
+    components: React.PropTypes.object.isRequired,
     colors: React.PropTypes.object,
     type: React.PropTypes.bool,
 };
