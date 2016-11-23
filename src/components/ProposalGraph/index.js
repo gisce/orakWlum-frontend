@@ -45,7 +45,7 @@ export class ProposalGraph extends Component {
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
 
-            const current = predictionAdapted[0];
+            const current = predictionAdapted["001"];
             const data = current.result;
             const components = current.components;
 
