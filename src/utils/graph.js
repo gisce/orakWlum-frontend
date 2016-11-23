@@ -2,9 +2,7 @@
 
 export function adaptProposalData(proposalData, hour=25) {
     let result=[];
-
     const aggregationNum = proposalData.result.length;
-    console.log(aggregationNum);
 
     //initialize result for each aggregation
     for (var j=0; j<aggregationNum; j++) {
@@ -22,7 +20,6 @@ export function adaptProposalData(proposalData, hour=25) {
         const prediction = aggregation.result.sum;
         const aggregationTitle = aggregation.aggregation;
         const aggregationID = aggregation.aggregation_id;
-        //console.dir(Object.keys(aggregation.result.sum));
 
         //convert incoming string to array
         const aggregationComponentsArray = JSON.parse(aggregationTitle.replace(/'/g, '"'));
@@ -30,9 +27,6 @@ export function adaptProposalData(proposalData, hour=25) {
 
         result[i]['aggregation'] = Object.assign([],aggregationComponentsArray);
         result[i]['aggregationID'] = "" + aggregationID;
-
-        console.log(aggregationTitle,"xx", aggregationComponentsArray);
-
 
         //for each returning entry of the API, extract the HOUR, the component (aggregation) and insert in the result propertly
         Object.keys(prediction).map( function(hour, y) {
@@ -45,18 +39,14 @@ export function adaptProposalData(proposalData, hour=25) {
             //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
             //If there are just one aggregation (hour), create the y="*"
             const hourAggregation = (hourComponentsArray.length == 1)?["*"]:hourComponentsArray.slice(1, hourComponentsArray.length);
-            console.log(hourExact,hourAggregation);
 
             result[i]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
 
             //append aggregation value if so far not exist
-
             const componentName = "" + hourAggregation.toString();
             result[i]['components'][componentName] = componentName;
-            console.log(componentName);
         })
     });
-    console.dir(result)
     return result;
 }
 
@@ -71,6 +61,5 @@ export function adaptProposalDataOld(proposalData, hour=25) {
             result[y][day.day]=hour;
         });
     });
-    console.dir(result)
     return result;
 }
