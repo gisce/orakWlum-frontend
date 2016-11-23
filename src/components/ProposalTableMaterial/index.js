@@ -85,7 +85,6 @@ export class ProposalTableMaterial extends Component {
             cells.push(
                 <TableRowColumn
                     key={"Column"+i+"TOTAL"}
-                    style={styles.selectedElement}
                 >
                     <b>{totalSum}</b>
                 </TableRowColumn>
