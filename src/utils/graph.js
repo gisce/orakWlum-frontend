@@ -11,6 +11,9 @@ export function adaptProposalData(proposalData, hour=25) {
         result[j]={};
         result[j]['result']=[];
 
+        //the stacked components for the aggregation values ie F1, F5D, ... or F1,girona; F5D,girona; F1,barcelona; F5D,barcelona
+        result[j]['components']=[];
+
         //initialize hours
         for (var i=0; i<hour; i++)
             result[j]['result'][i]={name: i+":00"}
@@ -30,24 +33,25 @@ export function adaptProposalData(proposalData, hour=25) {
 
         console.log(aggregationTitle,"xx", aggregationComponentsArray);
 
+
         //for each returning entry of the API, extract the HOUR, the component (aggregation) and insert in the result propertly
         Object.keys(prediction).map( function(hour, y) {
-
             const hourComponentsArray = JSON.parse(hour.replace(/'/g, '"'));
 
-            //Hour is ever fixed
+            //Hour is ever fixed (and must be extracted from the aggregations name)
             const hourDetail = "" + hourComponentsArray[0];
             const hourExact = hourDetail.slice(12,13);
 
             //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
-            const hourAggregation = hourComponentsArray.slice(1, hourComponentsArray.length);
+            //If there are just one aggregation (hour), create the y="*"
+            const hourAggregation = (hourComponentsArray.length == 1)?["*"]:hourComponentsArray.slice(1, hourComponentsArray.length);
             console.log(hourExact,hourAggregation);
 
-            result[i]['result'][hourExact][hourAggregation]=0 + prediction[hour];
+            result[i]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
         })
     });
     console.dir(result)
-    return result[0];
+    return result;
 }
 
 
