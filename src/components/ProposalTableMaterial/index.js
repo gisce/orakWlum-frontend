@@ -29,8 +29,6 @@ export class ProposalTableMaterial extends Component {
         const components = this.props.components;
         const type = (this.props.type)?this.props.type:null;
 
-        console.log(components);
-
         //Prepare headers
         const headers = Object.keys(components).map(function(component, i) {
             return (
@@ -48,6 +46,11 @@ export class ProposalTableMaterial extends Component {
 
         //Prepare rows and cells
         let rows=[];
+
+        //The total for each aggregate component
+        let allTotalSum = [];
+        for (var a=0; a<Object.keys(components).length; a++)
+            allTotalSum[a] = 0;
 
         const componentsKeys=Object.keys(components);
         for (var i=0; i<data.length; i++) {
@@ -67,7 +70,11 @@ export class ProposalTableMaterial extends Component {
                     </TableRowColumn>
                 );
 
+                //the total for this hour
                 totalSum += value;
+
+                //the total of this aggr component
+                allTotalSum[j] += value;
             })
 
             // Push the total for this row
@@ -83,6 +90,34 @@ export class ProposalTableMaterial extends Component {
                 </TableRow>
             );
         }
+
+        let totalRow = [];
+        let totalSum = 0;
+        //Prepare the last row with the TOTALS
+        allTotalSum.map( function (component, z) {
+            totalRow.push (
+                <TableRowColumn key={"tableRowTotal"+z}>
+                    <b>{component}</b>
+                </TableRowColumn>
+            );
+            totalSum += component;
+        })
+
+        rows.push (
+            <TableRow key={"tableRowTotal"}>
+                <TableRowColumn key={"tableRowTotalHeader"}>
+                    <b>TOTAL</b>
+                </TableRowColumn>
+
+                {totalRow}
+
+                <TableRowColumn key={"tableRowTotalHeader"}>
+                    <b>{totalSum}</b>
+                </TableRowColumn>
+            </TableRow>
+        );
+
+
 
         return (
             <div >
