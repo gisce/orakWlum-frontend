@@ -42,7 +42,10 @@ export default class ProposalView extends React.Component {
                     {!this.props.loaded
                         ? <h1>Loading Proposal {proposalId}...</h1>
                         :
-                        <Proposal proposal={proposal} />
+                        <div>
+                            <Proposal proposal={proposal} />
+                            <Proposal proposal={proposal} proposalOld/>
+                        </div>
                     }
                     {debug(this.props.data)}
                 </div>
