@@ -98,11 +98,13 @@ function mapDispatchToProps(dispatch) {
 export class Proposal extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
-            aggregationSelected: "001",
+            aggregationSelected: props.proposal.aggregations[0].id,
         };
+        props.proposal.aggregations[0].selected = true;
     }
 
     dispatchNewRoute(route) {
