@@ -43,12 +43,14 @@ export class ProposalGraph extends Component {
         const isLite = (this.props.isLite)?this.props.isLite:false;
 
         if (prediction) {
-            const data=adaptProposalData(prediction);
-        }
-            /*
+            const predictionAdapted=adaptProposalData(prediction);
 
-            const areas = prediction.map(function(day, i) {
-                return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+            const current = predictionAdapted[0];
+            const data = current.result;
+            const components = current.components;
+
+            const areas = Object.keys(components).map(function(component, i) {
+                return <Area key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
 
             /* Aggregations selector
@@ -56,7 +58,6 @@ export class ProposalGraph extends Component {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
             //*/
-            /*
 
             return (isLite)?
             (
@@ -88,7 +89,7 @@ export class ProposalGraph extends Component {
                 </div>
             );
         }
-        */
+        //*/
 
         return null;
     }
