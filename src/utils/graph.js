@@ -15,10 +15,7 @@ export function adaptProposalData(proposalData, hour=25) {
         for (var i=0; i<hour; i++)
             result[j]['result'][i]={name: i+":00"}
     }
-    const count = 1;
     proposalData.result.map(function(aggregation, i) {
-        if (i<count){
-
         const prediction = aggregation.result.sum;
         const aggregationTitle = aggregation.aggregation;
         const aggregationID = aggregation.aggregation_id;
@@ -28,20 +25,26 @@ export function adaptProposalData(proposalData, hour=25) {
         const aggregationComponentsArray = JSON.parse(aggregationTitle.replace(/'/g, '"'));
         const aggregationComponentsNumber = aggregationComponentsArray.length;
 
+        result[i]['aggregation'] = Object.assign([],aggregationComponentsArray);
+        result[i]['aggregationID'] = "" + aggregationID;
+
         console.log(aggregationTitle,"xx", aggregationComponentsArray);
 
         //for each returning entry of the API, extract the HOUR, the component (aggregation) and insert in the result propertly
         Object.keys(prediction).map( function(hour, y) {
 
             const hourComponentsArray = JSON.parse(hour.replace(/'/g, '"'));
+
+            //Hour is ever fixed
             const hourDetail = "" + hourComponentsArray[0];
             const hourExact = hourDetail.slice(12,13);
+
+            //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
             const hourAggregation = hourComponentsArray.slice(1, hourComponentsArray.length);
             console.log(hourExact,hourAggregation);
 
-            result[i]['result'][hourExact][hourAggregation]=prediction[hour];
+            result[i]['result'][hourExact][hourAggregation]=0 + prediction[hour];
         })
-    }
     });
     console.dir(result)
     return result[0];

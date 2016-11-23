@@ -34,7 +34,7 @@ export class ProposalGraph extends Component {
     }
 
     render() {
-        const prediction = this.props.proposal.prediction;
+        const prediction = this.props.proposal.aggregationz;
         const stacked = (this.props.stacked)?"1":null;
 
         const height = (this.props.height)?this.props.height:500;
@@ -44,9 +44,19 @@ export class ProposalGraph extends Component {
 
         if (prediction) {
             const data=adaptProposalData(prediction);
+        }
+            /*
+
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
+
+            /* Aggregations selector
+            const areas = prediction.map(function(day, i) {
+                return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+            });
+            //*/
+            /*
 
             return (isLite)?
             (
@@ -78,6 +88,8 @@ export class ProposalGraph extends Component {
                 </div>
             );
         }
+        */
+
         return null;
     }
 }
