@@ -1,17 +1,19 @@
 
 
 export function adaptProposalData(proposalData, hour=25) {
-    let result=[]
+    let result=[];
 
     const aggregationNum = proposalData.result.length;
     console.log(aggregationNum);
 
     //initialize result for each aggregation
     for (var j=0; j<aggregationNum; j++) {
-        result[j]=[];
+        result[j]={};
+        result[j]['result']=[];
+
         //initialize hours
         for (var i=0; i<hour; i++)
-            result[j][i]={name: i+":00"}
+            result[j]['result'][i]={name: i+":00"}
     }
     const count = 1;
     proposalData.result.map(function(aggregation, i) {
@@ -28,6 +30,7 @@ export function adaptProposalData(proposalData, hour=25) {
 
         console.log(aggregationTitle,"xx", aggregationComponentsArray);
 
+        //for each returning entry of the API, extract the HOUR, the component (aggregation) and insert in the result propertly
         Object.keys(prediction).map( function(hour, y) {
 
             const hourComponentsArray = JSON.parse(hour.replace(/'/g, '"'));
@@ -36,16 +39,8 @@ export function adaptProposalData(proposalData, hour=25) {
             const hourAggregation = hourComponentsArray.slice(1, hourComponentsArray.length);
             console.log(hourExact,hourAggregation);
 
-            result[i][hourExact][hourAggregation]=prediction[hour];
+            result[i]['result'][hourExact][hourAggregation]=prediction[hour];
         })
-
-        /*
-        aggregation.result.sum.map(function(hour, y){
-            day.consumption.map(function(hour, z){
-                result[z][day.day]=hour;
-            });
-        });
-        */
     }
     });
     console.dir(result)
