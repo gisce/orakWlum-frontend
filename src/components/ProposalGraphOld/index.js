@@ -5,7 +5,7 @@ import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContain
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
-import {adaptProposalData} from '../../utils/graph';
+import {adaptProposalDataOld} from '../../utils/graph';
 
 const styles = {
     dialog: {
@@ -43,7 +43,7 @@ export class ProposalGraphOld extends Component {
         const isLite = (this.props.isLite)?this.props.isLite:false;
 
         if (prediction) {
-            const data=adaptProposalData(prediction);
+            const data=adaptProposalDataOld(prediction);
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
