@@ -258,7 +258,7 @@ export class Proposal extends Component {
             (withPicture)?
                 (proposal.prediction) &&
                   (proposalTable)?
-                      <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
+                      <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
                       (proposalOld)?
                           <ProposalGraphOld stacked={true} proposal={proposal} height={500} />
