@@ -6,20 +6,19 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
 import {adaptProposalData} from '../../utils/graph';
+import {colors} from '../../constants';
 
 const styles = {
     selectedElement: {
         color: 'white',
         backgroundColor: '#808080',
+    },
+    hourColor: {
+        color: 'white',
+        backgroundColor: '#BBBBBB',
     }
 };
 
-const baseColors = [
-    '#db4939',
-    '#f29913',
-    '#3c8cba',
-    '#00a658'
-]
 
 export class ProposalTableMaterial extends Component {
     constructor(props) {
@@ -36,14 +35,17 @@ export class ProposalTableMaterial extends Component {
         //Prepare headers
         const headers = Object.keys(components).map(function(component, i) {
             return (
-                <TableRowColumn key={"header"+i} stroke={baseColors[i]} fill={baseColors[i]}>
+                <TableRowColumn key={"header"+i} style={{backgroundColor: colors[i] }} stroke={colors[i]} fill={colors[i]}>
                     <b>{component}</b>
                 </TableRowColumn>
             )
         });
 
         const headerTotal = (
-            <TableRowColumn key={"headerTotal"}>
+            <TableRowColumn
+                key={"headerTotal"}
+                style={styles.selectedElement}
+            >
                 <b>TOTAL</b>
             </TableRowColumn>
         );
@@ -60,7 +62,10 @@ export class ProposalTableMaterial extends Component {
         for (var i=0; i<data.length; i++) {
             let cells=[];
             cells.push(
-                <TableRowColumn key={"Column"+i}>
+                <TableRowColumn
+                    key={"Column"+i}
+                    style={styles.hourColor}
+                >
                     {data[i].name}
                 </TableRowColumn>
             );
@@ -85,6 +90,7 @@ export class ProposalTableMaterial extends Component {
             cells.push(
                 <TableRowColumn
                     key={"Column"+i+"TOTAL"}
+                    style={styles.selectedElement}
                 >
                     <b>{totalSum}</b>
                 </TableRowColumn>
@@ -103,7 +109,7 @@ export class ProposalTableMaterial extends Component {
         allTotalSum.map( function (component, z) {
             totalRow.push (
                 <TableRowColumn key={"tableRowTotal"+z}>
-                    <b>{component}</b>
+                    {component}
                 </TableRowColumn>
             );
             totalSum += component;
@@ -134,7 +140,10 @@ export class ProposalTableMaterial extends Component {
                         adjustForCheckbox={false}
                         >
                         <TableRow key="headersRow">
-                            <TableRowColumn key={"headerHour"}>
+                            <TableRowColumn
+                                key={"headerHour"}
+                                style={styles.hourColor}
+                            >
                                 <b>Hour</b>
                             </TableRowColumn>
                             {headers}
