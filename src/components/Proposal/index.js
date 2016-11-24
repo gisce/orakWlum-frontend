@@ -152,7 +152,7 @@ export class Proposal extends Component {
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>{daysRange + withPicture}</span>;
+        const subtitle = <span>{days[dayOfProposal]} {new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions)}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
