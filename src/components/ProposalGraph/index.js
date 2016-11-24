@@ -23,7 +23,18 @@ const colors = [
     '#db4939',
     '#f29913',
     '#3c8cba',
-    '#00a658'
+    '#00a658',
+    '#B63D70',
+    '#C0D849',
+    '#2C355E',
+    '#F2E9E1',
+    '#A75899',
+    '#4C9180',
+    '#D5A7CC',
+    '#A79C8E',
+    '#6B5344',
+    '#EB9F9F',
+    '#000000',
 ]
 
 export class ProposalGraph extends Component {
