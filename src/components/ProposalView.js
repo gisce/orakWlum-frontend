@@ -44,7 +44,6 @@ export default class ProposalView extends React.Component {
                         :
                         <div>
                             <Proposal proposal={proposal} />
-                            <Proposal proposal={proposal} proposalOld/>
                         </div>
                     }
                     {debug(this.props.data)}
