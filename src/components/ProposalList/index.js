@@ -9,7 +9,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/proposals';
 import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
+import { ProposalGraphOld } from '../ProposalGraphOld';
 
 import { dispatchNewRoute} from '../../utils/http_functions';
 
@@ -86,7 +86,7 @@ export class ProposalList extends Component {
                       style={styles.gridTile}
                     >
                     <div><br/><br/><br/><br/></div>
-                    <ProposalGraph
+                    <ProposalGraphOld
                         stacked={true}
                         proposal={tile}
                         width={ index < howManyBig ? width : width/2}
