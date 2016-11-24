@@ -148,6 +148,9 @@ export class Proposal extends Component {
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
+
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
         const subtitle = <span>{daysRange + withPicture}</span>;
 
