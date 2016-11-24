@@ -61,6 +61,8 @@ export class ProposalList extends Component {
 
         const howManyBig=1;
 
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
         const ProposalList = () => (
 
           <div style={styles.root}>
@@ -75,7 +77,7 @@ export class ProposalList extends Component {
                     <GridTile
                       key={tile.id}
                       title={"#" + (index+1) + " " + tile.name}
-                      subtitle={<span>{new Date(tile.creation_date).toLocaleString()}</span>}
+                      subtitle={<span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>}
                       actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
                       actionPosition="right"
                       titlePosition="top"
