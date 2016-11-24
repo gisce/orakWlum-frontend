@@ -37,7 +37,8 @@ export function adaptProposalData(proposalData, hour=25) {
 
             //Hour is ever fixed (and must be extracted from the aggregations name)
             const hourDetail = "" + hourComponentsArray[0];
-            const hourExact = hourDetail.slice(12,13);
+            const hourExact = parseInt(hourDetail.slice(11,13));
+
 
             //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
             //If there are just one aggregation (hour), create the y="*"
