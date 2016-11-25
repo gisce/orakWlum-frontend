@@ -154,7 +154,7 @@ export class Proposal extends Component {
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
 
-        const prediction = proposal.aggregationz;
+        const prediction = proposal.prediction;
 
         const aggregationSelected = this.state.aggregationSelected;
         const changeProposalAggregation=this.changeProposalAggregation;
