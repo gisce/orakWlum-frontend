@@ -10,6 +10,7 @@ import { Proposal } from './Proposal';
 function mapStateToProps(state) {
     return {
         data: state.proposal,
+        allAggregations: state.proposal.allAggregations,
         token: state.auth.token,
         loaded: state.proposal.loaded,
         isFetching: state.proposal.isFetching,
@@ -35,15 +36,27 @@ export default class ProposalView extends React.Component {
     render() {
         const proposalId = this.props.params.proposalId;
         const proposal = this.props.data.data;
+        const allAggregations = this.props.allAggregations;
+
+
 
         if (proposal!=null && proposal.id == proposalId) {
+            let aggregationsList = [];
+            proposal.aggregations.map( function(agg, i){
+                if (agg in allAggregations)
+                    aggregationsList.push( allAggregations[agg]);
+            })
+            
             return (
                 <div>
                     {!this.props.loaded
                         ? <h1>Loading Proposal {proposalId}...</h1>
                         :
                         <div>
-                            <Proposal proposal={proposal} />
+                            <Proposal
+                                proposal={proposal}
+                                aggregations={aggregationsList}
+                            />
                         </div>
                     }
                     {debug(this.props.data)}
