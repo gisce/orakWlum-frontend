@@ -19,7 +19,7 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
-import {adaptProposalData, adaptProposalDataOld} from '../../utils/graph';
+import {adaptProposalData} from '../../utils/graph';
 
 
 const locale = 'es';
