@@ -32,6 +32,9 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  aggregations: {
+      display: 'flex',
+  },
 };
 
 function mapStateToProps(state) {
@@ -55,6 +58,7 @@ export class ProposalList extends Component {
         };
     }
 
+
     render() {
         const data_received = this.state.proposals;
 
@@ -67,6 +71,116 @@ export class ProposalList extends Component {
 
         const aggregationSelected = "001";
 
+
+        const aggregations = [
+          {
+            "_id": "5836cda5bba862c6b7f5860e",
+            "db_fields": [
+              "hour",
+              "tariff"
+            ],
+            "id": "001",
+            "lite": "T",
+            "name": "Tariff",
+            "status": {
+              "color": "accepted",
+              "full": "Active",
+              "lite": "OK"
+            }
+          },
+          {
+            "_id": "5836cdb3bba862c6b7f5860f",
+            "db_fields": [
+              "hour",
+              "hourDisc"
+            ],
+            "id": "002",
+            "lite": "HD",
+            "name": "Hour Discr.",
+            "status": {
+              "color": "accepted",
+              "full": "Active",
+              "lite": "OK"
+            }
+          },
+          {
+            "_id": "5836cdbcbba862c6b7f58610",
+            "db_fields": [
+              "hour",
+              "voltage"
+            ],
+            "id": "003",
+            "lite": "kW",
+            "name": "Potence",
+            "status": {
+              "color": "accepted",
+              "full": "Active",
+              "lite": "OK"
+            }
+          },
+          {
+            "_id": "5836cdc8bba862c6b7f58611",
+            "db_fields": [
+              "hour",
+              "province"
+            ],
+            "id": "004",
+            "lite": "Prov",
+            "name": "Province",
+            "status": {
+              "color": "accepted",
+              "full": "Active",
+              "lite": "OK"
+            }
+          },
+          {
+            "_id": "5836ce56bba862c6b7f58614",
+            "db_fields": [
+              "hour",
+              "tariff",
+              "voltage"
+            ],
+            "id": "005",
+            "lite": "T/kW",
+            "name": "Tariff by Potence",
+            "status": {
+              "color": "accepted",
+              "full": "Active",
+              "lite": "OK"
+            }
+          }
+        ]
+
+        // The Proposal Aggregations List
+        const withPicture=true;
+        const offset = 0;
+        const size = 12;
+
+        const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
+        const proposalAggregations = (
+            aggregations &&
+                <div
+                    id="aggregationsList"
+                    className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size}
+                    style={aggregationsStyle}>
+                {
+                    aggregations.map( function(agg, i) {
+                        return (
+                            <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
+                                 <ProposalTag
+                                     key={"aggregationTag_"+i}
+                                     tag={agg.lite}
+                                     selected={agg.selected}
+                                     readOnly/>
+                             </div>
+                         );
+                    })
+                }
+                </div>
+
+        )
+
+        // Last Proposals (the first bug, the other ones 2 per row)
         const lastProposals =data_received.map((tile, index) => {
             if (tile.prediction) {
                 const predictionAdapted=adaptProposalData(tile.prediction);
@@ -106,7 +220,6 @@ export class ProposalList extends Component {
         });
 
         const ProposalList = () => (
-
           <div style={styles.root}>
             <GridList
               cols={2}
@@ -122,7 +235,8 @@ export class ProposalList extends Component {
 
         return (
             <div>
-                <ProposalList />
+                <div className="row">{proposalAggregations}</div>
+                <div className="row"><ProposalList /></div>
             </div>
         );
     }
