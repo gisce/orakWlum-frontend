@@ -51,109 +51,33 @@ export class ProposalList extends Component {
     constructor(props) {
         super(props);
 
-        const agg = [
-          {
-            "_id": "5836cda5bba862c6b7f5860e",
-            "db_fields": [
-              "hour",
-              "tariff"
-            ],
-            "id": "001",
-            "lite": "T",
-            "name": "Tariff",
-            "status": {
-              "color": "accepted",
-              "full": "Active",
-              "lite": "OK"
-            }
-          },
-          {
-            "_id": "5836cdb3bba862c6b7f5860f",
-            "db_fields": [
-              "hour",
-              "hourDisc"
-            ],
-            "id": "002",
-            "lite": "HD",
-            "name": "Hour Discr.",
-            "status": {
-              "color": "accepted",
-              "full": "Active",
-              "lite": "OK"
-            }
-          },
-          {
-            "_id": "5836cdbcbba862c6b7f58610",
-            "db_fields": [
-              "hour",
-              "voltage"
-            ],
-            "id": "003",
-            "lite": "kW",
-            "name": "Potence",
-            "status": {
-              "color": "accepted",
-              "full": "Active",
-              "lite": "OK"
-            }
-          },
-          {
-            "_id": "5836cdc8bba862c6b7f58611",
-            "db_fields": [
-              "hour",
-              "province"
-            ],
-            "id": "004",
-            "lite": "Prov",
-            "name": "Province",
-            "status": {
-              "color": "accepted",
-              "full": "Active",
-              "lite": "OK"
-            }
-          },
-          {
-            "_id": "5836ce56bba862c6b7f58614",
-            "db_fields": [
-              "hour",
-              "tariff",
-              "voltage"
-            ],
-            "id": "005",
-            "lite": "T/kW",
-            "name": "Tariff by Potence",
-            "status": {
-              "color": "accepted",
-              "full": "Active",
-              "lite": "OK"
-            }
-          }
-        ];
+        const defaultAggregation = "001";
 
         this.state = {
             open: false,
             proposals: props.proposals,
             title: props.title,
             path: props.path + "/",
-            aggregations: agg,
-            aggregationSelected: agg[0].id,
+            aggregations: props.aggregations,
+            aggregationSelected: props.aggregations[defaultAggregation].id,
         };
 
-        agg[0].selected = true;
+        props.aggregations[defaultAggregation].selected = true;
     }
 
     changeProposalAggregation = (event, agg) => {
         //initialize selection of all elements
-        this.state.aggregations.map( function(agg, i) {
-            agg.selected = false;
+        const aggregations = this.state.aggregations;
+        Object.keys(aggregations).map( function(agg, i) {
+            aggregations[agg].selected = false;
         });
 
         //select current
-        agg.selected=true;
+        aggregations[agg].selected=true;
 
         //save it to change the graph
         this.setState({
-            aggregationSelected: agg.id,
+            aggregationSelected: agg,
         });
     };
 
@@ -164,10 +88,7 @@ export class ProposalList extends Component {
         const height=300;
 
         const howManyBig=1;
-
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-
 
         // The Proposal Aggregations List
         const withPicture=true;
@@ -186,13 +107,13 @@ export class ProposalList extends Component {
                     className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size}
                     style={aggregationsStyle}>
                 {
-                    aggregations.map( function(agg, i) {
+                    Object.keys(aggregations).map( function(agg, i) {
                         return (
                             <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
                                  <ProposalTag
                                      key={"aggregationTag_"+i}
-                                     tag={agg.lite}
-                                     selected={agg.selected}
+                                     tag={aggregations[agg].lite}
+                                     selected={aggregations[agg].selected}
                                      readOnly/>
                              </div>
                          );
@@ -209,7 +130,6 @@ export class ProposalList extends Component {
                 const current = predictionAdapted[aggregationSelected];
                 const data = current.result;
                 const components = current.components;
-
 
                 return (
                     <GridTile
