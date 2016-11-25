@@ -101,9 +101,10 @@ export class Proposal extends Component {
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
-            aggregationSelected: props.proposal.aggregations[0].id,
+            aggregations: props.aggregations,
+            aggregationSelected: props.aggregations[0].id,
         };
-        props.proposal.aggregations[0].selected = true;
+        props.aggregations[0].selected = true;
     }
 
     dispatchNewRoute(route) {
@@ -118,7 +119,7 @@ export class Proposal extends Component {
 
     changeProposalAggregation = (event, agg) => {
         //initialize selection of all elements
-        this.state.proposal.aggregations.map( function(agg, i) {
+        this.state.aggregations.map( function(agg, i) {
             agg.selected = false;
         });
 
@@ -158,6 +159,7 @@ export class Proposal extends Component {
 
         const aggregationSelected = this.state.aggregationSelected;
         const changeProposalAggregation=this.changeProposalAggregation;
+        const aggregations = this.state.aggregations;
 
         let data=null;
         let components=null;
@@ -180,13 +182,13 @@ export class Proposal extends Component {
         // The Proposal Aggregations List
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
         const proposalAggregations = (
-            proposal.aggregations &&
+            aggregations &&
                 <div
                     id="aggregationsList"
                     className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size}
                     style={aggregationsStyle}>
                 {
-                    proposal.aggregations.map( function(agg, i) {
+                    aggregations.map( function(agg, i) {
                         return (
                             <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
                                  <ProposalTag
