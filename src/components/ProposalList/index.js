@@ -50,29 +50,8 @@ function mapDispatchToProps(dispatch) {
 export class ProposalList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            open: false,
-            proposals: props.proposals,
-            title: props.title,
-            path: props.path + "/",
-        };
-    }
 
-
-    render() {
-        const data_received = this.state.proposals;
-
-        const width=1024;
-        const height=300;
-
-        const howManyBig=1;
-
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-        const aggregationSelected = "001";
-
-
-        const aggregations = [
+        const agg = [
           {
             "_id": "5836cda5bba862c6b7f5860e",
             "db_fields": [
@@ -149,14 +128,57 @@ export class ProposalList extends Component {
               "lite": "OK"
             }
           }
-        ]
+        ];
+
+        this.state = {
+            open: false,
+            proposals: props.proposals,
+            title: props.title,
+            path: props.path + "/",
+            aggregations: agg,
+            aggregationSelected: agg[0].id,
+        };
+
+        agg[0].selected = true;
+    }
+
+    changeProposalAggregation = (event, agg) => {
+        //initialize selection of all elements
+        this.state.aggregations.map( function(agg, i) {
+            agg.selected = false;
+        });
+
+        //select current
+        agg.selected=true;
+
+        //save it to change the graph
+        this.setState({
+            aggregationSelected: agg.id,
+        });
+    };
+
+    render() {
+        const data_received = this.state.proposals;
+
+        const width=1024;
+        const height=300;
+
+        const howManyBig=1;
+
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+
 
         // The Proposal Aggregations List
         const withPicture=true;
         const offset = 0;
         const size = 12;
-
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
+
+        const changeProposalAggregation=this.changeProposalAggregation;
+        const aggregations = this.state.aggregations;
+        const aggregationSelected = this.state.aggregationSelected;
+
         const proposalAggregations = (
             aggregations &&
                 <div
