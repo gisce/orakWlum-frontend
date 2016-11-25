@@ -3,11 +3,12 @@ import { data_fetch_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
 
-export function receiveProposal(data) {
+export function receiveProposal(data, aggregations) {
     return {
         type: RECEIVE_PROPOSAL,
         payload: {
             data,
+            aggregations,
         },
     };
 }
@@ -24,7 +25,7 @@ export function fetchProposal(token, proposal) {
         data_fetch_api_resource(token, "proposal/" + proposal)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProposal(response.result));
+                dispatch(receiveProposal(response.result, response.aggregations));
             })
             .catch(error => {
                 if (error.status === 401) {
