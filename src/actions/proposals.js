@@ -12,11 +12,12 @@ import {
     logoutAndRedirect
 } from './auth'
 
-export function receiveProtectedData(data) {
+export function receiveProtectedData(data, aggregations) {
     return {
         type: RECEIVE_PROPOSALS,
         payload: {
             data,
+            aggregations,
         },
     };
 }
@@ -33,7 +34,7 @@ export function fetchProtectedDataProposals(token) {
         data_fetch_api_resource(token, "proposal/")
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProtectedData(response.result));
+                dispatch(receiveProtectedData(response.result, response.aggregations));
             })
             .catch(error => {
                 if (error.status === 401) {
