@@ -9,7 +9,9 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/proposals';
 import { ProposalTag } from '../ProposalTag';
-import { ProposalGraphOld } from '../ProposalGraphOld';
+import { ProposalGraph } from '../ProposalGraph';
+
+import {adaptProposalData} from '../../utils/graph';
 
 import { dispatchNewRoute} from '../../utils/http_functions';
 
@@ -63,6 +65,46 @@ export class ProposalList extends Component {
 
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
+        const aggregationSelected = "001";
+
+        const lastProposals =data_received.map((tile, index) => {
+            if (tile.prediction) {
+                const predictionAdapted=adaptProposalData(tile.prediction);
+                const current = predictionAdapted[aggregationSelected];
+                const data = current.result;
+                const components = current.components;
+
+
+                return (
+                    <GridTile
+                        key={tile.id}
+                        title={"#" + (index+1) + " " + tile.name}
+                        subtitle={<span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>}
+                        actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
+                        actionPosition="right"
+                        titlePosition="top"
+                        titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+                        cols={index < howManyBig ? 2 : 1}
+                        rows={index < howManyBig ? 2 : 1}
+                        onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
+                        style={styles.gridTile}
+                    >
+                    <div><br/><br/><br/><br/></div>
+                    <ProposalGraph
+                          stacked={true}
+                          data={data}
+                          components={components}
+                          width={ index < howManyBig ? width : width/2}
+                          height={ index < howManyBig ? height : height/2.3}
+                          isLite
+                    />
+
+                    </GridTile>
+                );
+            }
+
+        });
+
         const ProposalList = () => (
 
           <div style={styles.root}>
@@ -73,31 +115,7 @@ export class ProposalList extends Component {
               style={styles.gridList}
             >
             <Subheader>{this.state.title}</Subheader>
-              {data_received.map((tile, index) => (
-                    <GridTile
-                      key={tile.id}
-                      title={"#" + (index+1) + " " + tile.name}
-                      subtitle={<span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>}
-                      actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
-                      actionPosition="right"
-                      titlePosition="top"
-                      titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                      cols={index < howManyBig ? 2 : 1}
-                      rows={index < howManyBig ? 2 : 1}
-                      onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
-                      style={styles.gridTile}
-                    >
-                    <div><br/><br/><br/><br/></div>
-                    <ProposalGraphOld
-                        stacked={true}
-                        proposal={tile}
-                        width={ index < howManyBig ? width : width/2}
-                        height={ index < howManyBig ? height : height/2.3}
-                        isLite
-                    />
-
-                    </GridTile>
-              ))}
+              {lastProposals}
             </GridList>
           </div>
         );
