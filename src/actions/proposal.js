@@ -1,46 +1,14 @@
-import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS } from '../constants/index'
+import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS } from '../constants/index'
 import { data_fetch_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
 
-export function receiveProposal(data, aggregations) {
-    return {
-        type: RECEIVE_PROPOSAL,
-        payload: {
-            data,
-            aggregations,
-        },
-    };
-}
 
 export function fetchProposalRequest() {
     return {
         type: FETCH_PROPOSAL_REQUEST,
     };
 }
-
-export function runProposalRequest() {
-    return {
-        type: RUN_PROPOSAL_REQUEST,
-    };
-}
-
-export function runProposal(token, proposal) {
-    return (dispatch) => {
-        dispatch(runProposalRequest());
-        data_fetch_api_resource(token, "proposal/" + proposal + "/run/")
-            .then(parseJSON)
-            .then(response => {
-                dispatch(receiveProposal(response.result, response.aggregations));
-            })
-            .catch(error => {
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
-                }
-            });
-    };
-}
-
 
 export function fetchProposal(token, proposal) {
     return (dispatch) => {
@@ -58,6 +26,58 @@ export function fetchProposal(token, proposal) {
     };
 }
 
+export function receiveProposal(data, aggregations) {
+    return {
+        type: RECEIVE_PROPOSAL,
+        payload: {
+            data,
+            aggregations,
+        },
+    };
+}
+
+
+
+
+
+
+export function runProposalRequest() {
+    return {
+        type: RUN_PROPOSAL_REQUEST,
+    };
+}
+
+export function runProposal(token, proposal) {
+    return (dispatch) => {
+        dispatch(runProposalRequest());
+        data_fetch_api_resource(token, "proposal/" + proposal + "/run/")
+            .then(parseJSON)
+            .then(response => {
+                dispatch(receiveRunProposal(response.result, response.aggregations));
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+export function receiveRunProposal(data, aggregations) {
+
+    const message = "Updating proposal with the result of the last execution";
+
+    return {
+        type: RECEIVE_RUN_PROPOSAL,
+        payload: {
+            data,
+            aggregations,
+            message,
+        },
+    };
+}
+
+
 
 
 export function fetchAggregationsRequest() {
@@ -74,7 +94,6 @@ export function receiveAggregations(data) {
         },
     };
 }
-
 
 export function fetchAggregations(token) {
     return (dispatch) => {

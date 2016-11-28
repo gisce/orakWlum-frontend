@@ -167,7 +167,6 @@ export class Proposal extends Component {
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
 
-
         const reRunProposal=this.reRunProposal;
 
         let data=null;
@@ -179,6 +178,7 @@ export class Proposal extends Component {
             data = current.result;
             components = current.components;
         }
+
 
         // The Proposal status!
         const proposalStatus = (
@@ -298,7 +298,6 @@ export class Proposal extends Component {
           {       proposal.creation_date &&
                   <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
           }
-
           {       proposal.execution_date &&
                   <p><span>Last execution was done at {lastExecution}</span></p>
           }
