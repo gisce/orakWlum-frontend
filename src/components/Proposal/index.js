@@ -132,6 +132,12 @@ export class Proposal extends Component {
         });
     };
 
+    reRunProposal = (event, proposalID) => {
+        const token = this.props.token;
+        this.props.runProposal(token, proposalID);
+    };
+
+
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
         const proposal = this.state.proposal;
@@ -160,6 +166,9 @@ export class Proposal extends Component {
         const aggregationSelected = this.state.aggregationSelected;
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
+
+
+        const reRunProposal=this.reRunProposal;
 
         let data=null;
         let components=null;
@@ -300,7 +309,7 @@ export class Proposal extends Component {
           {
               !readOnly &&
               <CardActions>
-                <FlatButton label="Run" />
+                <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Delete" />
