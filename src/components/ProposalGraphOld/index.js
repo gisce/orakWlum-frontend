@@ -5,9 +5,7 @@ import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContain
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
-import {adaptProposalData} from '../../utils/graph';
-
-import {colors} from '../../constants';
+import {adaptProposalDataOld} from '../../utils/graph';
 
 const styles = {
     dialog: {
@@ -21,7 +19,14 @@ const styles = {
 
 };
 
-export class ProposalGraph extends Component {
+const colors = [
+    '#db4939',
+    '#f29913',
+    '#3c8cba',
+    '#00a658'
+]
+
+export class ProposalGraphOld extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,9 +34,7 @@ export class ProposalGraph extends Component {
     }
 
     render() {
-        const data = this.props.data;
-        const components = this.props.components;
-
+        const prediction = this.props.proposal.prediction;
         const stacked = (this.props.stacked)?"1":null;
 
         const height = (this.props.height)?this.props.height:500;
@@ -39,16 +42,11 @@ export class ProposalGraph extends Component {
 
         const isLite = (this.props.isLite)?this.props.isLite:false;
 
-        if (data && components) {
-            const areas = Object.keys(components).map(function(component, i) {
-                return <Area key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
-            });
-
-            /* Aggregations selector
+        if (prediction) {
+            const data=adaptProposalDataOld(prediction);
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
-            //*/
 
             return (isLite)?
             (
@@ -80,15 +78,12 @@ export class ProposalGraph extends Component {
                 </div>
             );
         }
-        //*/
-
         return null;
     }
 }
 
-ProposalGraph.propTypes = {
-    data: React.PropTypes.array.isRequired,
-    components: React.PropTypes.object.isRequired,
+ProposalGraphOld.propTypes = {
+    proposal: React.PropTypes.object,
     stacked: React.PropTypes.bool,
     isLite: React.PropTypes.bool,
     width: React.PropTypes.number,

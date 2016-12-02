@@ -12,6 +12,7 @@ import { ContentHeader } from './ContentHeader';
 function mapStateToProps(state) {
     return {
         data: state.proposals,
+        allAggregations: state.proposals.allAggregations,
         token: state.auth.token,
         loaded: state.proposals.loaded,
         isFetching: state.proposals.isFetching,
@@ -60,12 +61,13 @@ export default class ProposalsView extends React.Component {
                         <ProposalList
                             title="Last proposals"
                             proposals={this.props.data.data}
+                            aggregations={this.props.allAggregations}
                             path={this.props.location.pathname}
                         />
 
                     </div>
                 }
-            {debug(this.props.data)}
+            {debug(this.props)}
             </div>
         );
     }

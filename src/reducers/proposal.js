@@ -1,4 +1,4 @@
-import { RECEIVE_PROPOSAL, FETCH_PROPOSAL_REQUEST, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS } from '../constants';
+import { RECEIVE_PROPOSAL, FETCH_PROPOSAL_REQUEST, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, RECEIVE_RUN_PROPOSAL } from '../constants';
 import { createReducer } from '../utils/misc';
 
 const initialState = {
@@ -11,8 +11,20 @@ export default createReducer(initialState, {
     [RECEIVE_PROPOSAL]: (state, payload) =>
         Object.assign({}, state, {
             data: payload.data,
+            allAggregations: payload.aggregations,
             isFetching: false,
             loaded: true,
+            message_text: "none",
+            message_open: false,
+        }),
+    [RECEIVE_RUN_PROPOSAL]: (state, payload) =>
+        Object.assign({}, state, {
+            data: payload.data,
+            allAggregations: payload.aggregations,
+            isFetching: false,
+            loaded: true,
+            message_text: payload.message,
+            message_open: true,
         }),
     [FETCH_PROPOSAL_REQUEST]: (state) =>
         Object.assign({}, state, {

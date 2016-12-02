@@ -1,3 +1,6 @@
+import {debug} from './debug';
+export const DEBUG = (debug)?debug:false;
+
 export const API_SPECIFICATION = 1;
 export const API_PREFIX = "/api/v" + API_SPECIFICATION;
 
@@ -23,6 +26,9 @@ export const RECEIVE_PROPOSALS = 'RECEIVE_PROPOSALS';
 export const FETCH_PROPOSAL_REQUEST = 'FETCH_PROPOSAL_REQUEST';
 export const RECEIVE_PROPOSAL = 'RECEIVE_PROPOSAL';
 
+export const RUN_PROPOSAL_REQUEST = 'RUN_PROPOSAL_REQUEST';
+export const RECEIVE_RUN_PROPOSAL = 'RECEIVE_RUN_PROPOSAL';
+
 export const FETCH_AGGREGATIONS_REQUEST = 'FETCH_AGGREGATIONS_REQUEST';
 export const RECEIVE_AGGREGATIONS = 'RECEIVE_AGGREGATIONS';
 
@@ -38,3 +44,21 @@ export const APP_REMOVE_NODE = 'APP_REMOVE_NODE';
 export const APP_TOGGLE_NAME = 'APP_TOGGLE_NAME';
 export const APP_UPDATE_PATHS = 'APP_UPDATE_PATHS';
 export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
+
+export const colors = [
+    '#db4939',
+    '#f29913',
+    '#3c8cba',
+    '#00a658',
+    '#B63D70',
+    '#C0D849',
+    '#2C355E',
+    '#F2E9E1',
+    '#A75899',
+    '#4C9180',
+    '#D5A7CC',
+    '#A79C8E',
+    '#6B5344',
+    '#EB9F9F',
+    '#000000',
+];

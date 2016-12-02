@@ -49,8 +49,11 @@ export function requireAuthentication(Component) {
                             } else {
                                 browserHistory.push('/login?next=' + props.route.path);
                             }
+                        })
+                        .catch(error => {
+                            localStorage.removeItem('token');
+                            browserHistory.push('/login?next=' + props.route.path);
                         });
-
                 }
             } else {
                 this.setState({
