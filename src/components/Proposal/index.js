@@ -19,6 +19,9 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+import {adaptProposalData} from '../../utils/graph';
+
+
 const locale = 'es';
 const dateOptions = {
     day: '2-digit',
@@ -94,10 +97,14 @@ function mapDispatchToProps(dispatch) {
 export class Proposal extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
+            aggregations: props.aggregations,
+            aggregationSelected: props.aggregations[0].id,
         };
+        props.aggregations[0].selected = true;
     }
 
     dispatchNewRoute(route) {
@@ -109,6 +116,27 @@ export class Proposal extends Component {
             proposalTable: status,
         });
     };
+
+    changeProposalAggregation = (event, agg) => {
+        //initialize selection of all elements
+        this.state.aggregations.map( function(agg, i) {
+            agg.selected = false;
+        });
+
+        //select current
+        agg.selected=true;
+
+        //save it to change the graph
+        this.setState({
+            aggregationSelected: agg.id,
+        });
+    };
+
+    reRunProposal = (event, proposalID) => {
+        const token = this.props.token;
+        this.props.runProposal(token, proposalID);
+    };
+
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
@@ -124,11 +152,33 @@ export class Proposal extends Component {
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
+
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>{daysRange + withPicture}</span>;
+        const subtitle = <span>{days[dayOfProposal]} {new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions)}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
+
+        const prediction = proposal.prediction;
+
+        const aggregationSelected = this.state.aggregationSelected;
+        const changeProposalAggregation=this.changeProposalAggregation;
+        const aggregations = this.state.aggregations;
+
+        const reRunProposal=this.reRunProposal;
+
+        let data=null;
+        let components=null;
+
+        if (prediction) {
+            const predictionAdapted=adaptProposalData(prediction);
+            const current = predictionAdapted[aggregationSelected];
+            data = current.result;
+            components = current.components;
+        }
+
 
         // The Proposal status!
         const proposalStatus = (
@@ -141,15 +191,21 @@ export class Proposal extends Component {
         // The Proposal Aggregations List
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
         const proposalAggregations = (
-            proposal.aggregations &&
+            aggregations &&
                 <div
                     id="aggregationsList"
                     className={"col-md-offset-"+ (offset) + " col-md-" + size + " col-lg-offset-"+ (offset) + " col-lg-" + size}
                     style={aggregationsStyle}>
                 {
-                    proposal.aggregations.map( function(agg, i) {
+                    aggregations.map( function(agg, i) {
                         return (
-                             <ProposalTag key={"aggregationTag_"+i} tag={agg.lite} readOnly/>
+                            <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
+                                 <ProposalTag
+                                     key={"aggregationTag_"+i}
+                                     tag={agg.lite}
+                                     selected={agg.selected}
+                                     readOnly/>
+                             </div>
                          );
                     })
                 }
@@ -213,9 +269,9 @@ export class Proposal extends Component {
             (withPicture)?
                 (proposal.prediction) &&
                   (proposalTable)?
-                      <ProposalTableMaterial stacked={true} proposal={proposal} height={500} />
+                      <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
-                      <ProposalGraph stacked={true} proposal={proposal} height={500} />
+                      <ProposalGraph stacked={true} data={data} components={components} height={500} />
                   :null
 
         // The resulting Proposal element
@@ -242,7 +298,6 @@ export class Proposal extends Component {
           {       proposal.creation_date &&
                   <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
           }
-
           {       proposal.execution_date &&
                   <p><span>Last execution was done at {lastExecution}</span></p>
           }
@@ -253,7 +308,7 @@ export class Proposal extends Component {
           {
               !readOnly &&
               <CardActions>
-                <FlatButton label="Run" />
+                <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Delete" />
@@ -273,4 +328,5 @@ export class Proposal extends Component {
 
 Proposal.propTypes = {
     readOnly: React.PropTypes.bool,
+    proposalOld: React.PropTypes.bool,
 };

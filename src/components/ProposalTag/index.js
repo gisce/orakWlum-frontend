@@ -53,7 +53,9 @@ export class ProposalTag extends Component {
 
         const is_deletable = (this.props.handleRequestDelete)?(this.props.handleRequestDelete):handleRequestDelete;
 
-        const color = (tag.color)? tag.color : "base";
+        const is_selected = (this.props.selected)?(this.props.selected):false;
+
+        const color = (tag.color)? tag.color : (is_selected)?"accepted":"base";
         const full = (tag.full)? tag.full : tag;
         const lite = (tag.lite)? tag.lite : "";
 
