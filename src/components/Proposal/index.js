@@ -311,6 +311,7 @@ export class Proposal extends Component {
                 <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
+                <FlatButton label="Duplicate"/>
                 <FlatButton label="Delete" />
               </CardActions>
           }
