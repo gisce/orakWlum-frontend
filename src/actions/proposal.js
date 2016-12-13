@@ -4,6 +4,14 @@ import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
 
 
+
+
+/*******************
+  ################
+   FETCH PROPOSAL
+  ################
+*******************/
+
 export function fetchProposalRequest() {
     return {
         type: FETCH_PROPOSAL_REQUEST,
@@ -39,7 +47,11 @@ export function receiveProposal(data, aggregations) {
 
 
 
-
+/******************
+  ##############
+   RUN PROPOSAL
+  ##############
++*****************/
 
 export function runProposalRequest() {
     return {
@@ -80,8 +92,11 @@ export function receiveRunProposal(data, aggregations) {
 
 
 
-
-
+/************************
+  ####################
+   DUPLICATE PROPOSAL
+  ####################
++***********************/
 
 export function duplicateProposalRequest() {
     return {
@@ -114,6 +129,11 @@ export function duplicateProposal(token, proposal) {
 
 
 
+/**********************
+  ###################
+   FETCH AGGREGATION
+  ###################
++**********************/
 
 export function fetchAggregationsRequest() {
     return {
