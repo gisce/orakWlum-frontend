@@ -137,6 +137,11 @@ export class Proposal extends Component {
         this.props.runProposal(token, proposalID);
     };
 
+    duplicateProposal = (event, proposalID) => {
+        const token = this.props.token;
+        this.props.duplicateProposal(token, proposalID);
+    };
+
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
@@ -168,6 +173,7 @@ export class Proposal extends Component {
         const aggregations = this.state.aggregations;
 
         const reRunProposal=this.reRunProposal;
+        const duplicateProposal=this.duplicateProposal;
 
         let data=null;
         let components=null;
@@ -311,6 +317,7 @@ export class Proposal extends Component {
                 <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
+                <FlatButton label="Duplicate" onClick={(e) => duplicateProposal(e, proposal.id)}/>
                 <FlatButton label="Delete" />
               </CardActions>
           }

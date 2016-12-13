@@ -1,8 +1,16 @@
-import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS } from '../constants/index'
+import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST } from '../constants/index'
 import { data_fetch_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
-import { logoutAndRedirect } from './auth'
+import { logoutAndRedirect, redirectToRoute } from './auth'
 
+
+
+
+/*******************
+  ################
+   FETCH PROPOSAL
+  ################
+*******************/
 
 export function fetchProposalRequest() {
     return {
@@ -39,7 +47,11 @@ export function receiveProposal(data, aggregations) {
 
 
 
-
+/******************
+  ##############
+   RUN PROPOSAL
+  ##############
++*****************/
 
 export function runProposalRequest() {
     return {
@@ -79,6 +91,49 @@ export function receiveRunProposal(data, aggregations) {
 
 
 
+
+/************************
+  ####################
+   DUPLICATE PROPOSAL
+  ####################
++***********************/
+
+export function duplicateProposalRequest() {
+    return {
+        type: DUPLICATE_PROPOSAL_REQUEST,
+    };
+}
+
+export function duplicateProposal(token, proposal) {
+    return (dispatch) => {
+        dispatch(duplicateProposalRequest());
+        data_fetch_api_resource(token, "proposal/" + proposal + "/duplicate/")
+            .then(parseJSON)
+            .then(response => {
+                if (response.result.status == "ok") {
+                    dispatch(fetchProposal(token, response.result.id));
+                    dispatch(redirectToRoute("/proposals/"+response.result.id));
+                }
+                else {
+                    console.log("error duplicating proposal " + proposal);
+                }
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+
+
+
+/**********************
+  ###################
+   FETCH AGGREGATION
+  ###################
++**********************/
 
 export function fetchAggregationsRequest() {
     return {
