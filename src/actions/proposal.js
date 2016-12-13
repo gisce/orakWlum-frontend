@@ -111,11 +111,6 @@ export function duplicateProposal(token, proposal) {
     };
 }
 
-export function receiveDuplicateProposal(token, proposal) {
-    dispatch(fetchProposal(token, proposal));
-}
-
-
 
 
 
