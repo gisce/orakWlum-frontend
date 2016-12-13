@@ -95,13 +95,13 @@ export function duplicateProposal(token, proposal) {
         data_fetch_api_resource(token, "proposal/" + proposal + "/duplicate/")
             .then(parseJSON)
             .then(response => {
-                (response.result.status == "ok")?
-                    console.log(response.result.id)
-                    :
-                    console.log("error duplicating proposal " + proposal)
-
-
-                //dispatch(redirectToRoute(response.result, response.aggregations));
+                if (response.result.status == "ok") {
+                    dispatch(fetchProposal(token, response.result.id));
+                    dispatch(redirectToRoute("/proposals/"+response.result.id));
+                }
+                else {
+                    console.log("error duplicating proposal " + proposal);
+                }
             })
             .catch(error => {
                 if (error.status === 401) {
@@ -111,7 +111,9 @@ export function duplicateProposal(token, proposal) {
     };
 }
 
-
+export function receiveDuplicateProposal(token, proposal) {
+    dispatch(fetchProposal(token, proposal));
+}
 
 
 
