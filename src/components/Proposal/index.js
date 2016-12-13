@@ -139,6 +139,7 @@ export class Proposal extends Component {
 
     duplicateProposal = (event, proposalID) => {
         const token = this.props.token;
+        this.props.duplicateProposal(token, proposalID);
     };
 
 
@@ -172,6 +173,7 @@ export class Proposal extends Component {
         const aggregations = this.state.aggregations;
 
         const reRunProposal=this.reRunProposal;
+        const duplicateProposal=this.duplicateProposal;
 
         let data=null;
         let components=null;
