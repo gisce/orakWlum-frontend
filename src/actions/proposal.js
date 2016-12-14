@@ -1,5 +1,5 @@
-import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST } from '../constants/index'
-import { data_fetch_api_resource } from '../utils/http_functions'
+import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
+import { data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
 import { fetchProtectedDataProposals } from './proposals'
@@ -131,6 +131,44 @@ export function duplicateProposal(token, proposal) {
 
 
 
+/*********************
+  #################
+   CREATE PROPOSAL
+  #################
++********************/
+
+export function createProposalRequest() {
+    return {
+        type: CREATE_PROPOSAL_REQUEST,
+    };
+}
+
+export function createProposal(token, proposal) {
+    return (dispatch) => {
+        dispatch(createProposalRequest());
+        data_create_api_resource(token, "proposal/", proposal)
+            .then(parseJSON)
+            .then(response => {
+                if (response.result.status == "ok") {
+                    dispatch(fetchProtectedDataProposals(token));
+                    dispatch(fetchProposal(token, response.result.id));
+                    dispatch(redirectToRoute("/proposals/"+response.result.id));
+                }
+                else {
+                    console.log("error creating proposal " + proposal);
+                }
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+
+
+
 
 /*********************
   #################
@@ -147,7 +185,7 @@ export function deleteProposalRequest() {
 export function deleteProposal(token, proposal) {
     return (dispatch) => {
         dispatch(deleteProposalRequest());
-        data_fetch_api_resource(token, "proposal/" + proposal + "/delete/")
+        data_delete_api_resource(token, "proposal/" + proposal + "/")
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
