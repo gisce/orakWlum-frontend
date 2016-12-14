@@ -125,6 +125,7 @@ export class ProposalList extends Component {
 
         // Last Proposals (the first bug, the other ones 2 per row)
         const lastProposals =data_received.map((tile, index) => {
+            console.log("arribo");
             if (tile.prediction) {
                 const predictionAdapted=adaptProposalData(tile.prediction);
                 const current = predictionAdapted[aggregationSelected];
@@ -157,6 +158,30 @@ export class ProposalList extends Component {
 
                     </GridTile>
                 );
+            }
+            else {
+                console.log("else");
+
+                return (
+                    <GridTile
+                        key={tile.id}
+                        title={"#" + (index+1) + " " + tile.name}
+                        subtitle={<span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>}
+                        actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
+                        actionPosition="right"
+                        titlePosition="top"
+                        titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+                        cols={index < howManyBig ? 2 : 1}
+                        rows={index < howManyBig ? 2 : 1}
+                        onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
+                        style={styles.gridTile}
+                    >
+                    <div><br/><br/><br/><br/>
+                        <p>Prediction not ready</p>
+                    </div>
+                    </GridTile>
+                );
+
             }
 
         });
