@@ -142,6 +142,12 @@ export class Proposal extends Component {
         this.props.duplicateProposal(token, proposalID);
     };
 
+    deleteProposal = (event, proposalID) => {
+        const token = this.props.token;
+        this.props.deleteProposal(token, proposalID);
+    };
+
+
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
