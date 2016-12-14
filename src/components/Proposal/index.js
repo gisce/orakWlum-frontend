@@ -325,7 +325,7 @@ export class Proposal extends Component {
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Duplicate" onClick={(e) => duplicateProposal(e, proposal.id)}/>
-                <FlatButton label="Delete" />
+                <FlatButton label="Delete" onClick={(e) => deleteProposal(e, proposal.id)}/>
               </CardActions>
           }
 
