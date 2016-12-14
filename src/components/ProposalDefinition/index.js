@@ -16,6 +16,8 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 import {Proposal} from '../Proposal'
 
+import {createProposal} from '../../actions/proposal';
+
 const revalidator = require('revalidator');
 
 const styles = {
@@ -114,6 +116,7 @@ export class ProposalDefinition extends Component {
                 }
             );
         }
+
 
         const proposalSummary = {
             name:this.state.name,
@@ -240,7 +243,11 @@ export class ProposalDefinition extends Component {
 
                         <br/><br/>
 
-                        <Proposal proposal={proposalSummary} readOnly/>
+                        <Proposal
+                            proposal={proposalSummary}
+                            aggregations={this.state.aggregationsNames}
+                            readOnly
+                        />
 
                     </div>
                 )
