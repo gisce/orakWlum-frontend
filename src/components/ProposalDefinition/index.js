@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import TextField from 'material-ui/TextField';
 import {
   Step,
@@ -16,7 +19,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 import {Proposal} from '../Proposal'
 
-import {createProposal} from '../../actions/proposal';
+import * as actionCreators from '../../actions/proposal';
 
 const revalidator = require('revalidator');
 
@@ -57,6 +60,17 @@ const validations = {
 }
 
 
+function mapStateToProps(state) {
+    return {
+        token: state.auth.token,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export class ProposalDefinition extends Component {
     constructor(props) {
       super(props);
@@ -535,7 +549,7 @@ export class ProposalDefinition extends Component {
               <RaisedButton
                 label='Create'
                 primary={true}
-                onTouchTap={this.createNewProposal}
+                onTouchTap={(e) => this.createNewProposal(e)}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
               />
           :
@@ -551,8 +565,26 @@ export class ProposalDefinition extends Component {
         );
     }
 
-    createNewProposal () {
+    createNewProposal (event) {
         console.log("create");
+        const token = this.props.token;
+
+        const proposalData = {
+            name:this.state.name,
+            aggregations:this.state.aggregationsNames,
+            isNew: true,
+            days_range: [
+                this.state.date_start,
+                this.state.date_end,
+            ],
+            status: {
+              "color": "pending",
+              "full": "Pending",
+              "lite": "WIP"
+            },
+        }
+
+        this.props.createProposal(token, proposalData);
     }
 
     render() {
