@@ -151,7 +151,7 @@ export class Proposal extends Component {
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
-        const proposal = this.state.proposal;
+        const proposal = this.props.proposal;
 
         const proposalTable = this.state.proposalTable;
 
