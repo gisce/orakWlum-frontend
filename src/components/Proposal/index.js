@@ -180,6 +180,7 @@ export class Proposal extends Component {
 
         const reRunProposal=this.reRunProposal;
         const duplicateProposal=this.duplicateProposal;
+        const deleteProposal=this.deleteProposal;
 
         let data=null;
         let components=null;
