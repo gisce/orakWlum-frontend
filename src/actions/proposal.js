@@ -2,6 +2,7 @@ import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE
 import { data_fetch_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
+import { fetchProtectedDataProposals } from './proposals'
 
 
 
@@ -149,6 +150,7 @@ export function deleteProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
+                    dispatch(fetchProtectedDataProposals(token));
                     dispatch(redirectToRoute("/proposals"));
                 }
                 else {
