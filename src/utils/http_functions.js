@@ -71,6 +71,10 @@ export function data_fetch_api_resource(token, resource) {
     return axios.get(API_PREFIX + "/" + resource);
 }
 
+export function data_create_api_resource(token, resource, new_data) {
+    return axios.post(API_PREFIX + "/" + resource, new_data);
+}
+
 export function data_update_api_resource(token, resource, new_data) {
     return axios.put(API_PREFIX + "/" + resource, new_data);
 }
