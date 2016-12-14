@@ -78,3 +78,7 @@ export function data_create_api_resource(token, resource, new_data) {
 export function data_update_api_resource(token, resource, new_data) {
     return axios.put(API_PREFIX + "/" + resource, new_data);
 }
+
+export function data_delete_api_resource(token, resource) {
+    return axios.delete(API_PREFIX + "/" + resource);
+}
