@@ -529,15 +529,30 @@ export class ProposalDefinition extends Component {
                 onTouchTap={this.handlePrev}
                 style={{marginRight: 12}}
               />
+
+
+        {   (stepIndex === this.stepsLength-1)?
               <RaisedButton
-                label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
+                label='Create'
+                primary={true}
+                onTouchTap={this.createNewProposal}
+                disabled={!readyToNext && stepIndex !== this.stepsLength-1}
+              />
+          :
+              <RaisedButton
+                label='Next'
                 primary={true}
                 onTouchTap={this.handleNext}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
               />
+        }
             </div>
           </div>
         );
+    }
+
+    createNewProposal () {
+        console.log("create");
     }
 
     render() {
