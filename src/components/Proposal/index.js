@@ -142,6 +142,12 @@ export class Proposal extends Component {
         this.props.duplicateProposal(token, proposalID);
     };
 
+    deleteProposal = (event, proposalID) => {
+        const token = this.props.token;
+        this.props.deleteProposal(token, proposalID);
+    };
+
+
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
@@ -174,6 +180,7 @@ export class Proposal extends Component {
 
         const reRunProposal=this.reRunProposal;
         const duplicateProposal=this.duplicateProposal;
+        const deleteProposal=this.deleteProposal;
 
         let data=null;
         let components=null;
@@ -318,7 +325,7 @@ export class Proposal extends Component {
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
                 <FlatButton label="Duplicate" onClick={(e) => duplicateProposal(e, proposal.id)}/>
-                <FlatButton label="Delete" />
+                <FlatButton label="Delete" onClick={(e) => deleteProposal(e, proposal.id)}/>
               </CardActions>
           }
 
