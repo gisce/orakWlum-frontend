@@ -149,7 +149,7 @@ export function deleteProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(redirectToRoute("/proposals/"));
+                    dispatch(redirectToRoute("/proposals"));
                 }
                 else {
                     console.log("ERROR:" + response.result.message);
