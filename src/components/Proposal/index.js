@@ -19,6 +19,8 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+import { RefreshButton } from '../RefreshButton';
+
 import {adaptProposalData} from '../../utils/graph';
 
 
@@ -192,7 +194,6 @@ export class Proposal extends Component {
             components = current.components;
         }
 
-
         // The Proposal status!
         const proposalStatus = (
             proposal.status &&
@@ -297,7 +298,6 @@ export class Proposal extends Component {
                     subtitle={subtitle} />}
                   >
                   </CardMedia>
-
 
                   <div className="row">
                       {proposalStatus}
