@@ -69,5 +69,7 @@ export class ContentHeader extends Component {
 ContentHeader.propTypes = {
     title: React.PropTypes.string.isRequired,
     addButton: React.PropTypes.bool,
-    buttonClickMethod: React.PropTypes.func,
+    refreshButton: React.PropTypes.bool,
+    addClickMethod: React.PropTypes.func,
+    refreshClickMethod: React.PropTypes.func,
 };
