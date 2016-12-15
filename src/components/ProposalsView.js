@@ -56,7 +56,14 @@ export default class ProposalsView extends React.Component {
                     ? <h1>Loading Proposals...</h1>
                     :
                     <div>
-                        <ContentHeader title="Proposals List" addButton={true} buttonClickMethod={() => this.addProposal()} />
+                        <ContentHeader
+                            title="Proposals List"
+                            addButton={true}
+                            addClickMethod={() => this.addProposal()}
+
+                            refreshButton={true}
+                            refreshClickMethod={() => this.fetchData()}
+                        />
 
                         <ProposalList
                             title="Last proposals"
