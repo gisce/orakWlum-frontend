@@ -131,6 +131,11 @@ export class Proposal extends Component {
         });
     };
 
+    refreshProposal = (event, proposalID) => {
+        const token = this.props.token;
+        this.props.fetchProposal(token, proposalID);
+    };
+
     reRunProposal = (event, proposalID) => {
         const token = this.props.token;
         this.props.runProposal(token, proposalID);
@@ -145,7 +150,6 @@ export class Proposal extends Component {
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
     };
-
 
 
     render() {
@@ -177,6 +181,7 @@ export class Proposal extends Component {
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
 
+        const refreshProposal=this.refreshProposal;
         const reRunProposal=this.reRunProposal;
         const duplicateProposal=this.duplicateProposal;
         const deleteProposal=this.deleteProposal;
@@ -318,6 +323,7 @@ export class Proposal extends Component {
           {
               !readOnly &&
               <CardActions>
+                <FlatButton label="Refresh" onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
