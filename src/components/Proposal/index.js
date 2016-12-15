@@ -19,10 +19,7 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
-import { RefreshButton } from '../RefreshButton';
-
 import {adaptProposalData} from '../../utils/graph';
-
 
 const locale = 'es';
 const dateOptions = {
