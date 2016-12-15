@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 
 import IconButton from 'material-ui/IconButton';
-import ActionHome from 'material-ui/svg-icons/action/home';
+import IconToDisplay from 'material-ui/svg-icons/navigation/refresh';
 
 
 //Default click method
@@ -56,10 +56,9 @@ export class RefreshButton extends Component {
                       iconStyle={styles.smallIcon}
                       style={styles.small}
                   >
-                    <ActionHome />
+                    <IconToDisplay />
                   </IconButton>
               </div>
-            )
           );
 
         return (
