@@ -119,7 +119,7 @@ export class Proposal extends Component {
             message_text: null,
             confirmation_text: null,
             confirmation_open: false,
-            animateChart: false,
+            animateChart: true,
         };
         props.aggregations[0].selected = true;
     }
@@ -132,7 +132,7 @@ export class Proposal extends Component {
         this.setState({
             proposalTable: status,
             message_text: null,
-            animateChart: true,
+            animateChart: false,
         });
     };
 
@@ -149,7 +149,7 @@ export class Proposal extends Component {
         this.setState({
             aggregationSelected: agg.id,
             message_text: null,
-            animateChart: true,
+            animateChart: false,
         });
     };
 
@@ -278,7 +278,7 @@ export class Proposal extends Component {
 
     duplicateProposal = (proposalID) => {
         this.setState({
-            animateChart: true,
+            animateChart: false,
             message_text: "Duplicating current proposal",
             confirmation_open: false,
         });
@@ -320,7 +320,7 @@ export class Proposal extends Component {
 
     deleteProposal = (proposalID) => {
         this.setState({
-            animateChart: true,
+            animateChart: false,
             message_text: "Deleting current proposal",
             confirmation_open: false,
         });
