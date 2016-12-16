@@ -44,6 +44,10 @@ export default class ProposalsView extends React.Component {
         this.props.fetchProtectedDataProposals(token);
     }
 
+    refreshData() {
+        this.fetchData();
+    }
+
     addProposal() {
         console.log("add new proposal");
         dispatchNewRoute("/proposals/new");
@@ -62,7 +66,7 @@ export default class ProposalsView extends React.Component {
                             addClickMethod={() => this.addProposal()}
 
                             refreshButton={true}
-                            refreshClickMethod={() => this.fetchData()}
+                            refreshClickMethod={() => this.refreshData()}
                         />
 
                         <ProposalList
