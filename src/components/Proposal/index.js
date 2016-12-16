@@ -176,8 +176,8 @@ export class Proposal extends Component {
           />,
         ];
 
-        this.confirmation.title = "Are you sure about to refresh the Proposal?";
-        this.confirmation.text = "The Proposal will be refetched from the API.";
+        this.confirmation.title = "Refresh current proposal";
+        this.confirmation.text = <div><p>The Proposal will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p><p>Are you sure about to <b>refresh this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
@@ -185,7 +185,7 @@ export class Proposal extends Component {
             confirmation_open: true,
         });
     };
-
+x
     refreshProposal = (proposalID) => {
         this.setState({
             message_text: "Refreshing proposal",
@@ -218,8 +218,8 @@ export class Proposal extends Component {
           />,
         ];
 
-        this.confirmation.title = "Are you sure about to (re)Run the Proposal?";
-        this.confirmation.text = <div><p>The Proposal will be reprocessed from the API.</p><p>It can take a few seconds...</p></div>;
+        this.confirmation.title = "Reprocess current Proposal";
+        this.confirmation.text = <div><p>The Proposal will be reprocessed using the last data on DB. It can take a few seconds...</p><p>Are you sure about to <b>reprocess this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
@@ -258,8 +258,8 @@ export class Proposal extends Component {
           />,
         ];
 
-        this.confirmation.title = "Duplicate a Proposal";
-        this.confirmation.text = <div><p>The Proposal will duplicated. It can take a few seconds to finalize...</p><p>Are you sure about to duplicate this Proposal?</p></div>;
+        this.confirmation.title = "Duplicate current Proposal";
+        this.confirmation.text = <div><p>The Proposal will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Proposal once it's cloned.</p><p>Are you sure about to <b>duplicate this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
@@ -271,6 +271,7 @@ export class Proposal extends Component {
     duplicateProposal = (proposalID) => {
         this.setState({
             message_text: "Duplicating current proposal",
+            confirmation_open: false,
         });
         const token = this.props.token;
         this.props.duplicateProposal(token, proposalID);
@@ -298,7 +299,7 @@ export class Proposal extends Component {
         ];
 
         this.confirmation.title = "Delete current Proposal";
-        this.confirmation.text = <div><p>The Proposal will deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
+        this.confirmation.text = <div><p>The Proposal will be deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
@@ -310,6 +311,7 @@ export class Proposal extends Component {
     deleteProposal = (proposalID) => {
         this.setState({
             message_text: "Deleting current proposal",
+            confirmation_open: false,
         });
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
