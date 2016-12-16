@@ -119,6 +119,7 @@ export class Proposal extends Component {
             message_text: null,
             confirmation_text: null,
             confirmation_open: false,
+            animateChart: false,
         };
         props.aggregations[0].selected = true;
     }
@@ -131,6 +132,7 @@ export class Proposal extends Component {
         this.setState({
             proposalTable: status,
             message_text: null,
+            animateChart: true,
         });
     };
 
@@ -147,6 +149,7 @@ export class Proposal extends Component {
         this.setState({
             aggregationSelected: agg.id,
             message_text: null,
+            animateChart: true,
         });
     };
 
@@ -181,13 +184,15 @@ export class Proposal extends Component {
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
+            animateChart: false,
             message_text: null,
             confirmation_open: true,
         });
     };
-x
+
     refreshProposal = (proposalID) => {
         this.setState({
+            animateChart: true,
             message_text: "Refreshing proposal",
             confirmation_open: false,
         });
@@ -223,6 +228,7 @@ x
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
+            animateChart: false,
             message_text: null,
             confirmation_open: true,
         });
@@ -230,6 +236,7 @@ x
 
     reRunProposal = (proposalID) => {
         this.setState({
+            animateChart: true,
             message_text: "Forcing a reprocessing of the proposal",
             confirmation_open: false,
         });
@@ -263,6 +270,7 @@ x
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
+            animateChart: false,
             message_text: null,
             confirmation_open: true,
         });
@@ -270,6 +278,7 @@ x
 
     duplicateProposal = (proposalID) => {
         this.setState({
+            animateChart: true,
             message_text: "Duplicating current proposal",
             confirmation_open: false,
         });
@@ -303,6 +312,7 @@ x
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
+            animateChart: false,
             message_text: null,
             confirmation_open: true,
         });
@@ -310,6 +320,7 @@ x
 
     deleteProposal = (proposalID) => {
         this.setState({
+            animateChart: true,
             message_text: "Deleting current proposal",
             confirmation_open: false,
         });
@@ -477,7 +488,7 @@ x
                   (proposalTable)?
                       <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={false} />
+                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.state.animateChart} />
                   :null
 
         // The resulting Proposal element
