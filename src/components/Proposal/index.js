@@ -477,7 +477,7 @@ x
                   (proposalTable)?
                       <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} />
+                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={false} />
                   :null
 
         // The resulting Proposal element

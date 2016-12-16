@@ -38,10 +38,11 @@ export class ProposalGraph extends Component {
         const width = (this.props.width)?this.props.width:1024;
 
         const isLite = (this.props.isLite)?this.props.isLite:false;
+        const isAnimated = (this.props.animated)?this.props.animated:false;
 
         if (data && components) {
             const areas = Object.keys(components).map(function(component, i) {
-                return <Area isAnimationActive={false} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+                return <Area isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
 
             /* Aggregations selector
@@ -91,6 +92,7 @@ ProposalGraph.propTypes = {
     components: React.PropTypes.object.isRequired,
     stacked: React.PropTypes.bool,
     isLite: React.PropTypes.bool,
+    animated: React.PropTypes.bool,
     width: React.PropTypes.number,
     height: React.PropTypes.number,
 };
