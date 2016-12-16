@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/notification';
 
 import Snackbar from 'material-ui/Snackbar';
 
@@ -20,30 +17,13 @@ const styles = {
     },
 };
 
-function mapStateToProps(state) {
-    return {
-        profile: state.profile,
-        statusText: state.profile.statusText,
-        statusType: state.profile.statusType,
-        status: state.profile.status,
-        message_open: state.profile.message_open,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
 export class Notification extends Component {
+/*
     constructor(props) {
         super(props);
         this.state = {
-            profile: props.profile,
-            editing: false,
-            bckp_profile: JSON.parse(JSON.stringify(props.profile)),
-            groups: props.profile.data.groups,
-            bckp_groups: Object.assign([], props.profile.data.groups),
+            message: props.message,
+            open: props.open,
         };
     }
 
@@ -65,33 +45,30 @@ export class Notification extends Component {
             message_open: false,
         });
     };
-
+*/
 
     render() {
-        const message_open = this.state.message_open;
+        const message_text = this.props.message;
 
-        const Snackbar = () => (
-
-            <div>
-            {
-                this.props.statusText &&
-                        <Snackbar
-                          open={this.state.message_open}
-                          message={this.props.statusText}
-                          action="undo"
-                          autoHideDuration={4000}
-                          onActionTouchTap={this.undoChanges}
-                          onRequestClose={this.deactivateSnack}
-                        />
-            }
-            </div>
-        );
+        const process_message = (this.props.hide)?this.props.hide:null;
+        const message_time = (this.props.time)?this.props.time:4000;
 
         return (
-            <Snackbar />
+            <div>
+                {
+                    (message_text != null) &&
+                    <Snackbar
+                      open={true}
+                      message={message_text}
+                      autoHideDuration={message_time}
+                    />
+                }
+            </div>
         );
     }
 }
 
 Notification.propTypes = {
+    message: React.PropTypes.string,
+    width: React.PropTypes.number,
 };
