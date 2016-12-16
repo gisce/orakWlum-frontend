@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {debug} from './debug';
 export const DEBUG = (debug)?debug:false;
 
@@ -29,6 +31,12 @@ export const RECEIVE_PROPOSAL = 'RECEIVE_PROPOSAL';
 export const RUN_PROPOSAL_REQUEST = 'RUN_PROPOSAL_REQUEST';
 export const RECEIVE_RUN_PROPOSAL = 'RECEIVE_RUN_PROPOSAL';
 
+export const DUPLICATE_PROPOSAL_REQUEST = 'DUPLICATE_PROPOSAL_REQUEST';
+
+export const DELETE_PROPOSAL_REQUEST = 'DELETE_PROPOSAL_REQUEST';
+
+export const CREATE_PROPOSAL_REQUEST = 'CREATE_PROPOSAL_REQUEST';
+
 export const FETCH_AGGREGATIONS_REQUEST = 'FETCH_AGGREGATIONS_REQUEST';
 export const RECEIVE_AGGREGATIONS = 'RECEIVE_AGGREGATIONS';
 
@@ -45,20 +53,46 @@ export const APP_TOGGLE_NAME = 'APP_TOGGLE_NAME';
 export const APP_UPDATE_PATHS = 'APP_UPDATE_PATHS';
 export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 
+export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
+export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
+
 export const colors = [
     '#db4939',
     '#f29913',
     '#3c8cba',
     '#00a658',
-    '#B63D70',
     '#C0D849',
-    '#2C355E',
-    '#F2E9E1',
-    '#A75899',
-    '#4C9180',
-    '#D5A7CC',
-    '#A79C8E',
-    '#6B5344',
-    '#EB9F9F',
+    '#32742C',
+    '#B63D70',
     '#000000',
+    '#8B9294',
+    '#3F36DB',
+    '#3AB131',
+    '#FDFF3A',
+    '#F2E9E1',
+    '#D5A7CC',
+    '#EB9F9F',
+    '#A75899',
+    '#5A1A74',
+    '#2C355E',
+    '#A79C8E',
+    '#4C9180',
+    '#6B5344',
+    '#ffffff',
+    '#113F8C',
+    '#01A4A4',
+    '#00A1CB',
+    '#61AE24',
+    '#D0D102',
+    '#D70060',
+    '#E54028',
+    '#F18D05',
+    '#616161',
+    '#A7DBD8',
+    '#E0E4CC',
+    '#F38630',
+    '#D95B43',
+    '#542437',
+    '#53777A',
+    '#559F60',
 ];

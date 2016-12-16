@@ -9,6 +9,10 @@ import { dispatchNewRoute} from '../utils/http_functions';
 import { ProposalList } from './ProposalList';
 import { ContentHeader } from './ContentHeader';
 
+import { Notification } from './Notification';
+
+
+
 function mapStateToProps(state) {
     return {
         data: state.proposals,
@@ -34,8 +38,13 @@ const style = {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalsView extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            message_text: null,
+        };
+    }
     componentDidMount() {
-        const debug = localStorage.getItem('debug');
         this.fetchData();
     }
 
@@ -44,19 +53,32 @@ export default class ProposalsView extends React.Component {
         this.props.fetchProtectedDataProposals(token);
     }
 
+    refreshData() {
+        this.fetchData();
+        this.setState({
+            message_text: "Refreshing proposals list",
+        });
+    }
+
     addProposal() {
-        console.log("add new proposal");
         dispatchNewRoute("/proposals/new");
     }
 
     render() {
         return (
             <div>
-                {!this.props.loaded
-                    ? <h1>Loading Proposals...</h1>
-                    :
+                {this.props.loaded &&
                     <div>
-                        <ContentHeader title="Proposals List" addButton={true} buttonClickMethod={() => this.addProposal()} />
+                        <Notification message={this.state.message_text}/>
+
+                        <ContentHeader
+                            title="Proposals List"
+                            addButton={true}
+                            addClickMethod={() => this.addProposal()}
+
+                            refreshButton={true}
+                            refreshClickMethod={() => this.refreshData()}
+                        />
 
                         <ProposalList
                             title="Last proposals"

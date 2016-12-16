@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import TextField from 'material-ui/TextField';
 import {
   Step,
@@ -15,6 +18,8 @@ import DatePicker from 'material-ui/DatePicker';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 import {Proposal} from '../Proposal'
+
+import * as actionCreators from '../../actions/proposal';
 
 const revalidator = require('revalidator');
 
@@ -55,6 +60,17 @@ const validations = {
 }
 
 
+function mapStateToProps(state) {
+    return {
+        token: state.auth.token,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export class ProposalDefinition extends Component {
     constructor(props) {
       super(props);
@@ -114,6 +130,7 @@ export class ProposalDefinition extends Component {
                 }
             );
         }
+
 
         const proposalSummary = {
             name:this.state.name,
@@ -240,7 +257,11 @@ export class ProposalDefinition extends Component {
 
                         <br/><br/>
 
-                        <Proposal proposal={proposalSummary} readOnly/>
+                        <Proposal
+                            proposal={proposalSummary}
+                            aggregations={this.state.aggregationsNames}
+                            readOnly
+                        />
 
                     </div>
                 )
@@ -522,15 +543,48 @@ export class ProposalDefinition extends Component {
                 onTouchTap={this.handlePrev}
                 style={{marginRight: 12}}
               />
+
+
+        {   (stepIndex === this.stepsLength-1)?
               <RaisedButton
-                label={stepIndex === this.stepsLength-1 ? 'Create' : 'Next'}
+                label='Create'
+                primary={true}
+                onTouchTap={(e) => this.createNewProposal(e)}
+                disabled={!readyToNext && stepIndex !== this.stepsLength-1}
+              />
+          :
+              <RaisedButton
+                label='Next'
                 primary={true}
                 onTouchTap={this.handleNext}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
               />
+        }
             </div>
           </div>
         );
+    }
+
+    createNewProposal (event) {
+        console.log("create");
+        const token = this.props.token;
+
+        const proposalData = {
+            name:this.state.name,
+            aggregations:this.state.aggregationsNames,
+            isNew: true,
+            days_range: [
+                this.state.date_start,
+                this.state.date_end,
+            ],
+            status: {
+              "color": "pending",
+              "full": "Pending",
+              "lite": "WIP"
+            },
+        }
+
+        this.props.createProposal(token, proposalData);
     }
 
     render() {
