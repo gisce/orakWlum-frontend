@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -27,10 +26,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
-
 import {adaptProposalData} from '../../utils/graph';
-
-
 
 const locale = 'es';
 const dateOptions = {
@@ -336,8 +332,8 @@ export class Proposal extends Component {
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
-                <FlatButton label="Detail" icon={<DetailIcon/>}/>
-                <FlatButton label="Edit" icon={<EditIcon/>}/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} disabled/>
+                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
               </CardActions>
