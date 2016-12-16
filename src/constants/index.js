@@ -51,6 +51,9 @@ export const APP_TOGGLE_NAME = 'APP_TOGGLE_NAME';
 export const APP_UPDATE_PATHS = 'APP_UPDATE_PATHS';
 export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 
+export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
+export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
+
 export const colors = [
     '#db4939',
     '#f29913',
