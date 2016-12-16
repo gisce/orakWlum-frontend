@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProfileView extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
         this.fetchAggregations();
     }
 

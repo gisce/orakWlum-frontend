@@ -56,7 +56,7 @@ export default class ProposalsView extends React.Component {
     refreshData() {
         this.fetchData();
         this.setState({
-            message_text: "Refreshing data",
+            message_text: "Refreshing proposals list",
         });
     }
 

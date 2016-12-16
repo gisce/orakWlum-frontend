@@ -145,7 +145,7 @@ export class Proposal extends Component {
 
     refreshProposal = (event, proposalID) => {
         this.setState({
-            message_text: "Refreshing proposal.",
+            message_text: "Refreshing proposal",
         });
         const token = this.props.token;
         this.props.fetchProposal(token, proposalID);
@@ -153,7 +153,7 @@ export class Proposal extends Component {
 
     reRunProposal = (event, proposalID) => {
         this.setState({
-            message_text: "Forcing a reprocessing of the proposal.",
+            message_text: "Forcing a reprocessing of the proposal",
         });
         const token = this.props.token;
         this.props.runProposal(token, proposalID);
@@ -161,7 +161,7 @@ export class Proposal extends Component {
 
     duplicateProposal = (event, proposalID) => {
         this.setState({
-            message_text: "Duplicating current proposal.",
+            message_text: "Duplicating current proposal",
         });
         const token = this.props.token;
         this.props.duplicateProposal(token, proposalID);
@@ -169,7 +169,7 @@ export class Proposal extends Component {
 
     deleteProposal = (event, proposalID) => {
         this.setState({
-            message_text: "Deleting current proposal.",
+            message_text: "Deleting current proposal",
         });
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
