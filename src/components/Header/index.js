@@ -138,6 +138,7 @@ export class Header extends Component {
                                 <MenuItem
                                     leftIcon={<DashboardIcon/>}
                                     primaryText={"Dashboard"}
+                                    disabled
                                 />
 
                                 <Divider />
@@ -151,11 +152,13 @@ export class Header extends Component {
                                     onClick={() => this.dispatchRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
                                     primaryText="Buys"
+                                    disabled
                                 />
                                 <MenuItem
                                     onClick={() => this.dispatchRoute('/history')}
                                     leftIcon={<HistoryIcon/>}
                                     primaryText="History"
+                                    disabled
                                 />
 
                                 <Divider />
@@ -169,6 +172,7 @@ export class Header extends Component {
                                     onClick={() => this.dispatchRoute('/settings')}
                                     leftIcon={<SettingsIcon/>}
                                     primaryText="Settings"
+                                    disabled
                                 />
 
                                 <Divider />
