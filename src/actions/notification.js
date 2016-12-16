@@ -1,5 +1,4 @@
 import { NEW_NOTIFICATION, NOTIFICATION_DONE } from '../constants/index';
-import { logoutAndRedirect } from './auth';
 
 export function newNotification(message, time) {
     return {
@@ -21,9 +20,9 @@ export function closeNotification() {
         },
     };
 }
-export function setNotification(message, time) {
+export function setNotification(message, time=5) {
+    console.log("setting Notification");
     return (dispatch) => {
-        dispatch(newNotification());
-        dispatch(setNotification(message, time));
+        dispatch(newNotification(message, time));
     };
 }
