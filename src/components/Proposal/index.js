@@ -18,6 +18,8 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+import { Notification } from '../Notification';
+
 //Icons
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
@@ -109,6 +111,7 @@ export class Proposal extends Component {
             proposalTable: false,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
+            message_text: null,
         };
         props.aggregations[0].selected = true;
     }
@@ -120,6 +123,7 @@ export class Proposal extends Component {
     toogleProposalRender = (event, status) => {
         this.setState({
             proposalTable: status,
+            message_text: null,
         });
     };
 
@@ -135,29 +139,41 @@ export class Proposal extends Component {
         //save it to change the graph
         this.setState({
             aggregationSelected: agg.id,
+            message_text: null,
         });
     };
 
     refreshProposal = (event, proposalID) => {
+        this.setState({
+            message_text: "Refreshing proposal.",
+        });
         const token = this.props.token;
         this.props.fetchProposal(token, proposalID);
     };
 
     reRunProposal = (event, proposalID) => {
+        this.setState({
+            message_text: "Forcing a reprocessing of the proposal.",
+        });
         const token = this.props.token;
         this.props.runProposal(token, proposalID);
     };
 
     duplicateProposal = (event, proposalID) => {
+        this.setState({
+            message_text: "Duplicating current proposal.",
+        });
         const token = this.props.token;
         this.props.duplicateProposal(token, proposalID);
     };
 
     deleteProposal = (event, proposalID) => {
+        this.setState({
+            message_text: "Deleting current proposal.",
+        });
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
     };
-
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
@@ -342,8 +358,15 @@ export class Proposal extends Component {
             </Card>
         );
 
+        console.log("this.state.message_text");
+        console.log(this.state.message_text);
+
         return (
             <div>
+                <Notification
+                    message={this.state.message_text}
+                />
+
                 <Proposal/>
             </div>
         );
