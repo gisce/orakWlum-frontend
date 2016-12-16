@@ -162,8 +162,6 @@ export class Proposal extends Component {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
-        const token = this.props.token;
-
         const actionsButtons = [
           <FlatButton
             label="Cancel"
@@ -174,7 +172,7 @@ export class Proposal extends Component {
             label="Submit"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={() => this.refreshProposal(token, proposalID)}
+            onTouchTap={() => this.refreshProposal(proposalID)}
           />,
         ];
 
@@ -188,12 +186,13 @@ export class Proposal extends Component {
         });
     };
 
-    refreshProposal = (token, proposalID) => {
+    refreshProposal = (proposalID) => {
         this.setState({
             message_text: "Refreshing proposal",
             confirmation_open: false,
         });
 
+        const token = this.props.token;
         this.props.fetchProposal(token, proposalID);
 
     };
