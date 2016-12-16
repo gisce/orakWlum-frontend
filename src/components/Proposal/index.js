@@ -536,8 +536,10 @@ x
                   open={this.state.confirmation_open}
                   title={this.confirmation.title}
                   actions={this.confirmation.actionsButtons}
+                  modal={false}
+                  onRequestClose={this.handleCloseConfirmation}
                 >
-                {this.confirmation.text}
+                    {this.confirmation.text}
                 </Dialog>
 
                 <Notification
