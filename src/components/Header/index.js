@@ -187,7 +187,7 @@ export class Header extends Component {
                 </LeftNav>
 
                 <AppBar
-                  title="oraKWlum"
+                  title="orakWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
                   iconElementRight={<FlatButton label="Proposals" onClick={() => this.dispatchRoute('/proposals')}/>}
                 />
