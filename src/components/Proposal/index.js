@@ -239,6 +239,7 @@ export class Proposal extends Component {
 
 
 
+
     duplicateProposalQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
@@ -275,13 +276,47 @@ export class Proposal extends Component {
         this.props.duplicateProposal(token, proposalID);
     };
 
-    deleteProposal = (event, proposalID) => {
+
+
+
+    deleteProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.deleteProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Delete current Proposal";
+        this.confirmation.text = <div><p>The Proposal will deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
+        this.setState({
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    deleteProposal = (proposalID) => {
         this.setState({
             message_text: "Deleting current proposal",
         });
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
     };
+
+
+
 
     handleConfirmation = (what, message, text) => {
         this.next = what;
@@ -322,7 +357,7 @@ export class Proposal extends Component {
         const refreshProposal=this.refreshProposalQuestion;
         const reRunProposal=this.reRunProposalQuestion;
         const duplicateProposal=this.duplicateProposalQuestion;
-        const deleteProposal=this.deleteProposal;
+        const deleteProposal=this.deleteProposalQuestion;
 
         const actionsButtons = [
           <FlatButton
