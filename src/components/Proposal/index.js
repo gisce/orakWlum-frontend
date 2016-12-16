@@ -239,8 +239,35 @@ export class Proposal extends Component {
 
 
 
+    duplicateProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
 
-    duplicateProposal = (event, proposalID) => {
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.duplicateProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Duplicate a Proposal";
+        this.confirmation.text = <div><p>The Proposal will duplicated. It can take a few seconds to finalize...</p><p>Are you sure about to duplicate this Proposal?</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
+        this.setState({
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    duplicateProposal = (proposalID) => {
         this.setState({
             message_text: "Duplicating current proposal",
         });
@@ -294,7 +321,7 @@ export class Proposal extends Component {
 
         const refreshProposal=this.refreshProposalQuestion;
         const reRunProposal=this.reRunProposalQuestion;
-        const duplicateProposal=this.duplicateProposal;
+        const duplicateProposal=this.duplicateProposalQuestion;
         const deleteProposal=this.deleteProposal;
 
         const actionsButtons = [
