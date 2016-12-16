@@ -19,6 +19,7 @@ import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
 import { Notification } from '../Notification';
+import Dialog from 'material-ui/Dialog';
 
 //Icons
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
@@ -106,12 +107,18 @@ export class Proposal extends Component {
     constructor(props) {
         super(props);
 
+        this.confirmation = {
+            open: false,
+        }
+
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
             message_text: null,
+            confirmation_text: null,
+            confirmation_open: false,
         };
         props.aggregations[0].selected = true;
     }
@@ -143,20 +150,61 @@ export class Proposal extends Component {
         });
     };
 
-    refreshProposal = (event, proposalID) => {
+    handleOpenConfirmation = (open) => {
+      this.setState({confirmation_open: true});
+    };
+
+    handleCloseConfirmation = (open) => {
+      this.setState({confirmation_open: false});
+    };
+
+    refreshProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const token = this.props.token;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.refreshProposal(token, proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Are you sure about to refresh the Proposal?";
+        this.confirmation.text = "The Proposal will be refetched from the API.";
+        this.confirmation.actionsButtons = actionsButtons;
+
+        this.setState({
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    refreshProposal = (token, proposalID) => {
         this.setState({
             message_text: "Refreshing proposal",
+            confirmation_open: false,
         });
-        const token = this.props.token;
+
         this.props.fetchProposal(token, proposalID);
+
     };
 
     reRunProposal = (event, proposalID) => {
+        this.handleOpenConfirmation();
         this.setState({
             message_text: "Forcing a reprocessing of the proposal",
         });
         const token = this.props.token;
-        this.props.runProposal(token, proposalID);
+        //this.props.runProposal(token, proposalID);
     };
 
     duplicateProposal = (event, proposalID) => {
@@ -174,6 +222,13 @@ export class Proposal extends Component {
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
     };
+
+    handleConfirmation = (what, message, text) => {
+        this.next = what;
+        this.message = message
+        this.text = text
+        this.open_confirmation = true;
+    }
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
@@ -204,10 +259,25 @@ export class Proposal extends Component {
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
 
-        const refreshProposal=this.refreshProposal;
+        const refreshProposal=this.refreshProposalQuestion;
         const reRunProposal=this.reRunProposal;
         const duplicateProposal=this.duplicateProposal;
         const deleteProposal=this.deleteProposal;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+        ];
+
 
         let data=null;
         let components=null;
@@ -361,8 +431,18 @@ export class Proposal extends Component {
         console.log("this.state.message_text");
         console.log(this.state.message_text);
 
+
+
         return (
             <div>
+                <Dialog
+                  open={this.state.confirmation_open}
+                  title={this.confirmation.title}
+                  actions={this.confirmation.actionsButtons}
+                >
+                {this.confirmation.text}
+                </Dialog>
+
                 <Notification
                     message={this.state.message_text}
                 />
