@@ -19,6 +19,7 @@ import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
 import { Notification } from '../Notification';
+import Dialog from 'material-ui/Dialog';
 
 //Icons
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
@@ -106,12 +107,19 @@ export class Proposal extends Component {
     constructor(props) {
         super(props);
 
+        this.confirmation = {
+            open: false,
+        }
+
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
             message_text: null,
+            confirmation_text: null,
+            confirmation_open: false,
+            animateChart: true,
         };
         props.aggregations[0].selected = true;
     }
@@ -124,6 +132,7 @@ export class Proposal extends Component {
         this.setState({
             proposalTable: status,
             message_text: null,
+            animateChart: false,
         });
     };
 
@@ -140,40 +149,194 @@ export class Proposal extends Component {
         this.setState({
             aggregationSelected: agg.id,
             message_text: null,
+            animateChart: false,
         });
     };
 
-    refreshProposal = (event, proposalID) => {
+    handleOpenConfirmation = (open) => {
+      this.setState({confirmation_open: true});
+    };
+
+    handleCloseConfirmation = (open) => {
+      this.setState({confirmation_open: false});
+    };
+
+    refreshProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.refreshProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Refresh current proposal";
+        this.confirmation.text = <div><p>The Proposal will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p><p>Are you sure about to <b>refresh this Proposal</b>?</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
         this.setState({
-            message_text: "Refreshing proposal",
+            animateChart: false,
+            message_text: null,
+            confirmation_open: true,
         });
+    };
+
+    refreshProposal = (proposalID) => {
+        this.setState({
+            animateChart: true,
+            message_text: "Refreshing proposal",
+            confirmation_open: false,
+        });
+
         const token = this.props.token;
         this.props.fetchProposal(token, proposalID);
+
     };
 
-    reRunProposal = (event, proposalID) => {
+
+
+
+    reRunProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.reRunProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Reprocess current Proposal";
+        this.confirmation.text = <div><p>The Proposal will be reprocessed using the last data on DB. It can take a few seconds...</p><p>Are you sure about to <b>reprocess this Proposal</b>?</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
         this.setState({
+            animateChart: false,
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    reRunProposal = (proposalID) => {
+        this.setState({
+            animateChart: true,
             message_text: "Forcing a reprocessing of the proposal",
+            confirmation_open: false,
         });
         const token = this.props.token;
         this.props.runProposal(token, proposalID);
     };
 
-    duplicateProposal = (event, proposalID) => {
+
+
+
+    duplicateProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.duplicateProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Duplicate current Proposal";
+        this.confirmation.text = <div><p>The Proposal will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Proposal once it's cloned.</p><p>Are you sure about to <b>duplicate this Proposal</b>?</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
         this.setState({
+            animateChart: false,
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    duplicateProposal = (proposalID) => {
+        this.setState({
+            animateChart: false,
             message_text: "Duplicating current proposal",
+            confirmation_open: false,
         });
         const token = this.props.token;
         this.props.duplicateProposal(token, proposalID);
     };
 
-    deleteProposal = (event, proposalID) => {
+
+
+
+    deleteProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.deleteProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Delete current Proposal";
+        this.confirmation.text = <div><p>The Proposal will be deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
         this.setState({
+            animateChart: false,
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    deleteProposal = (proposalID) => {
+        this.setState({
+            animateChart: false,
             message_text: "Deleting current proposal",
+            confirmation_open: false,
         });
         const token = this.props.token;
         this.props.deleteProposal(token, proposalID);
     };
+
+
+
+
+    handleConfirmation = (what, message, text) => {
+        this.next = what;
+        this.message = message
+        this.text = text
+        this.open_confirmation = true;
+    }
 
     render() {
         const readOnly = (this.props.readOnly)?this.props.readOnly:false;
@@ -204,10 +367,25 @@ export class Proposal extends Component {
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
 
-        const refreshProposal=this.refreshProposal;
-        const reRunProposal=this.reRunProposal;
-        const duplicateProposal=this.duplicateProposal;
-        const deleteProposal=this.deleteProposal;
+        const refreshProposal=this.refreshProposalQuestion;
+        const reRunProposal=this.reRunProposalQuestion;
+        const duplicateProposal=this.duplicateProposalQuestion;
+        const deleteProposal=this.deleteProposalQuestion;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+        ];
+
 
         let data=null;
         let components=null;
@@ -310,7 +488,7 @@ export class Proposal extends Component {
                   (proposalTable)?
                       <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} />
+                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.state.animateChart} />
                   :null
 
         // The resulting Proposal element
@@ -358,11 +536,18 @@ export class Proposal extends Component {
             </Card>
         );
 
-        console.log("this.state.message_text");
-        console.log(this.state.message_text);
-
         return (
             <div>
+                <Dialog
+                  open={this.state.confirmation_open}
+                  title={this.confirmation.title}
+                  actions={this.confirmation.actionsButtons}
+                  modal={false}
+                  onRequestClose={this.handleCloseConfirmation}
+                >
+                    {this.confirmation.text}
+                </Dialog>
+
                 <Notification
                     message={this.state.message_text}
                 />

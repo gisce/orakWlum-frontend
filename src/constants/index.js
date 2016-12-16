@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {debug} from './debug';
 export const DEBUG = (debug)?debug:false;
 
