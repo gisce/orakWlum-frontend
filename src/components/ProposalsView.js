@@ -67,9 +67,7 @@ export default class ProposalsView extends React.Component {
     render() {
         return (
             <div>
-                {!this.props.loaded
-                    ? <h1>Loading Proposals...</h1>
-                    :
+                {this.props.loaded &&
                     <div>
                         <Notification message={this.state.message_text}/>
 
