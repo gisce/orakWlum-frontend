@@ -23,6 +23,7 @@ import { ProposalTableMaterial } from '../ProposalTableMaterial';
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
 import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 
 import {adaptProposalData} from '../../utils/graph';
@@ -334,7 +335,7 @@ export class Proposal extends Component {
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>}/>
-                <FlatButton label="Edit" />
+                <FlatButton label="Edit" icon={<EditIcon/>}/>
                 <FlatButton label="Duplicate" onClick={(e) => duplicateProposal(e, proposal.id)}/>
                 <FlatButton label="Delete" onClick={(e) => deleteProposal(e, proposal.id)}/>
               </CardActions>
