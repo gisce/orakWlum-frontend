@@ -198,14 +198,48 @@ export class Proposal extends Component {
 
     };
 
-    reRunProposal = (event, proposalID) => {
-        this.handleOpenConfirmation();
+
+
+
+    reRunProposalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.reRunProposal(proposalID)}
+          />,
+        ];
+
+        this.confirmation.title = "Are you sure about to (re)Run the Proposal?";
+        this.confirmation.text = <div><p>The Proposal will be reprocessed from the API.</p><p>It can take a few seconds...</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
+        this.setState({
+            message_text: null,
+            confirmation_open: true,
+        });
+    };
+
+    reRunProposal = (proposalID) => {
         this.setState({
             message_text: "Forcing a reprocessing of the proposal",
+            confirmation_open: false,
         });
         const token = this.props.token;
-        //this.props.runProposal(token, proposalID);
+        this.props.runProposal(token, proposalID);
     };
+
+
+
 
     duplicateProposal = (event, proposalID) => {
         this.setState({
@@ -260,7 +294,7 @@ export class Proposal extends Component {
         const aggregations = this.state.aggregations;
 
         const refreshProposal=this.refreshProposalQuestion;
-        const reRunProposal=this.reRunProposal;
+        const reRunProposal=this.reRunProposalQuestion;
         const duplicateProposal=this.duplicateProposal;
         const deleteProposal=this.deleteProposal;
 
