@@ -5,14 +5,12 @@ import data  from './data'
 import profile  from './profile'
 import proposal  from './proposal'
 import proposals  from './proposals'
-import notification  from './notification'
 import { LOGOUT_USER } from '../constants/index'
 
 const appReducer = combineReducers({
     routing: routerReducer,
     auth,
     data,
-    notification,
     proposals,
     proposal,
     profile,
