@@ -56,7 +56,7 @@ export default class ProposalsView extends React.Component {
     refreshData() {
         this.fetchData();
         this.setState({
-            message_text: "Refreshing data",
+            message_text: "Refreshing proposals list",
         });
     }
 
@@ -67,9 +67,7 @@ export default class ProposalsView extends React.Component {
     render() {
         return (
             <div>
-                {!this.props.loaded
-                    ? <h1>Loading Proposals...</h1>
-                    :
+                {this.props.loaded &&
                     <div>
                         <Notification message={this.state.message_text}/>
 

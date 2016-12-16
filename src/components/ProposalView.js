@@ -47,9 +47,7 @@ export default class ProposalView extends React.Component {
 
             return (
                 <div>
-                    {!this.props.loaded
-                        ? <h1>Loading Proposal {proposalId}...</h1>
-                        :
+                    {this.props.loaded &&
                         <div>
                             <Proposal
                                 proposal={proposal}
