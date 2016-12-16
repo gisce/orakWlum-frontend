@@ -42,23 +42,19 @@ export default class ProfileView extends React.Component {
     render() {
         return (
             <div>
-                {!this.props.loaded
-                    ?
-                    this.props.error?
-                        <div>
-                            <h1>There was an error</h1>
-                            {this.props.errorMessage.message}
-                        </div>
-                        :
-                        <div>
-                            <h1>Loading Profile {this.props.userName}...</h1>
-                        </div>
-                    :
+                {
+                    (!this.props.loaded) ?
 
-                    <div>
-                        <h1>Your profile</h1>
-                        <UserProfile onUpdate={(changed_data) => this.updateData(changed_data)}/>
-                    </div>
+                        this.props.error &&
+                            <div>
+                                <h1>There was an error</h1>
+                                {this.props.errorMessage.message}
+                            </div>
+                    :
+                        <div>
+                            <h1>Your profile</h1>
+                            <UserProfile onUpdate={(changed_data) => this.updateData(changed_data)}/>
+                        </div>
                 }
 
                 {debug(this.props.data)}
