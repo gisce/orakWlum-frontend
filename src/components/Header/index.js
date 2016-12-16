@@ -103,7 +103,7 @@ export class Header extends Component {
                 >
 
                     <AppBar
-                      title="oKW"
+                      title="okW"
                       onClick={() => this.setState({open: false})}
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
