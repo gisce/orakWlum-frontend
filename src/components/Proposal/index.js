@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -18,6 +17,14 @@ import * as actionCreators from '../../actions/proposal';
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
+
+//Icons
+import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
+import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
+import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -323,12 +330,12 @@ export class Proposal extends Component {
           {
               !readOnly &&
               <CardActions>
-                <FlatButton label="Refresh" onClick={(e) => refreshProposal(e, proposal.id)}/>
-                <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
-                <FlatButton label="Detail" />
-                <FlatButton label="Edit" />
-                <FlatButton label="Duplicate" onClick={(e) => duplicateProposal(e, proposal.id)}/>
-                <FlatButton label="Delete" onClick={(e) => deleteProposal(e, proposal.id)}/>
+                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
+                <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} disabled/>
+                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
+                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
               </CardActions>
           }
 
