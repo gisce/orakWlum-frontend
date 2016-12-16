@@ -41,7 +41,7 @@ export class ProposalGraph extends Component {
 
         if (data && components) {
             const areas = Object.keys(components).map(function(component, i) {
-                return <Area key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+                return <Area isAnimationActive={false} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
             });
 
             /* Aggregations selector
@@ -68,7 +68,7 @@ export class ProposalGraph extends Component {
             (
                 <div >
                     <ResponsiveContainer height={height} >
-                    	<AreaChart  data={data}
+                    	<AreaChart data={data}
                             margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                             <XAxis dataKey="name"/>
                             <YAxis/>

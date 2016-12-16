@@ -525,11 +525,6 @@ x
             </Card>
         );
 
-        console.log("this.state.message_text");
-        console.log(this.state.message_text);
-
-
-
         return (
             <div>
                 <Dialog
