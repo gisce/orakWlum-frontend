@@ -19,7 +19,13 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+//Icons
+import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
+
+
 import {adaptProposalData} from '../../utils/graph';
+
+
 
 const locale = 'es';
 const dateOptions = {
@@ -323,7 +329,7 @@ export class Proposal extends Component {
           {
               !readOnly &&
               <CardActions>
-                <FlatButton label="Refresh" onClick={(e) => refreshProposal(e, proposal.id)}/>
+                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" />
                 <FlatButton label="Edit" />
