@@ -76,7 +76,7 @@ export default class ProposalsView extends React.Component {
 		    refreshButton={true}
 		    refreshClickMethod={() => this.refreshData()}
                 />
-                {this.props.loaded &&
+                {this.props.loaded?
                     <div>
                         <ProposalList
                             title="Last proposals"
@@ -85,6 +85,10 @@ export default class ProposalsView extends React.Component {
                             path={this.props.location.pathname}
                         />
 
+                    </div>
+		:
+                    <div>
+                        <h3>There are no Proposals to show</h3>
                     </div>
                 }
             {debug(this.props)}
