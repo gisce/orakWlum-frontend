@@ -67,19 +67,17 @@ export default class ProposalsView extends React.Component {
     render() {
         return (
             <div>
+		<Notification message={this.state.message_text}/>
+		<ContentHeader
+		    title="Proposals List"
+		    addButton={true}
+		    addClickMethod={() => this.addProposal()}
+
+		    refreshButton={true}
+		    refreshClickMethod={() => this.refreshData()}
+                />
                 {this.props.loaded &&
                     <div>
-                        <Notification message={this.state.message_text}/>
-
-                        <ContentHeader
-                            title="Proposals List"
-                            addButton={true}
-                            addClickMethod={() => this.addProposal()}
-
-                            refreshButton={true}
-                            refreshClickMethod={() => this.refreshData()}
-                        />
-
                         <ProposalList
                             title="Last proposals"
                             proposals={this.props.data.data}
