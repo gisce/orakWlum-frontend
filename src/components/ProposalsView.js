@@ -67,19 +67,17 @@ export default class ProposalsView extends React.Component {
     render() {
         return (
             <div>
-                {this.props.loaded &&
+		<Notification message={this.state.message_text}/>
+		<ContentHeader
+		    title="Proposals List"
+		    addButton={true}
+		    addClickMethod={() => this.addProposal()}
+
+		    refreshButton={true}
+		    refreshClickMethod={() => this.refreshData()}
+                />
+                {this.props.loaded?
                     <div>
-                        <Notification message={this.state.message_text}/>
-
-                        <ContentHeader
-                            title="Proposals List"
-                            addButton={true}
-                            addClickMethod={() => this.addProposal()}
-
-                            refreshButton={true}
-                            refreshClickMethod={() => this.refreshData()}
-                        />
-
                         <ProposalList
                             title="Last proposals"
                             proposals={this.props.data.data}
@@ -87,6 +85,10 @@ export default class ProposalsView extends React.Component {
                             path={this.props.location.pathname}
                         />
 
+                    </div>
+		:
+                    <div>
+                        <h3>There are no Proposals to show</h3>
                     </div>
                 }
             {debug(this.props)}
