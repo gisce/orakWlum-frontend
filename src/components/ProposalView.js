@@ -55,7 +55,7 @@ export default class ProposalView extends React.Component {
                             />
                         </div>
                     }
-                    {debug(this.props.data.message_text)}
+                    {debug(this.props.data)}
                 </div>
             );
         }
