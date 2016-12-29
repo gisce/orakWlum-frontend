@@ -69,8 +69,25 @@ export function runProposal(token, proposal) {
                 dispatch(receiveRunProposal(response.result, response.aggregations));
             })
             .catch(error => {
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
+                const data = error.response.data;
+
+                switch (error.response.status) {
+                    case 406:
+                        console.log("Processing error"); 
+                        if (data.error)
+                            console.log(data.message);
+                    break;
+
+                    case 403:
+                        console.log("err"); 
+                    break;
+
+                    case 401:
+                        dispatch(logoutAndRedirect(error));
+                    break;
+
+                    default:
+                        console.log("generic error " + error);
                 }
             });
     };
