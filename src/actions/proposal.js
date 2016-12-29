@@ -106,22 +106,7 @@ export function runProposal(token, proposal) {
     };
 }
 
-
-export function receiveRunProposalError(error, errorMessage) {
-
-    const message = error + ": " + errorMessage;
-
-    return {
-        type: RECEIVE_RUN_PROPOSAL_ERROR,
-        payload: {
-            message,
-        },
-    };
-}
-
-
 export function receiveRunProposal(data, aggregations) {
-
     const message = "Updating proposal with the result of the last execution";
 
     return {
@@ -129,6 +114,17 @@ export function receiveRunProposal(data, aggregations) {
         payload: {
             data,
             aggregations,
+            message,
+        },
+    };
+}
+
+export function receiveRunProposalError(error, errorMessage) {
+    const message = error + ": " + errorMessage;
+
+    return {
+        type: RECEIVE_RUN_PROPOSAL_ERROR,
+        payload: {
             message,
         },
     };
