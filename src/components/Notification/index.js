@@ -49,7 +49,7 @@ export class Notification extends Component {
 
     render() {
         const message_text = this.props.message;
-
+        const open = (this.props.open)?this.props.open:false;
         const process_message = (this.props.hide)?this.props.hide:null;
         const message_time = (this.props.time)?this.props.time:4000;
 
@@ -58,7 +58,7 @@ export class Notification extends Component {
                 {
                     (message_text != null) &&
                     <Snackbar
-                      open={true}
+                      open={open}
                       message={message_text}
                       autoHideDuration={message_time}
                     />
@@ -69,6 +69,7 @@ export class Notification extends Component {
 }
 
 Notification.propTypes = {
+    open: React.PropTypes.bool,
     message: React.PropTypes.string,
     width: React.PropTypes.number,
 };
