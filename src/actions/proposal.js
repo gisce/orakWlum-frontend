@@ -1,4 +1,4 @@
-import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
+import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
 import { data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
@@ -72,6 +72,8 @@ export function runProposalRequest() {
 }
 
 export function runProposal(token, proposal) {
+    const errorType = "Processing error";
+
     return (dispatch) => {
         dispatch(runProposalRequest());
         data_fetch_api_resource(token, "proposal/" + proposal + "/run/")
@@ -84,9 +86,9 @@ export function runProposal(token, proposal) {
 
                 switch (error.response.status) {
                     case 406:
-                        console.log("Processing error");
+                        console.log(errorType);
                         if (data.error)
-                            console.log(data.message);
+                            dispatch(receiveRunProposalError(errorType, data.message));
                     break;
 
                     case 403:
@@ -103,6 +105,20 @@ export function runProposal(token, proposal) {
             });
     };
 }
+
+
+export function receiveRunProposalError(error, errorMessage) {
+
+    const message = error + ": " + errorMessage;
+
+    return {
+        type: RECEIVE_RUN_PROPOSAL_ERROR,
+        payload: {
+            message,
+        },
+    };
+}
+
 
 export function receiveRunProposal(data, aggregations) {
 
