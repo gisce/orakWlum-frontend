@@ -12,7 +12,6 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             isFetching: true,
             message_text: payload.message,
-            message_open: true,
         }),
     [RECEIVE_PROPOSAL]: (state, payload) =>
         Object.assign({}, state, {
@@ -21,7 +20,6 @@ export default createReducer(initialState, {
             isFetching: false,
             loaded: true,
             message_text: payload.message,
-            message_open: false,
         }),
 
 
@@ -30,7 +28,6 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             isFetching: true,
             message_text: payload.message,
-            message_open: true,
         }),
     [RECEIVE_RUN_PROPOSAL]: (state, payload) =>
         Object.assign({}, state, {
@@ -39,12 +36,10 @@ export default createReducer(initialState, {
             isFetching: false,
             loaded: true,
             message_text: payload.message,
-            message_open: true,
         }),
     [RECEIVE_RUN_PROPOSAL_ERROR]: (state, payload) =>
         Object.assign({}, state, {
             message_text: payload.message,
-            message_open: true,
         }),
 
 
