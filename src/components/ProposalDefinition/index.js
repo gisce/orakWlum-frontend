@@ -82,12 +82,16 @@ export class ProposalDefinition extends Component {
           aggregations_list.push( false );
       });
 
+      const minDate = new Date();
+      minDate.setFullYear(minDate.getFullYear() - 1);
+      //minDate.setHours(0, 0, 0, 0);
+
       this.state = {
           loading: false,
           finished: false,
           stepIndex: 0,
           name: "",
-          date_start: null,
+          date_start: minDate,
           date_end: null,
           aggregations: aggregations_list,
           aggregations_all: props.aggregationsList,

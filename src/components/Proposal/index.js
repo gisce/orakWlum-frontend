@@ -95,6 +95,8 @@ function mapStateToProps(state) {
         token: state.auth.token,
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
+        message_text: state.proposal.message_text,
+        message_open: state.proposal.message_open,
     };
 }
 
@@ -116,11 +118,14 @@ export class Proposal extends Component {
             proposalTable: false,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
-            message_text: null,
+            message_text: props.message_text,
+            message_open: false,
             confirmation_text: null,
             confirmation_open: false,
-            animateChart: true,
         };
+
+        this.animateChart = true;
+
         props.aggregations[0].selected = true;
     }
 
@@ -128,12 +133,18 @@ export class Proposal extends Component {
         browserHistory.push(route);
     }
 
+    dummyAsync = (cb) => {
+        this.setState({loading: true}, () => {
+            this.asyncTimer = setTimeout(cb, 2000);
+        });
+    };
+
     toogleProposalRender = (event, status) => {
         this.setState({
             proposalTable: status,
-            message_text: null,
-            animateChart: false,
+            message_open: false,
         });
+        this.animateChart = false;
     };
 
     changeProposalAggregation = (event, agg) => {
@@ -148,13 +159,16 @@ export class Proposal extends Component {
         //save it to change the graph
         this.setState({
             aggregationSelected: agg.id,
-            message_text: null,
-            animateChart: false,
+            message_open: false,
         });
+
+        this.animateChart = false;
     };
 
     handleOpenConfirmation = (open) => {
-      this.setState({confirmation_open: true});
+      this.setState({
+          confirmation_open: true,
+      });
     };
 
     handleCloseConfirmation = (open) => {
@@ -164,6 +178,8 @@ export class Proposal extends Component {
     refreshProposalQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
+
+        this.animateChart = false;
 
         const actionsButtons = [
           <FlatButton
@@ -184,22 +200,26 @@ export class Proposal extends Component {
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
-            animateChart: false,
-            message_text: null,
+            message_open: false,
             confirmation_open: true,
         });
+
     };
 
     refreshProposal = (proposalID) => {
         this.setState({
-            animateChart: true,
-            message_text: "Refreshing proposal",
             confirmation_open: false,
         });
+        this.animateChart = false;
 
         const token = this.props.token;
         this.props.fetchProposal(token, proposalID);
 
+        this.setState({
+            message_open: true,
+        });
+
+        this.animateChart = true;
     };
 
 
@@ -228,20 +248,29 @@ export class Proposal extends Component {
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
-            animateChart: false,
-            message_text: null,
+            message_open: false,
             confirmation_open: true,
         });
+
+        this.animateChart = false;
     };
 
     reRunProposal = (proposalID) => {
+        this.animateChart = false;
         this.setState({
-            animateChart: true,
-            message_text: "Forcing a reprocessing of the proposal",
+            message_open: true,
             confirmation_open: false,
         });
+
         const token = this.props.token;
         this.props.runProposal(token, proposalID);
+
+        this.dummyAsync(() =>
+            this.animateChart = true
+        );
+
+        this.animateChart = true;
+
     };
 
 
@@ -269,17 +298,17 @@ export class Proposal extends Component {
         this.confirmation.text = <div><p>The Proposal will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Proposal once it's cloned.</p><p>Are you sure about to <b>duplicate this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
-            message_text: null,
+            message_open: false,
             confirmation_open: true,
         });
     };
 
     duplicateProposal = (proposalID) => {
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
-            message_text: "Duplicating current proposal",
+            message_open: true,
             confirmation_open: false,
         });
         const token = this.props.token;
@@ -311,17 +340,17 @@ export class Proposal extends Component {
         this.confirmation.text = <div><p>The Proposal will be deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
-            message_text: null,
+            message_open: false,
             confirmation_open: true,
         });
     };
 
     deleteProposal = (proposalID) => {
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
-            message_text: "Deleting current proposal",
+            message_open: true,
             confirmation_open: false,
         });
         const token = this.props.token;
@@ -488,7 +517,7 @@ export class Proposal extends Component {
                   (proposalTable)?
                       <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.state.animateChart} />
+                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
                   :null
 
         // The resulting Proposal element
@@ -549,7 +578,8 @@ export class Proposal extends Component {
                 </Dialog>
 
                 <Notification
-                    message={this.state.message_text}
+                    message={this.props.message_text}
+                    open={this.state.message_open}
                 />
 
                 <Proposal/>

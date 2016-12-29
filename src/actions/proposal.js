@@ -1,4 +1,4 @@
-import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
+import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
 import { data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
@@ -13,19 +13,23 @@ import { fetchProtectedDataProposals } from './proposals'
   ################
 *******************/
 
-export function fetchProposalRequest() {
+export function fetchProposalRequest(initial) {
+    const message = (initial)?null:"Fetching proposal";
     return {
         type: FETCH_PROPOSAL_REQUEST,
+        payload: {
+            message,
+        },
     };
 }
 
-export function fetchProposal(token, proposal) {
+export function fetchProposal(token, proposal, initial=false) {
     return (dispatch) => {
-        dispatch(fetchProposalRequest());
+        dispatch(fetchProposalRequest(initial));
         data_fetch_api_resource(token, "proposal/" + proposal)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProposal(response.result, response.aggregations));
+                dispatch(receiveProposal(response.result, response.aggregations, initial));
             })
             .catch(error => {
                 if (error.status === 401) {
@@ -35,12 +39,14 @@ export function fetchProposal(token, proposal) {
     };
 }
 
-export function receiveProposal(data, aggregations) {
+export function receiveProposal(data, aggregations, initial) {
+    const message = (initial)?null:"Refreshing proposal";
     return {
         type: RECEIVE_PROPOSAL,
         payload: {
             data,
             aggregations,
+            message,
         },
     };
 }
@@ -55,12 +61,19 @@ export function receiveProposal(data, aggregations) {
 +*****************/
 
 export function runProposalRequest() {
+    const message = "(re)Processing proposal";
+
     return {
         type: RUN_PROPOSAL_REQUEST,
+        payload: {
+            message,
+        },
     };
 }
 
 export function runProposal(token, proposal) {
+    const errorType = "Processing error";
+
     return (dispatch) => {
         dispatch(runProposalRequest());
         data_fetch_api_resource(token, "proposal/" + proposal + "/run/")
@@ -69,15 +82,31 @@ export function runProposal(token, proposal) {
                 dispatch(receiveRunProposal(response.result, response.aggregations));
             })
             .catch(error => {
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
+                const data = error.response.data;
+
+                switch (error.response.status) {
+                    case 406:
+                        console.log(errorType);
+                        if (data.error)
+                            dispatch(receiveRunProposalError(errorType, data.message));
+                    break;
+
+                    case 403:
+                        console.log("err");
+                    break;
+
+                    case 401:
+                        dispatch(logoutAndRedirect(error));
+                    break;
+
+                    default:
+                        console.log("generic error " + error);
                 }
             });
     };
 }
 
 export function receiveRunProposal(data, aggregations) {
-
     const message = "Updating proposal with the result of the last execution";
 
     return {
@@ -85,6 +114,17 @@ export function receiveRunProposal(data, aggregations) {
         payload: {
             data,
             aggregations,
+            message,
+        },
+    };
+}
+
+export function receiveRunProposalError(error, errorMessage) {
+    const message = error + ": " + errorMessage;
+
+    return {
+        type: RECEIVE_RUN_PROPOSAL_ERROR,
+        payload: {
             message,
         },
     };

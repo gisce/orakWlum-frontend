@@ -30,7 +30,7 @@ export default class ProposalView extends React.Component {
     fetchData() {
         const token = this.props.token;
         const proposal_id = this.props.params.proposalId;
-        this.props.fetchProposal(token, proposal_id);
+        this.props.fetchProposal(token, proposal_id, true);
     }
 
     render() {
