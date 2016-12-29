@@ -122,7 +122,6 @@ export class Proposal extends Component {
             message_open: false,
             confirmation_text: null,
             confirmation_open: false,
-            animateChart: true,
         };
 
         this.animateChart = true;
@@ -143,7 +142,6 @@ export class Proposal extends Component {
     toogleProposalRender = (event, status) => {
         this.setState({
             proposalTable: status,
-            animateChart: false,
             message_open: false,
         });
         this.animateChart = false;
@@ -162,9 +160,8 @@ export class Proposal extends Component {
         this.setState({
             aggregationSelected: agg.id,
             message_open: false,
-            animateChart: false,
         });
-        
+
         this.animateChart = false;
     };
 
@@ -182,11 +179,7 @@ export class Proposal extends Component {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
-        this.setState({
-            message_text: null,
-            animateChart: false,
-        });
-
+        this.animateChart = false;
 
         const actionsButtons = [
           <FlatButton
@@ -207,17 +200,14 @@ export class Proposal extends Component {
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
-            animateChart: false,
             message_open: false,
             confirmation_open: true,
         });
 
-        this.animateChart = false;
     };
 
     refreshProposal = (proposalID) => {
         this.setState({
-            animateChart: false,
             confirmation_open: false,
         });
         this.animateChart = false;
@@ -226,7 +216,6 @@ export class Proposal extends Component {
         this.props.fetchProposal(token, proposalID);
 
         this.setState({
-            animateChart: true,
             message_open: true,
         });
 
@@ -259,7 +248,6 @@ export class Proposal extends Component {
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
-            animateChart: false,
             message_open: false,
             confirmation_open: true,
         });
@@ -268,22 +256,18 @@ export class Proposal extends Component {
     };
 
     reRunProposal = (proposalID) => {
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
             message_open: true,
             confirmation_open: false,
         });
+
         const token = this.props.token;
-
-        this.animateChart = false;
-
         this.props.runProposal(token, proposalID);
 
-/*
-        this.dummyAsync(() => this.setState({
-             animateChart: true,
-        }));
-*/
+        this.dummyAsync(() =>
+            this.animateChart = true
+        );
 
         this.animateChart = true;
 
@@ -314,16 +298,16 @@ export class Proposal extends Component {
         this.confirmation.text = <div><p>The Proposal will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Proposal once it's cloned.</p><p>Are you sure about to <b>duplicate this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
             message_open: false,
             confirmation_open: true,
         });
     };
 
     duplicateProposal = (proposalID) => {
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
             message_open: true,
             confirmation_open: false,
         });
@@ -356,16 +340,16 @@ export class Proposal extends Component {
         this.confirmation.text = <div><p>The Proposal will be deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
             message_open: false,
             confirmation_open: true,
         });
     };
 
     deleteProposal = (proposalID) => {
+        this.animateChart = false;
         this.setState({
-            animateChart: false,
             message_open: true,
             confirmation_open: false,
         });
