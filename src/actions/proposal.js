@@ -13,19 +13,23 @@ import { fetchProtectedDataProposals } from './proposals'
   ################
 *******************/
 
-export function fetchProposalRequest() {
+export function fetchProposalRequest(initial) {
+    const message = (initial)?null:"Fetching proposal";
     return {
         type: FETCH_PROPOSAL_REQUEST,
+        payload: {
+            message,
+        },
     };
 }
 
-export function fetchProposal(token, proposal) {
+export function fetchProposal(token, proposal, initial=false) {
     return (dispatch) => {
-        dispatch(fetchProposalRequest());
+        dispatch(fetchProposalRequest(initial));
         data_fetch_api_resource(token, "proposal/" + proposal)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProposal(response.result, response.aggregations));
+                dispatch(receiveProposal(response.result, response.aggregations, initial));
             })
             .catch(error => {
                 if (error.status === 401) {
@@ -35,12 +39,14 @@ export function fetchProposal(token, proposal) {
     };
 }
 
-export function receiveProposal(data, aggregations) {
+export function receiveProposal(data, aggregations, initial) {
+    const message = (initial)?null:"Refreshing proposal";
     return {
         type: RECEIVE_PROPOSAL,
         payload: {
             data,
             aggregations,
+            message,
         },
     };
 }
@@ -55,8 +61,13 @@ export function receiveProposal(data, aggregations) {
 +*****************/
 
 export function runProposalRequest() {
+    const message = "(re)Processing proposal";
+
     return {
         type: RUN_PROPOSAL_REQUEST,
+        payload: {
+            message,
+        },
     };
 }
 
@@ -73,13 +84,13 @@ export function runProposal(token, proposal) {
 
                 switch (error.response.status) {
                     case 406:
-                        console.log("Processing error"); 
+                        console.log("Processing error");
                         if (data.error)
                             console.log(data.message);
                     break;
 
                     case 403:
-                        console.log("err"); 
+                        console.log("err");
                     break;
 
                     case 401:
