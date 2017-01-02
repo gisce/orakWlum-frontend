@@ -35,7 +35,7 @@ export class PRDetail extends Component {
     render() {
         const PR = (this.props.PR)?this.props.PR:null;
 
-        const title = (this.props.title)?this.props.title:"Component";
+        const title = ((this.props.title)?this.props.title:"Component") + " " + PR.title;
 
         return (
             <div>
@@ -44,7 +44,12 @@ export class PRDetail extends Component {
                         (this.state.open)?
                             <div onClick={(e) => this.toggleOpen(e)}>
                                 <Card>
-                                    <CardTitle title={title + PR.title}/>
+                                    <CardTitle title={title}/>
+                                    <CardMedia
+                                      overlay={<CardTitle title={title}/>}
+                                    >
+                                    </CardMedia>
+
                                     <CardText>
                                         <div dangerouslySetInnerHTML={{__html: PR.body}}/>
                                     </CardText>
@@ -53,7 +58,6 @@ export class PRDetail extends Component {
                                       <FlatButton label="Detail" icon={<DetailIcon/>} disabled/>
                                       <FlatButton label="Github" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
                                     </CardActions>
-
                                 </Card>
                             </div>
                             :
