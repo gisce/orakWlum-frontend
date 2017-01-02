@@ -36,6 +36,8 @@ export class PRDetail extends Component {
     render() {
         const PR = (this.props.PR)?this.props.PR:null;
 
+        const api_specification = (PR.api_specification)?"API SPEC: v" + PR.api_specification:null;
+
         const title = ((this.props.title)?this.props.title:"Component") + " " + PR.title;
 
         const open = this.state.open;
@@ -48,11 +50,20 @@ export class PRDetail extends Component {
                     (PR != null)?
                         <div >
                             <Card>
-                                <CardTitle title={title}/>
+                                <CardTitle title={title} subtitle={api_specification}/>
                                 <CardMedia
-                                  overlay={<CardTitle title={title}/>}
+                                  overlay={<CardTitle title={title} subtitle={api_specification}/>}
                                 >
                                 </CardMedia>
+
+                                <CardText>
+                                    <p>Created by {PR.author} at {PR.created}</p>
+
+                                    { (PR.merged != null) &&
+                                        <p>Merged at {PR.merged}</p>
+                                    }
+                                </CardText>
+
 
                                 {(open) &&
                                     <CardText>
@@ -69,7 +80,6 @@ export class PRDetail extends Component {
 
                     :
                     <div>That's embracing, but {title} info not available...</div>
-
                 }
             </div>
         );
@@ -78,5 +88,5 @@ export class PRDetail extends Component {
 
 PRDetail.propTypes = {
     PR: React.PropTypes.object.isRequired,
-    width: React.PropTypes.number,
+    open: React.PropTypes.bool,
 };
