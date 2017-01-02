@@ -1,8 +1,33 @@
-import axios  from 'axios'
-import { browserHistory } from 'react-router'
-import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGOUT_USER, REGISTER_USER_FAILURE, REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, RECOVER_USER_REQUEST, RECOVER_USER_SUCCESS, RECOVER_USER_FAILURE } from '../constants/index'
-import { define_token, undefine_token, get_token, create_user, ask_recover } from '../utils/http_functions'
-import { parseJSON } from '../utils/misc'
+import axios from 'axios'
+
+import {
+    browserHistory
+} from 'react-router'
+
+import {
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_FAILURE,
+    LOGIN_USER_REQUEST,
+    LOGOUT_USER,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS,
+    RECOVER_USER_REQUEST,
+    RECOVER_USER_SUCCESS,
+    RECOVER_USER_FAILURE
+} from '../constants/index'
+
+import {
+    define_token,
+    undefine_token,
+    get_token,
+    create_user,
+    ask_recover
+} from '../utils/http_functions'
+
+import {
+    parseJSON
+} from '../utils/misc'
 
 export function loginUserSuccess(token) {
     define_token(token);
@@ -52,7 +77,7 @@ export function redirectToRoute(route) {
     };
 }
 
-export function loginUser(email, password, redirect="/proposals") {
+export function loginUser(email, password, redirect = "/proposals") {
     return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
