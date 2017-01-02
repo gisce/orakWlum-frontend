@@ -28,6 +28,8 @@ const initialState = {
     isRegistering: false,
     isRegistered: false,
     registerStatusText: null,
+    version: VERSION,
+    version_pr: VERSION_PR,
 };
 
 export default createReducer(initialState, {
