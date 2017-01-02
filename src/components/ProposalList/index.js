@@ -82,7 +82,7 @@ export class ProposalList extends Component {
     };
 
     render() {
-        const data_received = this.state.proposals;
+        const data_received = this.props.proposals;
 
         const width=1024;
         const height=300;
