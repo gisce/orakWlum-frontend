@@ -9,6 +9,8 @@ import { debug } from '../utils/debug';
 
 import { Notification } from './Notification';
 
+import { PRDetail } from './PRDetail';
+
 function mapStateToProps(state) {
     return {
         about: state.about,
@@ -45,6 +47,9 @@ export default class ProfileView extends React.Component {
         const version = this.props.auth.version;
         const version_pr = this.props.auth.version_pr;
 
+        const api = this.props.about.api;
+        const frontend = this.props.about.frontend;
+
         return (
             <div>
 
@@ -54,8 +59,18 @@ export default class ProfileView extends React.Component {
                         <div>
                             <h1>About oraKWlum</h1>
 
-                            {version}
-                            {version_pr}
+                            {(frontend)?
+                                <PRDetail PR={frontend} title="Frontend" />
+                                :
+                                <div>Frontend info not available</div>
+                            }
+
+                            {(api)?
+                                <PRDetail PR={api} title="API"/>
+                                :
+                                <div>API info not available</div>
+                            }
+
 
                         </div>
                     :
