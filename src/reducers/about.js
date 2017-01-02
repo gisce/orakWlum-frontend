@@ -14,6 +14,8 @@ const initialState = {
     message_text: null,
     message_open: false,
     error: false,
+    frontend: null,
+    api: null,
 };
 
 export default createReducer(initialState, {
@@ -26,6 +28,8 @@ export default createReducer(initialState, {
     [RECEIVE_VERSION]: (state, payload) =>
         Object.assign({}, state, {
             data: payload.data,
+            frontend: payload.data.frontend,
+            api: payload.data.api,
             isFetching: false,
             loaded: true,
             message_text: payload.message,
