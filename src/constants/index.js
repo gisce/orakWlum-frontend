@@ -9,6 +9,9 @@ export const VERSION_PR = "86";
 export const API_SPECIFICATION = 1;
 export const API_PREFIX = "/api/v" + API_SPECIFICATION;
 
+export const FETCH_PR_REQUEST = 'FETCH_PR_REQUEST';
+export const RECEIVE_PR = 'RECEIVE_PR';
+
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
