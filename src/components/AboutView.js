@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/profile';
+import * as actionCreators from '../actions/about';
 
 import { UserProfile } from './UserProfile';
 
@@ -21,6 +21,19 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProfileView extends React.Component {
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    fetchData() {
+        const token = this.props.token;
+        this.props.fetchPR(token);
+    }
+
+    updateData(data) {
+        const token = this.props.token;
+        this.props.updateProfile(token, data);
+    }
 
     render() {
         const version = this.props.auth.version;
@@ -34,6 +47,7 @@ export default class ProfileView extends React.Component {
                             <h1>About oraKWlum</h1>
 
                             {version}
+                            {version_pr}
 
                         </div>
                 }
