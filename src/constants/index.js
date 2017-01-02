@@ -3,8 +3,15 @@ import React from 'react';
 import {debug} from './debug';
 export const DEBUG = (debug)?debug:false;
 
+export const VERSION = "0.1.0";
+export const VERSION_PR = "86";
+
 export const API_SPECIFICATION = 1;
 export const API_PREFIX = "/api/v" + API_SPECIFICATION;
+
+export const FETCH_VERSION_REQUEST = 'FETCH_VERSION_REQUEST';
+export const RECEIVE_VERSION = 'RECEIVE_VERSION';
+export const RECEIVE_VERSION_ERROR = 'RECEIVE_VERSION_ERROR';
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
