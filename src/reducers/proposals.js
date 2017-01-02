@@ -15,8 +15,9 @@ export default createReducer(initialState, {
             isFetching: false,
             loaded: true,
         }),
-    [FETCH_PROPOSALS_REQUEST]: (state) =>
+    [FETCH_PROPOSALS_REQUEST]: (state, payload) =>
         Object.assign({}, state, {
             isFetching: true,
+            message_text: payload.message,
         }),
 });
