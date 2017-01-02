@@ -14,6 +14,7 @@ export default createReducer(initialState, {
             allAggregations: payload.aggregations,
             isFetching: false,
             loaded: true,
+            message_text: payload.message,
         }),
     [FETCH_PROPOSALS_REQUEST]: (state, payload) =>
         Object.assign({}, state, {
