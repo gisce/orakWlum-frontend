@@ -8,6 +8,7 @@ import {
     VERSION_PR,
     FETCH_PR_REQUEST,
     RECEIVE_PR,
+    RECEIVE_PR_ERROR,
 } from '../constants/index'
 
 
@@ -41,9 +42,16 @@ export function fetchPR(token, PR=VERSION_PR, initial=false) {
                 dispatch(receivePR(response.result, response.aggregations, initial));
             })
             .catch(error => {
+                console.dir(error);
+
                 if (error.status === 401) {
                     dispatch(logoutAndRedirect(error));
                 }
+
+                else {
+                    dispatch(receivePRerror(error.response.status));
+                }
+
             });
     };
 }
@@ -54,7 +62,16 @@ export function receivePR(data, aggregations, initial) {
         type: RECEIVE_PR,
         payload: {
             data,
-            aggregations,
+            message,
+        },
+    };
+}
+
+export function receivePRerror(error) {
+    const message = "Error while loading PR (" + error + ")";
+    return {
+        type: RECEIVE_PR_ERROR,
+        payload: {
             message,
         },
     };
