@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
+import OpenDetailIcon from 'material-ui/svg-icons/navigation/expand-more';
+import CloseDetailIcon from 'material-ui/svg-icons/navigation/expand-less';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 
 const styles = {
@@ -37,34 +38,35 @@ export class PRDetail extends Component {
 
         const title = ((this.props.title)?this.props.title:"Component") + " " + PR.title;
 
+        const open = this.state.open;
+
+        const detailIcon = (open)?<CloseDetailIcon/>:<OpenDetailIcon/>;
+
         return (
             <div>
                 {
                     (PR != null)?
-                        (this.state.open)?
-                            <div onClick={(e) => this.toggleOpen(e)}>
-                                <Card>
-                                    <CardTitle title={title}/>
-                                    <CardMedia
-                                      overlay={<CardTitle title={title}/>}
-                                    >
-                                    </CardMedia>
+                        <div >
+                            <Card>
+                                <CardTitle title={title}/>
+                                <CardMedia
+                                  overlay={<CardTitle title={title}/>}
+                                >
+                                </CardMedia>
 
+                                {(open) &&
                                     <CardText>
                                         <div dangerouslySetInnerHTML={{__html: PR.body}}/>
                                     </CardText>
+                                }
 
-                                    <CardActions>
-                                      <FlatButton label="Detail" icon={<DetailIcon/>} disabled/>
-                                      <FlatButton label="Github" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
-                                    </CardActions>
-                                </Card>
-                            </div>
-                            :
-                            <div title="Click me to view more detail" onClick={(e) => this.toggleOpen(e)}>
-                                <h2>+ {title} {PR.title}</h2>
-                                <hr/>
-                            </div>
+                                <CardActions>
+                                  <FlatButton label="Detail" icon={detailIcon} onClick={(e) => this.toggleOpen(e)} />
+                                  <FlatButton label="Github" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} />
+                                </CardActions>
+                            </Card>
+                        </div>
+
                     :
                     <div>{title} info not available</div>
 
