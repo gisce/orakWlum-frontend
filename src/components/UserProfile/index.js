@@ -14,6 +14,7 @@ import { PasswordChanger } from '../PasswordChanger';
 //Icons
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
 
 
 function handleRequestDelete() {
@@ -373,12 +374,14 @@ export class UserProfile extends Component {
                             label="Save" />
                         <FlatButton
                             onClick={(e) => this.discard_edit_profile(e)}
-                            label="Cancel" />
+                            label="Cancel"
+                            icon={<CancelIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
                             label="Delete"
                             icon={<DeleteIcon/>}
-                            />
+                        />
                       </CardActions>
                   </div>
                 }
