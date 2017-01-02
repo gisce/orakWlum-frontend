@@ -39,7 +39,7 @@ export function fetchVersion(token, PR=VERSION_PR, initial=false) {
         data_fetch_api_resource(token, "version/" + PR)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveVersion(response.result, response.aggregations, initial));
+                dispatch(receiveVersion(response.data, initial));
             })
             .catch(error => {
                 if (error.status === 401) {
@@ -52,7 +52,7 @@ export function fetchVersion(token, PR=VERSION_PR, initial=false) {
     };
 }
 
-export function receiveVersion(data, aggregations, initial) {
+export function receiveVersion(data, initial) {
     const message = (initial)?null:"Refreshing current version detail";
     return {
         type: RECEIVE_VERSION,
