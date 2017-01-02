@@ -16,6 +16,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
 import SaveIcon from 'material-ui/svg-icons/content/save';
+import KeyIcon from 'material-ui/svg-icons/communication/vpn-key';
 
 
 function handleRequestDelete() {
@@ -281,7 +282,9 @@ export class UserProfile extends Component {
                         />
                         <FlatButton
                             onClick={(e) => this.edit_password(e)}
-                            label="Change password" />
+                            label="Change password"
+                            icon={<KeyIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
                             label="Delete"
