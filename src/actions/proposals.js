@@ -12,29 +12,37 @@ import {
     logoutAndRedirect
 } from './auth'
 
-export function receiveProtectedData(data, aggregations) {
+
+export function fetchProposalsRequest(initial) {
+    const message = (initial)?null:"Refreshing proposals list";
+
+    return {
+        type: FETCH_PROPOSALS_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function receiveProposals(data, aggregations, initial) {
+    const message = (initial)?null:"Proposals list updated";
     return {
         type: RECEIVE_PROPOSALS,
         payload: {
             data,
             aggregations,
+            message,
         },
     };
 }
 
-export function fetchProtectedDataRequest() {
-    return {
-        type: FETCH_PROPOSALS_REQUEST,
-    };
-}
-
-export function fetchProtectedDataProposals(token) {
+export function fetchProposals(token, initial=false) {
     return (dispatch) => {
-        dispatch(fetchProtectedDataRequest());
+        dispatch(fetchProposalsRequest(initial));
         data_fetch_api_resource(token, "proposal/")
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProtectedData(response.result, response.aggregations));
+                dispatch(receiveProposals(response.result, response.aggregations, initial));
             })
             .catch(error => {
                 if (error.status === 401) {
