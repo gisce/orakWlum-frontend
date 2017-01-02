@@ -22,15 +22,20 @@ export function receiveProtectedData(data, aggregations) {
     };
 }
 
-export function fetchProtectedDataRequest() {
+export function fetchProtectedDataRequest(initial) {
+    const message = (initial)?null:"Refreshing proposals list";
+
     return {
         type: FETCH_PROPOSALS_REQUEST,
+        payload: {
+            message,
+        },
     };
 }
 
-export function fetchProtectedDataProposals(token) {
+export function fetchProtectedDataProposals(token, initial=false) {
     return (dispatch) => {
-        dispatch(fetchProtectedDataRequest());
+        dispatch(fetchProtectedDataRequest(initial));
         data_fetch_api_resource(token, "proposal/")
             .then(parseJSON)
             .then(response => {
