@@ -7,11 +7,17 @@ import { UserProfile } from './UserProfile';
 
 import { debug } from '../utils/debug';
 
+import { Notification } from './Notification';
+
 function mapStateToProps(state) {
     return {
-        loaded: true,
+        about: state.about,
+        loaded: state.about.loaded,
         profile: state.profile,
         auth: state.auth,
+        message_text: state.about.message_text,
+        message_open: state.about.message_open,
+        error: state.about.error,
     };
 }
 
@@ -27,7 +33,7 @@ export default class ProfileView extends React.Component {
 
     fetchData() {
         const token = this.props.token;
-        this.props.fetchPR(token);
+        this.props.fetchVersion(token);
     }
 
     updateData(data) {
@@ -41,8 +47,10 @@ export default class ProfileView extends React.Component {
 
         return (
             <div>
+
                 {
-                    (this.props.loaded) &&
+
+                    (this.props.loaded) ?
                         <div>
                             <h1>About oraKWlum</h1>
 
@@ -50,18 +58,29 @@ export default class ProfileView extends React.Component {
                             {version_pr}
 
                         </div>
+                    :
+                    (this.props.error) &&
+                        <div>
+                            <Notification
+                                message={this.props.about.message_text}
+                                open={this.props.about.message_open}
+                            />
+                            <p>There was an error fetching the current version details.</p>
+                        </div>
+
+
+
                 }
 
-                {debug(this.props.auth)}
+                {debug(this.props.about)}
             </div>
         );
     }
 }
 
 ProfileView.propTypes = {
-    fetchProfile: React.PropTypes.func,
+    fetchVersion: React.PropTypes.func,
     loaded: React.PropTypes.bool,
-    userName: React.PropTypes.string,
     data: React.PropTypes.any,
     token: React.PropTypes.string,
 };
