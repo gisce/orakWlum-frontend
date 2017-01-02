@@ -51,7 +51,7 @@ export default class ProposalsView extends React.Component {
 
     fetchData(initial=true) {
         const token = this.props.token;
-        this.props.fetchProtectedDataProposals(token, initial);
+        this.props.fetchProposals(token, initial);
     }
 
     refreshData() {

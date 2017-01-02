@@ -12,7 +12,7 @@ import {
     logoutAndRedirect
 } from './auth'
 
-export function receiveProtectedData(data, aggregations) {
+export function receiveProposals(data, aggregations) {
     return {
         type: RECEIVE_PROPOSALS,
         payload: {
@@ -22,7 +22,7 @@ export function receiveProtectedData(data, aggregations) {
     };
 }
 
-export function fetchProtectedDataRequest(initial) {
+export function fetchProposalsRequest(initial) {
     const message = (initial)?null:"Refreshing proposals list";
 
     return {
@@ -33,13 +33,13 @@ export function fetchProtectedDataRequest(initial) {
     };
 }
 
-export function fetchProtectedDataProposals(token, initial=false) {
+export function fetchProposals(token, initial=false) {
     return (dispatch) => {
-        dispatch(fetchProtectedDataRequest(initial));
+        dispatch(fetchProposalsRequest(initial));
         data_fetch_api_resource(token, "proposal/")
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProtectedData(response.result, response.aggregations));
+                dispatch(receiveProposals(response.result, response.aggregations));
             })
             .catch(error => {
                 if (error.status === 401) {
