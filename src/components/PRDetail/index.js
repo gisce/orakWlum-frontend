@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import OpenDetailIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseDetailIcon from 'material-ui/svg-icons/navigation/expand-less';
-import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
+import LinkIcon from 'material-ui/svg-icons/content/link';
 
 const styles = {
     wrapper: {
@@ -62,7 +62,7 @@ export class PRDetail extends Component {
 
                                 <CardActions>
                                   <FlatButton label="Detail" icon={detailIcon} onClick={(e) => this.toggleOpen(e)} />
-                                  <FlatButton label="Github" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} />
+                                  <a target="_blank" href={PR.url}><FlatButton label="Github" icon={<LinkIcon/>} /></a>
                                 </CardActions>
                             </Card>
                         </div>
