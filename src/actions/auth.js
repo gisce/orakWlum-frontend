@@ -14,7 +14,9 @@ import {
     REGISTER_USER_SUCCESS,
     RECOVER_USER_REQUEST,
     RECOVER_USER_SUCCESS,
-    RECOVER_USER_FAILURE
+    RECOVER_USER_FAILURE,
+    VERSION,
+    VERSION_PR,
 } from '../constants/index'
 
 import {
