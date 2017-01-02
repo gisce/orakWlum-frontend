@@ -6,9 +6,9 @@ import {
 
 import {
     VERSION_PR,
-    FETCH_PR_REQUEST,
-    RECEIVE_PR,
-    RECEIVE_PR_ERROR,
+    FETCH_VERSION_REQUEST,
+    RECEIVE_VERSION,
+    RECEIVE_VERSION_ERROR,
 } from '../constants/index'
 
 
@@ -23,43 +23,39 @@ import {
 } from '../utils/misc'
 
 
-export function fetchPRrequest(initial) {
-    const message = (initial)?null:"Fetching PR";
+export function fetchVersionRequest(initial) {
+    const message = (initial)?null:"Fetching current version detail";
     return {
-        type: FETCH_PR_REQUEST,
+        type: FETCH_VERSION_REQUEST,
         payload: {
             message,
         },
     };
 }
 
-export function fetchPR(token, PR=VERSION_PR, initial=false) {
+export function fetchVersion(token, PR=VERSION_PR, initial=false) {
     return (dispatch) => {
-        dispatch(fetchPRrequest(initial));
+        dispatch(fetchVersionRequest(initial));
         data_fetch_api_resource(token, "version/" + PR)
             .then(parseJSON)
             .then(response => {
-                dispatch(receivePR(response.result, response.aggregations, initial));
+                dispatch(receiveVersion(response.result, response.aggregations, initial));
             })
             .catch(error => {
-                console.dir(error);
-
                 if (error.status === 401) {
                     dispatch(logoutAndRedirect(error));
                 }
-
                 else {
-                    dispatch(receivePRerror(error.response.status));
+                    dispatch(receiveVersionError(error.response.status));
                 }
-
             });
     };
 }
 
-export function receivePR(data, aggregations, initial) {
-    const message = (initial)?null:"Refreshing PR";
+export function receiveVersion(data, aggregations, initial) {
+    const message = (initial)?null:"Refreshing current version detail";
     return {
-        type: RECEIVE_PR,
+        type: RECEIVE_VERSION,
         payload: {
             data,
             message,
@@ -67,10 +63,10 @@ export function receivePR(data, aggregations, initial) {
     };
 }
 
-export function receivePRerror(error) {
-    const message = "Error while loading PR (" + error + ")";
+export function receiveVersionError(error) {
+    const message = "Error while loading current version detail (" + error + ")";
     return {
-        type: RECEIVE_PR_ERROR,
+        type: RECEIVE_VERSION_ERROR,
         payload: {
             message,
         },
