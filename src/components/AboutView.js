@@ -59,12 +59,19 @@ export default class ProfileView extends React.Component {
                         <div>
                             <h1>About oraKWlum</h1>
 
+                            <br/>
+                            
+                            <p>oraKWlum suite was created by <a target="_blank" href="http://gisce.net">GISCE</a>.</p>
+                            <p>It provides a tool desired to support and speed up the energy provisioning process.</p>
+
+                            <br/>
+
                             {(frontend) &&
                                 <PRDetail PR={frontend} title="Frontend" />
 
                             }
                             <br/><br/>
-                            
+
                             {(api) &&
                                 <PRDetail PR={api} title="API"/>
                             }
