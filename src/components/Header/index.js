@@ -20,6 +20,7 @@ import LoginIcon from 'material-ui/svg-icons/social/person';
 import RegisterIcon from 'material-ui/svg-icons/social/person-add';
 import ProfileIcon from 'material-ui/svg-icons/action/perm-identity';
 import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
+import AboutIcon from 'material-ui/svg-icons/action/info-outline';
 
 import FontIcon from 'material-ui/FontIcon';
 
@@ -173,6 +174,11 @@ export class Header extends Component {
                                     leftIcon={<SettingsIcon/>}
                                     primaryText="Settings"
                                     disabled
+                                />
+                                <MenuItem
+                                    onClick={() => this.dispatchRoute('/about')}
+                                    leftIcon={<AboutIcon/>}
+                                    primaryText="About"
                                 />
 
                                 <Divider />
