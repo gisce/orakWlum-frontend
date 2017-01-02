@@ -11,6 +11,10 @@ import Snackbar from 'material-ui/Snackbar';
 import { ProposalTag } from '../ProposalTag';
 import { PasswordChanger } from '../PasswordChanger';
 
+//Icons
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+
+
 function handleRequestDelete() {
     alert('Treure TAG.');
 }
@@ -87,7 +91,7 @@ export class UserProfile extends Component {
 
         this.activateSnack()
     }
-    
+
     tmpChangeValue(e, type) {
         const value = e.target.value;
         this.props.profile.data[type] = value;
@@ -269,13 +273,16 @@ export class UserProfile extends Component {
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.edit_profile(e, {profile})}
-                            label="Edit" />
+                            label="Edit"
+                            icon={<EditIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.edit_password(e)}
                             label="Change password" />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
-                            label="Delete" />
+                            label="Delete"
+                        />
                       </CardActions>
                     </div>
                 :
