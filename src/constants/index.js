@@ -11,6 +11,7 @@ export const API_PREFIX = "/api/v" + API_SPECIFICATION;
 
 export const FETCH_PR_REQUEST = 'FETCH_PR_REQUEST';
 export const RECEIVE_PR = 'RECEIVE_PR';
+export const RECEIVE_PR_ERROR = 'RECEIVE_PR_ERROR';
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
