@@ -68,7 +68,7 @@ export class PRDetail extends Component {
                         </div>
 
                     :
-                    <div>{title} info not available</div>
+                    <div>That's embracing, but {title} info not available...</div>
 
                 }
             </div>
