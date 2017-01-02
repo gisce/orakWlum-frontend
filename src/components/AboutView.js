@@ -59,16 +59,14 @@ export default class ProfileView extends React.Component {
                         <div>
                             <h1>About oraKWlum</h1>
 
-                            {(frontend)?
+                            {(frontend) &&
                                 <PRDetail PR={frontend} title="Frontend" />
-                                :
-                                <div>Frontend info not available</div>
-                            }
 
-                            {(api)?
+                            }
+                            <br/><br/>
+                            
+                            {(api) &&
                                 <PRDetail PR={api} title="API"/>
-                                :
-                                <div>API info not available</div>
                             }
 
 
