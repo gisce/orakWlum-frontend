@@ -88,8 +88,8 @@ export class ProposalGraph extends Component {
 }
 
 ProposalGraph.propTypes = {
-    data: React.PropTypes.array.isRequired,
-    components: React.PropTypes.object.isRequired,
+    data: React.PropTypes.array,
+    components: React.PropTypes.object,
     stacked: React.PropTypes.bool,
     isLite: React.PropTypes.bool,
     animated: React.PropTypes.bool,
