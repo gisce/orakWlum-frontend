@@ -322,6 +322,7 @@ export class ProposalDefinition extends Component {
 
     handleChangeStartDate = (event, date_start) => {
         const date_end = (this.state.date_end == null)? date_start : this.state.date_end;
+
         (this.state.date_end == null) &&
             this.setState({
                 date_end: date_end,
@@ -573,12 +574,16 @@ export class ProposalDefinition extends Component {
         console.log("create");
         const token = this.props.token;
 
+        //Ensure 00:00:00 of each day
+        let date_start = this.state.date_start;
+        date_start.setHours(0, 0, 0, 0);
+
         const proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
             isNew: true,
             days_range: [
-                this.state.date_start,
+                date_start,
                 this.state.date_end,
             ],
             status: {
