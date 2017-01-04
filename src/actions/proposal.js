@@ -2,7 +2,7 @@ import { FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE
 import { data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
-import { fetchProtectedDataProposals } from './proposals'
+import { fetchProposals } from './proposals'
 
 
 
@@ -152,7 +152,7 @@ export function duplicateProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProtectedDataProposals(token));
+                    dispatch(fetchProposals(token));
                     dispatch(fetchProposal(token, response.result.id));
                     dispatch(redirectToRoute("/proposals/"+response.result.id));
                 }
@@ -190,7 +190,7 @@ export function createProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProtectedDataProposals(token));
+                    dispatch(fetchProposals(token));
                     dispatch(fetchProposal(token, response.result.id));
                     dispatch(redirectToRoute("/proposals/"+response.result.id));
                 }
@@ -229,7 +229,7 @@ export function deleteProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProtectedDataProposals(token));
+                    dispatch(fetchProposals(token));
                     dispatch(redirectToRoute("/proposals"));
                 }
                 else {
