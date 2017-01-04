@@ -152,8 +152,8 @@ export function duplicateProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProposal(token, response.result.id));
                     dispatch(redirectToRoute("/proposals/"+response.result.id));
+                    dispatch(fetchProposal(token, response.result.id));
                 }
                 else {
                     console.log("error duplicating proposal " + proposal);
