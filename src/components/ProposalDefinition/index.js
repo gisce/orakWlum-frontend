@@ -578,13 +578,16 @@ export class ProposalDefinition extends Component {
         let date_start = this.state.date_start;
         date_start.setHours(0, 0, 0, 0);
 
+        let date_end = this.state.date_end;
+        date_end.setHours(0, 0, 0, 0);
+
         const proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
             isNew: true,
             days_range: [
                 date_start,
-                this.state.date_end,
+                date_end,
             ],
             status: {
               "color": "pending",
