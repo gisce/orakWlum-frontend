@@ -229,7 +229,6 @@ export function deleteProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProposals(token));
                     dispatch(redirectToRoute("/proposals"));
                 }
                 else {
