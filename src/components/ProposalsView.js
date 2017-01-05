@@ -20,6 +20,7 @@ function mapStateToProps(state) {
         token: state.auth.token,
         loaded: state.proposals.loaded,
         isFetching: state.proposals.isFetching,
+        message_text: state.proposals.message_text,
     };
 }
 
@@ -48,15 +49,15 @@ export default class ProposalsView extends React.Component {
         this.fetchData();
     }
 
-    fetchData() {
+    fetchData(initial=true) {
         const token = this.props.token;
-        this.props.fetchProtectedDataProposals(token);
+        this.props.fetchProposals(token, initial);
     }
 
     refreshData() {
-        this.fetchData();
+        this.fetchData(false);
         this.setState({
-            message_text: "Refreshing proposals list",
+            message_open: true,
         });
     }
 
@@ -67,29 +68,36 @@ export default class ProposalsView extends React.Component {
     render() {
         return (
             <div>
-                {this.props.loaded &&
-                    <div>
-                        <Notification message={this.state.message_text}/>
+                <Notification
+                    message={this.props.message_text}
+                    open={this.state.message_open}
+                />
 
-                        <ContentHeader
-                            title="Proposals List"
-                            addButton={true}
-                            addClickMethod={() => this.addProposal()}
+        		<ContentHeader
+        		    title="Proposals List"
+        		    addButton={true}
+        		    addClickMethod={() => this.addProposal()}
 
-                            refreshButton={true}
-                            refreshClickMethod={() => this.refreshData()}
-                        />
+        		    refreshButton={true}
+        		    refreshClickMethod={() => this.refreshData()}
+                />
+            {
+                this.props.loaded?
+                <div>
+                    <ProposalList
+                        title="Last proposals"
+                        proposals={this.props.data.data}
+                        aggregations={this.props.allAggregations}
+                        path={this.props.location.pathname}
+                    />
 
-                        <ProposalList
-                            title="Last proposals"
-                            proposals={this.props.data.data}
-                            aggregations={this.props.allAggregations}
-                            path={this.props.location.pathname}
-                        />
-
-                    </div>
-                }
-            {debug(this.props)}
+                </div>
+            :
+                <div>
+                    <h3>There are no Proposals to show</h3>
+                </div>
+            }
+                {debug(this.props.data.data)}
             </div>
         );
     }

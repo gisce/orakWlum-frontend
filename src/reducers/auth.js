@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
 import { createReducer } from '../utils/misc';
+
 import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILURE,
@@ -11,7 +12,8 @@ import {
     REGISTER_USER_SUCCESS,
     RECOVER_USER_SUCCESS,
     RECOVER_USER_FAILURE,
-
+    VERSION,
+    VERSION_PR,
 } from '../constants/index';
 
 const initialState = {
@@ -26,6 +28,8 @@ const initialState = {
     isRegistering: false,
     isRegistered: false,
     registerStatusText: null,
+    version: VERSION,
+    version_pr: VERSION_PR,
 };
 
 export default createReducer(initialState, {

@@ -55,10 +55,8 @@ export class ProposalList extends Component {
 
         this.state = {
             open: false,
-            proposals: props.proposals,
             title: props.title,
             path: props.path + "/",
-            aggregations: props.aggregations,
             aggregationSelected: props.aggregations[defaultAggregation].id,
         };
 
@@ -67,7 +65,7 @@ export class ProposalList extends Component {
 
     changeProposalAggregation = (event, agg) => {
         //initialize selection of all elements
-        const aggregations = this.state.aggregations;
+        const aggregations = this.props.aggregations;
         Object.keys(aggregations).map( function(agg, i) {
             aggregations[agg].selected = false;
         });
@@ -82,7 +80,7 @@ export class ProposalList extends Component {
     };
 
     render() {
-        const data_received = this.state.proposals;
+        const data_received = this.props.proposals;
 
         const width=1024;
         const height=300;
@@ -97,7 +95,7 @@ export class ProposalList extends Component {
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
 
         const changeProposalAggregation=this.changeProposalAggregation;
-        const aggregations = this.state.aggregations;
+        const aggregations = this.props.aggregations;
         const aggregationSelected = this.state.aggregationSelected;
 
         const proposalAggregations = (
@@ -125,7 +123,6 @@ export class ProposalList extends Component {
 
         // Last Proposals (the first bug, the other ones 2 per row)
         const lastProposals =data_received.map((tile, index) => {
-            console.log("arribo");
             if (tile.prediction) {
                 const predictionAdapted=adaptProposalData(tile.prediction);
                 const current = predictionAdapted[aggregationSelected];
@@ -160,8 +157,6 @@ export class ProposalList extends Component {
                 );
             }
             else {
-                console.log("else");
-
                 return (
                     <GridTile
                         key={tile.id}

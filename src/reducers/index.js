@@ -1,6 +1,7 @@
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
 import auth  from './auth'
+import about  from './about'
 import data  from './data'
 import profile  from './profile'
 import proposal  from './proposal'
@@ -14,6 +15,7 @@ const appReducer = combineReducers({
     proposals,
     proposal,
     profile,
+    about,
 });
 
 const rootReducer = (state, action) => {

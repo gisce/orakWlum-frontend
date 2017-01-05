@@ -11,6 +11,14 @@ import Snackbar from 'material-ui/Snackbar';
 import { ProposalTag } from '../ProposalTag';
 import { PasswordChanger } from '../PasswordChanger';
 
+//Icons
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
+import SaveIcon from 'material-ui/svg-icons/content/save';
+import KeyIcon from 'material-ui/svg-icons/communication/vpn-key';
+
+
 function handleRequestDelete() {
     alert('Treure TAG.');
 }
@@ -87,7 +95,7 @@ export class UserProfile extends Component {
 
         this.activateSnack()
     }
-    
+
     tmpChangeValue(e, type) {
         const value = e.target.value;
         this.props.profile.data[type] = value;
@@ -269,13 +277,19 @@ export class UserProfile extends Component {
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.edit_profile(e, {profile})}
-                            label="Edit" />
+                            label="Edit"
+                            icon={<EditIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.edit_password(e)}
-                            label="Change password" />
+                            label="Change password"
+                            icon={<KeyIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
-                            label="Delete" />
+                            label="Delete"
+                            icon={<DeleteIcon/>}
+                        />
                       </CardActions>
                     </div>
                 :
@@ -361,13 +375,19 @@ export class UserProfile extends Component {
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.save_profile(e)}
-                            label="Save" />
+                            label="Save"
+                            icon={<SaveIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.discard_edit_profile(e)}
-                            label="Cancel" />
+                            label="Cancel"
+                            icon={<CancelIcon/>}
+                        />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
-                            label="Delete" />
+                            label="Delete"
+                            icon={<DeleteIcon/>}
+                        />
                       </CardActions>
                   </div>
                 }
