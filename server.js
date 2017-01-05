@@ -30,7 +30,7 @@ app.use(require('morgan')('short'));
 app.use(express.static('public'));
 
 app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, '/www/index.html'));
+    res.sendFile(path.join(__dirname, './www/index.html'));
 });
 
 const server = http.createServer(app);
