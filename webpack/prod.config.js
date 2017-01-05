@@ -24,7 +24,7 @@ module.exports = {
             },
             __DEVELOPMENT__: false,
         }),
-        new ExtractTextPlugin('bundle.css'),
+        new ExtractTextPlugin('orakWlum.css'),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
