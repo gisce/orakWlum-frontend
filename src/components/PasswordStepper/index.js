@@ -75,34 +75,35 @@ export class PasswordStepper extends Component {
       const state_error_text = field_name + "_error_text";
       const state_validation = field_name + "_validation";
 
-      if (passwd1 != passwd2) {
-          this.setState({
-              [state_error_text]: "New passwords do not match",
-              [state_validation]: false,
-              readyToNext: false,
-          });
-          return false;
-      } else {
-          console.log("BOO!!!");
-          const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
+      const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
 
-          if (passwd_validation.valid) {
+      if (passwd_validation.valid) {
+
+          if (passwd1 != passwd2) {
               this.setState({
-                  [state_error_text]: null,
-                  [state_validation]: true,
-                  readyToNext: true,
-              });
-              return true;
-          } else {
-              this.setState({
-                  [state_error_text]: "New password " + passwd_validation.errors[0].message,
+                  [state_error_text]: "New passwords do not match",
                   [state_validation]: false,
                   readyToNext: false,
               });
               return false;
           }
 
+          this.setState({
+              [state_error_text]: null,
+              [state_validation]: true,
+              readyToNext: true,
+          });
+          return true;
+          
+      } else {
+          this.setState({
+              [state_error_text]: "New password " + passwd_validation.errors[0].message,
+              [state_validation]: false,
+              readyToNext: false,
+          });
+          return false;
       }
+
   }
 
   handleChangeNewPasswd = (passwd1, passwd2) => {
