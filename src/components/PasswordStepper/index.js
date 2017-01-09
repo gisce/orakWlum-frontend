@@ -75,9 +75,6 @@ export class PasswordStepper extends Component {
   okSubCheck = <span>&#9745;</span>;
   koSubCheck = <span>&#9744;</span>;
 
-  //closeMe = (this.props.closeMethod)?this.props.closeMethod:null;
-  //console.log(closeMe);
-
   state = {
     loading: false,
     finished: false,
@@ -383,14 +380,17 @@ export class PasswordStepper extends Component {
   }
 
   render() {
-    const {statusText, closeMe, done} = this.props;
+    const {statusText, closeMe, done, startChangePasswordFlow} = this.props;
     const {loading, stepIndex, message_open} = this.state;
 
     //Close component PasswordStepper calling parent method
     if (done) {
+
         setTimeout(function() {
+            startChangePasswordFlow();
             closeMe();
         }, 2500);
+
     }
 
     const Notifications =
