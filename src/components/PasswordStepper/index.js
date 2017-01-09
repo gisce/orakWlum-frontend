@@ -93,6 +93,19 @@ export class PasswordStepper extends Component {
       }
       return true;
   }
+
+  validateNumber = (passwd)  => {
+      if (!passwd1.match(/^.*[0-9]+.*$/)){
+          this.setState({
+              [state_error_text]: "New password must have at least one number",
+              [state_validation]: false,
+              readyToNext: false,
+          });
+          return false;
+      }
+      return true;
+  }
+
   validateNewPasswd = (passwd1, passwd2) => {
       const field_name = "new_passwd";
       const state_error_text = field_name + "_error_text";
@@ -104,16 +117,7 @@ export class PasswordStepper extends Component {
 
           const upper = validateUpper(passwd1);
           const lower = validateLower(passwd1);
-
-
-          if (!passwd1.match(/^.*[0-9]+.*$/)){
-              this.setState({
-                  [state_error_text]: "New password must have at least one number",
-                  [state_validation]: false,
-                  readyToNext: false,
-              });
-              return false;
-          }
+          const number = validateNumber(passwd1);
 
           if (!passwd1.match(/^.*[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+.*$/)){
               this.setState({
