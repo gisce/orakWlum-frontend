@@ -14,10 +14,16 @@ import Divider from 'material-ui/Divider';
 const revalidator = require('revalidator');
 
 const styles = {
-    dialog: {
+  dialog: {
       width: '80%',
       maxWidth: 'none',
-    }
+  },
+  ok: {
+      color: 'green',
+  },
+  ko: {
+      color: 'red',
+  },
 };
 
 const PASSWD_MIN = 6;
@@ -33,7 +39,12 @@ const validations = {
     },
 };
 
+
+
 export class PasswordStepper extends Component {
+  okCheck = <span style={styles.ok}>&#10004;</span>;
+  koCheck = <span style={styles.ko}>&#10008;</span>;
+
   state = {
     loading: false,
     finished: false,
@@ -78,9 +89,13 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
               new_passwd_validation: false,
               readyToNext: false,
+              validPasswdCombi: this.koCheck,
           });
           return false;
       }
+      this.setState({
+          validPasswdCombi: this.okCheck,
+      })
       return true;
   }
 
@@ -90,9 +105,13 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password must have at least one lower character",
               new_passwd_validation: false,
               readyToNext: false,
+              validPasswdCombi: this.koCheck,
           });
           return false;
       }
+      this.setState({
+          validPasswdCombi: this.okCheck,
+      })
       return true;
   }
 
@@ -102,9 +121,13 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
               new_passwd_validation: false,
               readyToNext: false,
+              validPasswdCombi: this.koCheck,
           });
           return false;
       }
+      this.setState({
+          validPasswdCombi: this.okCheck,
+      })
       return true;
   }
 
@@ -114,9 +137,13 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
               new_passwd_validation: false,
               readyToNext: false,
+              validPasswdCombi: this.koCheck,
           });
           return false;
       }
+      this.setState({
+          validPasswdCombi: this.okCheck,
+      })
       return true;
   }
 
@@ -138,6 +165,11 @@ export class PasswordStepper extends Component {
 
       //validate policy
       if (passwd_validation.valid) {
+
+          this.setState({
+              validSize: this.okCheck,
+          });
+
           //lower is mandatory and (UPPER or numb3r or symbol)
           if (this.validateLower(passwd1) &&
             (
@@ -154,6 +186,7 @@ export class PasswordStepper extends Component {
                 new_passwd_error_text: null,
                 new_passwd_validation: true,
                 readyToNext: true,
+                validPasswdCombi: this.okCheck,
             });
             return true;
           }
@@ -163,6 +196,7 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password " + passwd_validation.errors[0].message,
               new_passwd_validation: false,
               readyToNext: false,
+              validSize: this.koCheck,
           });
           return false;
       }
@@ -170,12 +204,9 @@ export class PasswordStepper extends Component {
   }
 
   handleChangeNewPasswd = (passwd1, passwd2) => {
-      console.log("entro");
       console.dir(passwd1);
       this.validateNewPasswd(passwd1, passwd2);
-      console.log("OK? " + this.state.new_passwd_validation);
   };
-
 
   handleChangeNewPasswd1 = (event, new_passwd) => {
       let passwd = this.passwd;
@@ -188,7 +219,6 @@ export class PasswordStepper extends Component {
       passwd.p2 = new_passwd;
       this.handleChangeNewPasswd(passwd.p1, passwd.p2);
   };
-
 
   getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -213,8 +243,8 @@ export class PasswordStepper extends Component {
 
                   <p><br/>Your new password must accomplish:</p>
                   <ul>
-                      <li>Larger than <strong>{PASSWD_MIN-1} chars</strong> <i>[{PASSWD_MIN + " <= len(password) <= " + PASSWD_MAX}]</i></li>
-                      <li>Assert at least one of the following:</li>
+                      <li>{this.state.validSize} Larger than <strong>{PASSWD_MIN-1} chars</strong> <i>[{PASSWD_MIN + " <= len(password) <= " + PASSWD_MAX}]</i></li>
+                      <li>{this.state.validPasswdCombi} Assert at least one of the following:</li>
                       <ul>
                           <li>Include an <strong>UPPER</strong> case character <i>[A-Z]</i></li>
                           <li>Include a <strong>n1mb3r</strong> <i>[0-9]</i></li>
