@@ -20,12 +20,14 @@ const styles = {
     }
 };
 
+const PASSWD_MIN = 6;
+const PASSWD_MAX = 80;
 const validations = {
     passwd: {
         description: 'New password',
         type: 'string',
-        minLength: 6,
-        maxLength: 100,
+        minLength: PASSWD_MIN,
+        maxLength: PASSWD_MAX,
         allowEmpty: false,
         required: true,
     },
@@ -211,11 +213,11 @@ export class PasswordStepper extends Component {
 
                   <p><br/>Your new password must accomplish:</p>
                   <ul>
-                      <li>Be greather than <strong>5 characters</strong></li>
+                      <li>Larger than <strong>{PASSWD_MIN-1} chars</strong> <i>[{PASSWD_MIN + " <= len(password) <= " + PASSWD_MAX}]</i></li>
                       <li>Assert at least one of the following:</li>
                       <ul>
                           <li>Include an <strong>UPPER</strong> case character <i>[A-Z]</i></li>
-                          <li>Include a <strong>n1mb3r</strong> <i>[A-Z]</i></li>
+                          <li>Include a <strong>n1mb3r</strong> <i>[0-9]</i></li>
                           <li>Include a <strong>symbol</strong> <i>{"[-!$%^&*()_+|~=`{}[]:\";'\<>?,.\/)]"}</i></li>
                       </ul>
                   </ul>
