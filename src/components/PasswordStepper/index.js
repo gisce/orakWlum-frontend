@@ -42,8 +42,6 @@ const validations = {
     },
 };
 
-
-
 export class PasswordStepper extends Component {
   //main checks indicators
   okCheck = <span style={styles.ok}>&#10004;</span>;
@@ -57,6 +55,11 @@ export class PasswordStepper extends Component {
     loading: false,
     finished: false,
     stepIndex: 0,
+    validSize: this.koCheck,
+    validPasswdCombi: this.koCheck,
+    validUpper: this.koSubCheck,
+    validSymbol: this.koSubCheck,
+    validNumber: this.koSubCheck,
   };
 
   passwd = {
@@ -218,7 +221,6 @@ export class PasswordStepper extends Component {
   }
 
   handleChangeNewPasswd = (passwd1, passwd2) => {
-      console.dir(passwd1);
       this.validateNewPasswd(passwd1, passwd2);
   };
 
