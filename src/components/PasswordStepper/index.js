@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/profile';
+import * as actionCreators from '../../actions/password';
 
 const revalidator = require('revalidator');
 
@@ -16,6 +16,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Divider from 'material-ui/Divider';
 
+import Snackbar from 'material-ui/Snackbar';
 
 //import changePassword from '../../actions/profile';
 
@@ -52,10 +53,10 @@ const validations = {
 function mapStateToProps(state) {
     return {
         profile: state.profile,
-        statusText: state.profile.statusText,
-        statusType: state.profile.statusType,
-        status: state.profile.status,
-        message_open: state.profile.message_open,
+        statusText: state.password.statusText,
+        statusType: state.password.statusType,
+        status: state.password.status,
+        message_open: state.password.message_open,
         token: state.auth.token,
     };
 }
@@ -83,6 +84,8 @@ export class PasswordStepper extends Component {
     validUpper: this.koSubCheck,
     validSymbol: this.koSubCheck,
     validNumber: this.koSubCheck,
+    message_open: false,
+    message_text: null
   };
 
   passwd = {
@@ -263,6 +266,11 @@ export class PasswordStepper extends Component {
 
   applyPasswdChange = (event) => {
       event.preventDefault()
+
+      this.setState({
+          message_open: true,
+      });
+
       const token = this.props.token;
       this.props.changePassword(token, this.passwd.current, this.passwd.p1);
   };
@@ -364,10 +372,27 @@ export class PasswordStepper extends Component {
   }
 
   render() {
-    const {loading, stepIndex} = this.state;
+    const {statusText} = this.props;
+    const {loading, stepIndex, message_open} = this.state;
+
+
+    const Snackbarr =
+            this.props.statusText?
+                    <Snackbar
+                      open={true}
+                      message={this.props.statusText}
+                      autoHideDuration={4000}
+                      onActionTouchTap={this.undoChanges}
+                      onRequestClose={this.deactivateSnack}
+                    />
+                :
+                <div></div>;
 
     return (
+
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+      {Snackbarr}
+
         <Stepper activeStep={stepIndex}>
           <Step>
               <StepLabel>New password</StepLabel>
