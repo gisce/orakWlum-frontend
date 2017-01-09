@@ -11,11 +11,24 @@ import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Divider from 'material-ui/Divider';
 
+const revalidator = require('revalidator');
+
 const styles = {
     dialog: {
       width: '80%',
       maxWidth: 'none',
     }
+};
+
+const validations = {
+    passwd: {
+        description: 'New password',
+        type: 'string',
+        minLength: 6,
+        maxLength: 100,
+        allowEmpty: false,
+        required: true,
+    },
 };
 
 export class PasswordStepper extends Component {
