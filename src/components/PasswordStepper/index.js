@@ -24,6 +24,9 @@ const styles = {
   ko: {
       color: 'red',
   },
+  withoutBullet: {
+      listStyleType: "none",
+  },
 };
 
 const PASSWD_MIN = 6;
@@ -42,8 +45,13 @@ const validations = {
 
 
 export class PasswordStepper extends Component {
+  //main checks indicators
   okCheck = <span style={styles.ok}>&#10004;</span>;
   koCheck = <span style={styles.ko}>&#10008;</span>;
+
+  //list checks indicators
+  okSubCheck = <span>&#9745;</span>;
+  koSubCheck = <span>&#9744;</span>;
 
   state = {
     loading: false,
@@ -90,11 +98,13 @@ export class PasswordStepper extends Component {
               new_passwd_validation: false,
               readyToNext: false,
               validPasswdCombi: this.koCheck,
+              validUpper: this.koSubCheck,
           });
           return false;
       }
       this.setState({
           validPasswdCombi: this.okCheck,
+          validUpper: this.okSubCheck,
       })
       return true;
   }
@@ -122,11 +132,13 @@ export class PasswordStepper extends Component {
               new_passwd_validation: false,
               readyToNext: false,
               validPasswdCombi: this.koCheck,
+              validNumber: this.koSubCheck,
           });
           return false;
       }
       this.setState({
           validPasswdCombi: this.okCheck,
+          validNumber: this.okSubCheck,
       })
       return true;
   }
@@ -138,11 +150,13 @@ export class PasswordStepper extends Component {
               new_passwd_validation: false,
               readyToNext: false,
               validPasswdCombi: this.koCheck,
+              validSymbol: this.koSubCheck,
           });
           return false;
       }
       this.setState({
           validPasswdCombi: this.okCheck,
+          validSymbol: this.okSubCheck,
       })
       return true;
   }
@@ -242,13 +256,13 @@ export class PasswordStepper extends Component {
                       />
 
                   <p><br/>Your new password must accomplish:</p>
-                  <ul>
+                  <ul style={styles.withoutBullet}>
                       <li>{this.state.validSize} Larger than <strong>{PASSWD_MIN-1} chars</strong> <i>[{PASSWD_MIN + " <= len(password) <= " + PASSWD_MAX}]</i></li>
                       <li>{this.state.validPasswdCombi} Assert at least one of the following:</li>
-                      <ul>
-                          <li>Include an <strong>UPPER</strong> case character <i>[A-Z]</i></li>
-                          <li>Include a <strong>n1mb3r</strong> <i>[0-9]</i></li>
-                          <li>Include a <strong>symbol</strong> <i>{"[-!$%^&*()_+|~=`{}[]:\";'\<>?,.\/)]"}</i></li>
+                      <ul style={styles.withoutBullet}>
+                          <li>{this.state.validUpper} Include an <strong>UPPER</strong> case character <i>[A-Z]</i></li>
+                          <li>{this.state.validNumber} Include a <strong>n1mb3r</strong> <i>[0-9]</i></li>
+                          <li>{this.state.validSymbol} Include a <strong>symbol</strong> <i>{"[-!$%^&*()_+|~=`{}[]:\";'\<>?,.\/)]"}</i></li>
                       </ul>
                   </ul>
                 </div>
