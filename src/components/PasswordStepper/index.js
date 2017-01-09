@@ -88,6 +88,16 @@ export class PasswordStepper extends Component {
               return false;
           }
 
+          if (!passwd1.match(/^.*[a-z]+.*$/)){
+              this.setState({
+                  [state_error_text]: "New password must take at least one lower character",
+                  [state_validation]: false,
+                  readyToNext: false,
+              });
+              return false;
+          }
+
+
           if (passwd1 != passwd2) {
               this.setState({
                   [state_error_text]: "New passwords do not match",
