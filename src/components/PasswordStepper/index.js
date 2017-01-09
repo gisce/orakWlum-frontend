@@ -52,6 +52,23 @@ export class PasswordStepper extends Component {
     }
   };
 
+  validateNewPasswd = (passwd1, passwd2) => {
+      const field_name = "newPasswd";
+      const state_error_text = field_name + "_error_text";
+      const state_validation = field_name + "_validation";
+
+
+      if (passwd1 != passwd2) {
+          this.setState({
+              [state_error_text]: "New passwords do not match",
+              [state_validation]: false,
+              readyToNext: false,
+          });
+          return false;
+      }
+  }
+
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
         case 0:
