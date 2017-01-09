@@ -384,10 +384,13 @@ export class PasswordStepper extends Component {
 
   render() {
     const {statusText, closeMe, done} = this.props;
-    const {loading, stepIndex, message_open, finished} = this.state;
+    const {loading, stepIndex, message_open} = this.state;
 
-    if (done && finished) {
-        closeMe();
+    //Close component PasswordStepper calling parent method
+    if (done) {
+        setTimeout(function() {
+            closeMe();
+        }, 2500);
     }
 
     const Notifications =
@@ -412,7 +415,7 @@ export class PasswordStepper extends Component {
               <StepLabel>New password</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Current password</StepLabel>
+              <StepLabel>Current password</StepLabel>
           </Step>
         </Stepper>
 
