@@ -81,7 +81,7 @@ export class PasswordStepper extends Component {
 
           if (!passwd1.match(/^.*[A-Z]+.*$/)){
               this.setState({
-                  [state_error_text]: "New password must take at least one upper character",
+                  [state_error_text]: "New password must have at least one upper character",
                   [state_validation]: false,
                   readyToNext: false,
               });
@@ -90,13 +90,21 @@ export class PasswordStepper extends Component {
 
           if (!passwd1.match(/^.*[a-z]+.*$/)){
               this.setState({
-                  [state_error_text]: "New password must take at least one lower character",
+                  [state_error_text]: "New password must have at least one lower character",
                   [state_validation]: false,
                   readyToNext: false,
               });
               return false;
           }
 
+          if (!passwd1.match(/^.*[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+.*$/)){
+              this.setState({
+                  [state_error_text]: "New password must have at least one symbol",
+                  [state_validation]: false,
+                  readyToNext: false,
+              });
+              return false;
+          }
 
           if (passwd1 != passwd2) {
               this.setState({
