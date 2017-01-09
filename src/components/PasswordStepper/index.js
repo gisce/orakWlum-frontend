@@ -100,7 +100,6 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
               new_passwd_validation: false,
               readyToNext: false,
-              validPasswdCombi: this.koCheck,
               validUpper: this.koSubCheck,
           });
           return false;
@@ -122,19 +121,15 @@ export class PasswordStepper extends Component {
           });
           return false;
       }
-      this.setState({
-          validPasswdCombi: this.okCheck,
-      })
       return true;
   }
 
   validateNumber = (passwd)  => {
       if (!passwd.match(/^.*[0-9]+.*$/)){
           this.setState({
-              new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
+              new_passwd_error_text: "New password must have at least a lower",
               new_passwd_validation: false,
               readyToNext: false,
-              validPasswdCombi: this.koCheck,
               validNumber: this.koSubCheck,
           });
           return false;
@@ -143,6 +138,8 @@ export class PasswordStepper extends Component {
           validPasswdCombi: this.okCheck,
           validNumber: this.okSubCheck,
       })
+
+      console.log("number");
       return true;
   }
 
@@ -152,7 +149,6 @@ export class PasswordStepper extends Component {
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
               new_passwd_validation: false,
               readyToNext: false,
-              validPasswdCombi: this.koCheck,
               validSymbol: this.koSubCheck,
           });
           return false;
@@ -180,43 +176,55 @@ export class PasswordStepper extends Component {
   validateNewPasswd = (passwd1, passwd2) => {
       const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
 
-      //validate policy
-      if (passwd_validation.valid) {
 
-          this.setState({
-              validSize: this.okCheck,
-          });
+      //dispatch tests
+      const areEqual = this.validateSame(passwd1, passwd2);
+      const isSymbol = this.validateSymbol(passwd1);
+      const isNumber = this.validateNumber(passwd1);
+      const isUpper = this.validateUpper(passwd1);
 
-          //lower is mandatory and (UPPER or numb3r or symbol)
-          if (this.validateLower(passwd1) &&
-            (
-                this.validateUpper(passwd1)
-                ||
-                this.validateNumber(passwd1)
-                ||
-                this.validateSymbol(passwd1)
-            )
-            && this.validateSame(passwd1, passwd2)
-          )
-          {
+      //(UPPER or numb3r or a symbol)
+      const passwdCombi = (isUpper || isNumber || isSymbol) ? true : false;
+
+      // update states of check Size and Policy Accomplishment
+      this.setState({
+        //validate size
+        validSize: (passwd_validation.valid)?
+            this.okCheck
+            :
+            this.koCheck,
+        //validate policy
+        validPasswdCombi: (passwdCombi)?
+            this.okCheck
+            :
+            this.koCheck,
+        });
+
+        // check if password is correct
+        if (passwd_validation.valid) {
+             if (passwdCombi && areEqual) {
+                this.setState({
+                    new_passwd_error_text: null,
+                    new_passwd_validation: true,
+                    readyToNext: true,
+                });
+                return true;
+            }
+            else {
+                this.setState({
+                    readyToNext: false,
+                });
+                return false;
+            }
+        }
+        else {
             this.setState({
-                new_passwd_error_text: null,
-                new_passwd_validation: true,
-                readyToNext: true,
-                validPasswdCombi: this.okCheck,
-            });
-            return true;
-          }
-
-      } else {
-          this.setState({
               new_passwd_error_text: "New password " + passwd_validation.errors[0].message,
               new_passwd_validation: false,
               readyToNext: false,
-              validSize: this.koCheck,
-          });
-          return false;
-      }
+            });
+            return false;
+        }
 
   }
 
