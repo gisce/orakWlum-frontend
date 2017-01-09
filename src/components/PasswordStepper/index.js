@@ -54,28 +54,29 @@ export class PasswordStepper extends Component {
 
   getStepContent(stepIndex) {
     switch (stepIndex) {
-      case 0:
-        return (
-            <div>
-                <p>Your current password is needed to ensure that you're authorized to change it.</p>
-                <p>Please, <b>insert your password</b> in the following field:</p>
-                <TextField style={{marginTop: 0}} floatingLabelText="Your current password" />
-            </div>
-        );
-      case 1:
-        return (
-            <div>
-                <p>Great! Now <b>insert twice</b> your desired <b>new password</b>:</p>
-                <TextField style={{marginTop: 0}} floatingLabelText="Your new password" /><br/>
-                <TextField style={{marginTop: 0}} floatingLabelText="Your new password again..." />
-                <p><br/>Your new password must accomplish:</p>
-                <p> - At least 6 characters</p>
-                <p> - Be alphanumeric</p>
-                <p> - ...</p>
-            </div>
-        );
-      default:
-        return 'Mmmm.... that\'s embracing...';
+        case 0:
+            return (
+              <div>
+                  <p><b>Insert twice</b> your desired <b>new password</b>:</p>
+                  <TextField style={{marginTop: 0}} floatingLabelText="Your new password" /><br/>
+                  <TextField style={{marginTop: 0}} floatingLabelText="Your new password again..." />
+                  <p><br/>Your new password must accomplish:</p>
+                  <p> - At least 6 characters</p>
+                  <p> - Be alphanumeric</p>
+                  <p> - ...</p>
+              </div>
+            );
+
+        case 1:
+            return (
+                <div>
+                    <p>Great! Now <b>insert your password</b> in the following field:</p>
+                    <p>Your current password is needed to ensure that you're authorized to change it.</p>
+                    <TextField style={{marginTop: 0}} floatingLabelText="Your current password" />
+                </div>
+            );
+        default:
+            return 'Mmmm.... that\'s embracing...';
     }
   }
 
@@ -129,10 +130,10 @@ export class PasswordStepper extends Component {
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
         <Stepper activeStep={stepIndex}>
           <Step>
-            <StepLabel>Current password</StepLabel>
+              <StepLabel>New password</StepLabel>
           </Step>
           <Step>
-            <StepLabel>New password</StepLabel>
+            <StepLabel>Current password</StepLabel>
           </Step>
         </Stepper>
           {this.renderContent()}
