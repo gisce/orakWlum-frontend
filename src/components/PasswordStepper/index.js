@@ -75,6 +75,9 @@ export class PasswordStepper extends Component {
   okSubCheck = <span>&#9745;</span>;
   koSubCheck = <span>&#9744;</span>;
 
+  //closeMe = (this.props.closeMethod)?this.props.closeMethod:null;
+  //console.log(closeMe);
+
   state = {
     loading: false,
     finished: false,
@@ -85,7 +88,7 @@ export class PasswordStepper extends Component {
     validSymbol: this.koSubCheck,
     validNumber: this.koSubCheck,
     message_open: false,
-    message_text: null
+    done: false,
   };
 
   passwd = {
@@ -380,23 +383,22 @@ export class PasswordStepper extends Component {
     const {statusText} = this.props;
     const {loading, stepIndex, message_open} = this.state;
 
-
-    const Snackbarr =
+    const Notifications =
             this.props.statusText?
-                    <Snackbar
-                      open={this.state.message_open}
-                      message={this.props.statusText}
-                      autoHideDuration={4000}
-                      onActionTouchTap={this.undoChanges}
-                      onRequestClose={this.deactivateSnack}
-                    />
+                <Snackbar
+                  open={this.state.message_open}
+                  message={this.props.statusText}
+                  autoHideDuration={4000}
+                  onActionTouchTap={this.undoChanges}
+                  onRequestClose={this.deactivateSnack}
+                />
                 :
                 <div></div>;
 
     return (
 
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
-      {Snackbarr}
+        {Notifications}
 
         <Stepper activeStep={stepIndex}>
           <Step>
@@ -406,7 +408,8 @@ export class PasswordStepper extends Component {
             <StepLabel>Current password</StepLabel>
           </Step>
         </Stepper>
-          {this.renderContent()}
+
+        {this.renderContent()}
       </div>
     );
   }
