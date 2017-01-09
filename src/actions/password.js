@@ -1,7 +1,14 @@
-import { CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_OK, CHANGE_PASSWORD_KO } from '../constants/index'
+import { CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_OK, CHANGE_PASSWORD_KO, CHANGE_PASSWORD_INI } from '../constants/index'
 import { data_update_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
+
+export function startChangePasswordFlow() {
+    return {
+        type: CHANGE_PASSWORD_INI,
+    };
+}
+
 
 export function changePasswordRequest() {
     return {
