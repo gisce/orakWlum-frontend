@@ -101,6 +101,7 @@ export class PasswordStepper extends Component {
             loading: false,
             stepIndex: stepIndex + 1,
             finished: stepIndex >= 1,
+            readyToNext: false,
         });
     }
   };
@@ -257,7 +258,15 @@ export class PasswordStepper extends Component {
   };
 
   handleChangeCurrentPasswd = (event, currentPasswd) => {
-      this.passwd.current = currentPasswd;
+      const passwd_validation = revalidator.validate({ name: currentPasswd}, { properties: { name: validations.passwd} } );
+
+      if (passwd_validation.valid) {
+          this.setState({
+              readyToNext: true,
+          });
+          this.passwd.current = currentPasswd;
+      }
+
   };
 
   applyPasswdChange = (event) => {
