@@ -6,6 +6,10 @@ import { logoutAndRedirect } from './auth'
 export function changePasswordRequest() {
     return {
         type: CHANGE_PASSWORD_REQUEST,
+        payload: {
+            statusText: "Trying to change password...",
+            statusType: "info",
+        },
     };
 }
 
