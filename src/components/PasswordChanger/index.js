@@ -53,7 +53,7 @@ export class PasswordChanger extends Component {
               autoScrollBodyContent={true}
             >
 
-                <PasswordStepper />
+                <PasswordStepper closeMe={this.handleClose} />
             </Dialog>
         );
     }
