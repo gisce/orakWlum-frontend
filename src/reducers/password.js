@@ -1,4 +1,4 @@
-import { CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_OK, CHANGE_PASSWORD_KO } from '../constants'
+import { CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_OK, CHANGE_PASSWORD_KO, CHANGE_PASSWORD_INI } from '../constants'
 import { createReducer } from '../utils/misc'
 
 const initialState = {
@@ -8,6 +8,12 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
+    [CHANGE_PASSWORD_INI]: (state, payload) =>
+        Object.assign({}, state, {
+            isUpdating: false,
+            statusText: null,
+            done: false,
+        }),
 
     [CHANGE_PASSWORD_REQUEST]: (state, payload) =>
         Object.assign({}, state, {
