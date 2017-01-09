@@ -285,11 +285,6 @@ export class UserProfile extends Component {
                             label="Change password"
                             icon={<KeyIcon/>}
                         />
-                        <FlatButton
-                            onClick={(e) => this.delete_profile(e)}
-                            label="Delete"
-                            icon={<DeleteIcon/>}
-                        />
                       </CardActions>
                     </div>
                 :
