@@ -56,7 +56,7 @@ function mapStateToProps(state) {
         statusText: state.password.statusText,
         statusType: state.password.statusType,
         status: state.password.status,
-        message_open: state.password.message_open,
+        done: state.password.done,
         token: state.auth.token,
     };
 }
@@ -88,7 +88,7 @@ export class PasswordStepper extends Component {
     validSymbol: this.koSubCheck,
     validNumber: this.koSubCheck,
     message_open: false,
-    done: false,
+    done: this.props.done,
   };
 
   passwd = {
@@ -383,8 +383,12 @@ export class PasswordStepper extends Component {
   }
 
   render() {
-    const {statusText} = this.props;
-    const {loading, stepIndex, message_open} = this.state;
+    const {statusText, closeMe, done} = this.props;
+    const {loading, stepIndex, message_open, finished} = this.state;
+
+    if (done && finished) {
+        closeMe();
+    }
 
     const Notifications =
             this.props.statusText?
@@ -419,5 +423,5 @@ export class PasswordStepper extends Component {
 }
 
 PasswordStepper.propTypes = {
-    open: React.PropTypes.bool,
+    closeMe: React.PropTypes.func,
 };
