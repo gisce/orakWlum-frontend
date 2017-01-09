@@ -191,9 +191,7 @@ export class PasswordStepper extends Component {
         // check if password is correct //retriggering tests in order ((UPPER, n1mb3r, symbol) AND same)
         if (passwd_validation.valid) {
              if (
-                 (
-                     this.validateUpper(passwd1) || this.validateNumber(passwd1) || this.validateSymbol(passwd1)
-                 )
+                 (this.validateUpper(passwd1) || this.validateNumber(passwd1) || this.validateSymbol(passwd1))
                   && this.validateSame(passwd1, passwd2)) {
                 this.setState({
                     new_passwd_error_text: null,
@@ -288,7 +286,7 @@ export class PasswordStepper extends Component {
   }
 
   renderContent() {
-    const {finished, stepIndex} = this.state;
+    const {finished, stepIndex, readyToNext} = this.state;
     const contentStyle = {margin: '0 16px', overflow: 'hidden'};
 
     if (finished) {
@@ -324,6 +322,7 @@ export class PasswordStepper extends Component {
             label={stepIndex === 1 ? 'Finish' : 'Next'}
             primary={true}
             onTouchTap={this.handleNext}
+            disabled={!readyToNext}
           />
         </div>
       </div>
