@@ -98,8 +98,6 @@ export class PasswordStepper extends Component {
       if (!passwd.match(/^.*[A-Z]+.*$/)){
           this.setState({
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
-              new_passwd_validation: false,
-              readyToNext: false,
               validUpper: this.koSubCheck,
           });
           return false;
@@ -115,8 +113,6 @@ export class PasswordStepper extends Component {
       if (!passwd.match(/^.*[a-z]+.*$/)){
           this.setState({
               new_passwd_error_text: "New password must have at least one lower character",
-              new_passwd_validation: false,
-              readyToNext: false,
               validPasswdCombi: this.koCheck,
           });
           return false;
@@ -128,8 +124,6 @@ export class PasswordStepper extends Component {
       if (!passwd.match(/^.*[0-9]+.*$/)){
           this.setState({
               new_passwd_error_text: "New password must have at least a lower",
-              new_passwd_validation: false,
-              readyToNext: false,
               validNumber: this.koSubCheck,
           });
           return false;
@@ -138,8 +132,6 @@ export class PasswordStepper extends Component {
           validPasswdCombi: this.okCheck,
           validNumber: this.okSubCheck,
       })
-
-      console.log("number");
       return true;
   }
 
@@ -147,8 +139,6 @@ export class PasswordStepper extends Component {
       if (!passwd.match(/^.*[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+.*$/)){
           this.setState({
               new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
-              new_passwd_validation: false,
-              readyToNext: false,
               validSymbol: this.koSubCheck,
           });
           return false;
@@ -164,8 +154,6 @@ export class PasswordStepper extends Component {
       if (passwd1 != passwd2) {
           this.setState({
               new_passwd_error_text: "New passwords do not match",
-              new_passwd_validation: false,
-              readyToNext: false,
           });
           return false;
       }
@@ -176,8 +164,8 @@ export class PasswordStepper extends Component {
   validateNewPasswd = (passwd1, passwd2) => {
       const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
 
-
       //dispatch tests
+      const isLower = this.validateLower(passwd1);
       const areEqual = this.validateSame(passwd1, passwd2);
       const isSymbol = this.validateSymbol(passwd1);
       const isNumber = this.validateNumber(passwd1);
