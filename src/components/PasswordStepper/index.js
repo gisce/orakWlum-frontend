@@ -70,6 +70,8 @@ export class PasswordStepper extends Component {
               readyToNext: false,
           });
           return false;
+      } else {
+          console.log("BOO!!!");
       }
   }
 
@@ -112,7 +114,9 @@ export class PasswordStepper extends Component {
                       floatingLabelText="Your new password again..."
                       type="password"
                       onChange={this.handleChangeNewPasswd2}
+                      errorText={this.state.newPasswd_error_text}
                       />
+
                   <p><br/>Your new password must accomplish:</p>
                   <p> - At least 6 characters</p>
                   <p> - Be alphanumeric</p>
