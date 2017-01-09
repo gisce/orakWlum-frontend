@@ -25,6 +25,11 @@ export class PasswordStepper extends Component {
     stepIndex: 0,
   };
 
+  passwd = {
+      p1: null,
+      p2: null,
+  }
+
   dummyAsync = (cb) => {
     this.setState({loading: true}, () => {
       this.asyncTimer = setTimeout(cb, 500);
@@ -68,6 +73,19 @@ export class PasswordStepper extends Component {
       }
   }
 
+  handleChangeNewPasswd = (passwd1, passwd2) => {
+      console.log("entro");
+      console.dir(passwd1);
+      this.validateNewPasswd(passwd1, passwd2);
+      console.log("OK? " + this.state.newPasswd_validation);
+  };
+
+
+  handleChangeNewPasswd1 = (event, new_passwd) => {
+      let passwd = this.passwd;
+      passwd.p1 = new_passwd;
+      this.handleChangeNewPasswd(passwd.p1, passwd.p2);
+  };
 
   getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -79,12 +97,14 @@ export class PasswordStepper extends Component {
                       style={{marginTop: 0}}
                       floatingLabelText="Your new password"
                       type="password"
+                      onChange={this.handleChangeNewPasswd1}
                       />
                   <br/>
                   <TextField
                       style={{marginTop: 0}}
                       floatingLabelText="Your new password again..."
                       type="password"
+                      onChange={this.handleChangeName}
                       />
                   <p><br/>Your new password must accomplish:</p>
                   <p> - At least 6 characters</p>
