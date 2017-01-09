@@ -144,20 +144,17 @@ export class PasswordStepper extends Component {
                 this.validateNumber(passwd1)
                 ||
                 this.validateSymbol(passwd1)
-            )) {
-                this.setState({
-                    new_passwd_error_text: null,
-                    new_passwd_validation: true,
-                    readyToNext: true,
-                });
-                return true;
-            }
-
-/*
-                const symbolCheck =
-                const sameCheck = this.validateSame(passwd1, passwd2);
-*/
-
+            )
+            && this.validateSame(passwd1, passwd2)
+          )
+          {
+            this.setState({
+                new_passwd_error_text: null,
+                new_passwd_validation: true,
+                readyToNext: true,
+            });
+            return true;
+          }
 
       } else {
           this.setState({
