@@ -211,13 +211,12 @@ export class PasswordStepper extends Component {
 
                   <p><br/>Your new password must accomplish:</p>
                   <ul>
-                      <li>At least 6 characters</li>
-                      <li>Be alphanumeric</li>
-                      <li>Include at least one</li>
+                      <li>Be greather than <strong>5 characters</strong></li>
+                      <li>Assert at least one of the following:</li>
                       <ul>
-                          <li>Lower case character <i>[a-z]</i></li>
-                          <li>Upper case character <i>[A-Z]</i></li>
-                          <li>Symbol <i>{"[-!$%^&*()_+|~=`{}[]:\";'\<>?,.\/)]"}</i></li>
+                          <li>Include an <strong>UPPER</strong> case character <i>[A-Z]</i></li>
+                          <li>Include a <strong>n1mb3r</strong> <i>[A-Z]</i></li>
+                          <li>Include a <strong>symbol</strong> <i>{"[-!$%^&*()_+|~=`{}[]:\";'\<>?,.\/)]"}</i></li>
                       </ul>
                   </ul>
                 </div>
