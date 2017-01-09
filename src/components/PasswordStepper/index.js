@@ -56,6 +56,7 @@ function mapStateToProps(state) {
         statusType: state.profile.statusType,
         status: state.profile.status,
         message_open: state.profile.message_open,
+        token: state.auth.token,
     };
 }
 
@@ -256,14 +257,10 @@ export class PasswordStepper extends Component {
       this.handleChangeNewPasswd(passwd.p1, passwd.p2);
   };
 
-  applyPasswdChange = (event, passwd) => {
+  applyPasswdChange = (event) => {
       event.preventDefault()
-      console.log("changing passwd");
-
-      this.props.changePassword("asdad", {password: passwd});
-
-      console.log("changed passwd");
-
+      const token = this.props.token;
+      this.props.changePassword(token, {password: this.passwd.p1});
   };
 
   getStepContent(stepIndex) {

@@ -118,7 +118,7 @@ export function receiveChangePassword(data) {
         type: CHANGE_PASSWORD_OK,
         payload: {
             data,
-            statusText: "Changes applied correctly",
+            statusText: "Password changed",
             statusType: "info",
         },
     };
