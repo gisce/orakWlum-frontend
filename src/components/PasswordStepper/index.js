@@ -164,7 +164,7 @@ export class PasswordStepper extends Component {
   validateNewPasswd = (passwd1, passwd2) => {
       const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
 
-      //dispatch tests
+      //dispatch tests to upgrade indicators
       const isLower = this.validateLower(passwd1);
       const areEqual = this.validateSame(passwd1, passwd2);
       const isSymbol = this.validateSymbol(passwd1);
@@ -174,7 +174,7 @@ export class PasswordStepper extends Component {
       //(UPPER or numb3r or a symbol)
       const passwdCombi = (isUpper || isNumber || isSymbol) ? true : false;
 
-      // update states of check Size and Policy Accomplishment
+      // Indicators of check Size and Policy Accomplishment
       this.setState({
         //validate size
         validSize: (passwd_validation.valid)?
@@ -188,9 +188,13 @@ export class PasswordStepper extends Component {
             this.koCheck,
         });
 
-        // check if password is correct
+        // check if password is correct //retriggering tests in order ((UPPER, n1mb3r, symbol) AND same)
         if (passwd_validation.valid) {
-             if (passwdCombi && areEqual) {
+             if (
+                 (
+                     this.validateUpper(passwd1) || this.validateNumber(passwd1) || this.validateSymbol(passwd1)
+                 )
+                  && this.validateSame(passwd1, passwd2)) {
                 this.setState({
                     new_passwd_error_text: null,
                     new_passwd_validation: true,
