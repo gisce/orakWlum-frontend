@@ -87,6 +87,13 @@ export class PasswordStepper extends Component {
       this.handleChangeNewPasswd(passwd.p1, passwd.p2);
   };
 
+  handleChangeNewPasswd2 = (event, new_passwd) => {
+      let passwd = this.passwd;
+      passwd.p2 = new_passwd;
+      this.handleChangeNewPasswd(passwd.p1, passwd.p2);
+  };
+
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
         case 0:
@@ -104,7 +111,7 @@ export class PasswordStepper extends Component {
                       style={{marginTop: 0}}
                       floatingLabelText="Your new password again..."
                       type="password"
-                      onChange={this.handleChangeName}
+                      onChange={this.handleChangeNewPasswd2}
                       />
                   <p><br/>Your new password must accomplish:</p>
                   <p> - At least 6 characters</p>
