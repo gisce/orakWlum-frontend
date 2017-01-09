@@ -135,10 +135,10 @@ export function receiveChangePasswordKO(error) {
     };
 }
 
-export function changePassword(token, newPassword) {
+export function changePassword(token, currentPassword, newPassword) {
     return (dispatch) => {
         dispatch(changePasswordRequest());
-        data_update_api_resource(token, "user/password", newPassword )
+        data_update_api_resource(token, "user/password", {password: newPassword, current: currentPassword} )
             .then(parseJSON)
             .then(response => {
                 if (response.result.was_updated)
