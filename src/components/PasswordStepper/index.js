@@ -58,8 +58,17 @@ export class PasswordStepper extends Component {
             return (
               <div>
                   <p><b>Insert twice</b> your desired <b>new password</b>:</p>
-                  <TextField style={{marginTop: 0}} floatingLabelText="Your new password" /><br/>
-                  <TextField style={{marginTop: 0}} floatingLabelText="Your new password again..." />
+                  <TextField
+                      style={{marginTop: 0}}
+                      floatingLabelText="Your new password"
+                      type="password"
+                      />
+                  <br/>
+                  <TextField
+                      style={{marginTop: 0}}
+                      floatingLabelText="Your new password again..."
+                      type="password"
+                      />
                   <p><br/>Your new password must accomplish:</p>
                   <p> - At least 6 characters</p>
                   <p> - Be alphanumeric</p>
