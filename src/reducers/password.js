@@ -13,6 +13,7 @@ export default createReducer(initialState, {
         Object.assign({}, state, {
             isUpdating: true,
             statusText: payload.statusText,
+            done: false,
         }),
 
     [CHANGE_PASSWORD_OK]: (state, payload) =>
@@ -22,6 +23,7 @@ export default createReducer(initialState, {
             loaded: true,
             statusText: payload.statusText,
             statusType: payload.statusType,
+            done: true,
         }),
     [CHANGE_PASSWORD_KO]: (state, payload) =>
         Object.assign({}, state, {
@@ -31,5 +33,6 @@ export default createReducer(initialState, {
             status: payload.status,
             statusText: payload.statusText,
             statusType: payload.statusType,
+            done: false,
         }),
 });
