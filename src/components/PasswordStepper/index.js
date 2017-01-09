@@ -73,8 +73,8 @@ export class PasswordStepper extends Component {
   validateUpper = (passwd)  => {
       if (!passwd.match(/^.*[A-Z]+.*$/)){
           this.setState({
-              [state_error_text]: "New password must have at least one upper character",
-              [state_validation]: false,
+              new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
+              new_passwd_validation: false,
               readyToNext: false,
           });
           return false;
@@ -85,8 +85,8 @@ export class PasswordStepper extends Component {
   validateLower = (passwd)  => {
       if (!passwd.match(/^.*[a-z]+.*$/)){
           this.setState({
-              [state_error_text]: "New password must have at least one lower character",
-              [state_validation]: false,
+              new_passwd_error_text: "New password must have at least one lower character",
+              new_passwd_validation: false,
               readyToNext: false,
           });
           return false;
@@ -97,8 +97,8 @@ export class PasswordStepper extends Component {
   validateNumber = (passwd)  => {
       if (!passwd.match(/^.*[0-9]+.*$/)){
           this.setState({
-              [state_error_text]: "New password must have at least one number",
-              [state_validation]: false,
+              new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
+              new_passwd_validation: false,
               readyToNext: false,
           });
           return false;
@@ -109,8 +109,8 @@ export class PasswordStepper extends Component {
   validateSymbol = (passwd)  => {
       if (!passwd.match(/^.*[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+.*$/)){
           this.setState({
-              [state_error_text]: "New password must have at least one symbol",
-              [state_validation]: false,
+              new_passwd_error_text: "New password must have at least one number, UPPER or a symbol",
+              new_passwd_validation: false,
               readyToNext: false,
           });
           return false;
@@ -121,8 +121,8 @@ export class PasswordStepper extends Component {
   validateSame = (passwd1, passwd2)  => {
       if (passwd1 != passwd2) {
           this.setState({
-              [state_error_text]: "New passwords do not match",
-              [state_validation]: false,
+              new_passwd_error_text: "New passwords do not match",
+              new_passwd_validation: false,
               readyToNext: false,
           });
           return false;
@@ -132,31 +132,37 @@ export class PasswordStepper extends Component {
 
 
   validateNewPasswd = (passwd1, passwd2) => {
-      const field_name = "new_passwd";
-      const state_error_text = field_name + "_error_text";
-      const state_validation = field_name + "_validation";
-
       const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
 
+      //validate policy
       if (passwd_validation.valid) {
+          //lower is mandatory and (UPPER or numb3r or symbol)
+          if (this.validateLower(passwd1) &&
+            (
+                this.validateUpper(passwd1)
+                ||
+                this.validateNumber(passwd1)
+                ||
+                this.validateSymbol(passwd1)
+            )) {
+                this.setState({
+                    new_passwd_error_text: null,
+                    new_passwd_validation: true,
+                    readyToNext: true,
+                });
+                return true;
+            }
 
-          const upperCheck = this.validateUpper(passwd1);
-          const lowerCheck = this.validateLower(passwd1);
-          const numberCheck = this.validateNumber(passwd1);
-          const symbolCheck = this.validateSymbol(passwd1);
-          const sameCheck = this.validateSame(passwd1, passwd2);
+/*
+                const symbolCheck =
+                const sameCheck = this.validateSame(passwd1, passwd2);
+*/
 
-          this.setState({
-              [state_error_text]: null,
-              [state_validation]: true,
-              readyToNext: true,
-          });
-          return true;
 
       } else {
           this.setState({
-              [state_error_text]: "New password " + passwd_validation.errors[0].message,
-              [state_validation]: false,
+              new_passwd_error_text: "New password " + passwd_validation.errors[0].message,
+              new_passwd_validation: false,
               readyToNext: false,
           });
           return false;
