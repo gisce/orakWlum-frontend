@@ -71,10 +71,9 @@ export class PasswordStepper extends Component {
   };
 
   validateNewPasswd = (passwd1, passwd2) => {
-      const field_name = "newPasswd";
+      const field_name = "new_passwd";
       const state_error_text = field_name + "_error_text";
       const state_validation = field_name + "_validation";
-
 
       if (passwd1 != passwd2) {
           this.setState({
@@ -85,6 +84,24 @@ export class PasswordStepper extends Component {
           return false;
       } else {
           console.log("BOO!!!");
+          const passwd_validation = revalidator.validate({ name: passwd1}, { properties: { name: validations.passwd} } );
+
+          if (passwd_validation.valid) {
+              this.setState({
+                  [state_error_text]: null,
+                  [state_validation]: true,
+                  readyToNext: true,
+              });
+              return true;
+          } else {
+              this.setState({
+                  [state_error_text]: "New password " + passwd_validation.errors[0].message,
+                  [state_validation]: false,
+                  readyToNext: false,
+              });
+              return false;
+          }
+
       }
   }
 
@@ -92,7 +109,7 @@ export class PasswordStepper extends Component {
       console.log("entro");
       console.dir(passwd1);
       this.validateNewPasswd(passwd1, passwd2);
-      console.log("OK? " + this.state.newPasswd_validation);
+      console.log("OK? " + this.state.new_passwd_validation);
   };
 
 
@@ -127,7 +144,7 @@ export class PasswordStepper extends Component {
                       floatingLabelText="Your new password again..."
                       type="password"
                       onChange={this.handleChangeNewPasswd2}
-                      errorText={this.state.newPasswd_error_text}
+                      errorText={this.state.new_passwd_error_text}
                       />
 
                   <p><br/>Your new password must accomplish:</p>
