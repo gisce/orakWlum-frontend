@@ -268,8 +268,11 @@ export class PasswordStepper extends Component {
               readyToNext: true,
           });
           this.passwd.current = currentPasswd;
+      } else {
+          this.setState({
+              readyToNext: false,
+          });
       }
-
   };
 
   applyPasswdChange = (event) => {
