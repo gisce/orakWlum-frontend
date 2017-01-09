@@ -1,4 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../../actions/profile';
+
+const revalidator = require('revalidator');
 
 import TextField from 'material-ui/TextField';
 import {
@@ -11,7 +16,9 @@ import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Divider from 'material-ui/Divider';
 
-const revalidator = require('revalidator');
+
+//import changePassword from '../../actions/profile';
+
 
 const styles = {
   dialog: {
@@ -42,6 +49,21 @@ const validations = {
     },
 };
 
+function mapStateToProps(state) {
+    return {
+        profile: state.profile,
+        statusText: state.profile.statusText,
+        statusType: state.profile.statusType,
+        status: state.profile.status,
+        message_open: state.profile.message_open,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(actionCreators, dispatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export class PasswordStepper extends Component {
   //main checks indicators
   okCheck = <span style={styles.ok}>&#10004;</span>;
@@ -234,6 +256,16 @@ export class PasswordStepper extends Component {
       this.handleChangeNewPasswd(passwd.p1, passwd.p2);
   };
 
+  applyPasswdChange = (event, passwd) => {
+      event.preventDefault()
+      console.log("changing passwd");
+
+      this.props.changePassword("asdad", {password: passwd});
+
+      console.log("changed passwd");
+
+  };
+
   getStepContent(stepIndex) {
     switch (stepIndex) {
         case 0:
@@ -321,7 +353,7 @@ export class PasswordStepper extends Component {
           <RaisedButton
             label={stepIndex === 1 ? 'Finish' : 'Next'}
             primary={true}
-            onTouchTap={this.handleNext}
+            onTouchTap={stepIndex === 1 ? this.applyPasswdChange : this.handleNext}
             disabled={!readyToNext}
           />
         </div>
