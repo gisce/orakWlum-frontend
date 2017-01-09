@@ -257,10 +257,14 @@ export class PasswordStepper extends Component {
       this.handleChangeNewPasswd(passwd.p1, passwd.p2);
   };
 
+  handleChangeCurrentPasswd = (event, currentPasswd) => {
+      this.passwd.current = currentPasswd;
+  };
+
   applyPasswdChange = (event) => {
       event.preventDefault()
       const token = this.props.token;
-      this.props.changePassword(token, {password: this.passwd.p1});
+      this.props.changePassword(token, this.passwd.current, this.passwd.p1);
   };
 
   getStepContent(stepIndex) {
@@ -306,6 +310,7 @@ export class PasswordStepper extends Component {
                         style={{marginTop: 0}}
                         floatingLabelText="Your current password"
                         type="password"
+                        onChange={this.handleChangeCurrentPasswd}
                         />
                 </div>
             );
