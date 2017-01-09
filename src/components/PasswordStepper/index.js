@@ -93,30 +93,26 @@ export class PasswordStepper extends Component {
       p2: null,
   }
 
-  dummyAsync = (cb) => {
-    this.setState({loading: true}, () => {
-      this.asyncTimer = setTimeout(cb, 500);
-    });
-  };
-
   handleNext = () => {
     const {stepIndex} = this.state;
     if (!this.state.loading) {
-      this.dummyAsync(() => this.setState({
-        loading: false,
-        stepIndex: stepIndex + 1,
-        finished: stepIndex >= 1,
-      }));
+        this.setState({
+            message_open: false,
+            loading: false,
+            stepIndex: stepIndex + 1,
+            finished: stepIndex >= 1,
+        });
     }
   };
 
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (!this.state.loading) {
-      this.dummyAsync(() => this.setState({
-        loading: false,
-        stepIndex: stepIndex - 1,
-      }));
+        this.setState({
+            message_open: false,
+            loading: false,
+            stepIndex: stepIndex - 1,
+        });
     }
   };
 
@@ -379,7 +375,7 @@ export class PasswordStepper extends Component {
     const Snackbarr =
             this.props.statusText?
                     <Snackbar
-                      open={true}
+                      open={this.state.message_open}
                       message={this.props.statusText}
                       autoHideDuration={4000}
                       onActionTouchTap={this.undoChanges}
