@@ -79,6 +79,15 @@ export class PasswordStepper extends Component {
 
       if (passwd_validation.valid) {
 
+          if (!passwd1.match(/^.*[A-Z]+.*$/)){
+              this.setState({
+                  [state_error_text]: "New password must take at least one upper character",
+                  [state_validation]: false,
+                  readyToNext: false,
+              });
+              return false;
+          }
+
           if (passwd1 != passwd2) {
               this.setState({
                   [state_error_text]: "New passwords do not match",
@@ -94,7 +103,7 @@ export class PasswordStepper extends Component {
               readyToNext: true,
           });
           return true;
-          
+
       } else {
           this.setState({
               [state_error_text]: "New password " + passwd_validation.errors[0].message,
