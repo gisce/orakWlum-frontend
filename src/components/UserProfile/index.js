@@ -167,7 +167,6 @@ export class UserProfile extends Component {
                         <Snackbar
                           open={this.state.message_open}
                           message={this.props.statusText}
-                          action="undo"
                           autoHideDuration={4000}
                           onActionTouchTap={this.undoChanges}
                           onRequestClose={this.deactivateSnack}
