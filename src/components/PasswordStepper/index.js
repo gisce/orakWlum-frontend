@@ -97,6 +97,15 @@ export class PasswordStepper extends Component {
               return false;
           }
 
+          if (!passwd1.match(/^.*[0-9]+.*$/)){
+              this.setState({
+                  [state_error_text]: "New password must have at least one number",
+                  [state_validation]: false,
+                  readyToNext: false,
+              });
+              return false;
+          }
+
           if (!passwd1.match(/^.*[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+.*$/)){
               this.setState({
                   [state_error_text]: "New password must have at least one symbol",
@@ -105,6 +114,8 @@ export class PasswordStepper extends Component {
               });
               return false;
           }
+
+
 
           if (passwd1 != passwd2) {
               this.setState({
