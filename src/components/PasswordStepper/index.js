@@ -56,7 +56,7 @@ export class PasswordStepper extends Component {
     switch (stepIndex) {
         case 0:
             return (
-              <div>
+                <div>
                   <p><b>Insert twice</b> your desired <b>new password</b>:</p>
                   <TextField
                       style={{marginTop: 0}}
@@ -73,7 +73,7 @@ export class PasswordStepper extends Component {
                   <p> - At least 6 characters</p>
                   <p> - Be alphanumeric</p>
                   <p> - ...</p>
-              </div>
+                </div>
             );
 
         case 1:
@@ -81,7 +81,11 @@ export class PasswordStepper extends Component {
                 <div>
                     <p>Great! Now <b>insert your password</b> in the following field:</p>
                     <p>Your current password is needed to ensure that you're authorized to change it.</p>
-                    <TextField style={{marginTop: 0}} floatingLabelText="Your current password" />
+                    <TextField
+                        style={{marginTop: 0}}
+                        floatingLabelText="Your current password"
+                        type="password"
+                        />
                 </div>
             );
         default:
