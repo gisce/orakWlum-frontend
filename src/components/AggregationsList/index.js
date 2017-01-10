@@ -18,6 +18,11 @@ export class AggregationsList extends Component {
         };
     }
 
+    deleteAggregation(e) {
+        e.preventDefault();
+        console.log("delete");
+    }
+
     render() {
 
         const {aggregations, groupSelected} = this.state;
@@ -27,7 +32,7 @@ export class AggregationsList extends Component {
               key="deleteButton"
               label='Delete'
               primary={true}
-              onTouchTap={(e) => this.deleteProposal(e)}
+              onTouchTap={(e) => this.deleteAggregation(e)}
               disabled={!groupSelected}
             />
         ]
