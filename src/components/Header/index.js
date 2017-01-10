@@ -21,6 +21,7 @@ import RegisterIcon from 'material-ui/svg-icons/social/person-add';
 import ProfileIcon from 'material-ui/svg-icons/action/perm-identity';
 import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
 import AboutIcon from 'material-ui/svg-icons/action/info-outline';
+import AggregationsIcon from 'material-ui/svg-icons/action/donut-large';
 
 import FontIcon from 'material-ui/FontIcon';
 
@@ -160,6 +161,14 @@ export class Header extends Component {
                                     leftIcon={<HistoryIcon/>}
                                     primaryText="History"
                                     disabled
+                                />
+
+                                <Divider />
+
+                                <MenuItem
+                                    onClick={() => this.dispatchRoute('/aggregations')}
+                                    leftIcon={<AggregationsIcon/>}
+                                    primaryText="Aggregations"
                                 />
 
                                 <Divider />
