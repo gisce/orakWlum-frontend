@@ -22,6 +22,17 @@ export class AggregationsList extends Component {
 
         const {aggregations, groupSelected} = this.state;
 
+        const actions = [
+            <RaisedButton
+              key="deleteButton"
+              label='Delete'
+              primary={true}
+              onTouchTap={(e) => this.deleteProposal(e)}
+              disabled={!groupSelected}
+            />
+        ]
+
+
         return  (
             <div>
                 <Table
@@ -78,6 +89,8 @@ export class AggregationsList extends Component {
                         <br/>
                     </div>
             }
+
+            {actions}
 
             </div>
         );
