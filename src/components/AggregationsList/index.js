@@ -164,7 +164,7 @@ export class AggregationsList extends Component {
                     </TableHeader>
 
                     <TableBody
-                        stripedRows={false}
+                        stripedRows={true}
                         deselectOnClickaway={false}
                     >
                 {
