@@ -19,6 +19,11 @@ export class AggregationsList extends Component {
         };
     }
 
+    newAggregation(e) {
+        e.preventDefault();
+        console.log("new");
+    }
+
     editAggregation(e) {
         e.preventDefault();
         console.log("edit");
