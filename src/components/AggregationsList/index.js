@@ -69,7 +69,7 @@ export class AggregationsList extends Component {
         };
 
 
-        switch( this.selectedAggregations.length ) {
+        switch( selectedIDs.length ) {
             case 0:
                 oneSelected = false;
                 groupSelected = false;
@@ -135,8 +135,8 @@ export class AggregationsList extends Component {
                     onRowSelection={(agg) => this.handleSelection(agg)}
                 >
                     <TableHeader
-                        displaySelectAll={true}
-                        enableSelectAll={true}
+                        displaySelectAll={false}
+                        enableSelectAll={false}
                     >
                       <TableRow>
                           <TableHeaderColumn>Name</TableHeaderColumn>
