@@ -36,7 +36,7 @@ export class PasswordChanger extends Component {
 
         const actions = [
           <FlatButton
-            label="Done"
+            label="Cancel"
             primary={true}
             onTouchTap={this.handleClose}
           />,
@@ -53,7 +53,7 @@ export class PasswordChanger extends Component {
               autoScrollBodyContent={true}
             >
 
-                <PasswordStepper />
+                <PasswordStepper closeMe={this.handleClose} />
             </Dialog>
         );
     }

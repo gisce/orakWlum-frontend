@@ -6,6 +6,8 @@ import data  from './data'
 import profile  from './profile'
 import proposal  from './proposal'
 import proposals  from './proposals'
+import aggregations  from './aggregations'
+import password  from './password'
 import { LOGOUT_USER } from '../constants/index'
 
 const appReducer = combineReducers({
@@ -14,8 +16,10 @@ const appReducer = combineReducers({
     data,
     proposals,
     proposal,
+    aggregations,
     profile,
     about,
+    password,
 });
 
 const rootReducer = (state, action) => {

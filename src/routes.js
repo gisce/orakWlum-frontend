@@ -16,6 +16,7 @@ import Proposal from './components/ProposalView';
 import ProposalNew from './components/ProposalNewView';
 import Profile from './components/ProfileView';
 import About from './components/AboutView';
+import Aggregations from './components/AggregationsView';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -31,6 +32,7 @@ export default (
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
+        <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="about"   component={requireAuthentication(About)} />
         <Route path="*" component={DetermineAuth(NotFound)} />

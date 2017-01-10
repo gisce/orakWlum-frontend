@@ -3,8 +3,8 @@ import React from 'react';
 import {debug} from './debug';
 export const DEBUG = (debug)?debug:false;
 
-export const VERSION = "0.1.0";
-export const VERSION_PR = "86";
+export const VERSION = "0.2.0";
+export const VERSION_PR = "112";
 
 export const API_SPECIFICATION = 1;
 export const API_PREFIX = "/api/v" + API_SPECIFICATION;
@@ -28,6 +28,11 @@ export const RECEIVE_PROTECTED_DATA = 'RECEIVE_PROTECTED_DATA';
 export const RECOVER_USER_REQUEST = 'RECOVER_USER_REQUEST';
 export const RECOVER_USER_SUCCESS = 'RECOVER_USER_SUCCESS';
 export const RECOVER_USER_FAILURE = 'RECOVER_USER_FAILURE';
+
+export const CHANGE_PASSWORD_REQUEST = 'CHANGE_PASSWORD_REQUEST';
+export const CHANGE_PASSWORD_OK = 'CHANGE_PASSWORD_OK';
+export const CHANGE_PASSWORD_KO = 'CHANGE_PASSWORD_KO';
+export const CHANGE_PASSWORD_INI = 'CHANGE_PASSWORD_INI';
 
 export const FETCH_PROPOSALS_REQUEST = 'FETCH_PROPOSALS_REQUEST';
 export const RECEIVE_PROPOSALS = 'RECEIVE_PROPOSALS';

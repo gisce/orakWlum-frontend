@@ -27,6 +27,7 @@ export default createReducer(initialState, {
             error: true,
         }),
 
+
     [UPDATE_PROFILE_OK]: (state, payload) =>
         Object.assign({}, state, {
             data: payload.data,
