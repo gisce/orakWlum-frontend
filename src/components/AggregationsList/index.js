@@ -15,16 +15,16 @@ export class AggregationsList extends Component {
 
         this.state = {
             aggregations: props.aggregations,
+            //Flag just one element selected? -> edit/delete activated
+            oneSelected: false,
+            //Flag more than one element selected? -> delete activated
+            groupSelected: false,
+            //The list of index position of the selected elements
+            selectedIDs: [],
         };
 
         //The list IDs of the selected aggregations
         this.selectedAggregations = [];
-
-        //Flag just one element selected? -> edit/delete activated
-        this.oneSelected = false;
-
-        //Flag more than one element selected? -> delete activated
-        this.groupSelected = false;
     }
 
     newAggregation(e) {
@@ -45,20 +45,25 @@ export class AggregationsList extends Component {
     handleSelection(selections) {
         const aggregations = this.state.aggregations;
 
+        let {oneSelected, groupSelected} = false;
+
+        let selectedIDs = [];
+
         switch( selections ) {
             case "all":
-                this.selectedAggregations = aggregations.map(function(selected, index) {
-                    return selected._id;
+                this.selectedAggregations, selectedIDs = aggregations.map(function(selected, index) {
+                    return selected._id, index;
                 });
                 break;
 
             case "none":
                 this.selectedAggregations = [];
+                selectedIDs = [];
                 break;
 
             default:
-                this.selectedAggregations = selections.map(function(selected, index) {
-                    return aggregations[selected]._id;
+                this.selectedAggregations, selectedIDs = selections.map(function(selected, index) {
+                    return aggregations[selected]._id, selected;
                 });
                 break;
         };
@@ -66,26 +71,33 @@ export class AggregationsList extends Component {
 
         switch( this.selectedAggregations.length ) {
             case 0:
-                this.oneSelected = false;
-                this.groupSelected = false;
+                oneSelected = false;
+                groupSelected = false;
             break;
 
             case 1:
-                this.oneSelected = true;
-                this.groupSelected = false;
+                oneSelected = true;
+                groupSelected = false;
             break;
 
             default:
-                this.oneSelected = false;
-                this.groupSelected = true;
+                oneSelected = false;
+                groupSelected = true;
             break;
         }
+
+        this.setState ({
+            selectedIDs,
+            oneSelected,
+            groupSelected,
+        })
     }
 
     render() {
 
-        const {aggregations} = this.state;
-        const {groupSelected, oneSelected} = this;
+        const {aggregations, groupSelected, oneSelected} = this.state;
+
+        console.log(this.state.selectedIDs);
 
         const actions = [
             <RaisedButton
