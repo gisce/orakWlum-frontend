@@ -25,10 +25,10 @@ export class AggregationsList extends Component {
 
             //The list of index position of the selected elements
             selectedIDs: [],
-        };
 
-        //The list IDs of the selected aggregations
-        this.selectedAggregations = [];
+            //The list IDs of the selected aggregations
+            selectedAggregations: [],
+        };
     }
 
     newAggregation(e) {
@@ -38,42 +38,46 @@ export class AggregationsList extends Component {
 
     editAggregation(e) {
         e.preventDefault();
-        console.log("edit");
+        console.log("edit", this.state.selectedAggregations);
     }
 
     deleteAggregation(e) {
-        e.preventDefault();
-        console.log("delete");
+        const agg = this.state.selectedAggregations;
+        console.log("delete", agg);
     }
 
     handleSelection(selections) {
         const aggregations = this.state.aggregations;
 
-        let {oneSelected, groupSelected, disableCreate, disableEdit, disableDelete} = false;
-
+        let oneSelected, groupSelected, disableCreate, disableEdit, disableDelete;
         let selectedIDs = [];
+        let selectedAggregations = [];
 
+        //Reach the selectedAggregations (IDs) and positional lists
         switch( selections ) {
             case "all":
-                this.selectedAggregations, selectedIDs = aggregations.map(function(selected, index) {
-                    return selected._id, index;
+                selectedAggregations, selectedIDs = aggregations.map(function(selected, index) {
+                    selectedAggregations.push(selected._id);
+                    selectedIDs.push(index);
                 });
                 break;
 
             case "none":
-                this.selectedAggregations = [];
+                selectedAggregations = [];
                 selectedIDs = [];
                 break;
 
             default:
-                this.selectedAggregations, selectedIDs = selections.map(function(selected, index) {
-                    return aggregations[selected]._id, selected;
+                selections.map(function(selected, index) {
+                    selectedAggregations.push(aggregations[selected]._id);
+                    selectedIDs.push(selected);
                 });
                 break;
         };
 
         const selection_length = selectedIDs.length;
 
+        //Establish if there are one, more than one or none selected.
         switch( selection_length ) {
             case 0:
                 oneSelected = false;
@@ -102,6 +106,7 @@ export class AggregationsList extends Component {
 
         this.setState ({
             selectedIDs,
+            selectedAggregations,
             disableCreate,
             disableEdit,
             disableDelete,
@@ -109,8 +114,7 @@ export class AggregationsList extends Component {
     }
 
     render() {
-
-        const {aggregations, selectedIDs, disableCreate, disableEdit, disableDelete} = this.state;
+        const {aggregations, selectedIDs, selectedAggregations, disableCreate, disableEdit, disableDelete} = this.state;
 
         const actions = [
             <RaisedButton
