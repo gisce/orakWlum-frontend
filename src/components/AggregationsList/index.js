@@ -95,9 +95,9 @@ export class AggregationsList extends Component {
 
     render() {
 
-        const {aggregations, groupSelected, oneSelected} = this.state;
+        const {aggregations, groupSelected, oneSelected, selectedIDs} = this.state;
 
-        console.log(this.state.selectedIDs);
+        console.log(selectedIDs);
 
         const actions = [
             <RaisedButton
@@ -150,8 +150,13 @@ export class AggregationsList extends Component {
                     >
                 {
                     aggregations.map(function(agg, index) {
+                        let selected = (selectedIDs.indexOf(index) > -1)?true:false;
+
                         return (
-                            <TableRow key={"tableRow_"+index}>
+                            <TableRow
+                                key={"tableRow_"+index}
+                                selected={selected}
+                                >
                                 <TableRowColumn>{agg.name}</TableRowColumn>
                                 <TableRowColumn>
                                     {
