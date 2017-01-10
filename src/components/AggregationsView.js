@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/aggregations';
 
-import { AggregationList } from './AggregationList';
+import { AggregationsList } from './AggregationsList';
 
 import { debug } from '../utils/debug';
 
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ProfileView extends React.Component {
+export default class AggregationsView extends React.Component {
     componentDidMount() {
         this.fetchData();
     }
@@ -39,7 +39,6 @@ export default class ProfileView extends React.Component {
             <div>
                 {
                     (!this.props.loaded) ?
-
                         this.props.error &&
                             <div>
                                 <h1>There was an error</h1>
@@ -48,7 +47,7 @@ export default class ProfileView extends React.Component {
                     :
                         <div>
                             <h1>Aggregations</h1>
-                            <AggregationList aggregations={this.props.aggregations}/>
+                            <AggregationsList aggregations={this.props.aggregations}/>
                         </div>
                 }
                 {debug(this.props.data)}
@@ -57,8 +56,8 @@ export default class ProfileView extends React.Component {
     }
 }
 
-ProfileView.propTypes = {
-    aggregations: React.PropTypes.list,
+AggregationsView.propTypes = {
+    aggregations: React.PropTypes.object,
     fetchAggregations: React.PropTypes.func,
     loaded: React.PropTypes.bool,
     data: React.PropTypes.any,
