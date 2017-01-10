@@ -15,11 +15,16 @@ export class AggregationsList extends Component {
 
         this.state = {
             aggregations: props.aggregations,
-            groupSelected: false,
-            oneSelected: false,
         };
 
+        //The list IDs of the selected aggregations
         this.selectedAggregations = [];
+
+        //Flag just one element selected? -> edit/delete activated
+        this.oneSelected = false;
+
+        //Flag more than one element selected? -> delete activated
+        this.groupSelected = false;
     }
 
     newAggregation(e) {
@@ -58,11 +63,29 @@ export class AggregationsList extends Component {
                 break;
         };
 
+
+        switch( this.selectedAggregations.length ) {
+            case 0:
+                this.oneSelected = false;
+                this.groupSelected = false;
+            break;
+
+            case 1:
+                this.oneSelected = true;
+                this.groupSelected = false;
+            break;
+
+            default:
+                this.oneSelected = false;
+                this.groupSelected = true;
+            break;
+        }
     }
 
     render() {
 
-        const {aggregations, groupSelected, oneSelected} = this.state;
+        const {aggregations} = this.state;
+        const {groupSelected, oneSelected} = this;
 
         const actions = [
             <RaisedButton
