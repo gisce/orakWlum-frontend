@@ -15,6 +15,7 @@ export class AggregationsList extends Component {
         this.state = {
             aggregations: props.aggregations,
             groupSelected: false,
+            oneSelected: false,
         };
     }
 
@@ -25,9 +26,17 @@ export class AggregationsList extends Component {
 
     render() {
 
-        const {aggregations, groupSelected} = this.state;
+        const {aggregations, groupSelected, oneSelected} = this.state;
 
         const actions = [
+            <RaisedButton
+              key="editButton"
+              label='Edit'
+              primary={true}
+              onTouchTap={(e) => this.editAggregation(e)}
+              disabled={!oneSelected}
+            />
+        ,
             <RaisedButton
               key="deleteButton"
               label='Delete'
