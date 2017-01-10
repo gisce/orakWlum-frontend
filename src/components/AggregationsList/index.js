@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
@@ -13,12 +14,13 @@ export class AggregationsList extends Component {
         super(props);
         this.state = {
             aggregations: props.aggregations,
+            groupSelected: false,
         };
     }
 
     render() {
 
-        const aggregations = this.state.aggregations;
+        const {aggregations, groupSelected} = this.state;
 
         return  (
             <div>
@@ -83,5 +85,5 @@ export class AggregationsList extends Component {
 }
 
 AggregationsList.propTypes = {
-    aggregations: React.PropTypes.object.isRequired,
+    aggregations: React.PropTypes.array.isRequired,
 };
