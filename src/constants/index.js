@@ -3,8 +3,8 @@ import React from 'react';
 import {debug} from './debug';
 export const DEBUG = (debug)?debug:false;
 
-export const VERSION = "0.2.0";
-export const VERSION_PR = "112";
+export const VERSION = "0.3.0";
+export const VERSION_PR = "117";
 
 export const API_SPECIFICATION = 1;
 export const API_PREFIX = "/api/v" + API_SPECIFICATION;
