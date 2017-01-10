@@ -35,6 +35,14 @@ export class AggregationsList extends Component {
 
         const actions = [
             <RaisedButton
+              key="createButton"
+              label='New'
+              primary={true}
+              onTouchTap={(e) => this.newAggregation(e)}
+              disabled={oneSelected || groupSelected}
+            />
+        ,
+            <RaisedButton
               key="editButton"
               label='Edit'
               primary={true}
