@@ -34,6 +34,14 @@ export class AggregationsList extends Component {
         console.log("delete");
     }
 
+    handleSelection(selections) {
+        const aggregations = this.state.aggregations;
+        console.log (selections.map(function(selected, index) {
+            return aggregations[selected]._id;
+        }));
+
+    }
+
     render() {
 
         const {aggregations, groupSelected, oneSelected} = this.state;
@@ -71,7 +79,7 @@ export class AggregationsList extends Component {
                     fixedHeader={true}
                     selectable={true}
                     multiSelectable={true}
-                    onRowSelection={this.handleAggregations}
+                    onRowSelection={(agg) => this.handleSelection(agg)}
                 >
                     <TableHeader
                         displaySelectAll={false}
