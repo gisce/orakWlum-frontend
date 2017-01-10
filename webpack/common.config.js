@@ -73,7 +73,6 @@ const common = {
                 browsers: ['last 2 versions'],
             }),
             postcssImport({
-                addDependencyTo: webpack,
             }),
         ]
     ),

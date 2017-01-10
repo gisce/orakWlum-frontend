@@ -152,8 +152,8 @@ export class AggregationsList extends Component {
                     onRowSelection={(agg) => this.handleSelection(agg)}
                 >
                     <TableHeader
-                        displaySelectAll={false}
-                        enableSelectAll={false}
+                        displaySelectAll={true}
+                        enableSelectAll={true}
                     >
                       <TableRow>
                           <TableHeaderColumn>Name</TableHeaderColumn>
