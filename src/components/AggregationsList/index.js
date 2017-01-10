@@ -12,11 +12,14 @@ export class AggregationsList extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             aggregations: props.aggregations,
             groupSelected: false,
             oneSelected: false,
         };
+
+        this.selectedAggregations = [];
     }
 
     newAggregation(e) {
@@ -36,9 +39,24 @@ export class AggregationsList extends Component {
 
     handleSelection(selections) {
         const aggregations = this.state.aggregations;
-        console.log (selections.map(function(selected, index) {
-            return aggregations[selected]._id;
-        }));
+
+        switch( selections ) {
+            case "all":
+                this.selectedAggregations = aggregations.map(function(selected, index) {
+                    return selected._id;
+                });
+                break;
+
+            case "none":
+                this.selectedAggregations = [];
+                break;
+
+            default:
+                this.selectedAggregations = selections.map(function(selected, index) {
+                    return aggregations[selected]._id;
+                });
+                break;
+        };
 
     }
 
@@ -82,8 +100,8 @@ export class AggregationsList extends Component {
                     onRowSelection={(agg) => this.handleSelection(agg)}
                 >
                     <TableHeader
-                        displaySelectAll={false}
-                        enableSelectAll={false}
+                        displaySelectAll={true}
+                        enableSelectAll={true}
                     >
                       <TableRow>
                           <TableHeaderColumn>Name</TableHeaderColumn>
