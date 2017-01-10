@@ -18,6 +18,7 @@ import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import KeyIcon from 'material-ui/svg-icons/communication/vpn-key';
 
+import { MD5 } from '../../utils/misc'
 
 function handleRequestDelete() {
     alert('Treure TAG.');
@@ -159,6 +160,11 @@ export class UserProfile extends Component {
 
         const message_open = this.state.message_open;
 
+        const emailHash = MD5(profile.email);
+
+        //Load gravatar img or default from github
+        const image = "https://www.gravatar.com/avatar/"+emailHash+"?d=https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/www/public/images/user.jpg";
+
         const UserProfile = () => (
 
             <div>
@@ -178,7 +184,7 @@ export class UserProfile extends Component {
                     <CardHeader
                       title={profile.email}
                       subtitle={profile.roles}
-                      avatar={profile.image}
+                      avatar={image}
                     />
                     <CardTitle
                       title="Personal data"
