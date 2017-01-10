@@ -33,7 +33,8 @@ export class AggregationsList extends Component {
                         enableSelectAll={false}
                     >
                       <TableRow>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
+                          <TableHeaderColumn>Name</TableHeaderColumn>
+                          <TableHeaderColumn>DB Fields</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
 
@@ -45,7 +46,15 @@ export class AggregationsList extends Component {
                     aggregations.map(function(agg, index) {
                         return (
                             <TableRow key={"tableRow_"+index}>
-                              <TableRowColumn>{agg.name}</TableRowColumn>
+                                <TableRowColumn>{agg.name}</TableRowColumn>
+                                <TableRowColumn>
+                                    {
+                                        agg.db_fields.map(function(field, index){
+                                            const separator = (index==0)? "":", ";
+                                            return separator + field;
+                                        })
+                                    }
+                                </TableRowColumn>
                             </TableRow>
                         )
                     })
