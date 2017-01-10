@@ -159,6 +159,7 @@ export class AggregationsList extends Component {
                           <TableHeaderColumn>Name</TableHeaderColumn>
                           <TableHeaderColumn>Short name</TableHeaderColumn>
                           <TableHeaderColumn>DB Fields</TableHeaderColumn>
+                          <TableHeaderColumn>Status</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
 
@@ -185,6 +186,7 @@ export class AggregationsList extends Component {
                                         })
                                     }
                                 </TableRowColumn>
+                                <TableRowColumn>{agg.status.full}</TableRowColumn>
                             </TableRow>
                         )
                     })
