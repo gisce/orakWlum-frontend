@@ -15,10 +15,14 @@ export class AggregationsList extends Component {
 
         this.state = {
             aggregations: props.aggregations,
-            //Flag just one element selected? -> edit/delete activated
-            oneSelected: false,
-            //Flag more than one element selected? -> delete activated
-            groupSelected: false,
+
+            //Flag to disable Create action
+            disableCreation: false,
+            //Flag to disable Edit action
+            disableEdit: true,
+            //Flag to disable Delete action
+            disableDelete: true,
+
             //The list of index position of the selected elements
             selectedIDs: [],
         };
@@ -45,7 +49,7 @@ export class AggregationsList extends Component {
     handleSelection(selections) {
         const aggregations = this.state.aggregations;
 
-        let {oneSelected, groupSelected} = false;
+        let {oneSelected, groupSelected, disableCreate, disableEdit, disableDelete} = false;
 
         let selectedIDs = [];
 
@@ -68,8 +72,9 @@ export class AggregationsList extends Component {
                 break;
         };
 
+        const selection_length = selectedIDs.length;
 
-        switch( selectedIDs.length ) {
+        switch( selection_length ) {
             case 0:
                 oneSelected = false;
                 groupSelected = false;
@@ -86,18 +91,26 @@ export class AggregationsList extends Component {
             break;
         }
 
+        //Activate Creation ever
+        disableCreate = false;
+
+        //Activate Selection if just one element is selected
+        disableEdit = !oneSelected;
+
+        //Disable Delete if all aggregations are selected, or none was selected
+        disableDelete = (selection_length == aggregations.length)?true:!(oneSelected || groupSelected);
+
         this.setState ({
             selectedIDs,
-            oneSelected,
-            groupSelected,
+            disableCreate,
+            disableEdit,
+            disableDelete,
         })
     }
 
     render() {
 
-        const {aggregations, groupSelected, oneSelected, selectedIDs} = this.state;
-
-        console.log(selectedIDs);
+        const {aggregations, selectedIDs, disableCreate, disableEdit, disableDelete} = this.state;
 
         const actions = [
             <RaisedButton
@@ -105,7 +118,7 @@ export class AggregationsList extends Component {
               label='New'
               primary={true}
               onTouchTap={(e) => this.newAggregation(e)}
-              disabled={oneSelected || groupSelected}
+              disabled={disableCreate}
             />
         ,
             <RaisedButton
@@ -113,7 +126,7 @@ export class AggregationsList extends Component {
               label='Edit'
               primary={true}
               onTouchTap={(e) => this.editAggregation(e)}
-              disabled={!oneSelected}
+              disabled={disableEdit}
             />
         ,
             <RaisedButton
@@ -121,7 +134,7 @@ export class AggregationsList extends Component {
               label='Delete'
               primary={true}
               onTouchTap={(e) => this.deleteAggregation(e)}
-              disabled={!groupSelected}
+              disabled={disableDelete}
             />
         ]
 
