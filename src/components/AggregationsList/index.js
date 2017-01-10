@@ -157,6 +157,7 @@ export class AggregationsList extends Component {
                     >
                       <TableRow>
                           <TableHeaderColumn>Name</TableHeaderColumn>
+                          <TableHeaderColumn>Short name</TableHeaderColumn>
                           <TableHeaderColumn>DB Fields</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
@@ -175,6 +176,7 @@ export class AggregationsList extends Component {
                                 selected={selected}
                                 >
                                 <TableRowColumn>{agg.name}</TableRowColumn>
+                                <TableRowColumn>{agg.lite}</TableRowColumn>
                                 <TableRowColumn>
                                     {
                                         agg.db_fields.map(function(field, index){
