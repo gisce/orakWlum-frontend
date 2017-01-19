@@ -18,7 +18,7 @@ export function adaptProposalData(proposalData, hour=25) {
         for (var i=0; i<hour; i++)
             result[aggID]['result'][i]={name: i+":00"}
     }
-    
+
     proposalData.result.map(function(aggregation, i) {
         const prediction = aggregation.result.sum;
         const aggregationTitle = aggregation.aggregation;
@@ -37,12 +37,16 @@ export function adaptProposalData(proposalData, hour=25) {
 
             //Hour is ever fixed (and must be extracted from the aggregations name)
             const hourDetail = "" + hourComponentsArray[0];
-            const hourExact = parseInt(hourDetail.slice(11,13));
+            let hourExact = parseInt(hourDetail.slice(11,13));
 
 
             //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
             //If there are just one aggregation (hour), create the y="*"
             const hourAggregation = (hourComponentsArray.length == 1)?["*"]:hourComponentsArray.slice(1, hourComponentsArray.length);
+
+            // If current hour exits and have a value, (for the 00 of start day and 00 of end day)
+            if (result[aggregationID]['result'][hourExact][hourAggregation] != undefined)
+                hourExact = 24;
 
             result[aggregationID]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
 
