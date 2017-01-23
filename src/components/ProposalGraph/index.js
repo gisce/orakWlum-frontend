@@ -38,6 +38,8 @@ export class ProposalGraph extends Component {
         const width = (this.props.width)?this.props.width:1024;
 
         const isLite = (this.props.isLite)?this.props.isLite:false;
+        const isAreaChart = (this.props.areaChart)?this.props.areaChart:false;
+
         const isAnimated = (this.props.animated)?this.props.animated:false;
 
         if (data && components) {
@@ -51,35 +53,72 @@ export class ProposalGraph extends Component {
             });
             //*/
 
-            return (isLite)?
-            (
-                <div >
-                    <ResponsiveContainer height={height} >
-                        <AreaChart  data={data}
-                            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-                            <XAxis dataKey="name"/>
-                            <YAxis/>
-                            <CartesianGrid strokeDasharray="3 3"/>
-                            {areas}
-                        </AreaChart>
-                    </ResponsiveContainer>
-                </div>
-            )
-            :
-            (
-                <div >
-                    <ResponsiveContainer height={height} >
-                    	<AreaChart data={data}
-                            margin={{top: 10, right: 30, left: 0, bottom: 0}}>
-                            <XAxis dataKey="name"/>
-                            <YAxis/>
-                            <CartesianGrid strokeDasharray="3 3"/>
-                            <Tooltip/>
-                            {areas}
-                        </AreaChart>
-                    </ResponsiveContainer>
-                </div>
-            );
+
+            if (isAreaChart) {
+
+              return (isLite)?
+              (
+                  <div >
+                      <ResponsiveContainer height={height} >
+                          <AreaChart  data={data}
+                              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                              <XAxis dataKey="name"/>
+                              <YAxis/>
+                              <CartesianGrid strokeDasharray="3 3"/>
+                              {areas}
+                          </AreaChart>
+                      </ResponsiveContainer>
+                  </div>
+              )
+              :
+              (
+                  <div >
+                      <ResponsiveContainer height={height} >
+                      	<AreaChart data={data}
+                              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                              <XAxis dataKey="name"/>
+                              <YAxis/>
+                              <CartesianGrid strokeDasharray="3 3"/>
+                              <Tooltip/>
+                              {areas}
+                          </AreaChart>
+                      </ResponsiveContainer>
+                  </div>
+              );
+            }
+            else {
+              return (isLite)?
+              (
+                  <div >
+                      <ResponsiveContainer height={height} >
+                          <AreaChart  data={data}
+                              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                              <XAxis dataKey="name"/>
+                              <YAxis/>
+                              <CartesianGrid strokeDasharray="3 3"/>
+                              {areas}
+                          </AreaChart>
+                      </ResponsiveContainer>
+                  </div>
+              )
+              :
+              (
+                  <div >
+                      <ResponsiveContainer height={height} >
+                      	<AreaChart data={data}
+                              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                              <XAxis dataKey="name"/>
+                              <YAxis/>
+                              <CartesianGrid strokeDasharray="3 3"/>
+                              <Tooltip/>
+                              {areas}
+                          </AreaChart>
+                      </ResponsiveContainer>
+                  </div>
+              );
+            }
+
+
         }
         //*/
 
@@ -92,6 +131,7 @@ ProposalGraph.propTypes = {
     components: React.PropTypes.object,
     stacked: React.PropTypes.bool,
     isLite: React.PropTypes.bool,
+    areaChart: React.PropTypes.bool,
     animated: React.PropTypes.bool,
     width: React.PropTypes.number,
     height: React.PropTypes.number,
