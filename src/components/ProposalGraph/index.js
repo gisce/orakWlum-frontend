@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
+import {AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
 
 
 
@@ -19,8 +19,15 @@ const styles = {
     graphContainer: {
         maxWidth: '500px',
         maxHeight: '200px',
+    },
+    legend: {
+      //top: 40,
+      //right: 20,
+      backgroundColor: '#f5f5f5',
+      border: '1px solid #d5d5d5',
+      borderRadius: 3,
+      lineHeight: '40px',
     }
-
 };
 
 export class ProposalGraph extends Component {
@@ -118,6 +125,7 @@ export class ProposalGraph extends Component {
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip/>
+                              <Legend width={100} wrapperStyle={styles.legend}/>
                               {bars}
                           </BarChart>
                       </ResponsiveContainer>
