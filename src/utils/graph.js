@@ -31,9 +31,6 @@ export function adaptProposalData(proposalData, hour=25) {
         result[aggregationID]['aggregation'] = Object.assign([],aggregationComponentsArray);
         result[aggregationID]['aggregationID'] = "" + aggregationID;
 
-
-        result[aggregationID]['result'][0][aggregationTitle] = 0;
-
         //for each returning entry of the API, extract the HOUR, the component (aggregation) and insert in the result propertly
         Object.keys(prediction).map( function(hour, y) {
             const hourComponentsArray = JSON.parse(hour.replace(/'/g, '"'));
@@ -49,9 +46,6 @@ export function adaptProposalData(proposalData, hour=25) {
             // Handle the last hour as hour #24
             if (hourExact == 0)
                 hourExact = 24;
-
-
-              console.log(hour, prediction[hour]);
 
             result[aggregationID]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
 
