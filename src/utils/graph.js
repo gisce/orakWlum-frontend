@@ -16,7 +16,7 @@ export function adaptProposalData(proposalData, hour=25) {
 
         //initialize hours
         for (var i=0; i<hour; i++)
-            result[aggID]['result'][i]={name: i+":00"}
+            result[aggID]['result'][i]={name: i}
     }
 
     proposalData.result.map(function(aggregation, i) {
