@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
+import {AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
+
+
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -43,10 +45,6 @@ export class ProposalGraph extends Component {
         const isAnimated = (this.props.animated)?this.props.animated:false;
 
         if (data && components) {
-            const areas = Object.keys(components).map(function(component, i) {
-                return <Area isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
-            });
-
             /* Aggregations selector
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
@@ -55,6 +53,10 @@ export class ProposalGraph extends Component {
 
 
             if (isAreaChart) {
+              const areas = Object.keys(components).map(function(component, i) {
+                  return <Area isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+              });
+
 
               return (isLite)?
               (
@@ -87,17 +89,22 @@ export class ProposalGraph extends Component {
               );
             }
             else {
+              const bars = Object.keys(components).map(function(component, i) {
+                  return <Bar isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+              });
+
+
               return (isLite)?
               (
                   <div >
                       <ResponsiveContainer height={height} >
-                          <AreaChart  data={data}
+                          <BarChart  data={data}
                               margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                               <XAxis dataKey="name"/>
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
-                              {areas}
-                          </AreaChart>
+                              {bars}
+                          </BarChart>
                       </ResponsiveContainer>
                   </div>
               )
@@ -105,14 +112,14 @@ export class ProposalGraph extends Component {
               (
                   <div >
                       <ResponsiveContainer height={height} >
-                      	<AreaChart data={data}
+                      	<BarChart data={data}
                               margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                               <XAxis dataKey="name"/>
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip/>
-                              {areas}
-                          </AreaChart>
+                              {bars}
+                          </BarChart>
                       </ResponsiveContainer>
                   </div>
               );
