@@ -44,7 +44,7 @@ export function adaptProposalData(proposalData, hour=25) {
 
             //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
             //If there are just one aggregation (hour), create the y="*"
-            const hourAggregation = (hourComponentsArray.length == 1)?["*"]:hourComponentsArray.slice(1, hourComponentsArray.length);
+            const hourAggregation = (hourComponentsArray.length == 1)?["Amount"]:hourComponentsArray.slice(1, hourComponentsArray.length);
 
             // Handle the last hour as hour #24
             if (hourExact == 0)
