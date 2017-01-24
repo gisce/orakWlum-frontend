@@ -17,7 +17,7 @@ export function adaptProposalData(proposalData, hour=24) {
 
         //initialize hours
         for (var i=0; i<hour; i++) {
-            result[aggID]['result'][i]={total: 0, name: i};
+            result[aggID]['result'][i]={total: 0, name: i+1};
         }
     }
 
