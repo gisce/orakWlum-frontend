@@ -27,8 +27,52 @@ const styles = {
       border: '1px solid #d5d5d5',
       borderRadius: 3,
       lineHeight: '40px',
-    }
+    },
+    tooltip: {
+      backgroundColor: "white",
+      border: "1px solid grey",
+      paddingLeft: 15,
+      paddingRight: 15,
+    },
 };
+
+const CustomTooltip  = React.createClass({
+  propTypes: {
+    type: PropTypes.string,
+    payload: PropTypes.array,
+    label: PropTypes.any,
+  },
+
+  render() {
+    const { active } = this.props;
+
+    if (active) {
+      const { payload, label } = this.props;
+      return (
+        <div style={styles.tooltip} className="custom-tooltip">
+          <h4 className="desc"><strong>Hour #{label}</strong></h4>
+          {
+            Object.keys(payload).map(function(comp, i) {
+              const component = payload[i];
+              const componentStyle = {
+                backgroundColor: component.color,
+                color: "white",
+                padding: 3,
+                borderRadius: 5,
+                paddingLeft: 10,
+                paddingRight: 10,
+              };
+              const name = (component.name == "total")?component.name.toUpperCase():component.name;
+              return <p key={"tooltip" + i} style={componentStyle}>{name}: {component.value}</p>
+            })
+          }
+        </div>
+      );
+    }
+
+    return null;
+  }
+});
 
 export class ProposalGraph extends Component {
     constructor(props) {
@@ -127,7 +171,7 @@ export class ProposalGraph extends Component {
                               <XAxis dataKey="name"/>
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
-                              <Tooltip/>
+                              <Tooltip content={<CustomTooltip/>}/>
                               {bars}
                               <Line type='monotone' dataKey='total' stroke='#000000'/>
                           </ComposedChart>
