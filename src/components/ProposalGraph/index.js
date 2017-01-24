@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
+import {ComposedChart, AreaChart, Area, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
 
 
 
@@ -21,8 +21,8 @@ const styles = {
         maxHeight: '200px',
     },
     legend: {
-      //top: 40,
-      //right: 20,
+      top: 40,
+      right: 20,
       backgroundColor: '#f5f5f5',
       border: '1px solid #d5d5d5',
       borderRadius: 3,
@@ -36,6 +36,8 @@ export class ProposalGraph extends Component {
         this.state = {
         };
     }
+
+    // toDo review why the hour 0 stills appears
 
     render() {
         const data = this.props.data;
@@ -100,16 +102,17 @@ export class ProposalGraph extends Component {
                   return <Bar isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
               });
 
-
               return (isLite)?
               (
                   <div >
                       <ResponsiveContainer height={height} >
-                          <BarChart  data={data}
+                        <BarChart data={data}
                               margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                               <XAxis dataKey="name"/>
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
+                              <Tooltip/>
+                              <Legend width={100} wrapperStyle={styles.legend}/>
                               {bars}
                           </BarChart>
                       </ResponsiveContainer>
@@ -119,15 +122,15 @@ export class ProposalGraph extends Component {
               (
                   <div >
                       <ResponsiveContainer height={height} >
-                      	<BarChart data={data}
+                      	<ComposedChart data={data}
                               margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                               <XAxis dataKey="name"/>
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip/>
-                              <Legend width={100} wrapperStyle={styles.legend}/>
                               {bars}
-                          </BarChart>
+                              <Line type='monotone' dataKey='total' stroke='#ff7300'/>
+                          </ComposedChart>
                       </ResponsiveContainer>
                   </div>
               );
