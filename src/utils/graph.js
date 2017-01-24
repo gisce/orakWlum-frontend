@@ -1,6 +1,7 @@
 
 
 export function adaptProposalData(proposalData, hour=24) {
+  console.log("entro");
     let result={};
     const aggregationNum = proposalData.result.length;
 
@@ -16,8 +17,7 @@ export function adaptProposalData(proposalData, hour=24) {
 
         //initialize hours
         for (var i=0; i<hour; i++) {
-            result[aggID]['result'][i]={name: i+1}
-            result[aggID]['result'][i]={total: 0}
+            result[aggID]['result'][i]={total: 0, name: i};
         }
     }
 
