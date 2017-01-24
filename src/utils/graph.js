@@ -1,6 +1,6 @@
 
 
-export function adaptProposalData(proposalData, hour=25) {
+export function adaptProposalData(proposalData, hour=24) {
     let result={};
     const aggregationNum = proposalData.result.length;
 
@@ -47,14 +47,16 @@ export function adaptProposalData(proposalData, hour=25) {
             if (hourExact == 0)
                 hourExact = 24;
 
-            result[aggregationID]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
+            result[aggregationID]['result'][hourExact-1][hourAggregation] = 0 + prediction[hour];
 
             //append aggregation value if so far not exist
             const componentName = "" + hourAggregation.toString();
             result[aggregationID]['components'][componentName] = componentName;
         })
-
     });
+
+
+    console.log(result);
 
     return result;
 }
