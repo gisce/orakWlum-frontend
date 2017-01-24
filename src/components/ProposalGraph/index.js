@@ -129,14 +129,12 @@ export class ProposalGraph extends Component {
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip/>
                               {bars}
-                              <Line type='monotone' dataKey='total' stroke='#ff7300'/>
+                              <Line type='monotone' dataKey='total' stroke='#000000'/>
                           </ComposedChart>
                       </ResponsiveContainer>
                   </div>
               );
             }
-
-
         }
         //*/
 
