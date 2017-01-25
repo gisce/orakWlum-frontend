@@ -160,7 +160,7 @@ export class ProposalGraph extends Component {
                           />
               });
 
-              const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} label={{maringBottom: 10}}/>;
+              const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} />;
               const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
 
               const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
