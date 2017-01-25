@@ -65,10 +65,10 @@ const CustomTooltip  = React.createClass({
               if (component.name == "total") {
                   componentStyle.backgroundColor = "white",
                   componentStyle.color = "black";
-                  name = <strong>{component.name.toUpperCase()}</strong>;
+                  name = component.name.toUpperCase();
               }
 
-              return <p key={"tooltip" + i} style={componentStyle}>{name}: {component.value} {component.unit}</p>
+              return <p key={"tooltip" + i} style={componentStyle}><strong>{name}</strong>: {component.value} {component.unit}</p>
             })
           }
         </div>
