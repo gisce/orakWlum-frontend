@@ -163,7 +163,7 @@ export class ProposalGraph extends Component {
               const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} label={{maringBottom: 10}}/>;
               const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
 
-              const xaxis = <XAxis dataKey="name"/>;
+              const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
               const yaxis = <YAxis label={unit}/>;
 
               return (isLite)?
@@ -188,7 +188,7 @@ export class ProposalGraph extends Component {
                       <ResponsiveContainer height={height} >
                       	<ComposedChart
                             data={data}
-                            margin={{top: 20, right: 30, left: 0, bottom: 0}}
+                            margin={{top: 20, right: 50, left: 0, bottom: 0}}
                         >
                             {xaxis}
                             {yaxis}
