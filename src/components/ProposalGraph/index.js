@@ -20,19 +20,14 @@ const styles = {
         maxWidth: '500px',
         maxHeight: '200px',
     },
-    legend: {
-      top: 40,
-      right: 20,
-      backgroundColor: '#f5f5f5',
-      border: '1px solid #d5d5d5',
-      borderRadius: 3,
-      lineHeight: '40px',
-    },
     tooltip: {
       backgroundColor: "white",
       border: "1px solid grey",
       paddingLeft: 15,
       paddingRight: 15,
+    },
+    legend: {
+      width: "100%",
     },
 };
 
@@ -59,7 +54,7 @@ const CustomTooltip  = React.createClass({
                 color: "white",
                 padding: 3,
                 borderRadius: 5,
-                paddingLeft: 10,
+                paddingLeft: 0,
                 paddingRight: 10,
               };
               const name = (component.name == "total")?component.name.toUpperCase():component.name;
@@ -155,9 +150,8 @@ export class ProposalGraph extends Component {
                               <XAxis dataKey="name"/>
                               <YAxis/>
                               <CartesianGrid strokeDasharray="3 3"/>
-                              <Tooltip/>
-                              <Legend width={100} wrapperStyle={styles.legend}/>
                               {bars}
+                              <Line type='monotone' dataKey='total' stroke='#000000'/>
                           </BarChart>
                       </ResponsiveContainer>
                   </div>
@@ -173,6 +167,7 @@ export class ProposalGraph extends Component {
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip content={<CustomTooltip/>}/>
                               {bars}
+                              <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>
                               <Line type='monotone' dataKey='total' stroke='#000000'/>
                           </ComposedChart>
                       </ResponsiveContainer>
