@@ -162,6 +162,8 @@ export class ProposalGraph extends Component {
 
               const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} label={{maringBottom: 10}}/>;
               const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
+
+              const xaxis = <XAxis dataKey="name"/>;
               const yaxis = <YAxis label={unit}/>;
 
               return (isLite)?
@@ -171,11 +173,11 @@ export class ProposalGraph extends Component {
                         <BarChart data={data}
                             margin={{top: 20, right: 30, left: 0, bottom: 0}}
                         >
-                              <XAxis dataKey="name"/>
-                              {yaxis}
-                              <CartesianGrid strokeDasharray="3 3"/>
-                              {bars}
-                              {line}
+                            {xaxis}
+                            {yaxis}
+                            <CartesianGrid strokeDasharray="3 3"/>
+                            {bars}
+                            {line}
                           </BarChart>
                       </ResponsiveContainer>
                   </div>
@@ -188,13 +190,13 @@ export class ProposalGraph extends Component {
                             data={data}
                             margin={{top: 20, right: 30, left: 0, bottom: 0}}
                         >
-                              <XAxis dataKey="name"/>
-                              {yaxis}
-                              <CartesianGrid strokeDasharray="3 3"/>
-                              <Tooltip content={<CustomTooltip/>}/>
-                              {bars}
-                              {line}
-                              {legend}
+                            {xaxis}
+                            {yaxis}
+                            <CartesianGrid strokeDasharray="3 3"/>
+                            <Tooltip content={<CustomTooltip/>}/>
+                            {bars}
+                            {line}
+                            {legend}
                           </ComposedChart>
                       </ResponsiveContainer>
                   </div>
