@@ -162,16 +162,17 @@ export class ProposalGraph extends Component {
 
               const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} label={{maringBottom: 10}}/>;
               const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
+              const yaxis = <YAxis label={unit}/>;
 
               return (isLite)?
               (
                   <div >
                       <ResponsiveContainer height={height} >
                         <BarChart data={data}
-                            margin={{top: 10, right: 30, left: 0, bottom: 0}}
+                            margin={{top: 20, right: 30, left: 0, bottom: 0}}
                         >
                               <XAxis dataKey="name"/>
-                              <YAxis label={unit}/>
+                              {yaxis}
                               <CartesianGrid strokeDasharray="3 3"/>
                               {bars}
                               {line}
@@ -188,7 +189,7 @@ export class ProposalGraph extends Component {
                             margin={{top: 20, right: 30, left: 0, bottom: 0}}
                         >
                               <XAxis dataKey="name"/>
-                              <YAxis label={unit}/>
+                              {yaxis}
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip content={<CustomTooltip/>}/>
                               {bars}
