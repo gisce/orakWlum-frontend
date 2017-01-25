@@ -173,20 +173,26 @@ export class ProposalGraph extends Component {
               const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
 
               const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
+              const xaxisLite = <XAxis dataKey="name"/>;
+
               const yaxis = <YAxis label={unit}/>;
+              const yaxisLite = <YAxis/>;
+
+              const grid = <CartesianGrid strokeDasharray="3 3"/>;
+
+              const tooltip = <Tooltip content={<CustomTooltip/>}/>;
 
               return (isLite)?
               (
                   <div >
                       <ResponsiveContainer height={height} >
                         <BarChart data={data}
-                            margin={{top: 20, right: 30, left: 0, bottom: 0}}
+                          margin={{top: 20, right: 20, left: 0, bottom: 0}}
                         >
-                            {xaxis}
-                            {yaxis}
-                            <CartesianGrid strokeDasharray="3 3"/>
+                            {xaxisLite}
+                            {yaxisLite}
+                            {grid}
                             {bars}
-                            {line}
                           </BarChart>
                       </ResponsiveContainer>
                   </div>
@@ -201,11 +207,11 @@ export class ProposalGraph extends Component {
                         >
                             {xaxis}
                             {yaxis}
-                            <CartesianGrid strokeDasharray="3 3"/>
-                            <Tooltip content={<CustomTooltip/>}/>
+                            {grid}
                             {bars}
                             {line}
                             {legend}
+                            {tooltip}
                           </ComposedChart>
                       </ResponsiveContainer>
                   </div>
