@@ -49,7 +49,9 @@ const CustomTooltip  = React.createClass({
           {
             Object.keys(payload).map(function(comp, i) {
               const component = payload[i];
-              const componentStyle = {
+
+              let {name} = component;
+              let componentStyle = {
                 backgroundColor: component.color,
                 color: "white",
                 padding: 5,
@@ -57,8 +59,15 @@ const CustomTooltip  = React.createClass({
                 paddingLeft: 7,
                 paddingRight: 7,
                 textAlign: "left",
+                fontSize: 12,
               };
-              const name = (component.name == "total")?component.name.toUpperCase():component.name;
+
+              if (component.name == "total") {
+                  componentStyle.backgroundColor = "white",
+                  componentStyle.color = "black";
+                  name = <strong>{component.name.toUpperCase()}</strong>;
+              }
+
               return <p key={"tooltip" + i} style={componentStyle}>{name}: {component.value} {component.unit}</p>
             })
           }
