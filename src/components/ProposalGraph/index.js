@@ -52,13 +52,14 @@ const CustomTooltip  = React.createClass({
               const componentStyle = {
                 backgroundColor: component.color,
                 color: "white",
-                padding: 3,
+                padding: 5,
                 borderRadius: 5,
-                paddingLeft: 0,
-                paddingRight: 10,
+                paddingLeft: 7,
+                paddingRight: 7,
+                textAlign: "left",
               };
               const name = (component.name == "total")?component.name.toUpperCase():component.name;
-              return <p key={"tooltip" + i} style={componentStyle}>{name}: {component.value}</p>
+              return <p key={"tooltip" + i} style={componentStyle}>{name}: {component.value} {component.unit}</p>
             })
           }
         </div>
@@ -99,12 +100,21 @@ export class ProposalGraph extends Component {
             });
             //*/
 
+            const unit = "kW";
 
             if (isAreaChart) {
               const areas = Object.keys(components).map(function(component, i) {
-                  return <Area isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+                  return <Area
+                            unit={unit}
+                            isAnimationActive={isAnimated}
+                            key={"area"+i}
+                            type='monotone'
+                            dataKey={component}
+                            stackId={stacked}
+                            stroke={colors[i]}
+                            fill={colors[i]}
+                          />
               });
-
 
               return (isLite)?
               (
@@ -138,20 +148,33 @@ export class ProposalGraph extends Component {
             }
             else {
               const bars = Object.keys(components).map(function(component, i) {
-                  return <Bar isAnimationActive={isAnimated} key={"area"+i} type='monotone' dataKey={component} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
+                  return <Bar
+                            unit={unit}
+                            isAnimationActive={isAnimated}
+                            key={"area"+i}
+                            type='monotone'
+                            dataKey={component}
+                            stackId={stacked}
+                            stroke={colors[i]}
+                            fill={colors[i]}
+                          />
               });
+
+              const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} label={{maringBottom: 10}}/>;
+              const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
 
               return (isLite)?
               (
                   <div >
                       <ResponsiveContainer height={height} >
                         <BarChart data={data}
-                              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                            margin={{top: 10, right: 30, left: 0, bottom: 0}}
+                        >
                               <XAxis dataKey="name"/>
-                              <YAxis/>
+                              <YAxis label={unit}/>
                               <CartesianGrid strokeDasharray="3 3"/>
                               {bars}
-                              <Line type='monotone' dataKey='total' stroke='#000000'/>
+                              {line}
                           </BarChart>
                       </ResponsiveContainer>
                   </div>
@@ -160,22 +183,23 @@ export class ProposalGraph extends Component {
               (
                   <div >
                       <ResponsiveContainer height={height} >
-                      	<ComposedChart data={data}
-                              margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                      	<ComposedChart
+                            data={data}
+                            margin={{top: 20, right: 30, left: 0, bottom: 0}}
+                        >
                               <XAxis dataKey="name"/>
-                              <YAxis/>
+                              <YAxis label={unit}/>
                               <CartesianGrid strokeDasharray="3 3"/>
                               <Tooltip content={<CustomTooltip/>}/>
                               {bars}
-                              <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>
-                              <Line type='monotone' dataKey='total' stroke='#000000'/>
+                              {line}
+                              {legend}
                           </ComposedChart>
                       </ResponsiveContainer>
                   </div>
               );
             }
         }
-        //*/
 
         return null;
     }
