@@ -1,6 +1,7 @@
 
 
-export function adaptProposalData(proposalData, hour=25) {
+export function adaptProposalData(proposalData, hour=24) {
+  console.log("entro");
     let result={};
     const aggregationNum = proposalData.result.length;
 
@@ -15,10 +16,11 @@ export function adaptProposalData(proposalData, hour=25) {
         result[aggID]['components']={};
 
         //initialize hours
-        for (var i=0; i<hour; i++)
-            result[aggID]['result'][i]={name: i+":00"}
+        for (var i=0; i<hour; i++) {
+            result[aggID]['result'][i]={total: 0, name: i+1};
+        }
     }
-    
+
     proposalData.result.map(function(aggregation, i) {
         const prediction = aggregation.result.sum;
         const aggregationTitle = aggregation.aggregation;
@@ -37,20 +39,25 @@ export function adaptProposalData(proposalData, hour=25) {
 
             //Hour is ever fixed (and must be extracted from the aggregations name)
             const hourDetail = "" + hourComponentsArray[0];
-            const hourExact = parseInt(hourDetail.slice(11,13));
-
+            let hourExact = parseInt(hourDetail.slice(11,13));
 
             //Aggregations can be dynamic (one, two, ...) but used as the other dimension of the array (x=hour, y=aggregations ), ie. x=8:00, y="F1:50" / x=8:00 y="F5D:30"
             //If there are just one aggregation (hour), create the y="*"
-            const hourAggregation = (hourComponentsArray.length == 1)?["*"]:hourComponentsArray.slice(1, hourComponentsArray.length);
+            const hourAggregation = (hourComponentsArray.length == 1)?["Amount"]:hourComponentsArray.slice(1, hourComponentsArray.length);
 
-            result[aggregationID]['result'][hourExact][hourAggregation] = 0 + prediction[hour];
+            // Handle the last hour as hour #24
+            if (hourExact == 0)
+                hourExact = 24;
+
+            result[aggregationID]['result'][hourExact-1][hourAggregation] = 0 + prediction[hour];
+            result[aggregationID]['result'][hourExact-1]["total"] += 0 + prediction[hour];
 
             //append aggregation value if so far not exist
             const componentName = "" + hourAggregation.toString();
             result[aggregationID]['components'][componentName] = componentName;
         })
     });
+
     return result;
 }
 
