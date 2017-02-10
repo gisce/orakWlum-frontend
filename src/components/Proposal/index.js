@@ -528,57 +528,6 @@ export class Proposal extends Component {
             )
 
 
-        const dataTest = {
-            "cups_total": 555,
-            "invoice_total": 8,
-            "invoice_types": [
-                {
-                    name:'F1',
-                    value: 5,
-                },
-                {
-                    name:'F5D',
-                    value: 3,
-                },
-            ],
-            "tariff_total": 42,
-            "tariff_average": [
-                {
-                    name:'20A',
-                    value: 5,
-                },
-                {
-                    name:'20DHA',
-                    value: 3,
-                },
-                {
-                    name:'21A',
-                    value: 5,
-                },
-                {
-                    name:'21DHA',
-                    value: 3,
-                },
-                {
-                    name:'21DHS',
-                    value: 5,
-                },
-                {
-                    name:'30A',
-                    value: 3,
-                },
-                {
-                    name:'31A',
-                    value: 5,
-                },
-                {
-                    name:'20DHS',
-                    value: 3,
-                },
-
-            ],
-        }
-
         const proposalDetail =
             <div style={styles.cardSeparator}>
                 <ProposalDetail
