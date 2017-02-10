@@ -77,7 +77,7 @@ export class Indicator extends Component {
                               size={50}
                               thickness={7}
                     />
-                    <br/>{(value_asInt/total)*100}%
+                <br/>{((value_asInt/total)*100).toFixed(1)}%
                 </div>
             )
             :
