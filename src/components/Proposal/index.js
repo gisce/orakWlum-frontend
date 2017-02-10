@@ -435,6 +435,7 @@ export class Proposal extends Component {
 
         let data=null;
         let components=null;
+        summary = prediction.summary;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
@@ -528,10 +529,10 @@ export class Proposal extends Component {
             )
 
 
-        const proposalDetail = (proposal.summary) &&
+        const proposalDetail = (summary) &&
             <div style={styles.cardSeparator}>
                 <ProposalDetail
-                    data={proposal.summary}
+                    data={summary}
                     open={detail_open}
                 />
             </div>
