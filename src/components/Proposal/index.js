@@ -528,7 +528,7 @@ export class Proposal extends Component {
             )
 
 
-        const proposalDetail =
+        const proposalDetail = (proposal.summary) &&
             <div style={styles.cardSeparator}>
                 <ProposalDetail
                     data={proposal.summary}
