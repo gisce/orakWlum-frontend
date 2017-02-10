@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import CircularProgress from 'material-ui/CircularProgress';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -41,33 +42,51 @@ export class ProposalDetail extends Component {
         //open it by default
         const open = (this.props.open)?this.props.open:true;
 
+        //handle invoice types
+        const invoice_types = (data.invoice_types) &&
+            Object.keys(data.invoice_types).map(function(component, i) {
+                const component_name = data.invoice_types[component].name;
+                const component_value =  data.invoice_types[component].value;
+
+                return (
+                    <Paper key={"invoice_"+component} style={styles.paper} zDepth={styles.paperDepth}>
+                        <div className="inner">
+                          <h3>{component_name}</h3>
+                          <p>{component_value}</p>
+                        </div>
+                        <div className="icon">
+                          <i className="ion ion-bag"></i>
+                        </div>
+                    </Paper>
+                )
+            });
+
         //Prepare headers
         const num_cups = (
-            <div>
-                <Paper style={styles.paper} zDepth={styles.paperDepth}>
-                    <div class="inner">
-                      <h3>150</h3>
-                      <p>CUPS</p>
-                    </div>
-                    <div class="icon">
-                      <i class="ion ion-bag"></i>
-                    </div>
-                </Paper>
-
-            </div>
+            <Paper style={styles.paper} zDepth={styles.paperDepth}>
+                <div className="inner">
+                  <h3>150</h3>
+                  <p>CUPS</p>
+                </div>
+                <div className="icon">
+                  <i className="ion ion-bag"></i>
+                </div>
+            </Paper>
         );
 
         return (
             open &&
                 <div >
                     {num_cups}
+
+                    {invoice_types}
                 </div>
         );
     }
 }
 
 ProposalDetail.propTypes = {
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.object.isRequired,
     open: React.PropTypes.bool,
     colors: React.PropTypes.object,
 };
