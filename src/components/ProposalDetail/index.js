@@ -1,31 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import CircularProgress from 'material-ui/CircularProgress';
+import { Indicator } from '../Indicator';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
 import {colors} from '../../constants';
 
 const styles = {
-    selectedElement: {
-        color: 'white',
-        backgroundColor: '#808080',
-    },
-    hourColor: {
-        color: 'white',
-        backgroundColor: '#BBBBBB',
-    },
-    paper: {
-        height: 150,
-        width: 150,
-        margin: 20,
-        textAlign: 'center',
-        display: 'inline-block',
-    },
-    paperDepth: 4,
 };
 
 
@@ -49,44 +31,29 @@ export class ProposalDetail extends Component {
                 const component_value =  data.invoice_types[component].value;
 
                 return (
-                    <Paper key={"invoice_"+component} style={styles.paper} zDepth={styles.paperDepth}>
-                        <div className="inner">
-                          <h3>{component_name}</h3>
-                          <p>{component_value}</p>
-                        </div>
-                        <div className="icon">
-                          <i className="ion ion-bag"></i>
-                        </div>
-                    </Paper>
+                    <Indicator
+                        title={component_name}
+                        value={component_value}
+                    />
                 )
             });
 
         //Prepare CUPS count
         const num_cups = (data.cups_total) &&
             (
-                <Paper style={styles.paper} zDepth={styles.paperDepth}>
-                    <div className="inner">
-                      <h3>{data.cups_total}</h3>
-                      <p>CUPS</p>
-                    </div>
-                    <div className="icon">
-                      <i className="ion ion-bag"></i>
-                    </div>
-                </Paper>
+                <Indicator
+                    title="CUPS"
+                    value={data.cups_total}
+                />
             );
 
         //Prepare Invoices count
         const num_invoices =  (data.invoice_total) &&
             (
-                <Paper style={styles.paper} zDepth={styles.paperDepth}>
-                    <div className="inner">
-                      <h3>{data.invoice_total}</h3>
-                      <p>Invoices</p>
-                    </div>
-                    <div className="icon">
-                      <i className="ion ion-bag"></i>
-                    </div>
-                </Paper>
+                <Indicator
+                    title="Invoices"
+                    value={data.invoice_total}
+                />
             );
 
         return (
