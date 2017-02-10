@@ -10,8 +10,6 @@ import {colors} from '../../constants';
 
 const styles = {
     paper: {
-        height: 200,
-        width: 200,
         margin: 20,
         textAlign: 'center',
         display: 'inline-block',
@@ -28,8 +26,19 @@ const styles = {
     },
     header: {
         fontSize: 22,
+    },
+    normalSize: {
+        height: 200,
+        width: 200,
+    },
+    smallSize: {
+        height: 200,
+        width: 100,
+    },
+    kingSize: {
+        height: 300,
+        width: 300,
     }
-
 };
 
 
@@ -41,6 +50,15 @@ export class Indicator extends Component {
     }
 
     render() {
+        const is_small = (this.props.small)?this.props.small:false;
+
+        const which_size = (is_small)? styles.smallSize : styles.normalSize;
+
+        const paper_style = Object.assign({
+            height: which_size.height,
+            width: which_size.width,
+        }, styles.paper);
+
         const {title, value} = this.props;
         const value_asInt = parseInt(value);
 
@@ -73,7 +91,7 @@ export class Indicator extends Component {
 
 
         return (
-            <Paper key={"invoice_"+title} style={styles.paper} zDepth={styles.paperDepth}>
+            <Paper key={"invoice_"+title} style={paper_style} zDepth={styles.paperDepth}>
                 <h3 style={styles.header}>{title}</h3>
                 <span style={styles.value}>{value}</span>
                 {visual_indicator}
@@ -90,4 +108,5 @@ Indicator.propTypes = {
     ]).isRequired,
     percentage: React.PropTypes.bool,
     total: React.PropTypes.number,
+    small: React.PropTypes.bool,
 };
