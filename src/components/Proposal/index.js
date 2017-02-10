@@ -541,7 +541,7 @@ export class Proposal extends Component {
                     value: 3,
                 },
             ],
-            "tariff_total": 16,
+            "tariff_total": 42,
             "tariff_average": [
                 {
                     name:'20A',
@@ -559,6 +559,23 @@ export class Proposal extends Component {
                     name:'21DHA',
                     value: 3,
                 },
+                {
+                    name:'21DHS',
+                    value: 5,
+                },
+                {
+                    name:'30A',
+                    value: 3,
+                },
+                {
+                    name:'31A',
+                    value: 5,
+                },
+                {
+                    name:'20DHS',
+                    value: 3,
+                },
+
             ],
         }
 
