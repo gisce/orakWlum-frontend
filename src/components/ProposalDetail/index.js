@@ -114,9 +114,11 @@ export class ProposalDetail extends Component {
                     {num_invoices}
 
                     {invoice_types}
+                    <br/>
+                        <br/>
 
                     <div>
-                        <h3>TARIFF AVERAGES</h3>
+                        <h3>TARIFF COUNT</h3>
                         {tariff_average}
                     </div>
 
