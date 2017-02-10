@@ -33,7 +33,7 @@ const styles = {
     },
     smallSize: {
         height: 200,
-        width: 100,
+        width: 120,
     },
     kingSize: {
         height: 300,
