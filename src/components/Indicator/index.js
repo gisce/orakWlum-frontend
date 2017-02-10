@@ -23,6 +23,13 @@ const styles = {
         textAlign: 'center',
         overflow:'auto',
     },
+    value: {
+        fontSize: 35,
+    },
+    header: {
+        fontSize: 22,
+    }
+
 };
 
 
@@ -67,8 +74,8 @@ export class Indicator extends Component {
 
         return (
             <Paper key={"invoice_"+title} style={styles.paper} zDepth={styles.paperDepth}>
-                <h3>{title}</h3>
-                <p>{value}</p>
+                <h3 style={styles.header}>{title}</h3>
+                <span style={styles.value}>{value}</span>
                 {visual_indicator}
             </Paper>
         );
