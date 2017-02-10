@@ -18,10 +18,11 @@ const styles = {
     },
     paperDepth: 4,
     fixedSize: {
+        paddingTop:10,
         height: 80,
         textAlign: 'center',
         overflow:'auto',
-    }
+    },
 };
 
 
@@ -37,19 +38,10 @@ export class Indicator extends Component {
         const value_asInt = parseInt(value);
 
         const is_percentage = (this.props.percentage)?this.props.percentage:false;
-
         const total = (this.props.total)?parseInt(this.props.total):0;
 
+        const icon = (this.props.icon)?this.props.icon:false;
 
-/*        <CircularProgress
-          mode="determinate"
-          value={parseInt(value)}
-          max={total}
-          size={80}
-          thickness={7}
-        />
-
-    */
         const visual_indicator = (is_percentage) && (total>=0) ?
             (
                 <div style={styles.fixedSize}>
@@ -66,6 +58,7 @@ export class Indicator extends Component {
             :
             (
                 <div style={styles.fixedSize}>
+                    {icon}
                 </div>
             )
 
