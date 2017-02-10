@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -15,7 +16,15 @@ const styles = {
     hourColor: {
         color: 'white',
         backgroundColor: '#BBBBBB',
-    }
+    },
+    paper: {
+        height: 150,
+        width: 150,
+        margin: 20,
+        textAlign: 'center',
+        display: 'inline-block',
+    },
+    paperDepth: 4,
 };
 
 
@@ -35,7 +44,16 @@ export class ProposalDetail extends Component {
         //Prepare headers
         const num_cups = (
             <div>
-                asasd
+                <Paper style={styles.paper} zDepth={styles.paperDepth}>
+                    <div class="inner">
+                      <h3>150</h3>
+                      <p>CUPS</p>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-bag"></i>
+                    </div>
+                </Paper>
+
             </div>
         );
 
