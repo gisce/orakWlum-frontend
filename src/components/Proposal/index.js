@@ -435,7 +435,8 @@ export class Proposal extends Component {
 
         let data=null;
         let components=null;
-        summary = prediction.summary;
+
+        const summary = prediction.summary;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
