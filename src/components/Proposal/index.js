@@ -582,7 +582,7 @@ export class Proposal extends Component {
         const proposalDetail =
             <div style={styles.cardSeparator}>
                 <ProposalDetail
-                    data={dataTest}
+                    data={proposal.summary}
                     open={detail_open}
                 />
             </div>
