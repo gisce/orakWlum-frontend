@@ -64,6 +64,15 @@ export class ProposalDetail extends Component {
                 const component_name = data.tariff_average[component].name;
                 const component_value =  data.tariff_average[component].value;
 
+                const color = colors[i];
+
+                /*
+                const icon_style = Object.assign({
+                    color: color,
+                }, styles.icon);
+                */
+
+
                 return (
                     <Indicator
                         key={"indicator_"+component_name}
@@ -72,6 +81,7 @@ export class ProposalDetail extends Component {
                         total={data.tariff_total}
                         percentage={true}
                         small={true}
+                        color={color}
                     />
                 )
             });
