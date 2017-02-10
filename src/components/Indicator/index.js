@@ -10,13 +10,18 @@ import {colors} from '../../constants';
 
 const styles = {
     paper: {
-        height: 150,
-        width: 150,
+        height: 200,
+        width: 200,
         margin: 20,
         textAlign: 'center',
         display: 'inline-block',
     },
     paperDepth: 4,
+    fixedSize: {
+        height: 80,
+        textAlign: 'center',
+        overflow:'auto',
+    }
 };
 
 
@@ -29,26 +34,49 @@ export class Indicator extends Component {
 
     render() {
         const {title, value} = this.props;
+        const value_asInt = parseInt(value);
 
         const is_percentage = (this.props.percentage)?this.props.percentage:false;
 
         const total = (this.props.total)?parseInt(this.props.total):0;
 
-        const visual_indicator = (is_percentage) && (total>=0) &&
+
+/*        <CircularProgress
+          mode="determinate"
+          value={parseInt(value)}
+          max={total}
+          size={80}
+          thickness={7}
+        />
+
+    */
+        const visual_indicator = (is_percentage) && (total>=0) ?
             (
-                <div>{total}</div>
-            );
+                <div style={styles.fixedSize}>
+                    <CircularProgress
+                              mode="determinate"
+                              value={value_asInt}
+                              max={total}
+                              size={50}
+                              thickness={7}
+                    />
+                    <br/>{(value_asInt/total)*100}%
+                </div>
+            )
+            :
+            (
+                <div style={styles.fixedSize}>
+                </div>
+            )
+
+            ;
 
 
         return (
             <Paper key={"invoice_"+title} style={styles.paper} zDepth={styles.paperDepth}>
-                <div className="inner">
-                  <h3>{title}</h3>
-                  <p>{value}</p>
-                </div>
-                <div className="icon">
-                  <i className="ion ion-bag"></i>
-                </div>
+                <h3>{title}</h3>
+                <p>{value}</p>
+                {visual_indicator}
             </Paper>
         );
     }
@@ -56,7 +84,10 @@ export class Indicator extends Component {
 
 Indicator.propTypes = {
     title: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
+    value: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+    ]).isRequired,
     percentage: React.PropTypes.bool,
     total: React.PropTypes.number,
 };
