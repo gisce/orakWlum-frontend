@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+
+import CupsIcon from 'material-ui/svg-icons/communication/contacts';
+import InvoicesIcon from 'material-ui/svg-icons/editor/format-list-numbered';
+
+import {orange400} from 'material-ui/styles/colors';
+
 import { Indicator } from '../Indicator';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
@@ -8,6 +14,15 @@ import { Indicator } from '../Indicator';
 import {colors} from '../../constants';
 
 const styles = {
+    center: {
+        textAlign: 'center',
+    },
+    icon: {
+        color: orange400,
+        width: 50,
+        height: 50,
+        fontSize: 20,
+    },
 };
 
 
@@ -32,8 +47,11 @@ export class ProposalDetail extends Component {
 
                 return (
                     <Indicator
+                        key={"indicator_"+component_name}
                         title={component_name}
                         value={component_value}
+                        total={data.invoice_total}
+                        percentage={true}
                     />
                 )
             });
@@ -44,6 +62,7 @@ export class ProposalDetail extends Component {
                 <Indicator
                     title="CUPS"
                     value={data.cups_total}
+                    icon={<CupsIcon style={styles.icon}/>}
                 />
             );
 
@@ -53,12 +72,13 @@ export class ProposalDetail extends Component {
                 <Indicator
                     title="Invoices"
                     value={data.invoice_total}
+                    icon={<InvoicesIcon style={styles.icon}/>}
                 />
             );
 
         return (
             open &&
-                <div >
+                <div style={styles.center}>
                     {num_cups}
 
                     {num_invoices}
