@@ -71,6 +71,10 @@ const styles = {
     labelToggle: {
         marginTop: 7,
         marginLeft: 7,
+    },
+    cardSeparator: {
+        marginTop: 50,
+        marginBottom: 20,
     }
 };
 
@@ -540,10 +544,12 @@ export class Proposal extends Component {
         }
 
         const proposalDetail =
-            <ProposalDetail
-                data={dataTest}
-                open={detail_open}
-            />
+            <div style={styles.cardSeparator}>
+                <ProposalDetail
+                    data={dataTest}
+                    open={detail_open}
+                />
+            </div>
         ;
 
 
