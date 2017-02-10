@@ -71,6 +71,7 @@ export class ProposalDetail extends Component {
                         value={component_value}
                         total={data.tariff_total}
                         percentage={true}
+                        small={true}
                     />
                 )
             });
