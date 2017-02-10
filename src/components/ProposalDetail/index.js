@@ -60,7 +60,6 @@ export class ProposalDetail extends Component {
         //handle tariff average
         const tariff_average = (data.tariff_average) &&
             Object.keys(data.tariff_average).map(function(component, i) {
-                console.log(data.tariff_average[component]);
                 const component_name = data.tariff_average[component].name;
                 const component_value =  data.tariff_average[component].value;
 
@@ -76,7 +75,7 @@ export class ProposalDetail extends Component {
                 return (
                     <Indicator
                         key={"indicator_"+component_name}
-                        title={component_name}
+                        title={ (component_name!="")?component_name:"Empty"}
                         value={component_value}
                         total={data.tariff_total}
                         percentage={true}
