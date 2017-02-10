@@ -61,23 +61,40 @@ export class ProposalDetail extends Component {
                 )
             });
 
-        //Prepare headers
-        const num_cups = (
-            <Paper style={styles.paper} zDepth={styles.paperDepth}>
-                <div className="inner">
-                  <h3>150</h3>
-                  <p>CUPS</p>
-                </div>
-                <div className="icon">
-                  <i className="ion ion-bag"></i>
-                </div>
-            </Paper>
-        );
+        //Prepare CUPS count
+        const num_cups = (data.cups_total) &&
+            (
+                <Paper style={styles.paper} zDepth={styles.paperDepth}>
+                    <div className="inner">
+                      <h3>{data.cups_total}</h3>
+                      <p>CUPS</p>
+                    </div>
+                    <div className="icon">
+                      <i className="ion ion-bag"></i>
+                    </div>
+                </Paper>
+            );
+
+        //Prepare Invoices count
+        const num_invoices =  (data.invoice_total) &&
+            (
+                <Paper style={styles.paper} zDepth={styles.paperDepth}>
+                    <div className="inner">
+                      <h3>{data.invoice_total}</h3>
+                      <p>Invoices</p>
+                    </div>
+                    <div className="icon">
+                      <i className="ion ion-bag"></i>
+                    </div>
+                </Paper>
+            );
 
         return (
             open &&
                 <div >
                     {num_cups}
+
+                    {num_invoices}
 
                     {invoice_types}
                 </div>
