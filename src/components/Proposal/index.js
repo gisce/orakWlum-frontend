@@ -541,6 +541,25 @@ export class Proposal extends Component {
                     value: 3,
                 },
             ],
+            "tariff_total": 16,
+            "tariff_average": [
+                {
+                    name:'20A',
+                    value: 5,
+                },
+                {
+                    name:'20DHA',
+                    value: 3,
+                },
+                {
+                    name:'21A',
+                    value: 5,
+                },
+                {
+                    name:'21DHA',
+                    value: 3,
+                },
+            ],
         }
 
         const proposalDetail =
