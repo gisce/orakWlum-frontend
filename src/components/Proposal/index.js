@@ -525,6 +525,18 @@ export class Proposal extends Component {
 
 
         const dataTest = {
+            "cups_total": 555,
+            "invoice_total": 8,
+            "invoice_types": [
+                {
+                    name:'F1',
+                    value: 5,
+                },
+                {
+                    name:'F5D',
+                    value: 3,
+                },
+            ],
         }
 
         const proposalDetail =
