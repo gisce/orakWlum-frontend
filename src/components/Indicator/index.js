@@ -56,10 +56,12 @@ export class Indicator extends Component {
 
         const which_color = (this.props.color)? this.props.color : false;
 
-        const style_background_color = (which_color)?
+
+
+        const style_color = (which_color)?
             {
                 backgroundColor: which_color,
-                color: 'black',
+                color: (which_color == "#000000")?'white':'black',
             }
         :
             {
@@ -90,10 +92,10 @@ export class Indicator extends Component {
                         max={total}
                         size={50}
                         thickness={7}
-                        color= {style_background_color.color}
+                        color= {style_color.color}
                     />
-                <br/>
-                {((value_asInt/total)*100).toFixed(1)}%
+                    <br/>
+                    {((value_asInt/total)*100).toFixed(1)}%
                 </div>
             )
             :
@@ -105,15 +107,13 @@ export class Indicator extends Component {
 
             ;
 
-
-
-
-
         return (
             <Paper key={"invoice_"+title} style={paper_style} zDepth={styles.paperDepth}>
-                <h3 style={styles.header}>{title}</h3>
-                <span style={styles.value}>{value}</span>
-                {visual_indicator}
+                <div style={{ color: style_color.color }}>
+                    <h3 style={styles.header}>{title}</h3>
+                    <span style={styles.value}>{value}</span>
+                    {visual_indicator}
+                </div>
             </Paper>
         );
     }
