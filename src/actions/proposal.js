@@ -205,6 +205,27 @@ export function createProposal(token, proposal) {
 }
 
 
+export function createHistoricProposal(token, proposal) {
+    return (dispatch) => {
+        dispatch(createProposalRequest());
+        data_create_api_resource(token, "historic/", proposal)
+            .then(parseJSON)
+            .then(response => {
+                if (response.result.status == "ok") {
+                    dispatch(fetchProposal(token, response.result.id));
+                    dispatch(redirectToRoute("/proposals/"+response.result.id));
+                }
+                else {
+                    console.log("error creating proposal " + proposal);
+                }
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
 
 
 
