@@ -38,7 +38,7 @@ export default class HistoryNewView extends React.Component {
                     <h1>New historic</h1>
 
                     {this.props.aggregations &&
-                        <ProposalDefinition aggregationsList={this.props.aggregations}/>
+                        <ProposalDefinition aggregationsList={this.props.aggregations} type="historic"/>
                     }
                 </div>
 
