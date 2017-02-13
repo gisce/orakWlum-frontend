@@ -116,7 +116,7 @@ export class ProposalDetail extends Component {
         // Calc the AVG per tariff (tariff / num_cups)
         for (var hora=0; hora<avg_info.data.length; hora++){
             let una_hora = avg_info.data[hora];
-            
+
             Object.keys(una_hora).map(function(agg) {
                 const num_cups = cups_per_tariff[agg];
 
@@ -127,8 +127,7 @@ export class ProposalDetail extends Component {
 
 
         const avg_tariff_table = (data.tariff_count) &&
-            <ProposalTableMaterial stacked={true} data={avg_info.data} components={avg_info.components} height={500} />
-
+            <ProposalTableMaterial stacked={true} data={avg_info.data} components={avg_info.components} height={500} totals={false}/>
 
 
         return (
@@ -140,12 +139,16 @@ export class ProposalDetail extends Component {
 
                     {invoice_types}
                     <br/>
-                        <br/>
+                    <br/>
+                    <br/>
 
                     <div>
                         <h3>TARIFF COUNT</h3>
                         {tariff_count}
                     </div>
+
+                    <br/>
+                    <br/>
 
                     <div>
                         <h3>TARIFF AVG</h3>
