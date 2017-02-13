@@ -32,6 +32,10 @@ export class ProposalTableMaterial extends Component {
         const components = this.props.components;
         const type = (this.props.type)?this.props.type:null;
 
+        //Add totals by default
+        const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
+
+
         //Prepare headers
         const headers = Object.keys(components).map(function(component, i) {
             return (
@@ -41,7 +45,7 @@ export class ProposalTableMaterial extends Component {
             )
         });
 
-        const headerTotal = (
+        const headerTotal = (totals) && (
             <TableRowColumn
                 key={"headerTotal"}
                 style={styles.selectedElement}
@@ -71,6 +75,7 @@ export class ProposalTableMaterial extends Component {
             );
 
             let totalSum = 0;
+
             componentsKeys.map(function (comp, j) {
                 let value = (data[i][comp])?data[i][comp]:0;
                 cells.push(
@@ -86,15 +91,18 @@ export class ProposalTableMaterial extends Component {
                 allTotalSum[j] += value;
             })
 
-            // Push the total for this row
-            cells.push(
-                <TableRowColumn
-                    key={"Column"+i+"TOTAL"}
-                    style={styles.selectedElement}
-                >
-                    <b>{totalSum}</b>
-                </TableRowColumn>
-            )
+            if (totals) {
+
+                // Push the total for this row
+                cells.push(
+                    <TableRowColumn
+                        key={"Column"+i+"TOTAL"}
+                        style={styles.selectedElement}
+                    >
+                        <b>{totalSum}</b>
+                    </TableRowColumn>
+                )
+            }
 
             rows.push (
                 <TableRow key={"tableRow"+i}>
@@ -103,34 +111,39 @@ export class ProposalTableMaterial extends Component {
             );
         }
 
-        let totalRow = [];
-        let totalSum = 0;
-        //Prepare the last row with the TOTALS
-        allTotalSum.map( function (component, z) {
-            totalRow.push (
-                <TableRowColumn key={"tableRowTotal"+z}>
-                    {component}
-                </TableRowColumn>
+
+        if (totals) {
+            let totalRow = [];
+            let totalSum = 0;
+
+            //Prepare the last row with the TOTALS
+            allTotalSum.map( function (component, z) {
+                totalRow.push (
+                    <TableRowColumn key={"tableRowTotal"+z}>
+                        {component}
+                    </TableRowColumn>
+                );
+                totalSum += component;
+            })
+
+            rows.push (
+                <TableRow
+                    key={"tableRowTotal"}
+                    style={styles.selectedElement}
+                    selectable={false}>
+
+                    <TableRowColumn key={"tableRowTotalHeader"}>
+                        <b>TOTAL</b>
+                    </TableRowColumn>
+
+                    {totalRow}
+
+                    <TableRowColumn key={"tableRowTotalHeader"}>
+                        <b>{totalSum}</b>
+                    </TableRowColumn>
+                </TableRow>
             );
-            totalSum += component;
-        })
-
-        rows.push (
-            <TableRow
-                key={"tableRowTotal"}
-                style={styles.selectedElement}
-                selectable={false}>
-                <TableRowColumn key={"tableRowTotalHeader"}>
-                    <b>TOTAL</b>
-                </TableRowColumn>
-
-                {totalRow}
-
-                <TableRowColumn key={"tableRowTotalHeader"}>
-                    <b>{totalSum}</b>
-                </TableRowColumn>
-            </TableRow>
-        );
+        }
 
         return (
             <div >
@@ -164,4 +177,5 @@ ProposalTableMaterial.propTypes = {
     components: React.PropTypes.object.isRequired,
     colors: React.PropTypes.object,
     type: React.PropTypes.bool,
+    totals: React.PropTypes.bool,
 };
