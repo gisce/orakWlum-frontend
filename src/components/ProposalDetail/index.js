@@ -61,11 +61,15 @@ export class ProposalDetail extends Component {
 
         //handle tariff count
         const tariff_count = (data.tariff_count) &&
-            Object.keys(data.tariff_count).map(function(component, i) {
-                const component_name = component;
-                const component_value =  data.tariff_count[component];
 
-                const color = colors[i];
+            Object.keys(data.tariff_count).map(function(i) {
+                const entry = data.tariff_count[i];
+
+                const component_name = entry['name'];
+                const component_value =  entry['count'];
+                const original_position =  entry['position'];
+
+                const color = colors[original_position];
 
                 return (
                     <Indicator
@@ -114,7 +118,7 @@ export class ProposalDetail extends Component {
 
                     <div>
                         <h3>TARIFF COUNT</h3>
-                        {tariff_average}
+                        {tariff_count}
                     </div>
 
                 </div>
