@@ -151,15 +151,14 @@ export class Header extends Component {
                                     primaryText="Proposals"
                                 />
                                 <MenuItem
+                                    onClick={() => this.dispatchRoute('/historics/new')}
+                                    leftIcon={<HistoryIcon/>}
+                                    primaryText="History"
+                                />
+                                <MenuItem
                                     onClick={() => this.dispatchRoute('/buys')}
                                     leftIcon={<EuroIcon/>}
                                     primaryText="Buys"
-                                    disabled
-                                />
-                                <MenuItem
-                                    onClick={() => this.dispatchRoute('/history')}
-                                    leftIcon={<HistoryIcon/>}
-                                    primaryText="History"
                                     disabled
                                 />
 
