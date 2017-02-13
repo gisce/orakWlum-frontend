@@ -95,9 +95,10 @@ export class ProposalDefinition extends Component {
       const element_type = (props.type)?props.type:"proposal";
 
       const minDate = new Date();
-      minDate.setFullYear(minDate.getFullYear() - 1);
-      //minDate.setHours(0, 0, 0, 0);
 
+      (element_type == "historic") &&
+        minDate.setFullYear(minDate.getFullYear() - 1);
+      //minDate.setHours(0, 0, 0, 0);
 
       this.state = {
           type: types[element_type],
@@ -119,6 +120,7 @@ export class ProposalDefinition extends Component {
           aggregations_error_text: null,
           readyToNext: false,
       };
+
       this.stepsLength = this.getSteps().length;
       console.log(this.state.type);
     }
