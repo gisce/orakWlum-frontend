@@ -164,4 +164,5 @@ ProposalDetail.propTypes = {
     data: React.PropTypes.object.isRequired,
     open: React.PropTypes.bool,
     colors: React.PropTypes.object,
+    avg_info: React.PropTypes.object,
 };
