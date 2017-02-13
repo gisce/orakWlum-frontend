@@ -530,18 +530,6 @@ export class Proposal extends Component {
             )
 
 
-        const proposalDetail = (summary) &&
-            <div style={styles.cardSeparator}>
-                <ProposalDetail
-                    data={summary}
-                    open={detail_open}
-                    avg_info={{
-                        'data': Object.assign([],data),
-                        'components': components,
-                    }}
-                />
-            </div>
-        ;
 
 
         // The Proposal graph!
@@ -552,7 +540,25 @@ export class Proposal extends Component {
                       <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
                       <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
-                  :null
+                  :null;
+
+
+
+
+        const proposalDetail = (summary) &&
+          <div style={styles.cardSeparator}>
+              <ProposalDetail
+                  data={summary}
+                  open={detail_open}
+                  avg_info={{
+                      'data': data,
+                      'components': components,
+                  }}
+              />
+          </div>
+        ;
+
+
 
         // The resulting Proposal element
         const Proposal = () => (
