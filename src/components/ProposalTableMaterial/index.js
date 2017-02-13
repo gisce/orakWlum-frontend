@@ -35,11 +35,12 @@ export class ProposalTableMaterial extends Component {
         //Add totals by default
         const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
 
-
         //Prepare headers
         const headers = Object.keys(components).map(function(component, i) {
+            const text_color = (colors[i] == "#000000")?'white':'black';
+
             return (
-                <TableRowColumn key={"header"+i} style={{backgroundColor: colors[i] }} stroke={colors[i]} fill={colors[i]}>
+                <TableRowColumn key={"header"+i} style={{backgroundColor: colors[i], color: text_color }} stroke={colors[i]} fill={colors[i]}>
                     <b>{component}</b>
                 </TableRowColumn>
             )
