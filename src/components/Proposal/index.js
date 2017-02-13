@@ -536,7 +536,7 @@ export class Proposal extends Component {
                     data={summary}
                     open={detail_open}
                     avg_info={{
-                        'data': Object.assign({},data),
+                        'data': Object.assign([],data),
                         'components': components,
                     }}
                 />
