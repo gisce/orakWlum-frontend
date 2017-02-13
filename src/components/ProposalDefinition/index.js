@@ -98,8 +98,9 @@ export class ProposalDefinition extends Component {
 
       (element_type == "historic") &&
         minDate.setFullYear(minDate.getFullYear() - 1);
-      //minDate.setHours(0, 0, 0, 0);
 
+      minDate.setHours(0, 0, 0, 0);
+      
       this.state = {
           type: types[element_type],
           loading: false,
