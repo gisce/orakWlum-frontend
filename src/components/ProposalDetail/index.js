@@ -8,6 +8,8 @@ import InvoicesIcon from 'material-ui/svg-icons/editor/format-list-numbered';
 import {orange400} from 'material-ui/styles/colors';
 
 import { Indicator } from '../Indicator';
+import { ProposalTableMaterial } from '../ProposalTableMaterial';
+import {adaptProposalData} from '../../utils/graph';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -35,6 +37,7 @@ export class ProposalDetail extends Component {
 
     render() {
         const data = this.props.data;
+        const avg_info = this.props.avg_info;
 
         //open it by default
         const open = (this.props.open)?this.props.open:true;
@@ -60,6 +63,7 @@ export class ProposalDetail extends Component {
 
 
         //handle tariff count
+        let cups_per_tariff = {};
         const tariff_count = (data.tariff_count) &&
 
             Object.keys(data.tariff_count).map(function(i) {
@@ -70,6 +74,8 @@ export class ProposalDetail extends Component {
                 const original_position =  entry['position'];
 
                 const color = colors[original_position];
+
+                cups_per_tariff[component_name] = component_value;
 
                 return (
                     <Indicator
@@ -95,6 +101,7 @@ export class ProposalDetail extends Component {
                 />
             );
 
+
         //Prepare Invoices count
         const num_invoices =  (data.invoice_total) &&
             (
@@ -104,6 +111,25 @@ export class ProposalDetail extends Component {
                     icon={<InvoicesIcon style={styles.icon}/>}
                 />
             );
+
+
+        // Calc the AVG per tariff (tariff / num_cups)
+        for (var hora=0; hora<avg_info.data.length; hora++){
+            let una_hora = avg_info.data[hora];
+            
+            Object.keys(una_hora).map(function(agg) {
+                const num_cups = cups_per_tariff[agg];
+
+                if (agg != "total" && agg != "name")
+                    una_hora[agg] = (una_hora[agg] / num_cups).toFixed(4).toString().replace(".", ",");
+            });
+        }
+
+
+        const avg_tariff_table = (data.tariff_count) &&
+            <ProposalTableMaterial stacked={true} data={avg_info.data} components={avg_info.components} height={500} />
+
+
 
         return (
             open &&
@@ -119,6 +145,11 @@ export class ProposalDetail extends Component {
                     <div>
                         <h3>TARIFF COUNT</h3>
                         {tariff_count}
+                    </div>
+
+                    <div>
+                        <h3>TARIFF AVG</h3>
+                        {avg_tariff_table}
                     </div>
 
                 </div>
