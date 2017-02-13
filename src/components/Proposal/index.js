@@ -435,14 +435,14 @@ export class Proposal extends Component {
 
         let data=null;
         let components=null;
-
-        const summary = prediction.summary;
+        let summary = null;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
             const current = predictionAdapted[aggregationSelected];
             data = current.result;
             components = current.components;
+            summary = (prediction.summary != undefined)?prediction.summary:null;
         }
 
         // The Proposal status!
@@ -544,8 +544,7 @@ export class Proposal extends Component {
 
 
 
-
-        const proposalDetail = (summary) &&
+        const proposalDetail = (summary != null) &&
           <div style={styles.cardSeparator}>
               <ProposalDetail
                   data={summary}
