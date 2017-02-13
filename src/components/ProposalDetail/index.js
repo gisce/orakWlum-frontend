@@ -42,8 +42,10 @@ export class ProposalDetail extends Component {
         //handle invoice types
         const invoice_types = (data.invoice_types) &&
             Object.keys(data.invoice_types).map(function(component, i) {
-                const component_name = data.invoice_types[component].name;
-                const component_value =  data.invoice_types[component].value;
+
+                const component_name = component
+                const component_value =  data.invoice_types[component];
+
 
                 return (
                     <Indicator
