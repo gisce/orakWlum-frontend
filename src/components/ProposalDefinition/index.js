@@ -27,8 +27,8 @@ const styles = {
 };
 
 const today = new Date();
-const date_limit_inf = new Date(today.getFullYear() - 4, 1, 1);
-const date_limit_sup = new Date(today.getFullYear() + 4, 12, 31);
+const date_limit_inf = new Date(today.getFullYear() - 6, 1, 1);
+const date_limit_sup = new Date(today.getFullYear() + 6, 12, 31);
 
 const validations = {
     name: {

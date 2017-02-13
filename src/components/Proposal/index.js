@@ -18,6 +18,8 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+import { ProposalDetail } from '../ProposalDetail';
+
 import { Notification } from '../Notification';
 import Dialog from 'material-ui/Dialog';
 
@@ -69,6 +71,10 @@ const styles = {
     labelToggle: {
         marginTop: 7,
         marginLeft: 7,
+    },
+    cardSeparator: {
+        marginTop: 50,
+        marginBottom: 20,
     }
 };
 
@@ -274,6 +280,18 @@ export class Proposal extends Component {
     };
 
 
+    toggleDetail = () => {
+        this.detail_open = !this.detail_open;
+
+        console.log("toggling", this.detail_open);
+        /*
+        this.setState({
+            message_open: true,
+            confirmation_open: false,
+        });
+        */
+    };
+
 
 
     duplicateProposalQuestion = (event, proposalID) => {
@@ -315,9 +333,6 @@ export class Proposal extends Component {
         this.props.duplicateProposal(token, proposalID);
     };
 
-
-
-
     deleteProposalQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
@@ -357,9 +372,6 @@ export class Proposal extends Component {
         this.props.deleteProposal(token, proposalID);
     };
 
-
-
-
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
@@ -396,10 +408,15 @@ export class Proposal extends Component {
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
 
-        const refreshProposal=this.refreshProposalQuestion;
-        const reRunProposal=this.reRunProposalQuestion;
-        const duplicateProposal=this.duplicateProposalQuestion;
-        const deleteProposal=this.deleteProposalQuestion;
+        const refreshProposal = this.refreshProposalQuestion;
+        const reRunProposal = this.reRunProposalQuestion;
+        const duplicateProposal = this.duplicateProposalQuestion;
+        const deleteProposal = this.deleteProposalQuestion;
+
+        const toggleDetail = this.toggleDetail;
+
+        let detail_open = this.detail_open;
+
 
         const actionsButtons = [
           <FlatButton
@@ -418,6 +435,8 @@ export class Proposal extends Component {
 
         let data=null;
         let components=null;
+
+        const summary = prediction.summary;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
@@ -510,6 +529,9 @@ export class Proposal extends Component {
             </div>
             )
 
+
+
+
         // The Proposal graph!
         const proposalPicture =
             (withPicture)?
@@ -518,7 +540,25 @@ export class Proposal extends Component {
                       <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
                       :
                       <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
-                  :null
+                  :null;
+
+
+
+
+        const proposalDetail = (summary) &&
+          <div style={styles.cardSeparator}>
+              <ProposalDetail
+                  data={summary}
+                  open={detail_open}
+                  avg_info={{
+                      'data': data,
+                      'components': components,
+                  }}
+              />
+          </div>
+        ;
+
+
 
         // The resulting Proposal element
         const Proposal = () => (
@@ -550,12 +590,14 @@ export class Proposal extends Component {
 
           {proposalPicture}
 
+          {proposalDetail}
+
           {
               !readOnly &&
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
-                <FlatButton label="Detail" icon={<DetailIcon/>} disabled/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
