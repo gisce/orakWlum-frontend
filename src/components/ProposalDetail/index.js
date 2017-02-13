@@ -9,7 +9,6 @@ import {orange400} from 'material-ui/styles/colors';
 
 import { Indicator } from '../Indicator';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
-import {adaptProposalData} from '../../utils/graph';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -113,9 +112,13 @@ export class ProposalDetail extends Component {
             );
 
 
+
+        let table_data = []
         // Calc the AVG per tariff (tariff / num_cups)
-        for (var hora=0; hora<avg_info.data.length; hora++){
-            let una_hora = avg_info.data[hora];
+        for (var hora = 0; hora < avg_info.data.length; hora++){
+
+            //Duplicate table data memspaces to avoid corruptions
+            let una_hora = Object.assign([], avg_info.data[hora]);
 
             Object.keys(una_hora).map(function(agg) {
                 const num_cups = cups_per_tariff[agg];
@@ -123,11 +126,12 @@ export class ProposalDetail extends Component {
                 if (agg != "total" && agg != "name")
                     una_hora[agg] = (una_hora[agg] / num_cups).toFixed(4).toString().replace(".", ",");
             });
+
+            table_data[hora] = una_hora;
         }
 
-
         const avg_tariff_table = (data.tariff_count) &&
-            <ProposalTableMaterial stacked={true} data={avg_info.data} components={avg_info.components} height={500} totals={false}/>
+            <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false}/>
 
 
         return (
