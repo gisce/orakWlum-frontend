@@ -535,6 +535,10 @@ export class Proposal extends Component {
                 <ProposalDetail
                     data={summary}
                     open={detail_open}
+                    avg_info={{
+                        'data': data,
+                        'components': components,
+                    }}
                 />
             </div>
         ;
