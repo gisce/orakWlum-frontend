@@ -96,12 +96,17 @@ export class ProposalDefinition extends Component {
 
       const minDate = new Date();
 
-      (element_type == "historic") &&
-        minDate.setFullYear(minDate.getFullYear() - 1);
+      let createMethod = props.createProposal;
 
-      minDate.setHours(0, 0, 0, 0);
-      
+      if (element_type == "historic") {
+        minDate.setFullYear(minDate.getFullYear() - 1);
+        createMethod = props.createHistoricProposal;
+      }
+
+      //minDate.setHours(0, 0, 0, 0);
+
       this.state = {
+          createMethod: createMethod,
           type: types[element_type],
           loading: false,
           finished: false,
@@ -615,7 +620,8 @@ export class ProposalDefinition extends Component {
             },
         }
 
-        this.props.createProposal(token, proposalData);
+
+        this.state.createMethod(token, proposalData);
     }
 
     render() {
