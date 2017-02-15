@@ -385,11 +385,9 @@ export class Proposal extends Component {
 
         const proposalTable = this.state.proposalTable;
 
-        const historical = (proposal.historical != null)?proposal.historical:true;
+        const historical = (proposal.historical == true)?true:false;
 
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
-
-        const daysRangeFuture = (historical)? null : new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
 
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
         const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
@@ -402,10 +400,10 @@ export class Proposal extends Component {
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
-
         let daysRange_toShow;
         if (historical == false) {
-             daysRange_toShow = daysRangeFuture;
+             daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
+
         } else {
              daysRange_toShow = daysRange;
         }
