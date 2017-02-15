@@ -385,7 +385,7 @@ export class Proposal extends Component {
 
         const proposalTable = this.state.proposalTable;
 
-        const historical = (proposal.historical)? proposal.historical : true;
+        const historical = proposal.historical;
 
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
 
@@ -404,15 +404,12 @@ export class Proposal extends Component {
 
 
         let daysRange_toShow;
-
-        let day_string;
         if (historical == false) {
              daysRange_toShow = daysRangeFuture;
-             day_string = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions);
         } else {
              daysRange_toShow = daysRange;
-             day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
         }
+        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
         const subtitle = <span>Using {days[dayOfProposal]} {day_string}</span>;
