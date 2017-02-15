@@ -12,11 +12,23 @@ const styles = {
     selectedElement: {
         color: 'white',
         backgroundColor: '#808080',
+        textAlign: 'center',
+
     },
     hourColor: {
         color: 'white',
         backgroundColor: '#BBBBBB',
-    }
+        textAlign: 'right',
+    },
+    alignCenter: {
+        textAlign: 'center',
+    },
+    alignLeft: {
+        textAlign: 'left',
+    },
+    alignRight: {
+        textAlign: 'right',
+    },
 };
 
 
@@ -40,7 +52,12 @@ export class ProposalTableMaterial extends Component {
             const text_color = (colors[i] == "#000000")?'white':'black';
 
             return (
-                <TableRowColumn key={"header"+i} style={{backgroundColor: colors[i], color: text_color }} stroke={colors[i]} fill={colors[i]}>
+                <TableRowColumn
+                    key={"header"+i}
+                    style={{backgroundColor: colors[i], color: text_color, textAlign: styles.alignCenter.textAlign }} 
+                    stroke={colors[i]}
+                    fill={colors[i]}
+                >
                     <b>{component}</b>
                 </TableRowColumn>
             )
@@ -80,7 +97,10 @@ export class ProposalTableMaterial extends Component {
             componentsKeys.map(function (comp, j) {
                 let value = (data[i][comp])?data[i][comp]:0;
                 cells.push(
-                    <TableRowColumn key={"Column"+i+j}>
+                    <TableRowColumn
+                        key={"Column"+i+j}
+                        style={styles.alignCenter}
+                    >
                         {value}
                     </TableRowColumn>
                 );
@@ -120,7 +140,10 @@ export class ProposalTableMaterial extends Component {
             //Prepare the last row with the TOTALS
             allTotalSum.map( function (component, z) {
                 totalRow.push (
-                    <TableRowColumn key={"tableRowTotal"+z}>
+                    <TableRowColumn
+                        key={"tableRowTotal"+z}
+                        style={styles.alignCenter}
+                    >
                         {component}
                     </TableRowColumn>
                 );
@@ -133,13 +156,19 @@ export class ProposalTableMaterial extends Component {
                     style={styles.selectedElement}
                     selectable={false}>
 
-                    <TableRowColumn key={"tableRowTotalHeader"}>
+                    <TableRowColumn
+                        key={"tableRowTotalHeader"}
+                        style={styles.alignRight}
+                    >
                         <b>TOTAL</b>
                     </TableRowColumn>
 
                     {totalRow}
 
-                    <TableRowColumn key={"tableRowTotalHeader"}>
+                    <TableRowColumn
+                        key={"tableRowTotalHeader"}
+                        style={styles.alignCenter}
+                    >
                         <b>{totalSum}</b>
                     </TableRowColumn>
                 </TableRow>
