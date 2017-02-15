@@ -29,6 +29,8 @@ const styles = {
     alignRight: {
         textAlign: 'right',
     },
+    hourColumn: {
+    },
 };
 
 
@@ -54,7 +56,7 @@ export class ProposalTableMaterial extends Component {
             return (
                 <TableRowColumn
                     key={"header"+i}
-                    style={{backgroundColor: colors[i], color: text_color, textAlign: styles.alignCenter.textAlign }} 
+                    style={{backgroundColor: colors[i], color: text_color, textAlign: styles.alignCenter.textAlign }}
                     stroke={colors[i]}
                     fill={colors[i]}
                 >
@@ -86,7 +88,7 @@ export class ProposalTableMaterial extends Component {
             cells.push(
                 <TableRowColumn
                     key={"Column"+i}
-                    style={styles.hourColor}
+                    style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}
                 >
                     {data[i].name}
                 </TableRowColumn>
@@ -185,7 +187,8 @@ export class ProposalTableMaterial extends Component {
                         <TableRow key="headersRow">
                             <TableRowColumn
                                 key={"headerHour"}
-                                style={styles.hourColor}
+                                style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}
+
                             >
                                 <b>Hour</b>
                             </TableRowColumn>
