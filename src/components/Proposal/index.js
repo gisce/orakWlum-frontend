@@ -385,7 +385,7 @@ export class Proposal extends Component {
 
         const proposalTable = this.state.proposalTable;
 
-        const historical = (proposal.historical == true)?true:false;
+        const historical = (proposal.historical == false)?false:true;
 
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
 
