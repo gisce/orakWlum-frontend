@@ -121,7 +121,7 @@ export class ProposalTableMaterial extends Component {
                 cells.push(
                     <TableRowColumn
                         key={"Column"+i+"TOTAL"}
-                        style={styles.selectedElement}
+                        style={ Object.assign({},styles.selectedElement, {textOverflow:styles.alignCenter.textOverflow})} 
                     >
                         <b>{totalSum}</b>
                     </TableRowColumn>
