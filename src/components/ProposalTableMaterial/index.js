@@ -22,6 +22,7 @@ const styles = {
     },
     alignCenter: {
         textAlign: 'center',
+        textOverflow: '',
     },
     alignLeft: {
         textAlign: 'left',
