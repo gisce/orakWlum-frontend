@@ -50,6 +50,25 @@ export class ProposalTableMaterial extends Component {
         //Add totals by default
         const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
 
+
+        const howManyComponents = Object.keys(components).length;
+
+        if (howManyComponents > 18) {
+            return (
+                <div>
+                    <br/>
+                    <p>
+                        Sorry, but <strong>there too many components</strong> to render using this aggregation, and the <strong>table will be un-usable</strong>.
+                    </p>
+
+                    <p>
+                        Change to chart view or select another aggregation to review their related table.
+                    </p>
+                    <br/>
+                </div>
+            );
+        }
+
         //Prepare headers
         const headers = Object.keys(components).map(function(component, i) {
             const text_color = (colors[i] == "#000000")?'white':'black';
@@ -121,7 +140,7 @@ export class ProposalTableMaterial extends Component {
                 cells.push(
                     <TableRowColumn
                         key={"Column"+i+"TOTAL"}
-                        style={ Object.assign({},styles.selectedElement, {textOverflow:styles.alignCenter.textOverflow})} 
+                        style={ Object.assign({},styles.selectedElement, {textOverflow:styles.alignCenter.textOverflow})}
                     >
                         <b>{totalSum}</b>
                     </TableRowColumn>
