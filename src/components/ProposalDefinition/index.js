@@ -59,6 +59,16 @@ const validations = {
     },
 }
 
+const types = {
+    "proposal": {
+        "name": "proposal",
+        "plural": "proposals",
+    },
+    "historic": {
+        "name": "historic",
+        "plural": "historics",
+    },
+}
 
 function mapStateToProps(state) {
     return {
@@ -82,11 +92,22 @@ export class ProposalDefinition extends Component {
           aggregations_list.push( false );
       });
 
+      const element_type = (props.type)?props.type:"proposal";
+
       const minDate = new Date();
-      minDate.setFullYear(minDate.getFullYear() - 1);
+
+      let createMethod = props.createProposal;
+
+      if (element_type == "historic") {
+        minDate.setFullYear(minDate.getFullYear() - 1);
+        createMethod = props.createHistoricProposal;
+      }
+
       //minDate.setHours(0, 0, 0, 0);
 
       this.state = {
+          createMethod: createMethod,
+          type: types[element_type],
           loading: false,
           finished: false,
           stepIndex: 0,
@@ -105,8 +126,11 @@ export class ProposalDefinition extends Component {
           aggregations_error_text: null,
           readyToNext: false,
       };
+
       this.stepsLength = this.getSteps().length;
+      console.log(this.state.type);
     }
+
 
     componentWillMount = () => {
         //select all by default
@@ -157,8 +181,8 @@ export class ProposalDefinition extends Component {
                 title: "Name",
                 content: (
                     <div>
-                        <p>We need some details to create a new Proposal.</p>
-                        <p>Please, <b>insert the name</b> of your proposal in the following field:</p>
+                        <p>We need some details to create a new {this.state.type.name}.</p>
+                        <p>Please, <b>insert the name</b> of your {this.state.type.name} in the following field:</p>
                         <TextField
                             style={{marginTop: 0}}
                             floatingLabelText="Proposal name"
@@ -596,7 +620,8 @@ export class ProposalDefinition extends Component {
             },
         }
 
-        this.props.createProposal(token, proposalData);
+
+        this.state.createMethod(token, proposalData);
     }
 
     render() {

@@ -385,6 +385,8 @@ export class Proposal extends Component {
 
         const proposalTable = this.state.proposalTable;
 
+        const historical = (proposal.historical == false)?false:true;
+
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
 
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
@@ -394,10 +396,21 @@ export class Proposal extends Component {
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
 
-        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>{days[dayOfProposal]} {new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions)}</span>;
+        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
+        const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
+
+        let daysRange_toShow;
+        if (historical == false) {
+             daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
+
+        } else {
+             daysRange_toShow = daysRange;
+        }
+        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
+
+        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
+        const subtitle = <span>Using {days[dayOfProposal]} {day_string}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
@@ -435,14 +448,14 @@ export class Proposal extends Component {
 
         let data=null;
         let components=null;
-
-        const summary = prediction.summary;
+        let summary = null;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
             const current = predictionAdapted[aggregationSelected];
             data = current.result;
             components = current.components;
+            summary = (prediction.summary != undefined)?prediction.summary:null;
         }
 
         // The Proposal status!
@@ -536,16 +549,17 @@ export class Proposal extends Component {
         const proposalPicture =
             (withPicture)?
                 (proposal.prediction) &&
-                  (proposalTable)?
-                      <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
-                      :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                  (
+                      (proposalTable)?
+                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
+                          :
+                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                  )
                   :null;
 
 
 
-
-        const proposalDetail = (summary) &&
+        const proposalDetail = (summary != null) &&
           <div style={styles.cardSeparator}>
               <ProposalDetail
                   data={summary}

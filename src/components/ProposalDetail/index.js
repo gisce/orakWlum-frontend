@@ -124,7 +124,7 @@ export class ProposalDetail extends Component {
                 const num_cups = cups_per_tariff[agg];
 
                 if (agg != "total" && agg != "name")
-                    una_hora[agg] = (una_hora[agg] / num_cups).toFixed(4).toString().replace(".", ",");
+                    una_hora[agg] = (una_hora[agg] / num_cups).toFixed(4).toString()//.replace(".", ",");
             });
 
             table_data[hora] = una_hora;

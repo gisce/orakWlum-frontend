@@ -92,6 +92,8 @@ export class ProposalGraph extends Component {
         const data = this.props.data;
         const components = this.props.components;
 
+        const howManyComponents = Object.keys(components).length;
+
         const stacked = (this.props.stacked)?"1":null;
 
         const height = (this.props.height)?this.props.height:500;
@@ -170,7 +172,12 @@ export class ProposalGraph extends Component {
               });
 
               const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} />;
-              const legend = <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>;
+
+              //avoid showing legend if there are too many elements to show
+              const legend = (howManyComponents < 55) ?
+                <Legend width={100} layout="horizontal" align="center" wrapperStyle={styles.legend}/>
+                :
+                null;
 
               const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
               const xaxisLite = <XAxis dataKey="name"/>;

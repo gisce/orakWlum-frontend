@@ -12,11 +12,26 @@ const styles = {
     selectedElement: {
         color: 'white',
         backgroundColor: '#808080',
+        textAlign: 'center',
+
     },
     hourColor: {
         color: 'white',
         backgroundColor: '#BBBBBB',
-    }
+        textAlign: 'right',
+    },
+    alignCenter: {
+        textAlign: 'center',
+        textOverflow: '',
+    },
+    alignLeft: {
+        textAlign: 'left',
+    },
+    alignRight: {
+        textAlign: 'right',
+    },
+    hourColumn: {
+    },
 };
 
 
@@ -35,12 +50,36 @@ export class ProposalTableMaterial extends Component {
         //Add totals by default
         const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
 
+
+        const howManyComponents = Object.keys(components).length;
+
+        if (howManyComponents > 18) {
+            return (
+                <div>
+                    <br/>
+                    <p>
+                        Sorry, but <strong>there too many components</strong> to render using this aggregation, and the <strong>table will be un-usable</strong>.
+                    </p>
+
+                    <p>
+                        Change to chart view or select another aggregation to review their related table.
+                    </p>
+                    <br/>
+                </div>
+            );
+        }
+
         //Prepare headers
         const headers = Object.keys(components).map(function(component, i) {
             const text_color = (colors[i] == "#000000")?'white':'black';
 
             return (
-                <TableRowColumn key={"header"+i} style={{backgroundColor: colors[i], color: text_color }} stroke={colors[i]} fill={colors[i]}>
+                <TableRowColumn
+                    key={"header"+i}
+                    style={{backgroundColor: colors[i], color: text_color, textAlign: styles.alignCenter.textAlign }}
+                    stroke={colors[i]}
+                    fill={colors[i]}
+                >
                     <b>{component}</b>
                 </TableRowColumn>
             )
@@ -69,7 +108,7 @@ export class ProposalTableMaterial extends Component {
             cells.push(
                 <TableRowColumn
                     key={"Column"+i}
-                    style={styles.hourColor}
+                    style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}
                 >
                     {data[i].name}
                 </TableRowColumn>
@@ -80,7 +119,10 @@ export class ProposalTableMaterial extends Component {
             componentsKeys.map(function (comp, j) {
                 let value = (data[i][comp])?data[i][comp]:0;
                 cells.push(
-                    <TableRowColumn key={"Column"+i+j}>
+                    <TableRowColumn
+                        key={"Column"+i+j}
+                        style={styles.alignCenter}
+                    >
                         {value}
                     </TableRowColumn>
                 );
@@ -98,7 +140,7 @@ export class ProposalTableMaterial extends Component {
                 cells.push(
                     <TableRowColumn
                         key={"Column"+i+"TOTAL"}
-                        style={styles.selectedElement}
+                        style={ Object.assign({},styles.selectedElement, {textOverflow:styles.alignCenter.textOverflow})}
                     >
                         <b>{totalSum}</b>
                     </TableRowColumn>
@@ -120,7 +162,10 @@ export class ProposalTableMaterial extends Component {
             //Prepare the last row with the TOTALS
             allTotalSum.map( function (component, z) {
                 totalRow.push (
-                    <TableRowColumn key={"tableRowTotal"+z}>
+                    <TableRowColumn
+                        key={"tableRowTotal"+z}
+                        style={styles.alignCenter}
+                    >
                         {component}
                     </TableRowColumn>
                 );
@@ -133,13 +178,19 @@ export class ProposalTableMaterial extends Component {
                     style={styles.selectedElement}
                     selectable={false}>
 
-                    <TableRowColumn key={"tableRowTotalHeader"}>
+                    <TableRowColumn
+                        key={"tableRowTotalHeader"}
+                        style={styles.alignRight}
+                    >
                         <b>TOTAL</b>
                     </TableRowColumn>
 
                     {totalRow}
 
-                    <TableRowColumn key={"tableRowTotalHeader"}>
+                    <TableRowColumn
+                        key={"tableRowTotalHeader"}
+                        style={styles.alignCenter}
+                    >
                         <b>{totalSum}</b>
                     </TableRowColumn>
                 </TableRow>
@@ -156,7 +207,8 @@ export class ProposalTableMaterial extends Component {
                         <TableRow key="headersRow">
                             <TableRowColumn
                                 key={"headerHour"}
-                                style={styles.hourColor}
+                                style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}
+
                             >
                                 <b>Hour</b>
                             </TableRowColumn>
