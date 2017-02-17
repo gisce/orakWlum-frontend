@@ -1,7 +1,6 @@
 
 
 export function adaptProposalData(proposalData, hour=24) {
-  console.log("entro");
     let result={};
     const aggregationNum = proposalData.result.length;
 

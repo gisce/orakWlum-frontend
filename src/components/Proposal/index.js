@@ -18,6 +18,8 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
+import { ProposalDetail } from '../ProposalDetail';
+
 import { Notification } from '../Notification';
 import Dialog from 'material-ui/Dialog';
 
@@ -69,6 +71,10 @@ const styles = {
     labelToggle: {
         marginTop: 7,
         marginLeft: 7,
+    },
+    cardSeparator: {
+        marginTop: 50,
+        marginBottom: 20,
     }
 };
 
@@ -274,6 +280,18 @@ export class Proposal extends Component {
     };
 
 
+    toggleDetail = () => {
+        this.detail_open = !this.detail_open;
+
+        console.log("toggling", this.detail_open);
+        /*
+        this.setState({
+            message_open: true,
+            confirmation_open: false,
+        });
+        */
+    };
+
 
 
     duplicateProposalQuestion = (event, proposalID) => {
@@ -315,9 +333,6 @@ export class Proposal extends Component {
         this.props.duplicateProposal(token, proposalID);
     };
 
-
-
-
     deleteProposalQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
@@ -357,9 +372,6 @@ export class Proposal extends Component {
         this.props.deleteProposal(token, proposalID);
     };
 
-
-
-
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
@@ -373,6 +385,8 @@ export class Proposal extends Component {
 
         const proposalTable = this.state.proposalTable;
 
+        const historical = (proposal.historical == false)?false:true;
+
         const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
 
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
@@ -382,10 +396,21 @@ export class Proposal extends Component {
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
 
-        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>{days[dayOfProposal]} {new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions)}</span>;
+        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
+        const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
+
+        let daysRange_toShow;
+        if (historical == false) {
+             daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
+
+        } else {
+             daysRange_toShow = daysRange;
+        }
+        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
+
+        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
+        const subtitle = <span>Using {days[dayOfProposal]} {day_string}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
@@ -396,10 +421,15 @@ export class Proposal extends Component {
         const changeProposalAggregation=this.changeProposalAggregation;
         const aggregations = this.state.aggregations;
 
-        const refreshProposal=this.refreshProposalQuestion;
-        const reRunProposal=this.reRunProposalQuestion;
-        const duplicateProposal=this.duplicateProposalQuestion;
-        const deleteProposal=this.deleteProposalQuestion;
+        const refreshProposal = this.refreshProposalQuestion;
+        const reRunProposal = this.reRunProposalQuestion;
+        const duplicateProposal = this.duplicateProposalQuestion;
+        const deleteProposal = this.deleteProposalQuestion;
+
+        const toggleDetail = this.toggleDetail;
+
+        let detail_open = this.detail_open;
+
 
         const actionsButtons = [
           <FlatButton
@@ -418,12 +448,14 @@ export class Proposal extends Component {
 
         let data=null;
         let components=null;
+        let summary = null;
 
         if (prediction) {
             const predictionAdapted=adaptProposalData(prediction);
             const current = predictionAdapted[aggregationSelected];
             data = current.result;
             components = current.components;
+            summary = (prediction.summary != undefined)?prediction.summary:null;
         }
 
         // The Proposal status!
@@ -510,15 +542,37 @@ export class Proposal extends Component {
             </div>
             )
 
+
+
+
         // The Proposal graph!
         const proposalPicture =
             (withPicture)?
                 (proposal.prediction) &&
-                  (proposalTable)?
-                      <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
-                      :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
-                  :null
+                  (
+                      (proposalTable)?
+                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
+                          :
+                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                  )
+                  :null;
+
+
+
+        const proposalDetail = (summary != null) &&
+          <div style={styles.cardSeparator}>
+              <ProposalDetail
+                  data={summary}
+                  open={detail_open}
+                  avg_info={{
+                      'data': data,
+                      'components': components,
+                  }}
+              />
+          </div>
+        ;
+
+
 
         // The resulting Proposal element
         const Proposal = () => (
@@ -550,12 +604,14 @@ export class Proposal extends Component {
 
           {proposalPicture}
 
+          {proposalDetail}
+
           {
               !readOnly &&
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
-                <FlatButton label="Detail" icon={<DetailIcon/>} disabled/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
