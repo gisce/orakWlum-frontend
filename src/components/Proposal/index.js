@@ -549,10 +549,12 @@ export class Proposal extends Component {
         const proposalPicture =
             (withPicture)?
                 (proposal.prediction) &&
-                  (proposalTable)?
-                      <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
-                      :
-                      <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                  (
+                      (proposalTable)?
+                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
+                          :
+                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                  )
                   :null;
 
 
