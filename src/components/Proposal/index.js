@@ -30,6 +30,7 @@ import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import ExportIcon from 'material-ui/svg-icons/file/file-download';
 
 import {adaptProposalData} from '../../utils/graph';
 
