@@ -326,7 +326,8 @@ export function exportProposal(token, proposal) {
         dispatch(exportProposalRequest());
         data_download_api_resource(token, "proposal/" + proposal + "/xls/")
             .then(response => {
-               FileSaver.saveAs(response.data, "response.xls");
+               const filename = response.headers["content-disposition"].split("=");
+               FileSaver.saveAs(response.data, filename[1]);
             })
             .catch(error => {
                 if (error.status === 401) {
