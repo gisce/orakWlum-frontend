@@ -373,6 +373,20 @@ export class Proposal extends Component {
         this.props.deleteProposal(token, proposalID);
     };
 
+    exportProposal = (event, proposalID) => {
+        event.preventDefault();
+
+        this.setState({
+            animateChart: false,
+            message_text: "Exporting current proposal",
+            confirmation_open: false,
+        });
+
+        const token = this.props.token;
+        this.props.exportProposal(token, proposalID);
+    };
+
+
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
