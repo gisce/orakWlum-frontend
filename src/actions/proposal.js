@@ -1,5 +1,5 @@
 import { EXPORT_PROPOSAL_REQUEST, FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
-import { data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
+import { data_download_api_resource, data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
 import { fetchProposals } from './proposals'
@@ -312,6 +312,9 @@ export function fetchAggregations(token) {
   #################
 *********************/
 
+
+var FileSaver = require('../../node_modules/file-saver/FileSaver.min.js');
+
 export function exportProposalRequest() {
     return {
         type: EXPORT_PROPOSAL_REQUEST,
@@ -321,10 +324,9 @@ export function exportProposalRequest() {
 export function exportProposal(token, proposal) {
     return (dispatch) => {
         dispatch(exportProposalRequest());
-        data_fetch_api_resource(token, "proposal/" + proposal + "/xls/")
+        data_download_api_resource(token, "proposal/" + proposal + "/xls/")
             .then(response => {
-               FileSaver.saveAs(blob, "asdadasdasd");
-
+               FileSaver.saveAs(response.data, "response.xls");
             })
             .catch(error => {
                 if (error.status === 401) {
