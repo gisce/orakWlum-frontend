@@ -61,6 +61,9 @@ export class ProposalDetail extends Component {
         });
 
 
+        //total tariffs count
+        const total_tariffs_count = data.tariffs_total_count;
+
         //handle tariff tiles
         let cups_per_tariff = {};
         const tariff_count = (data.tariffs) &&
@@ -83,7 +86,7 @@ export class ProposalDetail extends Component {
                         title={ (component_name!="")?component_name:"Empty"}
                         value={component_value}
                         subvalue={component_subvalue}
-                        total={data.tariff_total}
+                        total={total_tariffs_count}
                         percentage={true}
                         small={true}
                         color={color}
