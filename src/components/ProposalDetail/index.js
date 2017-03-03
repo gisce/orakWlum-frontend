@@ -62,14 +62,14 @@ export class ProposalDetail extends Component {
 
 
         //total tariffs count
-        const total_tariffs_count = data.tariffs_total_count;
+        const total_tariffs_count = data.tariff_total_count;
 
         //handle tariff tiles
         let cups_per_tariff = {};
-        const tariff_count = (data.tariffs) &&
+        const tariffs = (data.tariffs) &&
 
             Object.keys(data.tariffs).map(function(i) {
-                const entry = data.tariff_count[i];
+                const entry = data.tariffs[i];
 
                 const component_name = entry['name'];
                 const component_value =  entry['energy'];
@@ -135,7 +135,7 @@ export class ProposalDetail extends Component {
             table_data[hora] = una_hora;
         }
 
-        const avg_tariff_table = (data.tariff_count) &&
+        const avg_tariff_table = (data.tariffs) &&
             <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false}/>
 
 
@@ -153,7 +153,7 @@ export class ProposalDetail extends Component {
 
                     <div>
                         <h3>TARIFF COUNT</h3>
-                        {tariff_count}
+                        {tariffs}
                     </div>
 
                     <br/>
