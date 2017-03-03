@@ -63,9 +63,9 @@ export class ProposalDetail extends Component {
 
         //handle tariff tiles
         let cups_per_tariff = {};
-        const tariff_count = (data.tariff_count) &&
+        const tariff_count = (data.tariffs) &&
 
-            Object.keys(data.tariff_count).map(function(i) {
+            Object.keys(data.tariffs).map(function(i) {
                 const entry = data.tariff_count[i];
 
                 const component_name = entry['name'];
