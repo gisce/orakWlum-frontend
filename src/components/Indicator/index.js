@@ -113,7 +113,11 @@ export class Indicator extends Component {
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
                     <span style={styles.value}>{value}</span>
+                    { 
+                        (subvalue != "") && 
+
                     <span style={styles.subvalue}>{subvalue}</span>
+                    }
                     {visual_indicator}
                 </div>
             </Paper>
