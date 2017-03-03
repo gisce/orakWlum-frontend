@@ -63,6 +63,7 @@ export class ProposalDetail extends Component {
 
         //total tariffs count
         const total_tariffs_count = data.tariff_total_count;
+        const total_tariffs_sum = data.measures_total;
 
         //handle tariff tiles
         let cups_per_tariff = {};
@@ -78,7 +79,7 @@ export class ProposalDetail extends Component {
 
                 const color = colors[original_position];
 
-                cups_per_tariff[component_name] = component_value;
+                cups_per_tariff[component_name] = component_subvalue;
 
                 return (
                     <Indicator
@@ -86,7 +87,7 @@ export class ProposalDetail extends Component {
                         title={ (component_name!="")?component_name:"Empty"}
                         value={component_value}
                         subvalue={component_subvalue}
-                        total={total_tariffs_count}
+                        total={total_tariffs_sum}
                         percentage={true}
                         small={true}
                         color={color}
