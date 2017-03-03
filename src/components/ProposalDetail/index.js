@@ -69,8 +69,8 @@ export class ProposalDetail extends Component {
                 const entry = data.tariff_count[i];
 
                 const component_name = entry['name'];
-                const component_value =  entry['count'];
-                const component_subvalue =  entry['position'];
+                const component_value =  entry['energy'];
+                const component_subvalue =  entry['count'];
                 const original_position =  entry['position'];
 
                 const color = colors[original_position];
