@@ -284,13 +284,9 @@ export class Proposal extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
 
-        console.log("toggling", this.detail_open);
-        /*
         this.setState({
-            message_open: true,
-            confirmation_open: false,
+            detail_open: this.detail_open,
         });
-        */
     };
 
 
@@ -444,8 +440,7 @@ export class Proposal extends Component {
 
         const toggleDetail = this.toggleDetail;
 
-        let detail_open = this.detail_open;
-
+        const detail_open = this.detail_open;
 
         const actionsButtons = [
           <FlatButton
@@ -575,11 +570,10 @@ export class Proposal extends Component {
 
 
 
-        const proposalDetail = (summary != null) &&
+        const proposalDetail = (summary != null) && 
           <div style={styles.cardSeparator}>
               <ProposalDetail
                   data={summary}
-                  open={detail_open}
                   avg_info={{
                       'data': data,
                       'components': components,
