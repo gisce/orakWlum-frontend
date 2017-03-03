@@ -134,7 +134,7 @@ Indicator.propTypes = {
     subvalue: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.number,
-    ]).isRequired,
+    ]),
     percentage: React.PropTypes.bool,
     total: React.PropTypes.number,
     small: React.PropTypes.bool,
