@@ -114,9 +114,10 @@ export class Indicator extends Component {
                     <h3 style={styles.header}>{title}</h3>
                     <span style={styles.value}>{value}</span>
                     { 
-                        (subvalue != "") && 
+                        (subvalue != "" && subvalue != null) && 
 
                     <span style={styles.subvalue}><br/>{subvalue}</span>
+
                     }
                     {visual_indicator}
                 </div>
