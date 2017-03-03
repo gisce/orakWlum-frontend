@@ -30,6 +30,7 @@ import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import ExportIcon from 'material-ui/svg-icons/file/file-download';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -372,6 +373,20 @@ export class Proposal extends Component {
         this.props.deleteProposal(token, proposalID);
     };
 
+    exportProposal = (event, proposalID) => {
+        event.preventDefault();
+
+        this.setState({
+            animateChart: false,
+            message_text: "Exporting current proposal",
+            confirmation_open: false,
+        });
+
+        const token = this.props.token;
+        this.props.exportProposal(token, proposalID);
+    };
+
+
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
@@ -425,6 +440,7 @@ export class Proposal extends Component {
         const reRunProposal = this.reRunProposalQuestion;
         const duplicateProposal = this.duplicateProposalQuestion;
         const deleteProposal = this.deleteProposalQuestion;
+        const exportProposal=this.exportProposal;
 
         const toggleDetail = this.toggleDetail;
 
@@ -612,6 +628,7 @@ export class Proposal extends Component {
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
                 <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
+                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>

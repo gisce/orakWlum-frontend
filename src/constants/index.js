@@ -69,6 +69,8 @@ export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
 export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
 
+export const EXPORT_PROPOSAL_REQUEST = 'EXPORT_PROPOSAL_REQUEST';
+
 export const colors = [
     '#db4939',
     '#f29913',
