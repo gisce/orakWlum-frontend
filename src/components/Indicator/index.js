@@ -75,8 +75,9 @@ export class Indicator extends Component {
             backgroundColor: which_color,
         }, styles.paper);
 
-        const {title, value} = this.props;
+        const {title, value, subvalue} = this.props;
         const value_asInt = parseInt(value);
+        const subvalue_asInt = parseInt(subvalue);
 
         const is_percentage = (this.props.percentage)?this.props.percentage:false;
         const total = (this.props.total)?parseInt(this.props.total):0;
@@ -112,6 +113,7 @@ export class Indicator extends Component {
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
                     <span style={styles.value}>{value}</span>
+                    <span style={styles.subvalue}>{subvalue}</span>
                     {visual_indicator}
                 </div>
             </Paper>
@@ -122,6 +124,10 @@ export class Indicator extends Component {
 Indicator.propTypes = {
     title: React.PropTypes.string.isRequired,
     value: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+    ]).isRequired,
+    subvalue: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.number,
     ]).isRequired,
