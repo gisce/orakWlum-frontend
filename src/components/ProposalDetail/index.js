@@ -85,8 +85,8 @@ export class ProposalDetail extends Component {
                     <Indicator
                         key={"indicator_"+component_name}
                         title={ (component_name!="")?component_name:"Empty"}
-                        value={component_value}
-                        subvalue={component_subvalue}
+                        value={component_value + " kW"}
+                        subvalue={"#" + component_subvalue}
                         total={total_tariffs_sum}
                         percentage={true}
                         small={true}
