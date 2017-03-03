@@ -284,6 +284,8 @@ export class Proposal extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
 
+        this.animateChart = false;
+
         this.setState({
             detail_open: this.detail_open,
         });
