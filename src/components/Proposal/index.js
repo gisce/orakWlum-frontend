@@ -570,7 +570,7 @@ export class Proposal extends Component {
 
 
 
-        const proposalDetail = (summary != null) && 
+        const proposalDetail = (summary != null) && (detail_open == true) &&
           <div style={styles.cardSeparator}>
               <ProposalDetail
                   data={summary}
