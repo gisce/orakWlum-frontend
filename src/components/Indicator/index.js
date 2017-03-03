@@ -32,8 +32,8 @@ const styles = {
         width: 200,
     },
     smallSize: {
-        height: 200,
-        width: 120,
+        height: 220,
+        width: 150,
     },
     kingSize: {
         height: 300,
