@@ -116,7 +116,7 @@ export class Indicator extends Component {
                     { 
                         (subvalue != "") && 
 
-                    <span style={styles.subvalue}>{subvalue}</span>
+                    <span style={styles.subvalue}><br/>{subvalue}</span>
                     }
                     {visual_indicator}
                 </div>
