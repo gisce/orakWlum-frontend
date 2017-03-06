@@ -21,24 +21,35 @@ const styles = {
         textAlign: 'center',
         overflow:'auto',
     },
+    header: {
+        fontSize: 25,
+        textDecoration: 'underline',
+    },
     value: {
         fontSize: 35,
     },
-    header: {
-        fontSize: 22,
+    valueUnit: {
+        fontSize: 20,
+    },
+    subvalue: {
+        fontSize: 20,
     },
     normalSize: {
         height: 200,
         width: 200,
     },
     smallSize: {
-        height: 200,
-        width: 120,
+        height: 260,
+        width: 150,
     },
     kingSize: {
         height: 300,
         width: 300,
-    }
+    },
+    indicatorHeader: {
+        fontSize: 35,
+        fontWeight: 300,
+    },
 };
 
 
@@ -55,8 +66,6 @@ export class Indicator extends Component {
         const which_size = (is_small)? styles.smallSize : styles.normalSize;
 
         const which_color = (this.props.color)? this.props.color : false;
-
-
 
         const style_color = (which_color)?
             {
@@ -75,8 +84,12 @@ export class Indicator extends Component {
             backgroundColor: which_color,
         }, styles.paper);
 
-        const {title, value} = this.props;
+        const {title, value, subvalue} = this.props;
         const value_asInt = parseInt(value);
+        const subvalue_asInt = parseInt(subvalue);
+
+        const valueInfo = (this.props.valueInfo)?this.props.valueInfo:null;
+        const subvalueInfo = (this.props.subvalueInfo)?this.props.subvalueInfo:null;
 
         const is_percentage = (this.props.percentage)?this.props.percentage:false;
         const total = (this.props.total)?parseInt(this.props.total):0;
@@ -85,7 +98,7 @@ export class Indicator extends Component {
 
         const visual_indicator = (is_percentage) && (total>=0) ?
             (
-                <div style={styles.fixedSize}>
+                <div title={valueInfo} style={styles.fixedSize}>
                     <CircularProgress
                         mode="determinate"
                         value={value_asInt}
@@ -95,7 +108,7 @@ export class Indicator extends Component {
                         color= {style_color.color}
                     />
                     <br/>
-                    {((value_asInt/total)*100).toFixed(1)}%
+                    <span title={valueInfo}>{((value_asInt/total)*100).toFixed(1)}%</span>
                 </div>
             )
             :
@@ -107,11 +120,41 @@ export class Indicator extends Component {
 
             ;
 
+
+        const has_unit = (value.toString().search(" ")>-1)?true:false;
+        const value_list = value.toString().split(" ");
+
+        const hasSubvalue = (subvalue != "" && subvalue != null)
+
+        const separator = (hasSubvalue)?<br/>:null;
+
         return (
             <Paper key={"invoice_"+title} style={paper_style} zDepth={styles.paperDepth}>
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
-                    <span style={styles.value}>{value}</span>
+
+                    {separator}
+                    <span title={valueInfo} style={styles.value}>{value_list[0]}</span> 
+                    {
+                        (has_unit) &&
+                        <span 
+                            style={styles.valueUnit}
+                        >{value_list[1]}
+                        </span>
+                    }
+
+                    { 
+                        (hasSubvalue) &&
+                    <span 
+                        title={subvalueInfo}
+                        style={styles.subvalue}
+                    >
+                            <br/>{subvalue}
+                    </span>
+
+                    }
+                    {separator}
+                    {separator}
                     {visual_indicator}
                 </div>
             </Paper>
@@ -125,6 +168,12 @@ Indicator.propTypes = {
         React.PropTypes.string,
         React.PropTypes.number,
     ]).isRequired,
+    subvalue: React.PropTypes.oneOfType([
+        React.PropTypes.string,
+        React.PropTypes.number,
+    ]),
+    valueInfo: React.PropTypes.string,
+    subvalueInfo: React.PropTypes.string,
     percentage: React.PropTypes.bool,
     total: React.PropTypes.number,
     small: React.PropTypes.bool,

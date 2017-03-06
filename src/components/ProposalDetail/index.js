@@ -61,27 +61,33 @@ export class ProposalDetail extends Component {
         });
 
 
-        //handle tariff count
-        let cups_per_tariff = {};
-        const tariff_count = (data.tariff_count) &&
+        //total tariffs count
+        const total_tariffs_count = data.tariff_total_count;
+        const total_tariffs_sum = data.measures_total;
 
-            Object.keys(data.tariff_count).map(function(i) {
-                const entry = data.tariff_count[i];
+        //handle tariff tiles
+        let cups_per_tariff = {};
+        const tariffs = (data.tariffs) &&
+
+            Object.keys(data.tariffs).map(function(i) {
+                const entry = data.tariffs[i];
 
                 const component_name = entry['name'];
-                const component_value =  entry['count'];
+                const component_value =  entry['energy'];
+                const component_subvalue =  entry['count'];
                 const original_position =  entry['position'];
 
                 const color = colors[original_position];
 
-                cups_per_tariff[component_name] = component_value;
+                cups_per_tariff[component_name] = component_subvalue;
 
                 return (
                     <Indicator
                         key={"indicator_"+component_name}
                         title={ (component_name!="")?component_name:"Empty"}
-                        value={component_value}
-                        total={data.tariff_total}
+                        value={component_value + " kW"}
+                        subvalue={"#" + component_subvalue}
+                        total={total_tariffs_sum}
                         percentage={true}
                         small={true}
                         color={color}
@@ -108,6 +114,8 @@ export class ProposalDetail extends Component {
                     title="Invoices"
                     value={data.invoice_total}
                     icon={<InvoicesIcon style={styles.icon}/>}
+                    valueInfo="Amount of energy in kW"
+                    subvalueInfo="Count of CUPS"
                 />
             );
 
@@ -130,7 +138,7 @@ export class ProposalDetail extends Component {
             table_data[hora] = una_hora;
         }
 
-        const avg_tariff_table = (data.tariff_count) &&
+        const avg_tariff_table = (data.tariffs) &&
             <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false}/>
 
 
@@ -147,15 +155,15 @@ export class ProposalDetail extends Component {
                     <br/>
 
                     <div>
-                        <h3>TARIFF COUNT</h3>
-                        {tariff_count}
+                        <h2>TARIFFS INFO</h2>
+                        {tariffs}
                     </div>
 
                     <br/>
                     <br/>
 
                     <div>
-                        <h3>TARIFF AVG</h3>
+                        <h2>TARIFFS AVERAGE</h2>
                         {avg_tariff_table}
                     </div>
 

@@ -58,11 +58,11 @@ export class ProposalTableMaterial extends Component {
                 <div>
                     <br/>
                     <p>
-                        Sorry, but <strong>there too many components</strong> to render using this aggregation, and the <strong>table will be un-usable</strong>.
+                        Sorry, but <strong>there are too many components to render</strong> using this aggregation, the <strong>table will be un-usable</strong>.
                     </p>
 
                     <p>
-                        Change to chart view or select another aggregation to review their related table.
+                        Export the Proposal to a spreadsheet, toggle to chart view or select another aggregation to view their table.
                     </p>
                     <br/>
                 </div>
