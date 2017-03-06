@@ -577,18 +577,36 @@ export class Proposal extends Component {
 
 
 
+        const proposalActions =
+             (!readOnly)?
+              <CardActions>
+                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
+                <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
+                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)}/>
+                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
+                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
+              </CardActions>
+            :
+            none;
+
+
         const proposalDetail = (summary != null) && (detail_open == true) &&
-          <div style={styles.cardSeparator}>
-              <ProposalDetail
-                  data={summary}
-                  avg_info={{
-                      'data': data,
-                      'components': components,
-                  }}
-              />
+		  <div>
+			  {proposalActions}
+			  <div style={styles.cardSeparator}>
+
+				  <ProposalDetail
+					  data={summary}
+					  avg_info={{
+						  'data': data,
+						  'components': components,
+					  }}
+				  />
+			  </div>
           </div>
         ;
-
 
 
         // The resulting Proposal element
@@ -618,23 +636,16 @@ export class Proposal extends Component {
                   <p><span>Last execution was done at {lastExecution}</span></p>
           }
               </CardText>
+	
+			  <br/>
 
-          {proposalPicture}
+			  {proposalPicture}
 
-          {proposalDetail}
+			  <br/>
 
-          {
-              !readOnly &&
-              <CardActions>
-                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
-                <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
-                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
-                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)}/>
-                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
-                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
-                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
-              </CardActions>
-          }
+			  {proposalDetail}
+
+			  {proposalActions}
 
             </Card>
         );
