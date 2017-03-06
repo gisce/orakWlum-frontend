@@ -119,6 +119,7 @@ export class Indicator extends Component {
             ;
 
 
+        const has_unit = (value.toString().search(" ")>-1)?true:false;
         const value_list = value.toString().split(" ");
 
         return (
@@ -126,7 +127,12 @@ export class Indicator extends Component {
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
 
-                    <span style={styles.value}>{value_list[0]}</span> <span style={styles.valueUnit}>{value_list[1]}</span>
+                    <span style={styles.value}>{value_list[0]}</span> 
+                    {
+                        (has_unit) &&
+                        <span style={styles.valueUnit}>{value_list[1]}</span>
+                    }
+
                     { 
                         (subvalue != "" && subvalue != null) && 
 
