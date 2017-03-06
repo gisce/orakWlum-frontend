@@ -447,7 +447,7 @@ export class Proposal extends Component {
 
         const detail_open = this.detail_open;
 
-        const DetailIcon = (detail_open == false)?ExpandIcon:CollapseIcon;
+        const DetailIcon = (detail_open == true)?CollapseIcon:ExpandIcon;
 
         const actionsButtons = [
           <FlatButton
