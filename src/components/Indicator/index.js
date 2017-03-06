@@ -22,10 +22,16 @@ const styles = {
         overflow:'auto',
     },
     header: {
-        fontSize: 22,
+        fontSize: 25,
     },
     value: {
         fontSize: 35,
+    },
+    valueUnit: {
+        fontSize: 20,
+    },
+    subvalue: {
+        fontSize: 20,
     },
     normalSize: {
         height: 200,
@@ -120,7 +126,7 @@ export class Indicator extends Component {
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
 
-                    <span style={styles.value}>{value_list[0]}</span> {value_list[1]}
+                    <span style={styles.value}>{value_list[0]}</span> <span style={styles.valueUnit}>{value_list[1]}</span>
                     { 
                         (subvalue != "" && subvalue != null) && 
 
