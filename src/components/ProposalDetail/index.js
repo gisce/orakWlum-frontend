@@ -153,7 +153,7 @@ export class ProposalDetail extends Component {
                     <br/>
 
                     <div>
-                        <h3>TARIFF COUNT</h3>
+                        <h2>TARIFFS INFO</h2>
                         {tariffs}
                     </div>
 
@@ -161,7 +161,7 @@ export class ProposalDetail extends Component {
                     <br/>
 
                     <div>
-                        <h3>TARIFF AVG</h3>
+                        <h2>TARIFFS AVERAGE</h2>
                         {avg_tariff_table}
                     </div>
 
