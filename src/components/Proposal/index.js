@@ -585,7 +585,7 @@ export class Proposal extends Component {
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)} title={"Export Proposal to a XLS file"}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
-                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
               </CardActions>
             :
