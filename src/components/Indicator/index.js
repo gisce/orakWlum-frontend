@@ -129,15 +129,24 @@ export class Indicator extends Component {
                     <h3 style={styles.header}>{title}</h3>
 
                     <br/>
-                    <span style={styles.value}>{value_list[0]}</span> 
+                    <span title={"Amount of energy in " + value_list[1]} style={styles.value}>{value_list[0]}</span> 
                     {
                         (has_unit) &&
-                        <span style={styles.valueUnit}>{value_list[1]}</span>
+                        <span 
+                            style={styles.valueUnit}
+                        >{value_list[1]}
+                        </span>
                     }
 
                     { 
                         (subvalue != "" && subvalue != null) && 
-                    <span style={styles.subvalue}><br/>{subvalue}</span>
+                    <span 
+                        title={"Count of CUPS"}
+                        style={styles.subvalue}
+                    >
+                            <br/>{subvalue}
+                    </span>
+
                     }
                     <br/>
                     <br/>
