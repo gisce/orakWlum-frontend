@@ -26,7 +26,7 @@ const styles = {
         textDecoration: 'underline',
     },
     value: {
-        fontSize: 30,
+        fontSize: 35,
     },
     valueUnit: {
         fontSize: 20,
@@ -67,8 +67,6 @@ export class Indicator extends Component {
 
         const which_color = (this.props.color)? this.props.color : false;
 
-
-
         const style_color = (which_color)?
             {
                 backgroundColor: which_color,
@@ -89,6 +87,9 @@ export class Indicator extends Component {
         const {title, value, subvalue} = this.props;
         const value_asInt = parseInt(value);
         const subvalue_asInt = parseInt(subvalue);
+
+        const valueInfo = (this.props.valueInfo)?this.props.valueInfo:null;
+        const subvalueInfo = (this.props.subvalueInfo)?this.props.subvalueInfo:null;
 
         const is_percentage = (this.props.percentage)?this.props.percentage:false;
         const total = (this.props.total)?parseInt(this.props.total):0;
@@ -123,13 +124,17 @@ export class Indicator extends Component {
         const has_unit = (value.toString().search(" ")>-1)?true:false;
         const value_list = value.toString().split(" ");
 
+        const hasSubvalue = (subvalue != "" && subvalue != null)
+
+        const separator = (hasSubvalue)?<br/>:null;
+
         return (
             <Paper key={"invoice_"+title} style={paper_style} zDepth={styles.paperDepth}>
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
 
-                    <br/>
-                    <span title={"Amount of energy in " + value_list[1]} style={styles.value}>{value_list[0]}</span> 
+                    {separator}
+                    <span title={valueInfo} style={styles.value}>{value_list[0]}</span> 
                     {
                         (has_unit) &&
                         <span 
@@ -139,17 +144,17 @@ export class Indicator extends Component {
                     }
 
                     { 
-                        (subvalue != "" && subvalue != null) && 
+                        (hasSubvalue) &&
                     <span 
-                        title={"Count of CUPS"}
+                        title={subvalueInfo}
                         style={styles.subvalue}
                     >
                             <br/>{subvalue}
                     </span>
 
                     }
-                    <br/>
-                    <br/>
+                    {separator}
+                    {separator}
                     {visual_indicator}
                 </div>
             </Paper>
@@ -167,6 +172,8 @@ Indicator.propTypes = {
         React.PropTypes.string,
         React.PropTypes.number,
     ]),
+    valueInfo: React.PropTypes.string,
+    subvalueInfo: React.PropTypes.string,
     percentage: React.PropTypes.bool,
     total: React.PropTypes.number,
     small: React.PropTypes.bool,
