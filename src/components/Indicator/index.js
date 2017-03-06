@@ -23,9 +23,10 @@ const styles = {
     },
     header: {
         fontSize: 25,
+        textDecoration: 'underline',
     },
     value: {
-        fontSize: 35,
+        fontSize: 30,
     },
     valueUnit: {
         fontSize: 20,
@@ -38,7 +39,7 @@ const styles = {
         width: 200,
     },
     smallSize: {
-        height: 220,
+        height: 260,
         width: 150,
     },
     kingSize: {
@@ -127,6 +128,7 @@ export class Indicator extends Component {
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
 
+                    <br/>
                     <span style={styles.value}>{value_list[0]}</span> 
                     {
                         (has_unit) &&
@@ -135,10 +137,10 @@ export class Indicator extends Component {
 
                     { 
                         (subvalue != "" && subvalue != null) && 
-
                     <span style={styles.subvalue}><br/>{subvalue}</span>
-
                     }
+                    <br/>
+                    <br/>
                     {visual_indicator}
                 </div>
             </Paper>
