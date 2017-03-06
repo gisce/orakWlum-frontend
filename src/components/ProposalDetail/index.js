@@ -114,6 +114,8 @@ export class ProposalDetail extends Component {
                     title="Invoices"
                     value={data.invoice_total}
                     icon={<InvoicesIcon style={styles.icon}/>}
+                    valueInfo="Amount of energy in kW"
+                    subvalueInfo="Count of CUPS"
                 />
             );
 
