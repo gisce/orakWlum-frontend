@@ -98,7 +98,7 @@ export class Indicator extends Component {
 
         const visual_indicator = (is_percentage) && (total>=0) ?
             (
-                <div style={styles.fixedSize}>
+                <div title={valueInfo} style={styles.fixedSize}>
                     <CircularProgress
                         mode="determinate"
                         value={value_asInt}
@@ -108,7 +108,7 @@ export class Indicator extends Component {
                         color= {style_color.color}
                     />
                     <br/>
-                    {((value_asInt/total)*100).toFixed(1)}%
+                    <span title={valueInfo}>{((value_asInt/total)*100).toFixed(1)}%</span>
                 </div>
             )
             :
