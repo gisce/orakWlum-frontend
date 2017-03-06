@@ -21,11 +21,11 @@ const styles = {
         textAlign: 'center',
         overflow:'auto',
     },
-    value: {
-        fontSize: 35,
-    },
     header: {
         fontSize: 22,
+    },
+    value: {
+        fontSize: 35,
     },
     normalSize: {
         height: 200,
@@ -38,7 +38,11 @@ const styles = {
     kingSize: {
         height: 300,
         width: 300,
-    }
+    },
+    indicatorHeader: {
+        fontSize: 35,
+        fontWeight: 300,
+    },
 };
 
 
@@ -108,11 +112,15 @@ export class Indicator extends Component {
 
             ;
 
+
+        const value_list = value.toString().split(" ");
+
         return (
             <Paper key={"invoice_"+title} style={paper_style} zDepth={styles.paperDepth}>
                 <div style={{ color: style_color.color }}>
                     <h3 style={styles.header}>{title}</h3>
-                    <span style={styles.value}>{value}</span>
+
+                    <span style={styles.value}>{value_list[0]}</span> {value_list[1]}
                     { 
                         (subvalue != "" && subvalue != null) && 
 
