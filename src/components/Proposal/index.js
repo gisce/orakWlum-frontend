@@ -26,7 +26,8 @@ import Dialog from 'material-ui/Dialog';
 //Icons
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
-import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
+import ExpandIcon from 'material-ui/svg-icons/navigation/expand-more';
+import CollapseIcon from 'material-ui/svg-icons/navigation/expand-less';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
@@ -413,6 +414,8 @@ export class Proposal extends Component {
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
+
+
         let daysRange_toShow;
         if (historical == false) {
              daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
@@ -443,6 +446,8 @@ export class Proposal extends Component {
         const toggleDetail = this.toggleDetail;
 
         const detail_open = this.detail_open;
+
+        const DetailIcon = (detail_open == false)?ExpandIcon:CollapseIcon;
 
         const actionsButtons = [
           <FlatButton
