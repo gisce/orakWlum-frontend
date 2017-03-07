@@ -111,7 +111,7 @@ export class ProposalGraph extends Component {
             });
             //*/
 
-            const unit = "kWh";
+            const unit = (typeof this.props.unit != 'undefined')?this.props.unit:"kWh";
 
             if (isAreaChart) {
               const areas = Object.keys(components).map(function(component, i) {
@@ -239,4 +239,5 @@ ProposalGraph.propTypes = {
     animated: React.PropTypes.bool,
     width: React.PropTypes.number,
     height: React.PropTypes.number,
+    unit: React.PropTypes.string,
 };
