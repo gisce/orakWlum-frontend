@@ -139,7 +139,7 @@ export class ProposalDetail extends Component {
         }
 
         const avg_tariff_table = (data.tariffs) &&
-            <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false}/>
+            <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false} unit={"kWh"}/>
 
 
         return (
