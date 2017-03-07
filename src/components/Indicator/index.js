@@ -40,7 +40,7 @@ const styles = {
     },
     smallSize: {
         height: 260,
-        width: 150,
+        width: 180,
     },
     kingSize: {
         height: 300,
