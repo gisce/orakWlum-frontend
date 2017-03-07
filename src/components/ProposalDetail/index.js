@@ -85,7 +85,7 @@ export class ProposalDetail extends Component {
                     <Indicator
                         key={"indicator_"+component_name}
                         title={ (component_name!="")?component_name:"Empty"}
-                        value={component_value + " kW"}
+                        value={component_value + " kWh"}
                         subvalue={"#" + component_subvalue}
                         total={total_tariffs_sum}
                         percentage={true}
@@ -139,7 +139,7 @@ export class ProposalDetail extends Component {
         }
 
         const avg_tariff_table = (data.tariffs) &&
-            <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false}/>
+            <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false} unit={"kWh"}/>
 
 
         return (

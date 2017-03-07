@@ -569,9 +569,9 @@ export class Proposal extends Component {
                 (proposal.prediction) &&
                   (
                       (proposalTable)?
-                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
+                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
                           :
-                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )
                   :null;
 

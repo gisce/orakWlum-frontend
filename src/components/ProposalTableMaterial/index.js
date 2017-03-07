@@ -32,6 +32,10 @@ const styles = {
     },
     hourColumn: {
     },
+    disclamer:{
+        textAlign: 'center',
+        margin: 5,
+    }
 };
 
 
@@ -50,6 +54,7 @@ export class ProposalTableMaterial extends Component {
         //Add totals by default
         const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
 
+        const disclamer = (typeof this.props.unit != 'undefined' && this.props.unit != null)?<div style={styles.disclamer}><span>*All entries in this table are in {this.props.unit}.</span></div>:null;
 
         const howManyComponents = Object.keys(components).length;
 
@@ -220,6 +225,7 @@ export class ProposalTableMaterial extends Component {
                         {rows}
                     </TableBody>
                 </Table>
+                {disclamer}
             </div>
         );
     }
@@ -231,4 +237,5 @@ ProposalTableMaterial.propTypes = {
     colors: React.PropTypes.object,
     type: React.PropTypes.bool,
     totals: React.PropTypes.bool,
+    unit: React.PropTypes.string,
 };

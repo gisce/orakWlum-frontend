@@ -29,6 +29,7 @@ const styles = {
         fontSize: 35,
     },
     valueUnit: {
+        marginLeft: 4,
         fontSize: 20,
     },
     subvalue: {
@@ -40,7 +41,7 @@ const styles = {
     },
     smallSize: {
         height: 260,
-        width: 150,
+        width: 180,
     },
     kingSize: {
         height: 300,
