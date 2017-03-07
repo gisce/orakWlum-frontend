@@ -29,6 +29,7 @@ const styles = {
         fontSize: 35,
     },
     valueUnit: {
+        marginLeft: 4,
         fontSize: 20,
     },
     subvalue: {
