@@ -14,6 +14,7 @@ import NotFound from './components/NotFound';
 import Proposals from './components/ProposalsView';
 import Proposal from './components/ProposalView';
 import ProposalNew from './components/ProposalNewView';
+import Historical from './components/HistoricalView';
 import HistoryNewView from './components/HistoryNewView';
 import Profile from './components/ProfileView';
 import About from './components/AboutView';
@@ -32,8 +33,10 @@ export default (
         <Route path="history" component={requireAuthentication(Analytics)} />
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
-        <Route path="historics/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
+        <Route path="historics" component={requireAuthentication(HistoricalView)} />
+        <Route path="historics/:historicalId" component={requireAuthentication(HistoricalView)} />
+        <Route path="historics/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="about"   component={requireAuthentication(About)} />
