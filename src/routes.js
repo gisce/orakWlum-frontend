@@ -34,7 +34,7 @@ export default (
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
-        <Route path="historics" component={requireAuthentication(HistoricalView)} />
+        <Route path="historics" component={requireAuthentication(Historical)} />
         <Route path="historics/:historicalId" component={requireAuthentication(HistoricalView)} />
         <Route path="historics/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
