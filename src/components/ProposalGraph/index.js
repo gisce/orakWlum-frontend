@@ -111,7 +111,7 @@ export class ProposalGraph extends Component {
             });
             //*/
 
-            const unit = "kW";
+            const unit = "kWh";
 
             if (isAreaChart) {
               const areas = Object.keys(components).map(function(component, i) {
