@@ -22,7 +22,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ProposalView extends React.Component {
+export default class HistoricalView extends React.Component {
     componentDidMount() {
         this.fetchData();
     }
@@ -63,7 +63,7 @@ export default class ProposalView extends React.Component {
     }
 }
 
-ProposalView.propTypes = {
+HistoricalView.propTypes = {
     loaded: React.PropTypes.bool,
     data: React.PropTypes.any,
     token: React.PropTypes.string,
