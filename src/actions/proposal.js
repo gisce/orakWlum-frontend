@@ -205,18 +205,19 @@ export function createProposal(token, proposal) {
 }
 
 
+// toDo integrate Historical actions instead of this
 export function createHistoricProposal(token, proposal) {
     return (dispatch) => {
         dispatch(createProposalRequest());
-        data_create_api_resource(token, "historic/", proposal)
+        data_create_api_resource(token, "historical/", proposal)
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
                     dispatch(fetchProposal(token, response.result.id));
-                    dispatch(redirectToRoute("/proposals/"+response.result.id));
+                    dispatch(redirectToRoute("/historicals/"+response.result.id));
                 }
                 else {
-                    console.log("error creating proposal " + proposal);
+                    console.log("error creating historical " + proposal);
                 }
             })
             .catch(error => {
