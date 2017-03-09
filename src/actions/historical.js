@@ -1,35 +1,35 @@
-import { EXPORT_PROPOSAL_REQUEST, FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
+import { EXPORT_HISTORICAL_REQUEST, FETCH_HISTORICAL_REQUEST, RUN_HISTORICAL_REQUEST, RECEIVE_HISTORICAL, RECEIVE_RUN_HISTORICAL, RECEIVE_RUN_HISTORICAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_HISTORICAL_REQUEST, DELETE_HISTORICAL_REQUEST, CREATE_HISTORICAL_REQUEST } from '../constants/index'
 import { data_download_api_resource, data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
-import { fetchProposals } from './proposals'
+import { fetchHistoricals } from './historicals'
 
 
 
 
 /*******************
   ################
-   FETCH PROPOSAL
+   FETCH HISTORICAL
   ################
 *******************/
 
-export function fetchProposalRequest(initial) {
-    const message = (initial)?null:"Fetching proposal";
+export function fetchHistoricalRequest(initial) {
+    const message = (initial)?null:"Fetching historical";
     return {
-        type: FETCH_PROPOSAL_REQUEST,
+        type: FETCH_HISTORICAL_REQUEST,
         payload: {
             message,
         },
     };
 }
 
-export function fetchProposal(token, proposal, initial=false) {
+export function fetchHistorical(token, historical, initial=false) {
     return (dispatch) => {
-        dispatch(fetchProposalRequest(initial));
-        data_fetch_api_resource(token, "proposal/" + proposal)
+        dispatch(fetchHistoricalRequest(initial));
+        data_fetch_api_resource(token, "historical/" + historical)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveProposal(response.result, response.aggregations, initial));
+                dispatch(receiveHistorical(response.result, response.aggregations, initial));
             })
             .catch(error => {
                 if (error.status === 401) {
@@ -39,10 +39,10 @@ export function fetchProposal(token, proposal, initial=false) {
     };
 }
 
-export function receiveProposal(data, aggregations, initial) {
-    const message = (initial)?null:"Refreshing proposal";
+export function receiveHistorical(data, aggregations, initial) {
+    const message = (initial)?null:"Refreshing historical";
     return {
-        type: RECEIVE_PROPOSAL,
+        type: RECEIVE_HISTORICAL,
         payload: {
             data,
             aggregations,
@@ -56,30 +56,30 @@ export function receiveProposal(data, aggregations, initial) {
 
 /******************
   ##############
-   RUN PROPOSAL
+   RUN HISTORICAL
   ##############
 +*****************/
 
-export function runProposalRequest() {
-    const message = "(re)Processing proposal";
+export function runHistoricalRequest() {
+    const message = "(re)Processing historical";
 
     return {
-        type: RUN_PROPOSAL_REQUEST,
+        type: RUN_HISTORICAL_REQUEST,
         payload: {
             message,
         },
     };
 }
 
-export function runProposal(token, proposal) {
+export function runHistorical(token, historical) {
     const errorType = "Processing error";
 
     return (dispatch) => {
-        dispatch(runProposalRequest());
-        data_fetch_api_resource(token, "proposal/" + proposal + "/run/")
+        dispatch(runHistoricalRequest());
+        data_fetch_api_resource(token, "historical/" + historical + "/run/")
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveRunProposal(response.result, response.aggregations));
+                dispatch(receiveRunHistorical(response.result, response.aggregations));
             })
             .catch(error => {
                 const data = error.response.data;
@@ -88,7 +88,7 @@ export function runProposal(token, proposal) {
                     case 406:
                         console.log(errorType);
                         if (data.error)
-                            dispatch(receiveRunProposalError(errorType, data.message));
+                            dispatch(receiveRunHistoricalError(errorType, data.message));
                     break;
 
                     case 403:
@@ -106,11 +106,11 @@ export function runProposal(token, proposal) {
     };
 }
 
-export function receiveRunProposal(data, aggregations) {
-    const message = "Updating proposal with the result of the last execution";
+export function receiveRunHistorical(data, aggregations) {
+    const message = "Updating historical with the result of the last execution";
 
     return {
-        type: RECEIVE_RUN_PROPOSAL,
+        type: RECEIVE_RUN_HISTORICAL,
         payload: {
             data,
             aggregations,
@@ -119,11 +119,11 @@ export function receiveRunProposal(data, aggregations) {
     };
 }
 
-export function receiveRunProposalError(error, errorMessage) {
+export function receiveRunHistoricalError(error, errorMessage) {
     const message = error + ": " + errorMessage;
 
     return {
-        type: RECEIVE_RUN_PROPOSAL_ERROR,
+        type: RECEIVE_RUN_HISTORICAL_ERROR,
         payload: {
             message,
         },
@@ -135,28 +135,28 @@ export function receiveRunProposalError(error, errorMessage) {
 
 /************************
   ####################
-   DUPLICATE PROPOSAL
+   DUPLICATE HISTORICAL
   ####################
 +***********************/
 
-export function duplicateProposalRequest() {
+export function duplicateHistoricalRequest() {
     return {
-        type: DUPLICATE_PROPOSAL_REQUEST,
+        type: DUPLICATE_HISTORICAL_REQUEST,
     };
 }
 
-export function duplicateProposal(token, proposal) {
+export function duplicateHistorical(token, historical) {
     return (dispatch) => {
-        dispatch(duplicateProposalRequest());
-        data_fetch_api_resource(token, "proposal/" + proposal + "/duplicate/")
+        dispatch(duplicateHistoricalRequest());
+        data_fetch_api_resource(token, "historical/" + historical + "/duplicate/")
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(redirectToRoute("/proposals/"+response.result.id));
-                    dispatch(fetchProposal(token, response.result.id));
+                    dispatch(redirectToRoute("/historicals/"+response.result.id));
+                    dispatch(fetchHistorical(token, response.result.id));
                 }
                 else {
-                    console.log("error duplicating proposal " + proposal);
+                    console.log("error duplicating historical " + historical);
                 }
             })
             .catch(error => {
@@ -172,28 +172,28 @@ export function duplicateProposal(token, proposal) {
 
 /*********************
   #################
-   CREATE PROPOSAL
+   CREATE HISTORICAL
   #################
 +********************/
 
-export function createProposalRequest() {
+export function createHistoricalRequest() {
     return {
-        type: CREATE_PROPOSAL_REQUEST,
+        type: CREATE_HISTORICAL_REQUEST,
     };
 }
 
-export function createProposal(token, proposal) {
+export function createHistorical(token, historical) {
     return (dispatch) => {
-        dispatch(createProposalRequest());
-        data_create_api_resource(token, "proposal/", proposal)
+        dispatch(createHistoricalRequest());
+        data_create_api_resource(token, "historical/", historical)
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProposal(token, response.result.id));
-                    dispatch(redirectToRoute("/proposals/"+response.result.id));
+                    dispatch(fetchHistorical(token, response.result.id));
+                    dispatch(redirectToRoute("/historicals/"+response.result.id));
                 }
                 else {
-                    console.log("error creating proposal " + proposal);
+                    console.log("error creating historical " + historical);
                 }
             })
             .catch(error => {
@@ -205,19 +205,18 @@ export function createProposal(token, proposal) {
 }
 
 
-// toDo integrate Historical actions instead of this
-export function createHistoricProposal(token, proposal) {
+export function createHistoricHistorical(token, historical) {
     return (dispatch) => {
-        dispatch(createProposalRequest());
-        data_create_api_resource(token, "historical/", proposal)
+        dispatch(createHistoricalRequest());
+        data_create_api_resource(token, "historical/", historical)
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProposal(token, response.result.id));
+                    dispatch(fetchHistorical(token, response.result.id));
                     dispatch(redirectToRoute("/historicals/"+response.result.id));
                 }
                 else {
-                    console.log("error creating historical " + proposal);
+                    console.log("error creating historical " + historical);
                 }
             })
             .catch(error => {
@@ -232,24 +231,24 @@ export function createHistoricProposal(token, proposal) {
 
 /*********************
   #################
-   DELETE PROPOSAL
+   DELETE HISTORICAL
   #################
 *********************/
 
-export function deleteProposalRequest() {
+export function deleteHistoricalRequest() {
     return {
-        type: DELETE_PROPOSAL_REQUEST,
+        type: DELETE_HISTORICAL_REQUEST,
     };
 }
 
-export function deleteProposal(token, proposal) {
+export function deleteHistorical(token, historical) {
     return (dispatch) => {
-        dispatch(deleteProposalRequest());
-        data_delete_api_resource(token, "proposal/" + proposal + "/")
+        dispatch(deleteHistoricalRequest());
+        data_delete_api_resource(token, "historical/" + historical + "/")
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(redirectToRoute("/proposals"));
+                    dispatch(redirectToRoute("/historicals"));
                 }
                 else {
                     console.log("ERROR:" + response.result.message);
@@ -309,23 +308,23 @@ export function fetchAggregations(token) {
 
 /*********************
   #################
-   EXPORT PROPOSAL
+   EXPORT HISTORICAL
   #################
 *********************/
 
 
 var FileSaver = require('../../node_modules/file-saver/FileSaver.min.js');
 
-export function exportProposalRequest() {
+export function exportHistoricalRequest() {
     return {
-        type: EXPORT_PROPOSAL_REQUEST,
+        type: EXPORT_HISTORICAL_REQUEST,
     };
 }
 
-export function exportProposal(token, proposal) {
+export function exportHistorical(token, historical) {
     return (dispatch) => {
-        dispatch(exportProposalRequest());
-        data_download_api_resource(token, "proposal/" + proposal + "/xls/")
+        dispatch(exportHistoricalRequest());
+        data_download_api_resource(token, "historical/" + historical + "/xls/")
             .then(response => {
                const filename = response.headers["content-disposition"].split("=");
                FileSaver.saveAs(response.data, filename[1]);

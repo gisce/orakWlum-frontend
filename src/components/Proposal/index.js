@@ -589,7 +589,7 @@ export class Proposal extends Component {
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
               </CardActions>
             :
-            none;
+            null;
 
 
         const proposalDetail = (summary != null) && (detail_open == true) &&
