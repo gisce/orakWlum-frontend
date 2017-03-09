@@ -208,7 +208,7 @@ export function createHistorical(token, historical) {
 export function createHistoricHistorical(token, historical) {
     return (dispatch) => {
         dispatch(createHistoricalRequest());
-        data_create_api_resource(token, "historic/", historical)
+        data_create_api_resource(token, "historical/", historical)
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
