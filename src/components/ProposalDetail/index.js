@@ -54,7 +54,7 @@ export class ProposalDetail extends Component {
                         key={"indicator_"+component_name}
                         title={component_name}
                         value={component_value}
-                        total={data.invoice_total}
+                        total={data.total_by_types}
                         percentage={true}
                     />
                 )
