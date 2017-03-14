@@ -108,11 +108,11 @@ export class ProposalDetail extends Component {
 
 
         //Prepare Invoices count
-        const num_invoices =  (data.invoice_total) &&
+        const num_invoices =  (data.real_invoice_total) &&
             (
                 <Indicator
-                    title="Invoices"
-                    value={data.invoice_total}
+                    title="Real Invoices"
+                    value={data.real_invoice_total}
                     icon={<InvoicesIcon style={styles.icon}/>}
                     valueInfo="Amount of energy in kW"
                     subvalueInfo="Count of CUPS"
