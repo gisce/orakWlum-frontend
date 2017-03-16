@@ -32,6 +32,10 @@ const styles = {
     },
     hourColumn: {
     },
+    disclamer:{
+        textAlign: 'center',
+        margin: 5,
+    }
 };
 
 
@@ -50,6 +54,7 @@ export class ProposalTableMaterial extends Component {
         //Add totals by default
         const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
 
+        const disclamer = (typeof this.props.unit != 'undefined' && this.props.unit != null)?<div style={styles.disclamer}><span>*All table entries are <u>{this.props.unit}</u></span></div>:null;
 
         const howManyComponents = Object.keys(components).length;
 
@@ -58,11 +63,11 @@ export class ProposalTableMaterial extends Component {
                 <div>
                     <br/>
                     <p>
-                        Sorry, but <strong>there too many components</strong> to render using this aggregation, and the <strong>table will be un-usable</strong>.
+                        Sorry, but <strong>there are too many components to render</strong> using this aggregation, the <strong>table will be un-usable</strong>.
                     </p>
 
                     <p>
-                        Change to chart view or select another aggregation to review their related table.
+                        Export the Proposal to a spreadsheet, toggle to chart view or select another aggregation to view their table.
                     </p>
                     <br/>
                 </div>
@@ -220,6 +225,7 @@ export class ProposalTableMaterial extends Component {
                         {rows}
                     </TableBody>
                 </Table>
+                {disclamer}
             </div>
         );
     }
@@ -231,4 +237,5 @@ ProposalTableMaterial.propTypes = {
     colors: React.PropTypes.object,
     type: React.PropTypes.bool,
     totals: React.PropTypes.bool,
+    unit: React.PropTypes.string,
 };

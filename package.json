@@ -1,6 +1,6 @@
 {
   "name": "orakwlum-frontend",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "scripts": {
     "clean": "rimraf dist",
@@ -118,7 +118,8 @@
       "webpack-hot-middleware": "^2.15.0",
       "webpack-merge": "^2.3.1",
       "yargs": "^6.6.0",
-      "blueimp-md5": "latest"
+      "blueimp-md5": "latest",
+      "file-saver": "latest"
   },
   "dependencies": {}
 }

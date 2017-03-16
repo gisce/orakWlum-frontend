@@ -26,10 +26,12 @@ import Dialog from 'material-ui/Dialog';
 //Icons
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
-import DetailIcon from 'material-ui/svg-icons/navigation/expand-more';
+import ExpandIcon from 'material-ui/svg-icons/navigation/expand-more';
+import CollapseIcon from 'material-ui/svg-icons/navigation/expand-less';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import ExportIcon from 'material-ui/svg-icons/file/file-download';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -283,13 +285,11 @@ export class Proposal extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
 
-        console.log("toggling", this.detail_open);
-        /*
+        this.animateChart = false;
+
         this.setState({
-            message_open: true,
-            confirmation_open: false,
+            detail_open: this.detail_open,
         });
-        */
     };
 
 
@@ -372,6 +372,20 @@ export class Proposal extends Component {
         this.props.deleteProposal(token, proposalID);
     };
 
+    exportProposal = (event, proposalID) => {
+        event.preventDefault();
+
+        this.setState({
+            animateChart: false,
+            message_text: "Exporting current proposal",
+            confirmation_open: false,
+        });
+
+        const token = this.props.token;
+        this.props.exportProposal(token, proposalID);
+    };
+
+
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
@@ -400,6 +414,8 @@ export class Proposal extends Component {
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
+
+
         let daysRange_toShow;
         if (historical == false) {
              daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
@@ -425,11 +441,13 @@ export class Proposal extends Component {
         const reRunProposal = this.reRunProposalQuestion;
         const duplicateProposal = this.duplicateProposalQuestion;
         const deleteProposal = this.deleteProposalQuestion;
+        const exportProposal=this.exportProposal;
 
         const toggleDetail = this.toggleDetail;
 
-        let detail_open = this.detail_open;
+        const detail_open = this.detail_open;
 
+        const DetailIcon = (detail_open == true)?CollapseIcon:ExpandIcon;
 
         const actionsButtons = [
           <FlatButton
@@ -551,27 +569,44 @@ export class Proposal extends Component {
                 (proposal.prediction) &&
                   (
                       (proposalTable)?
-                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} />
+                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
                           :
-                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} />
+                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )
                   :null;
 
 
 
-        const proposalDetail = (summary != null) &&
-          <div style={styles.cardSeparator}>
-              <ProposalDetail
-                  data={summary}
-                  open={detail_open}
-                  avg_info={{
-                      'data': data,
-                      'components': components,
-                  }}
-              />
+        const proposalActions =
+             (!readOnly)?
+              <CardActions>
+                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)} title={"Refresh current proposal"}/>
+                <FlatButton label="Reprocess" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"}/>
+                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)} title={"Export Proposal to a XLS file"}/>
+                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
+                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
+              </CardActions>
+            :
+            null;
+
+
+        const proposalDetail = (summary != null) && (detail_open == true) &&
+		  <div>
+			  {proposalActions}
+			  <div style={styles.cardSeparator}>
+
+				  <ProposalDetail
+					  data={summary}
+					  avg_info={{
+						  'data': data,
+						  'components': components,
+					  }}
+				  />
+			  </div>
           </div>
         ;
-
 
 
         // The resulting Proposal element
@@ -601,22 +636,16 @@ export class Proposal extends Component {
                   <p><span>Last execution was done at {lastExecution}</span></p>
           }
               </CardText>
+	
+			  <br/>
 
-          {proposalPicture}
+			  {proposalPicture}
 
-          {proposalDetail}
+			  <br/>
 
-          {
-              !readOnly &&
-              <CardActions>
-                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)}/>
-                <FlatButton label="Run" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)}/>
-                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)}/>
-                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
-                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)}/>
-                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)}/>
-              </CardActions>
-          }
+			  {proposalDetail}
+
+			  {proposalActions}
 
             </Card>
         );
