@@ -30,4 +30,3 @@ RUN mkdir -p /var/log/orakwlum/
 # Add runnable script to start nginx patching host name
 ADD run_frontend.sh run_frontend.sh
 RUN chmod 700 run_frontend.sh
-CMD CMD /bin/bash run_frontend.sh
