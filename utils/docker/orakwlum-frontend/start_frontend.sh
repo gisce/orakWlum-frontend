@@ -1,12 +1,7 @@
 #!/bin/bash
 # Set Server Name
 if [ "$#" -ne 1 ]; then
-    def_serv_name="okW-frontend"
-    echo -n "Enter a server name to patch [$def_serv_name]: "
-    read server_name
-    if [ "$server_name" = "" ]; then
-        server_name=$def_serv_name
-    fi
+    server_name="okW-frontend"
 else
     server_name="$1"
 fi
