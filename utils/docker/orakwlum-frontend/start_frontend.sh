@@ -7,7 +7,7 @@ else
 fi
 name="frontend"
 container="okw/"$name
-ports="-p 8080:80 -p 443:443"
+ports="-p 80:80 -p 443:443"
 socket_path="/tmp/docker_sockets"
 if [ -d $socket_path ]; then
     mkdir -p $socket_path
