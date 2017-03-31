@@ -20,7 +20,7 @@ fi
 # Ensure permissions on socket
 chmod -R 777 $socket_path
 sockets="-v $socket_path:/tmp/"
-log_path="/var/log/nginx/frontend_docker"
+log_path="/var/log/orakwlum/frontend"
 if [ -d $log_path ]; then
     mkdir -p $log_path
 fi
