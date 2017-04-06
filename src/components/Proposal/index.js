@@ -468,7 +468,8 @@ export class Proposal extends Component {
         let components=null;
         let summary = null;
 
-        if (prediction) {
+
+        if (prediction && prediction.length > 0) {
             const predictionAdapted=adaptProposalData(prediction);
             const current = predictionAdapted[aggregationSelected];
             data = current.result;
@@ -566,7 +567,7 @@ export class Proposal extends Component {
         // The Proposal graph!
         const proposalPicture =
             (withPicture)?
-                (proposal.prediction) &&
+                (prediction && prediction.length > 0) &&
                   (
                       (proposalTable)?
                           <ProposalTableMaterial stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
@@ -636,7 +637,7 @@ export class Proposal extends Component {
                   <p><span>Last execution was done at {lastExecution}</span></p>
           }
               </CardText>
-	
+
 			  <br/>
 
 			  {proposalPicture}
