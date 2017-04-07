@@ -1,3 +1,14 @@
+function convertTimestampToString(timestamp){
+    const the_hour = new Date(timestamp);
+
+    return "" +
+        ("0" + the_hour.getHours()).slice(-2) +
+        ":" +
+        ("0" + the_hour.getMinutes()).slice(-2)
+    ;
+
+}
+
 export function adaptProposalData(proposalData, hour=24) {
     let result={};
 
@@ -36,9 +47,10 @@ export function adaptProposalData(proposalData, hour=24) {
             //Adapt the tmp_result dict to an ordered list (based on the timestamp, incremental)
             Object.keys(tmp_result).sort().map( function( tmp_entry, i) {
                 result[current_aggregation]['result'][i] = tmp_result[tmp_entry];
-            });
 
-            //console.log("GO", current_aggregation, hour);
+                const hour_string = convertTimestampToString(parseInt(tmp_entry));
+                result[current_aggregation]['result'][i]['name'] = hour_string;
+            });
 
     });
 
