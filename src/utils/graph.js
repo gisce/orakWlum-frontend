@@ -1,7 +1,75 @@
-
-
 export function adaptProposalData(proposalData, hour=24) {
     let result={};
+
+    console.log(proposalData);
+
+    Object.keys(proposalData).map( function(current_aggregation, j) {
+            console.log (j, current_aggregation);
+
+            const aggregation = proposalData[current_aggregation];
+
+            //initialize result for each aggregation
+            result[current_aggregation]={}
+            result[current_aggregation]['result']=[];
+
+            let tmp_result={}; //the temp dict
+
+            //the stacked components for the aggregation values ie F1, F5D, ... or F1,girona; F5D,girona; F1,barcelona; F5D,barcelona
+            result[current_aggregation]['components']={};
+
+/*
+            //initialize hours
+            for (var i=0; i<hour; i++) {
+                result[current_aggregation]['result'][i]={total: 0, name: i+1};
+            }
+*/
+
+            //set current aggregation ID and fields
+            result[current_aggregation]['aggregation']=aggregation['aggregation']['fields'];
+            result[current_aggregation]['aggregationID']=aggregation['aggregation']['id'];
+
+
+            aggregation.result.map( function(entry, i) {
+                const hour=entry['hour'];
+                const amount=entry['amount'];
+                const title=entry['title'];
+
+                // initialize result hour with an empty dict
+                if (!tmp_result[hour])
+                    tmp_result[hour]={total: 0, name: hour};
+
+                tmp_result[hour][title] = amount;
+                tmp_result[hour]["total"] += amount;
+
+                result[current_aggregation]['components'][title] = title;
+            });
+
+
+            //Adapt the tmp_result dict to a list!
+            Object.keys(tmp_result).map( function( tmp_entry, i) {
+                console.log(result[tmp_entry]);
+                result[current_aggregation]['result'][i] = tmp_result[tmp_entry];
+            });
+
+            //console.log("GO", current_aggregation, hour);
+
+    });
+
+    console.log(result);
+
+    return result;
+}
+
+
+
+
+
+
+export function adaptProposalData_preRefactor(proposalData, hour=24) {
+    let result={};
+
+    console.log(proposalData);
+
     const aggregationNum = proposalData.result.length;
 
     //initialize result for each aggregation
