@@ -401,7 +401,7 @@ export class Proposal extends Component {
 
         const historical = (proposal.historical == false)?false:true;
 
-        const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
         const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
@@ -409,21 +409,39 @@ export class Proposal extends Component {
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+        /// Process Proposal dates
+
+
+        console.log(proposal.days_range);
+        console.log(proposal.days_range_future);
+
+
+
+        const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
+        const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
+
+        const daysRange =
+            (proposalDaysRange.length == 1)?
+                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions)
+                :
+                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[1]).toLocaleDateString(locale, dateOptions);
+
+        const daysRangeFuture =
+            (proposalDaysRangeFuture.length == 1)?
+                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions)
+                :
+                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangeFuture[1]).toLocaleDateString(locale, dateOptions);
+
+        const daysRange_toShow = daysRangeFuture;
+
+
 
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
-
-
-        let daysRange_toShow;
-        if (historical == false) {
-             daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
-
-        } else {
-             daysRange_toShow = daysRange;
-        }
         const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
+
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
         const subtitle = <span>Using {days[dayOfProposal]} {day_string}</span>;
