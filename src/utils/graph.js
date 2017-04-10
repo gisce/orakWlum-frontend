@@ -42,7 +42,9 @@ export function adaptProposalData(proposalData, hour=24) {
                 tmp_result[hour][title] = amount;
                 tmp_result[hour]["total"] += amount;
 
-                result[current_aggregation]['components'][title] = title;
+                result[current_aggregation]['components'][title] = {
+                    'title': title,
+                };
             });
 
             //Adapt the tmp_result dict to an ordered list (based on the timestamp, incremental)

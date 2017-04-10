@@ -47,7 +47,6 @@ export class ProposalDetail extends Component {
         const origins_data = data.origins;
         const tariffs_data = data.tariffs;
 
-
         //Prepare CUPS count
         const num_cups = (total_cups) &&
             (
@@ -70,8 +69,6 @@ export class ProposalDetail extends Component {
                     subvalueInfo="Count of CUPS"
                 />
             );
-
-
 
 
         //handle invoice types
@@ -109,11 +106,15 @@ export class ProposalDetail extends Component {
 
         //handle tariff tiles
         const tariffs = (tariffs_data) &&
-            Object.keys(tariffs_data).sort(
+            Object.keys(tariffs_data)
+            /*.sort(
                 function (a, b){
                     return tariffs_data[a].order - tariffs_data[b].order;
                 }
-            ).map(function(tariff, i) {
+                )
+                */
+            .sort() //sort by key ASC
+            .map(function(tariff, i) {
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;

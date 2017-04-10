@@ -158,7 +158,9 @@ export class ProposalGraph extends Component {
               );
             }
             else {
-              const bars = Object.keys(components).map(function(component, i) {
+              const bars = Object.keys(components)
+              .sort() //sort by key ASC
+              .map(function(component, i) {
                   return <Bar
                             unit={unit}
                             isAnimationActive={isAnimated}
