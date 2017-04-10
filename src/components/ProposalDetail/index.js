@@ -109,7 +109,11 @@ export class ProposalDetail extends Component {
 
         //handle tariff tiles
         const tariffs = (tariffs_data) &&
-            Object.keys(tariffs_data).map(function(tariff, i) {
+            Object.keys(tariffs_data).sort(
+                function (a, b){
+                    return tariffs_data[a].order - tariffs_data[b].order;
+                }
+            ).map(function(tariff, i) {
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;
