@@ -41,18 +41,11 @@ export class ProposalDetail extends Component {
         //open it by default
         const open = (this.props.open)?this.props.open:true;
 
-
-
-
-
-
         const total_cups = data.cups;
         const energy_total = data.energy_total;
         const total_invoices = data.invoices;
         const origins_data = data.origins;
         const tariffs_data = data.tariffs;
-
-
 
 
         //Prepare CUPS count
@@ -83,12 +76,11 @@ export class ProposalDetail extends Component {
         //handle invoice types
         const invoice_types = (origins_data) &&
             Object.keys(origins_data).map(function(origin, i) {
-                console.log(origin);
-
                 const entry = origins_data[origin];
 
                 const component_name = origin;
-                const component_value =  entry['count'];
+                const component_value =  entry['energy'];
+                const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
                 const color = colors[original_position];
@@ -97,9 +89,11 @@ export class ProposalDetail extends Component {
                     <Indicator
                         key={"indicator_"+component_name}
                         title={component_name}
-                        value={component_value}
-                        total={total_invoices}
+                        value={component_value + " kWh"}
+                        subvalue={"#" + component_subvalue}
+                        total={energy_total}
                         percentage={true}
+                        small={true}
                     />
                 )
 
@@ -111,8 +105,6 @@ export class ProposalDetail extends Component {
         //handle tariff tiles
         const tariffs = (tariffs_data) &&
             Object.keys(tariffs_data).map(function(tariff, i) {
-                console.log(tariff);
-
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;
@@ -173,14 +165,17 @@ export class ProposalDetail extends Component {
                     {num_cups}
 
                     {num_invoices}
-
-                    {invoice_types}
-                    <br/>
                     <br/>
                     <br/>
 
                     <div>
-                        <h2>TARIFFS INFO</h2>
+                        <h2>ORIGINS</h2>
+                        {invoice_types}
+                    </div>
+                    <br/>
+
+                    <div>
+                        <h2>TARIFFS</h2>
                         {tariffs}
                     </div>
 
