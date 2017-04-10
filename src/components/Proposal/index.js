@@ -493,6 +493,7 @@ export class Proposal extends Component {
             summary = (prediction.summary != undefined)?prediction.summary:null;
         }
 
+
         // The Proposal status!
         const proposalStatus = (
             proposal.status &&
@@ -500,6 +501,7 @@ export class Proposal extends Component {
                 <ProposalTag tag={proposal.status} />
             </div>
         )
+
 
         // The Proposal Aggregations List
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
@@ -525,6 +527,7 @@ export class Proposal extends Component {
                 </div>
 
         )
+
 
         // The Proposal graph toogle! //to switch between table and chart
         const proposalPictureToggle = (
@@ -578,8 +581,6 @@ export class Proposal extends Component {
             )
 
 
-
-
         // The Proposal graph!
         const proposalPicture =
             (withPicture)?
@@ -591,7 +592,6 @@ export class Proposal extends Component {
                           <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )
                   :null;
-
 
 
         const proposalActions =

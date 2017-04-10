@@ -26,7 +26,6 @@ export function adaptProposalData(proposalData) {
             //the stacked components for the aggregation values ie F1, F5D, ... or F1,girona; F5D,girona; F1,barcelona; F5D,barcelona
             result[current_aggregation]['components']={};
 
-
             //set current aggregation ID and fields
             result[current_aggregation]['aggregation']=aggregation['aggregation']['fields'];
             result[current_aggregation]['aggregationID']=aggregation['aggregation']['id'];
@@ -39,13 +38,11 @@ export function adaptProposalData(proposalData) {
                 const avg=entry['average'];
                 const title=entry['title'];
 
-
                 // initialize result hour with an empty dict
                 if (!tmp_result[hour])
                     tmp_result[hour]={total: 0, name: hour};
                 tmp_result[hour][title] = amount;
                 tmp_result[hour]["total"] += amount;
-
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
