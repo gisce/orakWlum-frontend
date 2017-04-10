@@ -617,7 +617,7 @@ export class Proposal extends Component {
 				  <ProposalDetail
 					  data={summary}
 					  avg_info={{
-                          'average': avg,
+                          'average': average,
 						  'data': data,
 						  'components': components,
 					  }}

@@ -59,17 +59,16 @@ export function adaptProposalData(proposalData) {
                 };
             });
 
-
-
             //Adapt the tmp_result dict to an ordered list (based on the timestamp, incremental)
             Object.keys(tmp_result).sort().map( function( tmp_entry, i) {
                 result[current_aggregation]['result'][i] = tmp_result[tmp_entry];
                 result[current_aggregation]['average'][i] = tmp_average[tmp_entry];
 
+                //Convert datetime to hour strings
                 const hour_string = convertTimestampToString(parseInt(tmp_entry));
                 result[current_aggregation]['result'][i]['name'] = hour_string;
+                result[current_aggregation]['average'][i]['name'] = hour_string;
             });
-
     });
 
     return result;

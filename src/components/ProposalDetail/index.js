@@ -145,29 +145,17 @@ export class ProposalDetail extends Component {
         const total_tariffs_sum = data.measures_total;
 
 
-/*
-        let table_data = [];
+        //Current aggregation average
+        const avg_table = (avg_info) &&
+            <ProposalTableMaterial
+                stacked={true}
+                data={avg_info.average}
+                components={avg_info.components}
+                height={500}
+                totals={false}
+                unit={"kWh"}
+            />
 
-        // Calc the AVG per tariff (tariff / num_cups)
-        for (var hora = 0; hora < avg_info.data.length; hora++){
-
-            //Duplicate table data memspaces to avoid corruptions
-            let una_hora = Object.assign([], avg_info.data[hora]);
-
-            Object.keys(una_hora).map(function(agg) {
-                const num_cups = cups_per_tariff[agg];
-
-                if (agg != "total" && agg != "name")
-                    una_hora[agg] = (una_hora[agg] / num_cups).toFixed(4).toString()//.replace(".", ",");
-            });
-
-            table_data[hora] = una_hora;
-        }
-
-        const avg_tariff_table = (data.tariffs) &&
-            <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false} unit={"kWh"}/>
-
-*/
         return (
             open &&
                 <div style={styles.center}>
@@ -192,7 +180,8 @@ export class ProposalDetail extends Component {
                     <br/>
 
                     <div>
-                        <h2>TARIFFS AVERAGE</h2>
+                        <h2>AVERAGE</h2>
+                        {avg_table}
                     </div>
 
                 </div>
