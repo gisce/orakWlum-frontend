@@ -413,11 +413,6 @@ export class Proposal extends Component {
         /// Process Proposal dates
 
 
-        console.log(proposal.days_range);
-        console.log(proposal.days_range_future);
-
-
-
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
         const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
 
@@ -488,7 +483,7 @@ export class Proposal extends Component {
 
 
         if (prediction && Object.keys(prediction).length > 0) {
-            const predictionAdapted=adaptProposalData(prediction);
+            const predictionAdapted=adaptProposalData(prediction['result']);
             const current = predictionAdapted[aggregationSelected];
             data = current.result;
             components = current.components;
