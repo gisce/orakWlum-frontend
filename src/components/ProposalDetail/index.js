@@ -73,9 +73,14 @@ export class ProposalDetail extends Component {
 
 
 
+
         //handle invoice types
         const invoice_types = (origins_data) &&
-            Object.keys(origins_data).map(function(origin, i) {
+            Object.keys(origins_data).sort(
+                function (a, b){
+                    return origins_data[a].order - origins_data[b].order;
+                }
+            ).map(function(origin, i) {
                 const entry = origins_data[origin];
 
                 const component_name = origin;
