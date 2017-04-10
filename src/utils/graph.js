@@ -24,6 +24,7 @@ export function adaptProposalData(proposalData, hour=24) {
             //the stacked components for the aggregation values ie F1, F5D, ... or F1,girona; F5D,girona; F1,barcelona; F5D,barcelona
             result[current_aggregation]['components']={};
 
+
             //set current aggregation ID and fields
             result[current_aggregation]['aggregation']=aggregation['aggregation']['fields'];
             result[current_aggregation]['aggregationID']=aggregation['aggregation']['id'];

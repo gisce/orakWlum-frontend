@@ -49,17 +49,73 @@ export class ProposalDetail extends Component {
         const total_cups = data.cups;
         const energy_total = data.energy_total;
         const total_invoices = data.invoices;
-        const origins = data.origins;
+        const origins_data = data.origins;
+        const tariffs_data = data.tariffs;
 
-        console.log(origins);
 
-        const tariffs = (origins) &&
-            Object.keys(origins).map(function(origin, i) {
+
+
+        //Prepare CUPS count
+        const num_cups = (total_cups) &&
+            (
+                <Indicator
+                    title="CUPS"
+                    value={total_cups}
+                    icon={<CupsIcon style={styles.icon}/>}
+                />
+            );
+
+
+        //Prepare Invoices count
+        const num_invoices =  (total_invoices) &&
+            (
+                <Indicator
+                    title="Invoices"
+                    value={total_invoices}
+                    icon={<InvoicesIcon style={styles.icon}/>}
+                    valueInfo="Amount of energy in kW"
+                    subvalueInfo="Count of CUPS"
+                />
+            );
+
+
+
+        //handle invoice types
+        const invoice_types = (origins_data) &&
+            Object.keys(origins_data).map(function(origin, i) {
                 console.log(origin);
 
-                const entry = origins[origin];
+                const entry = origins_data[origin];
 
                 const component_name = origin;
+                const component_value =  entry['count'];
+                const original_position =  entry['order'];
+
+                const color = colors[original_position];
+
+                return (
+                    <Indicator
+                        key={"indicator_"+component_name}
+                        title={component_name}
+                        value={component_value}
+                        total={energy_total}
+                        percentage={true}
+                    />
+                )
+
+            });
+
+
+
+
+        //handle tariff tiles
+        const tariffs = (tariffs_data) &&
+            Object.keys(tariffs_data).map(function(tariff, i) {
+                console.log(tariff);
+
+                const entry = tariffs_data[tariff];
+
+                const component_name = tariff;
                 const component_value =  entry['energy'];
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
@@ -82,87 +138,15 @@ export class ProposalDetail extends Component {
             });
 
 
-        //handle invoice types
-        const invoice_types = (data.invoice_types) &&
-            Object.keys(data.invoice_types).map(function(component, i) {
-
-                const component_name = component
-                const component_value =  data.invoice_types[component];
-
-
-                return (
-                    <Indicator
-                        key={"indicator_"+component_name}
-                        title={component_name}
-                        value={component_value}
-                        total={data.invoice_total}
-                        percentage={true}
-                    />
-                )
-        });
-
 
         //total tariffs count
         const total_tariffs_count = data.tariff_total_count;
         const total_tariffs_sum = data.measures_total;
 
-        //handle tariff tiles
-        let cups_per_tariff = {};
-        const tariffss = (data.tariffs) &&
 
-            Object.keys(data.tariffs).map(function(i) {
-                const entry = data.tariffs[i];
+/*
+        let table_data = [];
 
-                const component_name = entry['name'];
-                const component_value =  entry['energy'];
-                const component_subvalue =  entry['count'];
-                const original_position =  entry['position'];
-
-                const color = colors[original_position];
-
-                cups_per_tariff[component_name] = component_subvalue;
-
-                return (
-                    <Indicator
-                        key={"indicator_"+component_name}
-                        title={ (component_name!="")?component_name:"Empty"}
-                        value={component_value + " kWh"}
-                        subvalue={"#" + component_subvalue}
-                        total={total_tariffs_sum}
-                        percentage={true}
-                        small={true}
-                        color={color}
-                    />
-                )
-            });
-
-
-        //Prepare CUPS count
-        const num_cups = (data.cups_total) &&
-            (
-                <Indicator
-                    title="CUPS"
-                    value={data.cups_total}
-                    icon={<CupsIcon style={styles.icon}/>}
-                />
-            );
-
-
-        //Prepare Invoices count
-        const num_invoices =  (data.invoice_total) &&
-            (
-                <Indicator
-                    title="Invoices"
-                    value={data.invoice_total}
-                    icon={<InvoicesIcon style={styles.icon}/>}
-                    valueInfo="Amount of energy in kW"
-                    subvalueInfo="Count of CUPS"
-                />
-            );
-
-
-
-        let table_data = []
         // Calc the AVG per tariff (tariff / num_cups)
         for (var hora = 0; hora < avg_info.data.length; hora++){
 
@@ -182,7 +166,7 @@ export class ProposalDetail extends Component {
         const avg_tariff_table = (data.tariffs) &&
             <ProposalTableMaterial stacked={true} data={table_data} components={avg_info.components} height={500} totals={false} unit={"kWh"}/>
 
-
+*/
         return (
             open &&
                 <div style={styles.center}>
@@ -205,7 +189,6 @@ export class ProposalDetail extends Component {
 
                     <div>
                         <h2>TARIFFS AVERAGE</h2>
-                        {avg_tariff_table}
                     </div>
 
                 </div>
