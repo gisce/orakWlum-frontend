@@ -98,7 +98,7 @@ export class ProposalDetail extends Component {
                         key={"indicator_"+component_name}
                         title={component_name}
                         value={component_value}
-                        total={energy_total}
+                        total={total_invoices}
                         percentage={true}
                     />
                 )
