@@ -41,6 +41,47 @@ export class ProposalDetail extends Component {
         //open it by default
         const open = (this.props.open)?this.props.open:true;
 
+
+
+
+
+
+        const total_cups = data.cups;
+        const energy_total = data.energy_total;
+        const total_invoices = data.invoices;
+        const origins = data.origins;
+
+        console.log(origins);
+
+        const tariffs = (origins) &&
+            Object.keys(origins).map(function(origin, i) {
+                console.log(origin);
+
+                const entry = origins[origin];
+
+                const component_name = origin;
+                const component_value =  entry['energy'];
+                const component_subvalue =  entry['count'];
+                const original_position =  entry['order'];
+
+                const color = colors[original_position];
+
+                return (
+                    <Indicator
+                        key={"indicator_"+component_name}
+                        title={ (component_name!="")?component_name:"Empty"}
+                        value={component_value + " kWh"}
+                        subvalue={"#" + component_subvalue}
+                        total={energy_total}
+                        percentage={true}
+                        small={true}
+                        color={color}
+                    />
+                )
+
+            });
+
+
         //handle invoice types
         const invoice_types = (data.invoice_types) &&
             Object.keys(data.invoice_types).map(function(component, i) {
@@ -67,7 +108,7 @@ export class ProposalDetail extends Component {
 
         //handle tariff tiles
         let cups_per_tariff = {};
-        const tariffs = (data.tariffs) &&
+        const tariffss = (data.tariffs) &&
 
             Object.keys(data.tariffs).map(function(i) {
                 const entry = data.tariffs[i];
