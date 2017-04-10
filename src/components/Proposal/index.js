@@ -481,9 +481,10 @@ export class Proposal extends Component {
         let components=null;
         let summary = null;
 
-
         if (prediction && Object.keys(prediction).length > 0) {
+            //The Prediction
             const predictionAdapted=adaptProposalData(prediction['result']);
+
             const current = predictionAdapted[aggregationSelected];
             data = current.result;
             components = current.components;

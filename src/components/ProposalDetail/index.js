@@ -140,7 +140,6 @@ export class ProposalDetail extends Component {
             });
 
 
-
         //total tariffs count
         const total_tariffs_count = data.tariff_total_count;
         const total_tariffs_sum = data.measures_total;
