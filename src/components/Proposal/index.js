@@ -478,15 +478,17 @@ export class Proposal extends Component {
 
 
         let data=null;
+        let average=null;
         let components=null;
         let summary = null;
 
         if (prediction && Object.keys(prediction).length > 0) {
             //The Prediction
             const predictionAdapted=adaptProposalData(prediction['result']);
-
             const current = predictionAdapted[aggregationSelected];
+
             data = current.result;
+            average = current.average;
             components = current.components;
             summary = (prediction.summary != undefined)?prediction.summary:null;
         }
@@ -615,6 +617,7 @@ export class Proposal extends Component {
 				  <ProposalDetail
 					  data={summary}
 					  avg_info={{
+                          'average': avg,
 						  'data': data,
 						  'components': components,
 					  }}
