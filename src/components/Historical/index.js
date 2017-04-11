@@ -486,7 +486,7 @@ export class Historical extends Component {
             const current = predictionAdapted[aggregationSelected];
 
             data = current.result;
-            components = current.average;
+            average = current.average;
             components = current.components;
             summary = (prediction.summary != undefined)?prediction.summary:null;
         }
@@ -615,6 +615,7 @@ export class Historical extends Component {
 				  <ProposalDetail
 					  data={summary}
 					  avg_info={{
+						  'average': average,
 						  'data': data,
 						  'components': components,
 					  }}
