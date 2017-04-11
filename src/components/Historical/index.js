@@ -479,14 +479,16 @@ export class Historical extends Component {
 
 
         let data=null;
+        let average=null;
         let components=null;
         let summary = null;
 
         if (prediction && Object.keys(prediction).length > 0) {
-            const predictionAdapted=adaptProposalData(prediction);
+            const predictionAdapted=adaptProposalData(prediction['result']);
             const current = predictionAdapted[aggregationSelected];
 
             data = current.result;
+            components = current.average;
             components = current.components;
             summary = (prediction.summary != undefined)?prediction.summary:null;
         }
