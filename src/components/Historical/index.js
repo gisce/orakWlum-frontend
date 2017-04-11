@@ -1,3 +1,15 @@
+/*
+
+WORKAROUND TO INSTANCE Historical actions.
+
+Do not edit, it's a copy of <Proposal>
+
+toDo: create a dummy component to render data from Proposal and Historical and keep ReduxActions upper as possible
+
+*/
+
+
+
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
@@ -12,7 +24,7 @@ import {orange300, orange900, green300, green900, red300, red900} from 'material
 
 import Toggle from 'material-ui/Toggle';
 
-import * as actionCreators from '../../actions/proposal';
+import * as actionCreators from '../../actions/historical';
 
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
@@ -113,7 +125,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class Proposal extends Component {
+export class Historical extends Component {
     constructor(props) {
         super(props);
 
@@ -221,7 +233,7 @@ export class Proposal extends Component {
         this.animateChart = false;
 
         const token = this.props.token;
-        this.props.fetchProposal(token, proposalID);
+        this.props.fetchHistorical(token, proposalID);
 
         this.setState({
             message_open: true,
@@ -271,7 +283,7 @@ export class Proposal extends Component {
         });
 
         const token = this.props.token;
-        this.props.runProposal(token, proposalID);
+        this.props.runHistorical(token, proposalID);
 
         this.dummyAsync(() =>
             this.animateChart = true
@@ -330,7 +342,7 @@ export class Proposal extends Component {
             confirmation_open: false,
         });
         const token = this.props.token;
-        this.props.duplicateProposal(token, proposalID);
+        this.props.duplicateHistorical(token, proposalID);
     };
 
     deleteProposalQuestion = (event, proposalID) => {
@@ -369,7 +381,7 @@ export class Proposal extends Component {
             confirmation_open: false,
         });
         const token = this.props.token;
-        this.props.deleteProposal(token, proposalID);
+        this.props.deleteHistorical(token, proposalID);
     };
 
     exportProposal = (event, proposalID) => {
@@ -382,7 +394,7 @@ export class Proposal extends Component {
         });
 
         const token = this.props.token;
-        this.props.exportProposal(token, proposalID);
+        this.props.exportHistorical(token, proposalID);
     };
 
 
@@ -401,7 +413,7 @@ export class Proposal extends Component {
 
         const historical = (proposal.historical == false)?false:true;
 
-        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
 
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
         const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
@@ -409,34 +421,21 @@ export class Proposal extends Component {
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
-
-        /// Process Proposal dates
-
-
-        const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
-        const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
-
-        const daysRange =
-            (proposalDaysRange.length == 1)?
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions)
-                :
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[1]).toLocaleDateString(locale, dateOptions);
-
-        const daysRangeFuture =
-            (proposalDaysRangeFuture.length == 1)?
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions)
-                :
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangeFuture[1]).toLocaleDateString(locale, dateOptions);
-
-        const daysRange_toShow = daysRangeFuture;
-
-
+        const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
-        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
+
+        let daysRange_toShow;
+        if (historical == false) {
+             daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
+
+        } else {
+             daysRange_toShow = daysRange;
+        }
+        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
         const subtitle = <span>Using {days[dayOfProposal]} {day_string}</span>;
@@ -483,7 +482,6 @@ export class Proposal extends Component {
         let summary = null;
 
         if (prediction && Object.keys(prediction).length > 0) {
-            //The Prediction
             const predictionAdapted=adaptProposalData(prediction['result']);
             const current = predictionAdapted[aggregationSelected];
 
@@ -493,7 +491,6 @@ export class Proposal extends Component {
             summary = (prediction.summary != undefined)?prediction.summary:null;
         }
 
-
         // The Proposal status!
         const proposalStatus = (
             proposal.status &&
@@ -501,7 +498,6 @@ export class Proposal extends Component {
                 <ProposalTag tag={proposal.status} />
             </div>
         )
-
 
         // The Proposal Aggregations List
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
@@ -527,7 +523,6 @@ export class Proposal extends Component {
                 </div>
 
         )
-
 
         // The Proposal graph toogle! //to switch between table and chart
         const proposalPictureToggle = (
@@ -581,6 +576,8 @@ export class Proposal extends Component {
             )
 
 
+
+
         // The Proposal graph!
         const proposalPicture =
             (withPicture)?
@@ -592,6 +589,7 @@ export class Proposal extends Component {
                           <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )
                   :null;
+
 
 
         const proposalActions =
@@ -617,7 +615,7 @@ export class Proposal extends Component {
 				  <ProposalDetail
 					  data={summary}
 					  avg_info={{
-                          'average': average,
+						  'average': average,
 						  'data': data,
 						  'components': components,
 					  }}
@@ -691,7 +689,7 @@ export class Proposal extends Component {
     }
 }
 
-Proposal.propTypes = {
+Historical.propTypes = {
     readOnly: React.PropTypes.bool,
     proposalOld: React.PropTypes.bool,
 };
