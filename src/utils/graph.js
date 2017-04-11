@@ -2,11 +2,8 @@ function convertTimestampToString(timestamp){
     const the_hour = new Date(timestamp);
 
     return "" +
-        ("0" + the_hour.getHours()).slice(-2) +
-        ":" +
-        ("0" + the_hour.getMinutes()).slice(-2)
+        ("0" + the_hour.getHours()).slice(-2) 
     ;
-
 }
 
 export function adaptProposalData(prediction) {
