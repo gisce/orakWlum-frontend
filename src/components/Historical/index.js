@@ -282,8 +282,6 @@ export class Historical extends Component {
             confirmation_open: false,
         });
 
-        console.log("RUNN");
-
         const token = this.props.token;
         this.props.runHistorical(token, proposalID);
 

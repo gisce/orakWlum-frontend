@@ -17,8 +17,6 @@ export function adaptProposalData(prediction) {
     Object.keys(proposalData).map( function(current_aggregation, j) {
             const aggregation = proposalData[current_aggregation];
 
-            console.log(current_aggregation, aggregation);
-
             //initialize result for each aggregation
             result[current_aggregation]={}
             result[current_aggregation]['result']=[];
@@ -41,7 +39,8 @@ export function adaptProposalData(prediction) {
             the_sum.map( function(entry, i) {
                 const hour=entry['hour'];
                 const amount=entry['amount'];
-                const avg=entry['average'];
+                const avg=entry['average'].toFixed(4);
+
                 const title=entry['title'];
 
                 // initialize result hour with an empty dict
