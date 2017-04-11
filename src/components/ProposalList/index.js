@@ -37,7 +37,7 @@ const styles = {
   },
   proposalMessage: {
       marginLeft: 15,
-  }
+  },
 };
 
 function mapStateToProps(state) {
