@@ -12,7 +12,7 @@ function convertTimestampToString(timestamp){
 export function adaptProposalData(prediction) {
     let result={};
 
-    const proposalData = prediction.result;
+    const proposalData = prediction;
 
     Object.keys(proposalData).map( function(current_aggregation, j) {
             const aggregation = proposalData[current_aggregation];
