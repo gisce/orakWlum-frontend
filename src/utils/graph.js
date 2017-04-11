@@ -9,11 +9,15 @@ function convertTimestampToString(timestamp){
 
 }
 
-export function adaptProposalData(proposalData) {
+export function adaptProposalData(prediction) {
     let result={};
+
+    const proposalData = prediction.result;
 
     Object.keys(proposalData).map( function(current_aggregation, j) {
             const aggregation = proposalData[current_aggregation];
+
+            console.log(current_aggregation, aggregation);
 
             //initialize result for each aggregation
             result[current_aggregation]={}
@@ -27,6 +31,8 @@ export function adaptProposalData(proposalData) {
             result[current_aggregation]['components']={};
 
             //set current aggregation ID and fields
+
+
             result[current_aggregation]['aggregation']=aggregation['aggregation']['fields'];
             result[current_aggregation]['aggregationID']=aggregation['aggregation']['id'];
 
