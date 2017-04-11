@@ -24,6 +24,11 @@ import * as actionCreators from '../../actions/proposal';
 const revalidator = require('revalidator');
 
 const styles = {
+    disclamer:{
+        fontSize: 11,
+        marginTop: 15,
+        marginBottom: 15,
+    },
 };
 
 const today = new Date();
@@ -178,27 +183,10 @@ export class ProposalDefinition extends Component {
         return [
             {
                 key: "0",
-                title: "Name",
-                content: (
-                    <div>
-                        <p>We need some details to create a new {this.state.type.name}.</p>
-                        <p>Please, <b>insert the name</b> of your {this.state.type.name} in the following field:</p>
-                        <TextField
-                            style={{marginTop: 0}}
-                            floatingLabelText="Proposal name"
-                            value={this.state.name}
-                            onChange={this.handleChangeName}
-                            errorText={this.state.name_error_text}
-                        />
-                    </div>
-                )
-            },
-            {
-                key: "1",
                 title: "Dates",
                 content: (
                     <div>
-                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p>
+                        <p>We need some details to create a new {this.state.type.name}.</p>
 
                         <DatePicker
                             floatingLabelText="Start date"
@@ -218,9 +206,31 @@ export class ProposalDefinition extends Component {
                             autoOk={true}
                         />
 
+                        <p style={styles.disclamer}>
+                            * Dates are inclusive, so if you mark start:day1 and end:day2, will produce two proposals, one for each day.
+                        </p>
                     </div>
                 )
             },
+
+            {
+                key: "1",
+                title: "Name",
+                content: (
+                    <div>
+                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p>
+                        <p>Please, <b>insert the name</b> of your {this.state.type.name} in the following field:</p>
+                        <TextField
+                            style={{marginTop: 0}}
+                            floatingLabelText="Proposal name"
+                            value={this.state.name}
+                            onChange={this.handleChangeName}
+                            errorText={this.state.name_error_text}
+                        />
+                    </div>
+                )
+            },
+
             {
                 key: "2",
                 title: "Aggregations",
