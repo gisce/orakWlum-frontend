@@ -122,7 +122,8 @@ export class ProposalDetail extends Component {
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
-                const color = colors[original_position];
+                //const color = colors[original_position];  //use API order field
+                const color = colors[i];
 
                 return (
                     <Indicator
