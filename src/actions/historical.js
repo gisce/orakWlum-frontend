@@ -209,29 +209,6 @@ export function createHistorical(token, historical) {
 }
 
 
-export function createHistoricHistorical(token, historical) {
-    return (dispatch) => {
-        dispatch(createHistoricalRequest());
-        data_create_api_resource(token, "historical/", historical)
-            .then(parseJSON)
-            .then(response => {
-                if (response.result.status == "ok") {
-                    dispatch(fetchHistorical(token, response.result.id));
-                    dispatch(redirectToRoute("/historicals/"+response.result.id));
-                }
-                else {
-                    console.log("error creating historical " + historical);
-                }
-            })
-            .catch(error => {
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
-                }
-            });
-    };
-}
-
-
 
 /*********************
   #################

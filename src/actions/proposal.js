@@ -4,6 +4,7 @@ import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
 import { fetchProposals } from './proposals'
 
+import { createHistorical } from './historical'
 
 
 
@@ -210,27 +211,9 @@ export function createProposal(token, proposal) {
 }
 
 
-// toDo integrate Historical actions instead of this
+// Ask historical.createHistorical method //Used while creating Historicals from unified ProposalDefinition component
 export function createHistoricProposal(token, proposal) {
-    return (dispatch) => {
-        dispatch(createProposalRequest());
-        data_create_api_resource(token, "historical/", proposal)
-            .then(parseJSON)
-            .then(response => {
-                if (response.result.status == "ok") {
-                    dispatch(fetchProposal(token, response.result.id));
-                    dispatch(redirectToRoute("/historicals/"+response.result.id));
-                }
-                else {
-                    console.log("error creating historical " + proposal);
-                }
-            })
-            .catch(error => {
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
-                }
-            });
-    };
+    return createHistorical(token, proposal);
 }
 
 
