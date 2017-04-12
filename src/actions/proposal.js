@@ -190,12 +190,15 @@ export function createProposal(token, proposal) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchProposal(token, response.result.id));
 
                     (response.result.multi)?
                         dispatch(redirectToRoute("/proposals"))
                         :
-                        dispatch(redirectToRoute("/proposals/"+response.result.id))
+                        (
+                            dispatch(fetchProposal(token, response.result.id))
+                        &&
+                            dispatch(redirectToRoute("/proposals/"+response.result.id))
+                        )
                     ;
                 }
                 else {
