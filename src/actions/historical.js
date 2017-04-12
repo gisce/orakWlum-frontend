@@ -189,12 +189,15 @@ export function createHistorical(token, historical) {
             .then(parseJSON)
             .then(response => {
                 if (response.result.status == "ok") {
-                    dispatch(fetchHistorical(token, response.result.id));
 
                     (response.result.multi)?
                         dispatch(redirectToRoute("/historicals"))
                         :
-                        dispatch(redirectToRoute("/historicals/"+response.result.id))
+                        (
+                            dispatch(fetchHistorical(token, response.result.id))
+                        &&
+                            dispatch(redirectToRoute("/historicals/"+response.result.id))
+                        )
                 }
                 else {
                     console.log("error creating historical " + historical);
