@@ -191,15 +191,12 @@ export function createProposal(token, proposal) {
             .then(response => {
                 if (response.result.status == "ok") {
 
-                    (response.result.multi)?
+                    if (response.result.multi) 
                         dispatch(redirectToRoute("/proposals"))
-                        :
-                        (
-                            dispatch(fetchProposal(token, response.result.id))
-                        &&
-                            dispatch(redirectToRoute("/proposals/"+response.result.id))
-                        )
-                    ;
+                    else {
+                            dispatch(fetchProposal(token, response.result.id));
+                            dispatch(redirectToRoute("/proposals/"+response.result.id));
+                    }
                 }
                 else {
                     console.log("error creating proposal " + proposal);
