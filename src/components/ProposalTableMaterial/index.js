@@ -75,19 +75,21 @@ export class ProposalTableMaterial extends Component {
         }
 
         //Prepare headers
-        const headers = Object.keys(components).map(function(component, i) {
-            const text_color = (colors[i] == "#000000")?'white':'black';
+        const headers = Object.keys(components)
+            .sort() //sort by key ASC
+            .map(function(component, i) {
+                const text_color = (colors[i] == "#000000")?'white':'black';
 
-            return (
-                <TableRowColumn
-                    key={"header"+i}
-                    style={{backgroundColor: colors[i], color: text_color, textAlign: styles.alignCenter.textAlign }}
-                    stroke={colors[i]}
-                    fill={colors[i]}
-                >
-                    <b>{component}</b>
-                </TableRowColumn>
-            )
+                return (
+                    <TableRowColumn
+                        key={"header"+i}
+                        style={{backgroundColor: colors[i], color: text_color, textAlign: styles.alignCenter.textAlign }}
+                        stroke={colors[i]}
+                        fill={colors[i]}
+                    >
+                        <b>{component}</b>
+                    </TableRowColumn>
+                )
         });
 
         const headerTotal = (totals) && (
