@@ -1,6 +1,9 @@
 # Avoiding DEBUG definition
 src/constants/debug.js
 
+# Avoid npm logs
+npm-debug.log*
+
 # Avoid swap files
 *.sw*
 

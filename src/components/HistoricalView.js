@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/historical';
 import { debug } from '../utils/debug';
 
-import { Proposal } from './Proposal';
+import { Historical } from './Historical';
 
 function mapStateToProps(state) {
     return {
@@ -49,7 +49,7 @@ export default class HistoricalView extends React.Component {
                 <div>
                     {this.props.loaded &&
                         <div>
-                            <Proposal
+                            <Historical
                                 proposal={historical}
                                 aggregations={aggregationsList}
                             />

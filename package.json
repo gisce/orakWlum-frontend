@@ -1,7 +1,7 @@
 {
   "name": "orakwlum-frontend",
-  "version": "0.6.0",
-  "description": "",
+  "version": "0.7.0",
+  "description": "Sprint #3",
   "scripts": {
     "clean": "rimraf dist",
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",

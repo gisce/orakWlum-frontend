@@ -35,6 +35,9 @@ const styles = {
   aggregations: {
       display: 'flex',
   },
+  proposalMessage: {
+      marginLeft: 15,
+  },
 };
 
 function mapStateToProps(state) {
@@ -123,8 +126,8 @@ export class ProposalList extends Component {
 
         // Last Proposals (the first bug, the other ones 2 per row)
         const lastProposals =data_received.map((tile, index) => {
-            if (tile.prediction) {
-                const predictionAdapted=adaptProposalData(tile.prediction);
+            if (tile.prediction && Object.keys(tile.prediction).length >0 ) {
+                const predictionAdapted=adaptProposalData(tile.prediction['result']);
                 const current = predictionAdapted[aggregationSelected];
                 const data = current.result;
                 const components = current.components;
@@ -171,9 +174,20 @@ export class ProposalList extends Component {
                         onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
                         style={styles.gridTile}
                     >
-                    <div><br/><br/><br/><br/>
-                        <p>Prediction not ready</p>
-                    </div>
+                        <div><br/><br/><br/><br/>
+
+                        <p style={styles.proposalMessage}>
+                        {
+                        (tile.status.lite == "RUN")?
+                            <span><b>Prediction is runnig!</b><br/>Refresh it passed a few seconds...</span>
+                        :
+                            (tile.status.lite == "ERROR")?
+                                <span>Prediction have errors</span>
+                                :
+                                <span>Prediction not ready</span>
+                        }
+                        </p>
+                        </div>
                     </GridTile>
                 );
 

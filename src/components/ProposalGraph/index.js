@@ -114,7 +114,7 @@ export class ProposalGraph extends Component {
             const unit = (typeof this.props.unit != 'undefined')?this.props.unit:"kWh";
 
             if (isAreaChart) {
-              const areas = Object.keys(components).map(function(component, i) {
+              const areas = Object.keys(components).sort().map(function(component, i) {
                   return <Area
                             unit={unit}
                             isAnimationActive={isAnimated}
@@ -158,7 +158,9 @@ export class ProposalGraph extends Component {
               );
             }
             else {
-              const bars = Object.keys(components).map(function(component, i) {
+              const bars = Object.keys(components)
+              .sort() //sort by key ASC
+              .map(function(component, i) {
                   return <Bar
                             unit={unit}
                             isAnimationActive={isAnimated}
