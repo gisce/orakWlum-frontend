@@ -609,7 +609,7 @@ export class Proposal extends Component {
 
             {
                 (proposal.related_id)?
-                <FlatButton label="Historical" icon={<ProposalIcon/>} href={"/historical/" + proposal.related_id} title={"Switch to related historical"}/>
+                <FlatButton label="Historical" icon={<ProposalIcon/>} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
                 :
                 <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
             }
