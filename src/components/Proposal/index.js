@@ -32,6 +32,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
+import ProposalIcon from 'material-ui/svg-icons/image/switch-camera';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -282,6 +283,68 @@ export class Proposal extends Component {
     };
 
 
+
+
+
+
+    switchToHistoricalQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onTouchTap={this.handleCloseConfirmation}
+          />,
+          <FlatButton
+            label="Switch"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.switchToHistorical(proposalID)}
+          />,
+          <FlatButton
+            label="Open in a new tab"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={() => this.switchToHistorical(proposalID)}
+          />,
+
+        ];
+
+        this.confirmation.title = "Switch to related Historical";
+        this.confirmation.text = <div><p>The related Historical will be showed, if you want, later you can go back or navigate to this Proposal again.</p></div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
+        this.setState({
+            message_open: false,
+            confirmation_open: true,
+        });
+
+        this.animateChart = false;
+    };
+
+    switchToHistorical = (proposalID) => {
+        this.animateChart = false;
+        this.setState({
+            message_open: true,
+            confirmation_open: false,
+        });
+
+        const token = this.props.token;
+        this.props.fetchRelatedElement(token, proposalID);
+
+        this.dummyAsync(() =>
+            this.animateChart = true
+        );
+
+        this.animateChart = true;
+
+    };
+
+
+
+
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
 
@@ -454,7 +517,8 @@ export class Proposal extends Component {
         const reRunProposal = this.reRunProposalQuestion;
         const duplicateProposal = this.duplicateProposalQuestion;
         const deleteProposal = this.deleteProposalQuestion;
-        const exportProposal=this.exportProposal;
+        const exportProposal = this.exportProposal;
+        const switchToHistorical = this.switchToHistoricalQuestion;
 
         const toggleDetail = this.toggleDetail;
 
@@ -604,6 +668,7 @@ export class Proposal extends Component {
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
+                <FlatButton label="Historical" icon={<ProposalIcon/>} onClick={(e) => switchToHistorical(e, proposal.id)} title={"Switch to related historical"}/>
               </CardActions>
             :
             null;
