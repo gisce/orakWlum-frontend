@@ -596,7 +596,7 @@ export class Historical extends Component {
              (!readOnly)?
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Reprocess" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)} title={"Export Proposal to a XLS file"}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
