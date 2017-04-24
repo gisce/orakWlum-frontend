@@ -32,6 +32,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
+import ProposalIcon from 'material-ui/svg-icons/image/switch-camera';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -282,6 +283,7 @@ export class Proposal extends Component {
     };
 
 
+
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
 
@@ -454,7 +456,7 @@ export class Proposal extends Component {
         const reRunProposal = this.reRunProposalQuestion;
         const duplicateProposal = this.duplicateProposalQuestion;
         const deleteProposal = this.deleteProposalQuestion;
-        const exportProposal=this.exportProposal;
+        const exportProposal = this.exportProposal;
 
         const toggleDetail = this.toggleDetail;
 
@@ -598,13 +600,20 @@ export class Proposal extends Component {
              (!readOnly)?
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Reprocess" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)} title={"Export Proposal to a XLS file"}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
-              </CardActions>
+
+            {
+                (proposal.related_id)?
+                <FlatButton label="Historical" icon={<ProposalIcon/>} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
+                :
+                <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
+            }
+            </CardActions>
             :
             null;
 

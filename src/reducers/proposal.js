@@ -24,6 +24,8 @@ export default createReducer(initialState, {
 
 
 
+
+
     [RUN_PROPOSAL_REQUEST]: (state,payload) =>
         Object.assign({}, state, {
             isFetching: true,

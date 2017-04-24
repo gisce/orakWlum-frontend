@@ -4,7 +4,7 @@ import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
 import { fetchProposals } from './proposals'
 
-import { createHistorical } from './historical'
+import { createHistorical, fetchHistorical } from './historical'
 
 
 
@@ -191,7 +191,7 @@ export function createProposal(token, proposal) {
             .then(response => {
                 if (response.result.status == "ok") {
 
-                    if (response.result.multi) 
+                    if (response.result.multi)
                         dispatch(redirectToRoute("/proposals"))
                     else {
                             dispatch(fetchProposal(token, response.result.id));
