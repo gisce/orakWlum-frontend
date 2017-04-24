@@ -1,4 +1,4 @@
-import { EXPORT_PROPOSAL_REQUEST, FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST, FETCH_RELATED_REQUEST } from '../constants/index'
+import { EXPORT_PROPOSAL_REQUEST, FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
 import { data_download_api_resource, data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
@@ -167,51 +167,6 @@ export function duplicateProposal(token, proposal) {
             });
     };
 }
-
-
-
-
-
-
-
-/*****************************
-  ##########################
-   FETCH RELATED HISTORICAL
-  ##########################
-******+***********************/
-
-export function fetchRelatedElementRequest() {
-    return {
-        type: FETCH_RELATED_REQUEST,
-    };
-}
-
-export function fetchRelatedElement(token, proposal) {
-    return (dispatch) => {
-        dispatch(fetchRelatedElementRequest());
-        data_fetch_api_resource(token, "proposal/" + proposal + "/related/")
-            .then(parseJSON)
-            .then(response => {
-                if (response.result.status == "ok") {
-                    dispatch(redirectToRoute("/historicals/"+response.result.id));
-                    dispatch(fetchHistorical(token, response.result.id));
-                }
-                else {
-                    console.log("error fetching related element " + proposal);
-                }
-            })
-            .catch(error => {
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect(error));
-                }
-            });
-    };
-}
-
-
-
-
-
 
 
 
