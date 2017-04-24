@@ -606,8 +606,14 @@ export class Proposal extends Component {
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
-                <FlatButton label="Historical" icon={<ProposalIcon/>} onClick={(e) => switchToHistorical(e, proposal.id)} title={"Switch to related historical"}/>
-              </CardActions>
+
+            {
+                (proposal.related_id)?
+                <FlatButton label="Historical" icon={<ProposalIcon/>} href={"/historical/" + proposal.related_id} title={"Switch to related historical"}/>
+                :
+                <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
+            }
+            </CardActions>
             :
             null;
 
