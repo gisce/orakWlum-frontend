@@ -47,7 +47,9 @@ export default class SettingsView extends React.Component {
         if (this.props.loaded && data) {
             const {measures, static_data} = data;
 
-            Settings=<SettingsTable data={measures}/>
+            const sources = measures.concat(static_data);
+
+            Settings=<SettingsTable data={sources}/>
         } else {
             Settings=null;
         }
