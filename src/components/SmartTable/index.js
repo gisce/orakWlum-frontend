@@ -58,7 +58,7 @@ export class SmartTable extends Component {
         switch( selections ) {
             case "all":
                 selectedEntrys, selectedIDs = table.map(function(selected, index) {
-                    selectedEntrys.push(selected._id);
+                    selectedEntrys.push(selected);
                     selectedIDs.push(index);
                 });
                 break;
@@ -70,11 +70,14 @@ export class SmartTable extends Component {
 
             default:
                 selections.map(function(selected, index) {
-                    selectedEntrys.push(table[selected]._id);
+                    selectedEntrys.push(table[selected]);
                     selectedIDs.push(selected);
                 });
                 break;
         };
+
+        console.log(selectedEntrys);
+        console.log(selectedIDs);
 
         const selection_length = selectedIDs.length;
 
@@ -150,10 +153,10 @@ export class SmartTable extends Component {
         return  (
             <Paper>
 
-            {
+                {
                 (this.props.title) &&
                     <h3>{this.props.title}</h3>
-            }
+                }
 
                 <Table
                     fixedHeader={true}
@@ -167,21 +170,21 @@ export class SmartTable extends Component {
                     >
                       <TableRow>
 
-              { //Prepare headers with optional width
-                  header_list.map(function(header, index) {
-                      return (
-                          header.width?
-                            <TableHeaderColumn
-                                key={"data_header_" + index}
-                                style={{width:header.width}}
-                            >{header.title}</TableHeaderColumn>
-                          :
-                            <TableHeaderColumn
-                                key={"data_header_" + index}
-                            >{header.title}</TableHeaderColumn>
-                      )
-                  })
-              }
+                      { //Prepare headers with optional width
+                          header_list.map(function(header, index) {
+                              return (
+                                  header.width?
+                                    <TableHeaderColumn
+                                        key={"data_header_" + index}
+                                        style={{width:header.width}}
+                                    >{header.title}</TableHeaderColumn>
+                                  :
+                                    <TableHeaderColumn
+                                        key={"data_header_" + index}
+                                    >{header.title}</TableHeaderColumn>
+                              )
+                          })
+                      }
 
                       </TableRow>
                     </TableHeader>
@@ -191,39 +194,40 @@ export class SmartTable extends Component {
                         deselectOnClickaway={false}
                     >
 
-              { //Prepare the data!
-                    table.map(function(entry, index) {
-                        let selected = (selectedIDs.indexOf(index) > -1)?true:false;
+                    { //Prepare the data!
+                        table.map(function(entry, index) {
+                            let selected = (selectedIDs.indexOf(index) > -1)?true:false;
 
-                        return (
-                            <TableRow
-                                key={"tableRow_"+index}
-                                selected={selected}
-                                >
-                    { //For each header
-                        header_list.map(function(header, index_header) {
                             return (
-                                header.width?
-                                  <TableRowColumn
-                                      key={"data_row_" + index_header}
-                                      style={{width:header.width}}
-                                  >{entry[index_header]}</TableRowColumn>
-                                :
-                                  <TableRowColumn
-                                      key={"data_row_" + index_header}
-                                  >{entry[index_header]}</TableRowColumn>
+                                <TableRow
+                                    key={"tableRow_"+index}
+                                    selected={selected}
+                                    >
+
+                                { //For each header
+                                    header_list.map(function(header, index_header) {
+                                        return (
+                                            header.width?
+                                              <TableRowColumn
+                                                  key={"data_row_" + index_header}
+                                                  style={{width:header.width}}
+                                              >{entry[index_header]}</TableRowColumn>
+                                            :
+                                              <TableRowColumn
+                                                  key={"data_row_" + index_header}
+                                              >{entry[index_header]}</TableRowColumn>
+                                        )
+                                    })
+                                }
+
+                                </TableRow>
                             )
                         })
                     }
-
-                            </TableRow>
-                        )
-                    })
-                }
                     </TableBody>
                 </Table>
 
-            {
+                {
                     this.state.entry_error_text &&
                     <div>
                         <TextField
@@ -236,7 +240,7 @@ export class SmartTable extends Component {
                         <br/>
                         <br/>
                     </div>
-            }
+                }
 
             {actions}
 
