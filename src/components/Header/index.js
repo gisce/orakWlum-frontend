@@ -181,7 +181,6 @@ export class Header extends Component {
                                     onClick={() => this.dispatchRoute('/settings')}
                                     leftIcon={<SettingsIcon/>}
                                     primaryText="Settings"
-                                    disabled
                                 />
                                 <MenuItem
                                     onClick={() => this.dispatchRoute('/about')}

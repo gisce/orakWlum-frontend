@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/aggregations';
 
 import { AggregationsList } from './AggregationsList';
+import { SmartTable } from './SmartTable';
 
 import { debug } from '../utils/debug';
 
@@ -35,6 +36,46 @@ export default class AggregationsView extends React.Component {
     }
 
     render() {
+
+        let Aggregations;
+
+        if (this.props.loaded && this.props.aggregations) {
+            const headers = [
+                {
+                    title: 'Name',
+                    width: null,
+                },                {
+                    title: 'Short name',
+                    width: null,
+                },                {
+                    title: 'DB Fields',
+                    width: '30%',
+                },                {
+                    title: 'Status',
+                    width: null,
+                },
+            ];
+
+            //Adapt Aggregations List
+            const aggregations_adapted = this.props.aggregations.map(function( entry, index){
+                const db_fields = entry.db_fields.map(function(field, index){
+                    const separator = (index==0)? "":", ";
+                    return separator + field;
+                })
+
+                return (
+                    [
+                        entry.name,
+                        entry.lite,
+                        db_fields,
+                        entry.status.full,
+                    ]
+                )
+            })
+
+            Aggregations = <SmartTable header={headers} data={aggregations_adapted}/>
+        }
+
         return (
             <div>
                 {
@@ -47,7 +88,7 @@ export default class AggregationsView extends React.Component {
                     :
                         <div>
                             <h1>Aggregations</h1>
-                            <AggregationsList aggregations={this.props.aggregations}/>
+                            {Aggregations}
                         </div>
                 }
                 {debug(this.props.data)}
