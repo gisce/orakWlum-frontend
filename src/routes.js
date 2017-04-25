@@ -20,6 +20,7 @@ import HistoryNewView from './components/HistoryNewView';
 import Profile from './components/ProfileView';
 import About from './components/AboutView';
 import Aggregations from './components/AggregationsView';
+import Settings from './components/SettingsView';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -41,6 +42,7 @@ export default (
         <Route path="historicals/:historicalId" component={requireAuthentication(Historical)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
+        <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
