@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/settings';
 
+import { SettingsTable } from './SettingsTable'
+
 import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
-        data: state.profile,
+        settings: state.settings,
         token: state.auth.token,
-        loaded: state.profile.loaded,
-        isFetching: state.profile.isFetching,
-        error: state.profile.error,
-        errorMessage: state.profile.data,
+        loaded: state.settings.loaded,
+        isFetching: state.settings.isFetching,
+        error: state.settings.error,
+        errorMessage: state.settings.data,
     };
 }
 
@@ -37,6 +39,19 @@ export default class SettingsView extends React.Component {
     }
 
     render() {
+
+        const data = this.props.settings.data;
+
+
+        let Settings;
+        if (this.props.loaded && data) {
+            const {measures, static_data} = data;
+
+            Settings=<SettingsTable data={measures}/>
+        } else {
+            Settings=null;
+        }
+
         return (
             <div>
                 {
@@ -50,10 +65,12 @@ export default class SettingsView extends React.Component {
                     :
                         <div>
                             <h1>Settings</h1>
+
+                            {Settings}
                         </div>
                 }
 
-                {debug(this.props.data)}
+                {debug(this.props.settings)}
             </div>
         );
     }
