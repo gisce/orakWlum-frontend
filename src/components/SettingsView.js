@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/settings';
 
-
-import { SmartTable } from './SmartTable'
+import { SettingsSources } from './SettingsSources'
 
 import { debug } from '../utils/debug';
 
@@ -43,73 +42,10 @@ export default class SettingsView extends React.Component {
 
         const data = this.props.settings.data;
 
-
         let Settings;
         if (this.props.loaded && data) {
             const {measures, static_data} = data;
-
-            //Adapt measures
-            const measures_adapted = measures.map(function( entry, index){
-                const active = (entry.active)?"Active":"Deactivated";
-                const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
-                return (
-                    [
-                        entry.name,
-                        entry.alias,
-                        entry.type,
-                        entry.unit,
-                        db_fields,
-                        active,
-                    ]
-                )
-            })
-
-
-            //Adapt static data
-            const static_data_adapted = static_data.map(function( entry, index){
-                const active = (entry.active)?"Active":"Deactivated";
-                const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
-                return (
-                    [
-                        entry.name,
-                        entry.alias,
-                        entry.type,
-                        entry.unit,
-                        db_fields,
-                        active,
-                    ]
-                )
-            })
-
-            const headers = [
-                {
-                    title: 'Name',
-                    width: null,
-                },                {
-                    title: 'Alias',
-                    width: null,
-                },                {
-                    title: 'Type',
-                    width: '10%',
-                },                {
-                    title: 'Unit',
-                    width: '10%',
-                },                {
-                    title: 'DB',
-                    width: '30%',
-                },                {
-                    title: 'Status',
-                    width: null,
-                },
-            ];
-
-            Settings=(
-                <div>
-                    <h2>Available sources</h2>
-                    <SmartTable title="Measures" header={headers} data={measures_adapted}/>
-                    <SmartTable title="Static Data" header={headers} data={static_data_adapted}/>
-                </div>
-            )
+            Settings=<SettingsSources measures={measures} static_data={static_data}/>
         } else {
             Settings=null;
         }
