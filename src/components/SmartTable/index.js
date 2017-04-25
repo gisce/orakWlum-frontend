@@ -76,9 +76,6 @@ export class SmartTable extends Component {
                 break;
         };
 
-        console.log(selectedEntrys);
-        console.log(selectedIDs);
-
         const selection_length = selectedIDs.length;
 
         //Establish if there are one, more than one or none selected.

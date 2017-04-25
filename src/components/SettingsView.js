@@ -103,8 +103,6 @@ export default class SettingsView extends React.Component {
                 },
             ];
 
-
-
             Settings=(
                 <div>
                     <h2>Available sources</h2>
