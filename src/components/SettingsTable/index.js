@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Paper from 'material-ui/Paper';
 
 const styles = {
 };
@@ -117,6 +118,7 @@ export class SettingsTable extends Component {
         const {selectedIDs, selectedAggregations, disableCreate, disableEdit, disableDelete} = this.state;
 
         const table = this.props.data;
+        const title = this.props.title;
 
         const actions = [
             <RaisedButton
@@ -145,7 +147,8 @@ export class SettingsTable extends Component {
         ]
 
         return  (
-            <div>
+            <Paper>
+                <h3>{title}</h3>
                 <Table
                     fixedHeader={true}
                     selectable={true}
@@ -217,7 +220,7 @@ export class SettingsTable extends Component {
 
             {actions}
 
-            </div>
+            </Paper>
         );
     }
 }
