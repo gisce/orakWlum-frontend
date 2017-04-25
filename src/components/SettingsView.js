@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/settings';
 
+
 import { SettingsTable } from './SettingsTable'
 
 import { debug } from '../utils/debug';
@@ -47,9 +48,15 @@ export default class SettingsView extends React.Component {
         if (this.props.loaded && data) {
             const {measures, static_data} = data;
 
-            const sources = measures.concat(static_data);
+            Settings=(
+                <div>
+                    <h2>Available sources</h2>
 
-            Settings=<SettingsTable data={sources}/>
+                    <SettingsTable title="Measures" data={measures}/>
+
+                    <SettingsTable title="Static Data" data={static_data}/>
+                </div>
+            )
         } else {
             Settings=null;
         }
@@ -61,7 +68,7 @@ export default class SettingsView extends React.Component {
 
                         this.props.error &&
                             <div>
-                                <h1>There was an error</h1>
+                                <h1>There was an error fetching data</h1>
                                 {this.props.errorMessage.message}
                             </div>
                     :

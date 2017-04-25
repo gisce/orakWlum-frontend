@@ -28,22 +28,22 @@ export class SettingsTable extends Component {
             selectedIDs: [],
 
             //The list IDs of the selected entry
-            selectedAggregations: [],
+            selectedEntrys: [],
         };
     }
 
-    newAggregation(e) {
+    newEntry(e) {
         e.preventDefault();
         console.log("new");
     }
 
-    editAggregation(e) {
+    editEntry(e) {
         e.preventDefault();
-        console.log("edit", this.state.selectedAggregations);
+        console.log("edit", this.state.selectedEntrys);
     }
 
-    deleteAggregation(e) {
-        const entry = this.state.selectedAggregations;
+    deleteEntry(e) {
+        const entry = this.state.selectedEntrys;
         console.log("delete", entry);
     }
 
@@ -52,25 +52,25 @@ export class SettingsTable extends Component {
 
         let oneSelected, groupSelected, disableCreate, disableEdit, disableDelete;
         let selectedIDs = [];
-        let selectedAggregations = [];
+        let selectedEntrys = [];
 
-        //Reach the selectedAggregations (IDs) and positional lists
+        //Reach the selectedEntrys (IDs) and positional lists
         switch( selections ) {
             case "all":
-                selectedAggregations, selectedIDs = table.map(function(selected, index) {
-                    selectedAggregations.push(selected._id);
+                selectedEntrys, selectedIDs = table.map(function(selected, index) {
+                    selectedEntrys.push(selected._id);
                     selectedIDs.push(index);
                 });
                 break;
 
             case "none":
-                selectedAggregations = [];
+                selectedEntrys = [];
                 selectedIDs = [];
                 break;
 
             default:
                 selections.map(function(selected, index) {
-                    selectedAggregations.push(table[selected]._id);
+                    selectedEntrys.push(table[selected]._id);
                     selectedIDs.push(selected);
                 });
                 break;
@@ -107,7 +107,7 @@ export class SettingsTable extends Component {
 
         this.setState ({
             selectedIDs,
-            selectedAggregations,
+            selectedEntrys,
             disableCreate,
             disableEdit,
             disableDelete,
@@ -115,7 +115,7 @@ export class SettingsTable extends Component {
     }
 
     render() {
-        const {selectedIDs, selectedAggregations, disableCreate, disableEdit, disableDelete} = this.state;
+        const {selectedIDs, selectedEntrys, disableCreate, disableEdit, disableDelete} = this.state;
 
         const table = this.props.data;
 
@@ -124,7 +124,7 @@ export class SettingsTable extends Component {
               key="createButton"
               label='New'
               primary={true}
-              onTouchTap={(e) => this.newAggregation(e)}
+              onTouchTap={(e) => this.newEntry(e)}
               disabled={disableCreate}
             />
         ,
@@ -132,7 +132,7 @@ export class SettingsTable extends Component {
               key="editButton"
               label='Edit'
               primary={true}
-              onTouchTap={(e) => this.editAggregation(e)}
+              onTouchTap={(e) => this.editEntry(e)}
               disabled={disableEdit}
             />
         ,
@@ -140,17 +140,19 @@ export class SettingsTable extends Component {
               key="deleteButton"
               label='Delete'
               primary={true}
-              onTouchTap={(e) => this.deleteAggregation(e)}
+              onTouchTap={(e) => this.deleteEntry(e)}
               disabled={disableDelete}
             />
         ]
 
         return  (
             <Paper>
+
             {
                 (this.props.title) &&
                     <h3>{this.props.title}</h3>
             }
+
                 <Table
                     fixedHeader={true}
                     selectable={true}
@@ -166,7 +168,7 @@ export class SettingsTable extends Component {
                           <TableHeaderColumn>Alias</TableHeaderColumn>
                           <TableHeaderColumn style={{width:'10%'}}>Type</TableHeaderColumn>
                           <TableHeaderColumn style={{width:'10%'}}>Unit</TableHeaderColumn>
-                          <TableHeaderColumn style={{width:'30%'}}>DB Fields</TableHeaderColumn>
+                          <TableHeaderColumn style={{width:'30%'}}>DB</TableHeaderColumn>
                           <TableHeaderColumn>Status</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
@@ -181,11 +183,7 @@ export class SettingsTable extends Component {
 
                         const active = (entry.active)?"Active":"Deactivated";
 
-                        const db_fields = (
-                            entry.config.map(function(field, index){
-                            const separator = (index==0)? "":", ";
-                            return separator + field;
-                        }));
+                        const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
 
                         return (
                             <TableRow
