@@ -118,7 +118,6 @@ export class SettingsTable extends Component {
         const {selectedIDs, selectedAggregations, disableCreate, disableEdit, disableDelete} = this.state;
 
         const table = this.props.data;
-        const title = this.props.title;
 
         const actions = [
             <RaisedButton
@@ -148,7 +147,10 @@ export class SettingsTable extends Component {
 
         return  (
             <Paper>
-                <h3>{title}</h3>
+            {
+                (this.props.title) &&
+                    <h3>{this.props.title}</h3>
+            }
                 <Table
                     fixedHeader={true}
                     selectable={true}
@@ -227,4 +229,5 @@ export class SettingsTable extends Component {
 
 SettingsTable.propTypes = {
     data: React.PropTypes.array.isRequired,
+    title: React.PropTypes.string,
 };
