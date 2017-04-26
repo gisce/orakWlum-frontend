@@ -106,16 +106,18 @@ export class ProposalDefinition extends Component {
           aggregations_list.push( false );
       });
 
-
       let sources_list=[];
-        const measures = props.sourcesList;
-        //initialize sources list
-        measures.map(function(source, i){
-            sources_list.push( false );
-        });
+      let sources_all=[];
+      let measures = [];
+      //initialize sources list
+      props.sourcesList.map(function(source, i){
+          if (source.active) {
+              sources_all.push( source );
+              sources_list.push( false );
+          }
+      });
 
       const element_type = (props.type)?props.type:"proposal";
-
       const minDate = new Date();
 
       let createMethod = props.createProposal;
@@ -141,7 +143,7 @@ export class ProposalDefinition extends Component {
           aggregations_all: props.aggregationsList,
 
           sources: sources_list,
-          sources_all: props.sourcesList,
+          sources_all: sources_all,
 
           name_validation: false,
           name_error_text: null,
