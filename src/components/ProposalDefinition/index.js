@@ -172,7 +172,7 @@ export class ProposalDefinition extends Component {
     componentDidMount = () => {
         //override the readyToNext=true setted indirectly by componentWillMount
         this.setState({
-            readyToNext: false,
+            readyToNext: true,
         });
     }
 
