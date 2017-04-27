@@ -2,6 +2,15 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware  from 'redux-thunk'
 import rootReducer  from '../reducers'
 
+import RavenMiddleware from 'redux-raven-middleware';
+
+const DSN = "https://545e27e7709d4f28b2388faf97ebb05b@sentry.io/162486";
+
+const createStoreWithMiddleware = applyMiddleware(
+  RavenMiddleware(DSN)
+)(createStore);
+
+
 const debugware = [];
 if (process.env.NODE_ENV !== 'production') {
     const createLogger = require('redux-logger');
@@ -19,7 +28,10 @@ export default function configureStore(initialState) {
         rootReducer,
         initialState,
         composeEnhancers(
-            applyMiddleware(thunkMiddleware, ...debugware)
+            applyMiddleware(
+                thunkMiddleware,
+                ...debugware,
+            )
         )
     );
 
