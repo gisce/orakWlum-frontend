@@ -57,7 +57,6 @@ export function updateSettingsRequest() {
     };
 }
 export function fetchSettings(token) {
-    rolf = "a";
     return (dispatch) => {
         dispatch(fetchSettingsRequest());
         data_fetch_api_resource(token, "sources/" )

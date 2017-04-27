@@ -2,13 +2,12 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware  from 'redux-thunk'
 import rootReducer  from '../reducers'
 
-import RavenMiddleware from 'redux-raven-middleware';
+import Raven from "raven-js";
+import createRavenMiddleware from "raven-for-redux";
+
 
 const DSN = "https://545e27e7709d4f28b2388faf97ebb05b@sentry.io/162486";
-
-const createStoreWithMiddleware = applyMiddleware(
-  RavenMiddleware(DSN)
-)(createStore);
+Raven.config(DSN).install();
 
 
 const debugware = [];
@@ -31,6 +30,7 @@ export default function configureStore(initialState) {
             applyMiddleware(
                 thunkMiddleware,
                 ...debugware,
+                createRavenMiddleware(Raven)
             )
         )
     );

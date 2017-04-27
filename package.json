@@ -121,7 +121,7 @@
       "blueimp-md5": "latest",
       "file-saver": "latest",
       "raven-js": "latest",
-      "redux-raven-middleware": "latest"
+      "raven-for-redux": "latest"
   },
   "dependencies": {}
 }
