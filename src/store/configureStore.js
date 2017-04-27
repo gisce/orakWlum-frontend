@@ -6,7 +6,7 @@ import Raven from "raven-js";
 import createRavenMiddleware from "raven-for-redux";
 
 
-const DSN = "https://545e27e7709d4f28b2388faf97ebb05b@sentry.io/162486";
+import { DSN } from '../settings/index'
 Raven.config(DSN).install();
 
 
