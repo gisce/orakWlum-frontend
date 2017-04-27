@@ -66,11 +66,9 @@ export function fetchSettings(token) {
             })
             .catch(error => {
                 if (error.response.status === 409 || error.status === 409) {
-                    throw new Error("Error fetching Settings");
                     dispatch(receiveSettingsError(error.response.data));
                 }
                 if (error.status === 401) {
-                    throw new Error("Error fetching Settings");
                     dispatch(logoutAndRedirect());
                 }
             });
@@ -99,7 +97,6 @@ export function updateSettings(token, data) {
             })
             .catch(error => {
                 if (error.status === 401) {
-                    throw new Error("Error updating Settings");
                     dispatch(logoutAndRedirect(error));
                 }
             });
