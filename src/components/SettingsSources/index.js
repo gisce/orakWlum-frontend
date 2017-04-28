@@ -108,9 +108,10 @@ export class SettingsSources extends React.Component {
                 {
                     'label': 'Toggle Status',
                     'action':
-                        function(e) {
+                        function(e, selectedIDs) {
                             e.preventDefault();
-                            console.log("toggle");
+                            console.log("toggle", selectedIDs);
+                            //this.updateData()
                         }
                 },
             ]

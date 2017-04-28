@@ -155,7 +155,7 @@ export class SmartTable extends Component {
                       key={button.label + "Button"}
                       label={button.label}
                       primary={true}
-                      onTouchTap={(e) => button.action(e)}
+                      onTouchTap={(e) => button.action(e, selectedEntrys)}
                       disabled={false}
                     />
                 )
