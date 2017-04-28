@@ -119,7 +119,7 @@ export class SmartTable extends Component {
 
         const table = this.props.data;
         const header_list = this.props.header;
-        const appendButtons = this.props.appendButtons;
+        const {appendButtons, onUpdate} = this.props;
 
         const defaultActions = [
             <RaisedButton
@@ -147,7 +147,6 @@ export class SmartTable extends Component {
             />
         ]
 
-        console.log(appendButtons);
         const extendedActions = (appendButtons != null)?
             appendButtons.map(function(button, id) {
                 return (
@@ -155,7 +154,7 @@ export class SmartTable extends Component {
                       key={button.label + "Button"}
                       label={button.label}
                       primary={true}
-                      onTouchTap={(e) => button.action(e, selectedEntrys)}
+                      onTouchTap={(e) => button.action(e, selectedEntrys, onUpdate)}
                       disabled={false}
                     />
                 )

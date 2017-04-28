@@ -108,10 +108,30 @@ export class SettingsSources extends React.Component {
                 {
                     'label': 'Toggle Status',
                     'action':
-                        function(e, selectedIDs) {
+                        function(e, selectedIDs, onUpdate) {
                             e.preventDefault();
                             console.log("toggle", selectedIDs);
-                            //this.updateData()
+
+                            const sources_parsed = (selectedIDs)?
+                                selectedIDs.map( function(entry, idx) {
+                                    return {
+                                        "name": entry[0],
+                                        "alias": entry[1],
+                                        "type": entry[2],
+                                        "unit": entry[3],
+                                        "db": entry[4],
+                                        "priority": entry[5],
+                                        "active": entry[6],
+                                    }
+                                })
+                                :
+                                null;
+
+
+                            // Try to update data
+                            if (onUpdate) {
+                                onUpdate(selectedIDs);
+                            }
                         }
                 },
             ]
@@ -122,8 +142,20 @@ export class SettingsSources extends React.Component {
             (
                 <div>
                     <h2>Available sources</h2>
-                    <SmartTable title="Measures" header={headers} data={measures_adapted} appendButtons={toggle_active}/>
-                    <SmartTable title="Static Data" header={headers} data={static_data_adapted} appendButtons={toggle_active}/>
+                    <SmartTable
+                        title="Measures"
+                        header={headers}
+                        data={measures_adapted}
+                        appendButtons={toggle_active}
+                        onUpdate={(changed_data) => this.updateData(changed_data)}
+                    />
+                    <SmartTable
+                        title="Static Data"
+                        header={headers}
+                        data={static_data_adapted}
+                        appendButtons={toggle_active}
+                        onUpdate={(changed_data) => this.updateData(changed_data)}
+                    />
                 </div>
             )
             return Settings;
