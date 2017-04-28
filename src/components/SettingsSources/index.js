@@ -55,6 +55,7 @@ export class SettingsSources extends React.Component {
                 const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
                 return (
                     [
+                        entry._id,
                         entry.name,
                         entry.alias,
                         entry.type,
@@ -72,6 +73,7 @@ export class SettingsSources extends React.Component {
                 const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
                 return (
                     [
+                        entry._id,
                         entry.name,
                         entry.alias,
                         entry.type,
@@ -85,6 +87,10 @@ export class SettingsSources extends React.Component {
 
             const headers = [
                 {
+                    title: 'ID',
+                    width: null,
+                    hide: true,
+                },{
                     title: 'Name',
                     width: null,
                 },{

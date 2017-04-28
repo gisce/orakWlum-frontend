@@ -186,17 +186,18 @@ export class SmartTable extends Component {
 
                       { //Prepare headers with optional width
                           header_list.map(function(header, index) {
-                              return (
-                                  header.width?
-                                    <TableHeaderColumn
-                                        key={"data_header_" + index}
-                                        style={{width:header.width}}
-                                    >{header.title}</TableHeaderColumn>
-                                  :
-                                    <TableHeaderColumn
-                                        key={"data_header_" + index}
-                                    >{header.title}</TableHeaderColumn>
-                              )
+                              if (header.hide != true)
+                                  return (
+                                      header.width?
+                                        <TableHeaderColumn
+                                            key={"data_header_" + index}
+                                            style={{width:header.width}}
+                                        >{header.title}</TableHeaderColumn>
+                                      :
+                                        <TableHeaderColumn
+                                            key={"data_header_" + index}
+                                        >{header.title}</TableHeaderColumn>
+                                  )
                           })
                       }
 
@@ -220,18 +221,19 @@ export class SmartTable extends Component {
 
                                 { //For each header
                                     header_list.map(function(header, index_header) {
-                                        return (
-                                            header.width?
-                                              <TableRowColumn
-                                                  key={"data_row_" + index_header}
-                                                  style={{width:header.width}}
-                                              >{entry[index_header]}</TableRowColumn>
-                                            :
-                                              <TableRowColumn
-                                                  key={"data_row_" + index_header}
-                                              >{entry[index_header]}</TableRowColumn>
-                                        )
-                                    })
+                                        if (header.hide != true)
+                                            return (
+                                                header.width?
+                                                  <TableRowColumn
+                                                      key={"data_row_" + index_header}
+                                                      style={{width:header.width}}
+                                                  >{entry[index_header]}</TableRowColumn>
+                                                :
+                                                  <TableRowColumn
+                                                      key={"data_row_" + index_header}
+                                                  >{entry[index_header]}</TableRowColumn>
+                                            )
+                                        })
                                 }
 
                                 </TableRow>
