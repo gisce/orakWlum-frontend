@@ -103,14 +103,26 @@ export class SettingsSources extends React.Component {
                 },
             ];
 
+            //Toggle Status BUTTON to inject in SmartTable
+            const toggle_active = [
+                {
+                    'label': 'Toggle Status',
+                    'action':
+                        function(e) {
+                            e.preventDefault();
+                            console.log("toggle");
+                        }
+                },
+            ]
+
             const Settings = (this.props.lite)?
             <SmartTable header={headers} data={measures_adapted}/>
             :
             (
                 <div>
                     <h2>Available sources</h2>
-                    <SmartTable title="Measures" header={headers} data={measures_adapted}/>
-                    <SmartTable title="Static Data" header={headers} data={static_data_adapted}/>
+                    <SmartTable title="Measures" header={headers} data={measures_adapted} appendButtons={toggle_active}/>
+                    <SmartTable title="Static Data" header={headers} data={static_data_adapted} appendButtons={toggle_active}/>
                 </div>
             )
             return Settings;
