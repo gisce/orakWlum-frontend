@@ -60,6 +60,7 @@ export class SettingsSources extends React.Component {
                         entry.type,
                         entry.unit,
                         db_fields,
+                        entry.priority,
                         active,
                     ]
                 )
@@ -76,6 +77,7 @@ export class SettingsSources extends React.Component {
                         entry.type,
                         entry.unit,
                         db_fields,
+                        entry.priority,
                         active,
                     ]
                 )
@@ -85,19 +87,22 @@ export class SettingsSources extends React.Component {
                 {
                     title: 'Name',
                     width: null,
-                },                {
+                },{
                     title: 'Alias',
                     width: null,
-                },                {
+                },{
                     title: 'Type',
                     width: '10%',
-                },                {
+                },{
                     title: 'Unit',
                     width: '10%',
-                },                {
+                },{
                     title: 'DB',
                     width: '30%',
-                },                {
+                },{
+                    title: 'Priority',
+                    width: '10%',
+                },{
                     title: 'Status',
                     width: null,
                 },
@@ -110,7 +115,6 @@ export class SettingsSources extends React.Component {
                     'action':
                         function(e, selectedIDs, onUpdate) {
                             e.preventDefault();
-                            console.log("toggle", selectedIDs);
 
                             const sources_parsed = (selectedIDs)?
                                 selectedIDs.map( function(entry, idx) {
