@@ -118,10 +118,10 @@ export class SmartTable extends Component {
         const {selectedIDs, selectedEntrys, disableCreate, disableEdit, disableDelete} = this.state;
 
         const table = this.props.data;
-
         const header_list = this.props.header;
+        const appendButtons = this.props.appendButtons;
 
-        const actions = [
+        const defaultActions = [
             <RaisedButton
               key="createButton"
               label='New'
@@ -146,6 +146,24 @@ export class SmartTable extends Component {
               disabled={disableDelete}
             />
         ]
+
+        console.log(appendButtons);
+        const extendedActions = (appendButtons != null)?
+            appendButtons.map(function(button, id) {
+                return (
+                    <RaisedButton
+                      key={button.label + "Button"}
+                      label={button.label}
+                      primary={true}
+                      onTouchTap={(e) => button.action(e)}
+                      disabled={false}
+                    />
+                )
+            })
+            :
+            null;
+
+        const actions = defaultActions.concat(extendedActions)
 
         return  (
             <Paper>
@@ -250,4 +268,5 @@ SmartTable.propTypes = {
     header: React.PropTypes.array.isRequired,
     data: React.PropTypes.array.isRequired,
     title: React.PropTypes.string,
+    appendButtons: React.PropTypes.array,
 };
