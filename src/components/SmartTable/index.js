@@ -23,7 +23,7 @@ export class SmartTable extends Component {
             disableEdit: true,
             //Flag to disable Delete action
             disableDelete: true,
-
+            disableExtended: true,
             //The list of index position of the selected elements
             selectedIDs: [],
 
@@ -50,7 +50,7 @@ export class SmartTable extends Component {
     handleSelection(selections) {
         const table = this.state.table;
 
-        let oneSelected, groupSelected, disableCreate, disableEdit, disableDelete;
+        let oneSelected, groupSelected, disableCreate, disableEdit, disableDelete, disableExtended;
         let selectedIDs = [];
         let selectedEntrys = [];
 
@@ -105,17 +105,21 @@ export class SmartTable extends Component {
         //Disable Delete if all entry are selected, or none was selected
         disableDelete = (selection_length == table.length)?true:!(oneSelected || groupSelected);
 
+        //Disable Extended if no entry is selected
+        disableExtended = (selection_length > 0)?false:true;
+
         this.setState ({
             selectedIDs,
             selectedEntrys,
             disableCreate,
             disableEdit,
             disableDelete,
+            disableExtended,
         })
     }
 
     render() {
-        const {selectedIDs, selectedEntrys, disableCreate, disableEdit, disableDelete} = this.state;
+        const {selectedIDs, selectedEntrys, disableCreate, disableEdit, disableDelete, disableExtended} = this.state;
 
         const table = this.props.data;
         const header_list = this.props.header;
@@ -155,7 +159,7 @@ export class SmartTable extends Component {
                       label={button.label}
                       primary={false}
                       onTouchTap={(e) => button.action(e, selectedEntrys, onUpdate)}
-                      disabled={false}
+                      disabled={disableExtended}
                     />
                 )
             })
