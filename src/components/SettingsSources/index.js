@@ -41,6 +41,11 @@ export class SettingsSources extends React.Component {
         this.props.updateSettings(token, data);
     }
 
+    toggleStatus(data) {
+        const token = this.props.token;
+        this.props.toggleSourceSettings(token, data);
+    }
+
     render() {
         if (this.props.loaded) {
 
@@ -157,14 +162,14 @@ export class SettingsSources extends React.Component {
                         header={headers}
                         data={measures_adapted}
                         appendButtons={toggle_active}
-                        onUpdate={(changed_data) => this.updateData(changed_data)}
+                        onUpdate={(changed_data) => this.toggleStatus(changed_data)}
                     />
                     <SmartTable
                         title="Static Data"
                         header={headers}
                         data={static_data_adapted}
                         appendButtons={toggle_active}
-                        onUpdate={(changed_data) => this.updateData(changed_data)}
+                        onUpdate={(changed_data) => this.toggleStatus(changed_data)}
                     />
                 </div>
             )
