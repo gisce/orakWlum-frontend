@@ -23,7 +23,7 @@ export class SmartTable extends Component {
             disableEdit: true,
             //Flag to disable Delete action
             disableDelete: true,
-
+            disableExtended: true,
             //The list of index position of the selected elements
             selectedIDs: [],
 
@@ -50,7 +50,7 @@ export class SmartTable extends Component {
     handleSelection(selections) {
         const table = this.state.table;
 
-        let oneSelected, groupSelected, disableCreate, disableEdit, disableDelete;
+        let oneSelected, groupSelected, disableCreate, disableEdit, disableDelete, disableExtended;
         let selectedIDs = [];
         let selectedEntrys = [];
 
@@ -105,23 +105,27 @@ export class SmartTable extends Component {
         //Disable Delete if all entry are selected, or none was selected
         disableDelete = (selection_length == table.length)?true:!(oneSelected || groupSelected);
 
+        //Disable Extended if no entry is selected
+        disableExtended = (selection_length > 0)?false:true;
+
         this.setState ({
             selectedIDs,
             selectedEntrys,
             disableCreate,
             disableEdit,
             disableDelete,
+            disableExtended,
         })
     }
 
     render() {
-        const {selectedIDs, selectedEntrys, disableCreate, disableEdit, disableDelete} = this.state;
+        const {selectedIDs, selectedEntrys, disableCreate, disableEdit, disableDelete, disableExtended} = this.state;
 
         const table = this.props.data;
-
         const header_list = this.props.header;
+        const {appendButtons, onUpdate} = this.props;
 
-        const actions = [
+        const defaultActions = [
             <RaisedButton
               key="createButton"
               label='New'
@@ -147,6 +151,23 @@ export class SmartTable extends Component {
             />
         ]
 
+        const extendedActions = (appendButtons != null)?
+            appendButtons.map(function(button, id) {
+                return (
+                    <RaisedButton
+                      key={button.label + "Button"}
+                      label={button.label}
+                      primary={false}
+                      onTouchTap={(e) => button.action(e, selectedEntrys, onUpdate)}
+                      disabled={disableExtended}
+                    />
+                )
+            })
+            :
+            null;
+
+        const actions = defaultActions.concat(extendedActions)
+
         return  (
             <Paper>
 
@@ -169,15 +190,19 @@ export class SmartTable extends Component {
 
                       { //Prepare headers with optional width
                           header_list.map(function(header, index) {
+                              const is_hidden = (header.hide != true)?false:true;
+
                               return (
                                   header.width?
                                     <TableHeaderColumn
                                         key={"data_header_" + index}
                                         style={{width:header.width}}
+                                        hidden={is_hidden}
                                     >{header.title}</TableHeaderColumn>
                                   :
                                     <TableHeaderColumn
                                         key={"data_header_" + index}
+                                        hidden={is_hidden}
                                     >{header.title}</TableHeaderColumn>
                               )
                           })
@@ -203,15 +228,19 @@ export class SmartTable extends Component {
 
                                 { //For each header
                                     header_list.map(function(header, index_header) {
+                                        const is_hidden = (header.hide != true)?false:true;
+
                                         return (
                                             header.width?
                                               <TableRowColumn
                                                   key={"data_row_" + index_header}
                                                   style={{width:header.width}}
+                                                  hidden={is_hidden}
                                               >{entry[index_header]}</TableRowColumn>
                                             :
                                               <TableRowColumn
                                                   key={"data_row_" + index_header}
+                                                  hidden={is_hidden}
                                               >{entry[index_header]}</TableRowColumn>
                                         )
                                     })
@@ -250,4 +279,5 @@ SmartTable.propTypes = {
     header: React.PropTypes.array.isRequired,
     data: React.PropTypes.array.isRequired,
     title: React.PropTypes.string,
+    appendButtons: React.PropTypes.array,
 };

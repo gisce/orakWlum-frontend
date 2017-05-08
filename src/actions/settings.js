@@ -82,9 +82,10 @@ export function updateSettings(token, data) {
         data_update_api_resource(token, "sources/", data )
             .then(parseJSON)
             .then(response => {
-                if (response.result.was_updated)
+                if (response.result.was_updated) {
                     dispatch(receiveUpdateSettings(response.result));
-                else
+                }
+                else {
                     throw new Error("Error updating Settings");
                     dispatch(receiveUpdateSettingsKO({
                         response: {
@@ -93,6 +94,35 @@ export function updateSettings(token, data) {
                             statusType: "warning",
                         },
                     }));
+                }
+
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+export function toggleSourceSettings(token, data) {
+    return (dispatch) => {
+        dispatch(updateSettingsRequest());
+        data_update_api_resource(token, "sources/status/toggle", data )
+            .then(parseJSON)
+            .then(response => {
+                if (response.result.was_updated == true)
+                    dispatch(receiveUpdateSettings(response.result));
+                else {
+                    throw new Error("Error toggling Settings");
+                    dispatch(receiveUpdateSettingsKO({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token',
+                            statusType: "warning",
+                        },
+                    }));
+                }
 
             })
             .catch(error => {

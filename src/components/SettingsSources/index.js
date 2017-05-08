@@ -41,6 +41,11 @@ export class SettingsSources extends React.Component {
         this.props.updateSettings(token, data);
     }
 
+    toggleStatus(data) {
+        const token = this.props.token;
+        this.props.toggleSourceSettings(token, data);
+    }
+
     render() {
         if (this.props.loaded) {
 
@@ -55,11 +60,13 @@ export class SettingsSources extends React.Component {
                 const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
                 return (
                     [
+                        entry._id,
                         entry.name,
                         entry.alias,
                         entry.type,
                         entry.unit,
                         db_fields,
+                        entry.priority,
                         active,
                     ]
                 )
@@ -71,11 +78,13 @@ export class SettingsSources extends React.Component {
                 const db_fields = entry.config[0] + ":" + entry.config[1] + "@" + entry.config[2] + "/" + entry.config[3];
                 return (
                     [
+                        entry._id,
                         entry.name,
                         entry.alias,
                         entry.type,
                         entry.unit,
                         db_fields,
+                        entry.priority,
                         active,
                     ]
                 )
@@ -83,25 +92,64 @@ export class SettingsSources extends React.Component {
 
             const headers = [
                 {
+                    title: 'ID',
+                    width: null,
+                    hide: true,
+                },{
                     title: 'Name',
                     width: null,
-                },                {
+                },{
                     title: 'Alias',
                     width: null,
-                },                {
+                },{
                     title: 'Type',
                     width: '10%',
-                },                {
+                },{
                     title: 'Unit',
                     width: '10%',
-                },                {
+                },{
                     title: 'DB',
                     width: '30%',
-                },                {
+                },{
+                    title: 'Priority',
+                    width: '10%',
+                },{
                     title: 'Status',
                     width: null,
                 },
             ];
+
+            //Toggle Status BUTTON to inject in SmartTable
+            const toggle_active = [
+                {
+                    'label': 'Toggle Status',
+                    'action':
+                        function(e, selectedIDs, onUpdate) {
+                            e.preventDefault();
+
+                            const sources_parsed = (selectedIDs)?
+                                selectedIDs.map( function(entry, idx) {
+                                    return {
+                                        "name": entry[0],
+                                        "alias": entry[1],
+                                        "type": entry[2],
+                                        "unit": entry[3],
+                                        "db": entry[4],
+                                        "priority": entry[5],
+                                        "active": entry[6],
+                                    }
+                                })
+                                :
+                                null;
+
+
+                            // Try to update data
+                            if (onUpdate) {
+                                onUpdate(selectedIDs);
+                            }
+                        }
+                },
+            ]
 
             const Settings = (this.props.lite)?
             <SmartTable header={headers} data={measures_adapted}/>
@@ -109,8 +157,20 @@ export class SettingsSources extends React.Component {
             (
                 <div>
                     <h2>Available sources</h2>
-                    <SmartTable title="Measures" header={headers} data={measures_adapted}/>
-                    <SmartTable title="Static Data" header={headers} data={static_data_adapted}/>
+                    <SmartTable
+                        title="Measures"
+                        header={headers}
+                        data={measures_adapted}
+                        appendButtons={toggle_active}
+                        onUpdate={(changed_data) => this.toggleStatus(changed_data)}
+                    />
+                    <SmartTable
+                        title="Static Data"
+                        header={headers}
+                        data={static_data_adapted}
+                        appendButtons={toggle_active}
+                        onUpdate={(changed_data) => this.toggleStatus(changed_data)}
+                    />
                 </div>
             )
             return Settings;
