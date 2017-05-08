@@ -1,10 +1,10 @@
-import React from 'react';
-
 import {debug} from './debug';
+import {version, version_pr} from './version';
+
 export const DEBUG = (debug)?debug:false;
 
-export const VERSION = "0.7.0";
-export const VERSION_PR = "157";
+export const VERSION = version;
+export const VERSION_PR = version_pr;
 
 export const API_SPECIFICATION = 1;
 export const API_PREFIX = "/api/v" + API_SPECIFICATION;

@@ -85,6 +85,7 @@ export function updateSettings(token, data) {
                 if (response.result.was_updated)
                     dispatch(receiveUpdateSettings(response.result));
                 else
+                    throw new Error("Error updating Settings");
                     dispatch(receiveUpdateSettingsKO({
                         response: {
                             status: 403,

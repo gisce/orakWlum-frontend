@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/aggregations';
 
-import { AggregationsList } from './AggregationsList';
 import { SmartTable } from './SmartTable';
 
 import { debug } from '../utils/debug';
