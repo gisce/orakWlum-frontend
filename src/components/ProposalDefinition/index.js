@@ -787,7 +787,8 @@ export class ProposalDefinition extends Component {
         let date_start = this.state.date_start;
         date_start.setHours(0, 0, 0, 0);
 
-        let date_end = this.state.date_end;
+        let date_end;
+        date_end = (this.state.date_end)?this.state.date_end:this.state.date_start;
         date_end.setHours(0, 0, 0, 0);
 
         const proposalData = {
