@@ -37,7 +37,6 @@ export default class ProposalView extends React.Component {
     }
 
     render() {
-        //const proposal = this.props.data.data;
         const elements = this.props.data.data;
         const allAggregations = this.props.allAggregations;
 
@@ -73,7 +72,7 @@ export default class ProposalView extends React.Component {
                     {this.props.loaded &&
                         <div>
                             <ProposalComparator
-                                title={"Comparing A"}
+                                title={"Comparing '" + elementA.days_range_future[0] + "' vs '" + elementB.days_range_future[0] + "'" }
                                 elementA={elementA_merged}
                                 elementB={elementB_merged}
                             />
