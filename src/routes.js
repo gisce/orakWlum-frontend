@@ -21,6 +21,7 @@ import Profile from './components/ProfileView';
 import About from './components/AboutView';
 import Aggregations from './components/AggregationsView';
 import Settings from './components/SettingsView';
+import Comparator from './components/ProposalComparatorView';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -40,6 +41,7 @@ export default (
         <Route path="historicals" component={requireAuthentication(Historicals)} />
         <Route path="historicals/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="historicals/:historicalId" component={requireAuthentication(Historical)} />
+        <Route path="comparator/:proposalId" component={requireAuthentication(Comparator)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
