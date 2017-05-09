@@ -41,7 +41,7 @@ export default (
         <Route path="historicals" component={requireAuthentication(Historicals)} />
         <Route path="historicals/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="historicals/:historicalId" component={requireAuthentication(Historical)} />
-        <Route path="comparator/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+        <Route path="compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
