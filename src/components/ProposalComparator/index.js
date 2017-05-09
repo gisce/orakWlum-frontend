@@ -10,7 +10,6 @@ const styles = {
         margin: 20,
         textAlign: 'center',
     }
-
 };
 
 export class ProposalComparator extends Component {
@@ -24,12 +23,13 @@ export class ProposalComparator extends Component {
 
     render() {
 
-        const {title, elementA, elementB} = this.props;
+        const {title, elementA, elementB, mode} = this.props;
 
         const ProposalA = (
             <Proposal
                 proposal={elementA.element}
                 aggregations={elementA.aggregations}
+                comparation={true}
             />
         );
 
@@ -37,12 +37,11 @@ export class ProposalComparator extends Component {
             <Proposal
                 proposal={elementB.element}
                 aggregations={elementB.aggregations}
+                comparation={true}
             />
         );
 
         //Handle view mode
-
-        const mode = "horizontal";
         const result = (mode == "vertical")?
             (
                 <div>
@@ -85,4 +84,5 @@ ProposalComparator.propTypes = {
     elementA: React.PropTypes.object.isRequired,
     elementB: React.PropTypes.object.isRequired,
     title: React.PropTypes.string,
+    mode: React.PropTypes.string,
 };
