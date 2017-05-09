@@ -39,7 +39,8 @@ export function receiveElements(data, aggregations, initial) {
 export function fetchElements(token, elements, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
-        data_fetch_api_resource(token, "proposal/")
+
+        data_fetch_api_resource(token, "elements/" + elements)
             .then(parseJSON)
             .then(response => {
                 dispatch(receiveElements(response.result, response.aggregations, initial));
