@@ -75,6 +75,7 @@ export default class ProposalView extends React.Component {
                                 title={"Comparing '" + elementA.days_range_future[0] + "' vs '" + elementB.days_range_future[0] + "'" }
                                 elementA={elementA_merged}
                                 elementB={elementB_merged}
+                                mode="horizontal"
                             />
                         </div>
                     }
