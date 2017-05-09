@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ProposalView extends React.Component {
+export default class ProposalComparatorView extends React.Component {
     componentWillMount() {
         this.idA = this.props.params.elementA;
         this.idB = this.props.params.elementB;
@@ -40,7 +40,7 @@ export default class ProposalView extends React.Component {
         const elements = this.props.data.data;
         const allAggregations = this.props.allAggregations;
 
-        if (elements != null && elements.length>=2 && allAggregations != null) {
+        if (elements != null && elements.length==2 && allAggregations != null) {
             const elementA = elements[0];
             const elementB = elements[1];
 
@@ -67,12 +67,16 @@ export default class ProposalView extends React.Component {
                 aggregations: aggregationsListB,
             }
 
+            //Prepare each title
+            const titleA = (elementA.days_range_future)?elementA.days_range_future[0]:elementA.days_range[0];
+            const titleB = (elementB.days_range_future)?elementB.days_range_future[0]:elementB.days_range[0];
+
             return (
                 <div>
                     {this.props.loaded &&
                         <div>
                             <ProposalComparator
-                                title={"Comparing '" + elementA.days_range_future[0] + "' vs '" + elementB.days_range_future[0] + "'" }
+                                title={"Comparing '" + titleA + "' vs '" + titleB + "'" }
                                 elementA={elementA_merged}
                                 elementB={elementB_merged}
                                 mode="horizontal"
@@ -87,7 +91,7 @@ export default class ProposalView extends React.Component {
     }
 }
 
-ProposalView.propTypes = {
+ProposalComparatorView.propTypes = {
     loaded: React.PropTypes.bool,
     data: React.PropTypes.any,
     token: React.PropTypes.string,
