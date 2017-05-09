@@ -437,8 +437,6 @@ export class Proposal extends Component {
 
         const daysRange_toShow = daysRangeFuture;
 
-
-
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 

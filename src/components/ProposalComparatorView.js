@@ -68,15 +68,18 @@ export default class ProposalComparatorView extends React.Component {
             }
 
             //Prepare each title
+            const typeA = (elementA.historical)?"H":"P";
             const titleA = (elementA.days_range_future)?elementA.days_range_future[0]:elementA.days_range[0];
-            const titleB = (elementB.days_range_future)?elementB.days_range_future[0]:elementB.days_range[0];
+
+            const typeB = (elementB.historical)?"H":"P";
+            const titleB =  (elementB.days_range_future)?elementB.days_range_future[0]:elementB.days_range[0];
 
             return (
                 <div>
                     {this.props.loaded &&
                         <div>
                             <ProposalComparator
-                                title={"Comparing '" + titleA + "' vs '" + titleB + "'" }
+                                title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
                                 elementA={elementA_merged}
                                 elementB={elementB_merged}
                                 mode="horizontal"
