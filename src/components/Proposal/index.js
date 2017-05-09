@@ -136,6 +136,11 @@ export class Proposal extends Component {
         this.animateChart = true;
 
         props.aggregations[0].selected = true;
+
+        if (props.comparation){
+            this.detail_open = true;
+            this.comparation = true;
+        }
     }
 
     dispatchNewRoute(route) {
@@ -533,7 +538,7 @@ export class Proposal extends Component {
 
         // The Proposal graph toogle! //to switch between table and chart
         const proposalPictureToggle = (
-            (withPicture) &&
+            (withPicture) && (!this.comparation) &&
             <div
                 className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2"
                 style={styles.to_ri}>
@@ -597,7 +602,7 @@ export class Proposal extends Component {
 
 
         const proposalActions =
-             (!readOnly)?
+             (!readOnly && !this.comparation)?
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)} title={"Refresh current proposal"}/>
                 <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
@@ -703,4 +708,5 @@ export class Proposal extends Component {
 Proposal.propTypes = {
     readOnly: React.PropTypes.bool,
     proposalOld: React.PropTypes.bool,
+    comparation: React.PropTypes.bool,
 };
