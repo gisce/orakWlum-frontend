@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { SettingsSources } from '../Proposal'
+import { Proposal } from '../Proposal'
 
 const styles = {
 };
@@ -24,6 +24,11 @@ export class ProposalComparator extends Component {
                 (title) &&
                     <h3>{title}</h3>
                 }
+
+                <Proposal
+                    proposal={elementA.element}
+                    aggregations={elementA.aggregations}
+                    />
 
             </div>
 
