@@ -418,8 +418,6 @@ export class Historical extends Component {
 
         const historical = (proposal.historical == false)?false:true;
 
-        const daysRange = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range[1]).toLocaleDateString(locale, dateOptions);
-
         const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
         const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
         const ownerText = (proposal.owner)?"by " + proposal.owner:"";
@@ -431,15 +429,15 @@ export class Historical extends Component {
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
+        const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
+        const daysRange =
+            (proposalDaysRange.length == 1)?
+                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions)
+                :
+                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[1]).toLocaleDateString(locale, dateOptions);
 
+        const daysRange_toShow = daysRange;
 
-        let daysRange_toShow;
-        if (historical == false) {
-             daysRange_toShow = new Date(proposal.days_range_future[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposal.days_range_future[1]).toLocaleDateString(locale, dateOptions);
-
-        } else {
-             daysRange_toShow = daysRange;
-        }
         const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
@@ -651,7 +649,7 @@ export class Historical extends Component {
 
               <CardText>
           {       proposal.creation_date &&
-                  <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
+                  <p><span>Historical was created on {creationDate} {ownerText}</span></p>
           }
           {       proposal.execution_date &&
                   <p><span>Last execution was done at {lastExecution}</span></p>
