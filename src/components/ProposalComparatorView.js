@@ -2,18 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actionCreators from '../actions/proposal';
+import * as actionCreators from '../actions/elements';
 import { debug } from '../utils/debug';
 
 import { ProposalComparator } from './ProposalComparator';
 
 function mapStateToProps(state) {
+
     return {
-        data: state.proposal,
-        allAggregations: state.proposal.allAggregations,
+        data: state.elements,
+        allAggregations: state.elements.allAggregations,
         token: state.auth.token,
-        loaded: state.proposal.loaded,
-        isFetching: state.proposal.isFetching,
+        loaded: state.elements.loaded,
+        isFetching: state.elements.isFetching,
     };
 }
 
@@ -23,31 +24,48 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalView extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
+        this.idA = this.props.params.elementA;
+        this.idB = this.props.params.elementB;
+
         this.fetchData();
     }
 
     fetchData() {
         const token = this.props.token;
-        const proposal_id = this.props.params.proposalId;
-        this.props.fetchProposal(token, proposal_id, true);
+        this.props.fetchElements(token, [this.idA, this.idB], true);
     }
 
     render() {
-        const proposalId = this.props.params.proposalId;
-        const proposal = this.props.data.data;
+        //const proposal = this.props.data.data;
+        const elements = this.props.data.data;
         const allAggregations = this.props.allAggregations;
 
-        if (proposal!=null && proposal.id == proposalId) {
-            let aggregationsList = [];
-            proposal.aggregations.map( function(agg, i){
+        if (elements != null && elements.length>=2 && allAggregations != null) {
+            const elementA = elements[0];
+            const elementB = elements[1];
+
+            //Prepare the Aggregations for each element
+            let aggregationsListA = [];
+            let aggregationsListB = [];
+
+            elementA.aggregations.map( function(agg, i){
                 if (agg in allAggregations)
-                    aggregationsList.push( allAggregations[agg]);
+                    aggregationsListA.push( allAggregations[agg]);
+            })
+            elementB.aggregations.map( function(agg, i){
+                if (agg in allAggregations)
+                    aggregationsListB.push( allAggregations[agg]);
             })
 
-            const elementA = {
-                element: proposal,
-                aggregations: aggregationsList,
+            //Prepare the final object for each element
+            const elementA_merged = {
+                element: elementA,
+                aggregations: aggregationsListA,
+            }
+            const elementB_merged = {
+                element: elementB,
+                aggregations: aggregationsListB,
             }
 
             return (
@@ -56,8 +74,8 @@ export default class ProposalView extends React.Component {
                         <div>
                             <ProposalComparator
                                 title={"Comparing A"}
-                                elementA={elementA}
-                                elementB={elementA}
+                                elementA={elementA_merged}
+                                elementB={elementB_merged}
                             />
                         </div>
                     }

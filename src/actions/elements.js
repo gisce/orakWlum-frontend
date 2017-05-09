@@ -42,15 +42,12 @@ export function fetchElements(token, elements, initial=false) {
         data_fetch_api_resource(token, "proposal/")
             .then(parseJSON)
             .then(response => {
-                console.log("receive!")
                 dispatch(receiveElements(response.result, response.aggregations, initial));
             })
-            /*
             .catch(error => {
                 if (error.status === 401) {
                     dispatch(logoutAndRedirect(error));
                 }
             });
-            */
     };
 }
