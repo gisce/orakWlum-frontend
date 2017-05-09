@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
 import { Proposal } from '../Proposal'
+import { Historical } from '../Historical'
+
 import Paper from 'material-ui/Paper';
 
 const styles = {
@@ -22,42 +24,61 @@ export class ProposalComparator extends Component {
     }
 
     render() {
-
         const {title, elementA, elementB, mode} = this.props;
 
-        const ProposalA = (
-            <Proposal
-                proposal={elementA.element}
-                aggregations={elementA.aggregations}
+        const ElementA = (elementA.element.historical)?
+            (
+                <Historical
+                    proposal={elementA.element}
+                    aggregations={elementA.aggregations}
+                    comparation={true}
+                />
+            )
+            :
+            (
+                <Proposal
+                    proposal={elementA.element}
+                    aggregations={elementA.aggregations}
+                    comparation={true}
+                />
+            )
+        ;
+
+        const ElementB = (elementB.element.historical)?
+        (
+            <Historical
+                proposal={elementB.element}
+                aggregations={elementB.aggregations}
                 comparation={true}
             />
-        );
-
-        const ProposalB = (
+        )
+        :
+        (
             <Proposal
                 proposal={elementB.element}
                 aggregations={elementB.aggregations}
                 comparation={true}
             />
-        );
+        )
+    ;
 
         //Handle view mode
         const result = (mode == "vertical")?
             (
                 <div>
-                    {ProposalA}
+                    {ElementA}
                     <hr/>
-                    {ProposalB}
+                    {ElementB}
                 </div>
             )
             :
             (
                 <div>
                     <Paper style={styles.horizontal}>
-                        {ProposalA}
+                        {ElementA}
                     </Paper>
                     <Paper style={styles.horizontal}>
-                        {ProposalB}
+                        {ElementB}
                     </Paper>
                 </div>
             )
@@ -66,14 +87,12 @@ export class ProposalComparator extends Component {
 
         return  (
             <div>
-
                 {
                 (title) &&
                     <h3>{title}</h3>
                 }
 
                 {result}
-
             </div>
 
         );
