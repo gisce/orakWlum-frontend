@@ -24,13 +24,14 @@ export function fetchElementsRequest(initial) {
     };
 }
 
-export function receiveElements(data, aggregations, initial) {
+export function receiveElements(data, aggregations, comparison, initial) {
     const message = (initial)?null:"Elements list updated";
     return {
         type: RECEIVE_ELEMENTS,
         payload: {
             data,
             aggregations,
+            comparison,
             message,
         },
     };
@@ -43,7 +44,7 @@ export function fetchElements(token, elements, initial=false) {
         data_fetch_api_resource(token, "elements/" + elements)
             .then(parseJSON)
             .then(response => {
-                dispatch(receiveElements(response.result, response.aggregations, initial));
+                dispatch(receiveElements(response.result, response.aggregations, response.comparison, initial));
             })
             .catch(error => {
                 if (error.status === 401) {
