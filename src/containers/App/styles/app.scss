@@ -9,7 +9,15 @@
   h1, h2, h3, h4 {
     font-weight: 300;
   }
+}
 
+//increase container for large screens
+@media (min-width: 1200px) {
+    :global(.container) {
+        width: auto !important;
+        margin-left: 7vw !important;
+        margin-right: 7vw !important;
+    }
 }
 
 //Fixing aggregationsList of <Proposal>
