@@ -2,6 +2,7 @@
 @import 'fonts/roboto';
 @import 'typography';
 @import 'links';
+@import 'screens';
 
 :global(body) {
   position: relative;
@@ -12,7 +13,7 @@
 }
 
 //increase container for large screens
-@media (min-width: 1200px) {
+@media (#{$large-desktop}) {
     :global(.container) {
         width: auto !important;
         margin-left: 7vw !important;
