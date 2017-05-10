@@ -66,15 +66,7 @@ export class ProposalComparator extends Component {
     ;
 
         //Handle view mode
-        const result = (mode == "vertical")?
-            (
-                <div>
-                    {ElementA}
-                    <hr/>
-                    {ElementB}
-                </div>
-            )
-            :
+        const result = (mode == "horizontal")?
             (
                 <div style={styles.container}>
                     <Paper style={styles.horizontal}>
@@ -83,6 +75,14 @@ export class ProposalComparator extends Component {
                     <Paper style={styles.horizontal}>
                         {ElementB}
                     </Paper>
+                </div>
+            )
+            :
+            (
+                <div>
+                    {ElementA}
+                    <hr/>
+                    {ElementB}
                 </div>
             )
         ;
