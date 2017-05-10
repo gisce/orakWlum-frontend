@@ -27,7 +27,7 @@ export class ProposalComparator extends Component {
     }
 
     render() {
-        const {title, elementA, elementB, mode} = this.props;
+        const {title, elementA, elementB, comparison, mode} = this.props;
 
         const ElementA = (elementA.element.historical)?
             (
@@ -63,7 +63,26 @@ export class ProposalComparator extends Component {
                 comparation={true}
             />
         )
-    ;
+        ;
+
+        const Comparison = (comparison.element.historical)?
+        (
+            <Historical
+                proposal={comparison.element}
+                aggregations={comparison.aggregations}
+                comparation={false}
+            />
+        )
+        :
+        (
+            <Proposal
+                proposal={comparison.element}
+                aggregations={comparison.aggregations}
+                comparation={false}
+            />
+        )
+        ;
+
 
         //Handle view mode
         const result = (mode == "horizontal")?
@@ -78,13 +97,21 @@ export class ProposalComparator extends Component {
                 </div>
             )
             :
-            (
-                <div>
-                    {ElementA}
-                    <hr/>
-                    {ElementB}
-                </div>
-            )
+            (mode == "unique")?
+                (
+                    <div>
+                        {Comparison}
+                    </div>
+                )
+                :
+                (
+                    <div>
+                        {ElementA}
+                        <hr/>
+                        {ElementB}
+                    </div>
+                )
+
         ;
 
 
@@ -105,6 +132,7 @@ export class ProposalComparator extends Component {
 ProposalComparator.propTypes = {
     elementA: React.PropTypes.object.isRequired,
     elementB: React.PropTypes.object.isRequired,
+    comparison: React.PropTypes.object.isRequired,
     title: React.PropTypes.string,
     mode: React.PropTypes.string,
 };
