@@ -6,10 +6,13 @@ import { Historical } from '../Historical'
 import Paper from 'material-ui/Paper';
 
 const styles = {
+    container: {
+        textAlign: 'center',
+    },
     horizontal: {
         display: 'inline-block',
-        maxWidth: 530,
-        margin: 20,
+        maxWidth: '46%',
+        margin: '1em',
         textAlign: 'center',
     }
 };
@@ -73,7 +76,7 @@ export class ProposalComparator extends Component {
             )
             :
             (
-                <div>
+                <div style={styles.container}>
                     <Paper style={styles.horizontal}>
                         {ElementA}
                     </Paper>
