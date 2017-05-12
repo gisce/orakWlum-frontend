@@ -6,7 +6,6 @@ import * as actionCreators from '../actions/elements';
 import { debug } from '../utils/debug';
 
 import { ProposalComparator } from './ProposalComparator';
-import RaisedButton from 'material-ui/RaisedButton';
 
 function mapStateToProps(state) {
 
@@ -26,32 +25,11 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalComparatorView extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.modes = ["horizontal", "unique"];
-        this.mode_selected = 0;
-
-        this.state = {
-            mode: this.modes[this.mode_selected],
-        }
-
-        this.toggleMode = this.toggleMode.bind(this);
-    }
-
     componentWillMount() {
         this.idA = this.props.params.elementA;
         this.idB = this.props.params.elementB;
 
         this.fetchData();
-    }
-
-    toggleMode(){
-        this.mode_selected = (this.mode_selected + 1) % this.modes.length;
-
-        this.setState({
-            mode: this.modes[this.mode_selected],
-        });
     }
 
     fetchData() {
@@ -62,7 +40,6 @@ export default class ProposalComparatorView extends React.Component {
     render() {
         const elements = this.props.data.data;
         const {allAggregations, comparison} = this.props;
-        const {mode} = this.state;
 
         if (elements != null && elements.length==2 && allAggregations != null) {
             const elementA = elements[0];
@@ -111,18 +88,12 @@ export default class ProposalComparatorView extends React.Component {
                 <div>
                     {this.props.loaded &&
                         <div>
-                            <RaisedButton
-                              label="Change view"
-                              onTouchTap={this.toggleMode}
-                              style={{marginRight: 12}}
-                            />
-
                             <ProposalComparator
                                 title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
                                 elementA={elementA_merged}
                                 elementB={elementB_merged}
                                 comparison={comparison_merged}
-                                mode={mode}
+                                mode={"unique"}
                             />
                         </div>
                     }

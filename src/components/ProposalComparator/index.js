@@ -4,6 +4,7 @@ import { Proposal } from '../Proposal'
 import { Historical } from '../Historical'
 
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
     container: {
@@ -14,7 +15,10 @@ const styles = {
         maxWidth: '46%',
         margin: '1em',
         textAlign: 'center',
-    }
+    },
+    change_mode_button: {
+        marginBottom: 22
+    },
 };
 
 export class ProposalComparator extends Component {
@@ -22,12 +26,35 @@ export class ProposalComparator extends Component {
     constructor(props) {
         super(props);
 
+        this.modes = ["horizontal", "unique"];
+        this.mode_selected = (props.mode)?
+            this.modes.indexOf(props.mode)
+        :
+            0
+        ;
+
         this.state = {
-        };
+            mode: this.modes[this.mode_selected],
+        }
+
+        this.toggleMode = this.toggleMode.bind(this);
     }
 
+
+    toggleMode(){
+        this.mode_selected = (this.mode_selected + 1) % this.modes.length;
+
+        this.setState({
+            mode: this.modes[this.mode_selected],
+        });
+    }
+
+
+
     render() {
-        const {title, elementA, elementB, comparison, mode} = this.props;
+        const {title, elementA, elementB, comparison} = this.props;
+
+        const {mode} = this.state;
 
         const ElementA = (elementA.element.historical)?
             (
@@ -84,6 +111,14 @@ export class ProposalComparator extends Component {
         ;
 
 
+        const change_mode_button  = (
+            <RaisedButton
+              label="Change view"
+              onTouchTap={this.toggleMode}
+              style={styles.change_mode_button}
+            />
+        );
+
         //Handle view mode
         const result = (mode == "horizontal")?
             (
@@ -122,6 +157,7 @@ export class ProposalComparator extends Component {
                     <h3>{title}</h3>
                 }
 
+                {change_mode_button}
                 {result}
             </div>
 
@@ -134,5 +170,5 @@ ProposalComparator.propTypes = {
     elementB: React.PropTypes.object.isRequired,
     comparison: React.PropTypes.object.isRequired,
     title: React.PropTypes.string,
-    mode: React.PropTypes.string,
+    mode: React.PropTypes.string.isRequired,
 };
