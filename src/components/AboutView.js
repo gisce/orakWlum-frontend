@@ -11,6 +11,8 @@ import { Notification } from './Notification';
 
 import { PRDetail } from './PRDetail';
 
+import { LoadingAnimation } from './LoadingAnimation';
+
 function mapStateToProps(state) {
     return {
         about: state.about,
@@ -53,14 +55,14 @@ export default class ProfileView extends React.Component {
         return (
             <div>
 
+                <h1>About oraKWlum</h1>
+
                 {
 
                     (this.props.loaded) ?
                         <div>
-                            <h1>About oraKWlum</h1>
-
                             <br/>
-                            
+
                             <p>oraKWlum suite was created by <a target="_blank" href="http://gisce.net">GISCE</a>.</p>
                             <p>It provides a tool desired to support and speed up the energy provisioning process.</p>
 
@@ -79,6 +81,8 @@ export default class ProfileView extends React.Component {
 
                         </div>
                     :
+                    <LoadingAnimation /> ||
+
                     (this.props.error) &&
                         <div>
                             <Notification

@@ -5,6 +5,8 @@ import * as actionCreators from '../actions/aggregations';
 
 import { SmartTable } from './SmartTable';
 
+import { LoadingAnimation } from './LoadingAnimation';
+
 import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
@@ -79,6 +81,7 @@ export default class AggregationsView extends React.Component {
             <div>
                 {
                     (!this.props.loaded) ?
+                        <LoadingAnimation /> || 
                         this.props.error &&
                             <div>
                                 <h1>There was an error</h1>

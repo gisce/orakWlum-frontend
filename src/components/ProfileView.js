@@ -5,6 +5,8 @@ import * as actionCreators from '../actions/profile';
 
 import { UserProfile } from './UserProfile';
 
+import { LoadingAnimation } from './LoadingAnimation';
+
 import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
@@ -44,7 +46,7 @@ export default class ProfileView extends React.Component {
             <div>
                 {
                     (!this.props.loaded) ?
-
+                        <LoadingAnimation /> || 
                         this.props.error &&
                             <div>
                                 <h1>There was an error</h1>

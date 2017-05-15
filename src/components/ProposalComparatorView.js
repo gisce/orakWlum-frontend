@@ -7,6 +7,8 @@ import { debug } from '../utils/debug';
 
 import { ProposalComparator } from './ProposalComparator';
 
+import { LoadingAnimation } from './LoadingAnimation';
+
 function mapStateToProps(state) {
 
     return {
@@ -101,7 +103,11 @@ export default class ProposalComparatorView extends React.Component {
                 </div>
             );
         }
-        return (<div>{debug(this.props.data.data)}</div>);
+        return (
+            <div>
+                <LoadingAnimation />
+                {debug(this.props.data.data)}
+            </div>);
     }
 }
 

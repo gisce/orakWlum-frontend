@@ -11,6 +11,7 @@ import { ContentHeader } from './ContentHeader';
 
 import { Notification } from './Notification';
 
+import { LoadingAnimation } from './LoadingAnimation';
 
 
 function mapStateToProps(state) {
@@ -94,7 +95,7 @@ export default class HistoricalsView extends React.Component {
                 </div>
             :
                 <div>
-                    <h3>There are no Historicals to show</h3>
+                    <LoadingAnimation />
                 </div>
             }
                 {debug(this.props.data.data)}

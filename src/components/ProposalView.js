@@ -6,6 +6,7 @@ import * as actionCreators from '../actions/proposal';
 import { debug } from '../utils/debug';
 
 import { Proposal } from './Proposal';
+import { LoadingAnimation } from './LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
@@ -59,7 +60,12 @@ export default class ProposalView extends React.Component {
                 </div>
             );
         }
-        return (<div>{debug(this.props.data.data)}</div>);
+        return (
+            <div>
+                <LoadingAnimation />
+                {debug(this.props.data.data)}
+            </div>
+        );
     }
 }
 
