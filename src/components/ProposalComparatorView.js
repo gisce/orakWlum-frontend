@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     return {
         data: state.elements,
         allAggregations: state.elements.allAggregations,
+        comparison: state.elements.comparison,
         token: state.auth.token,
         loaded: state.elements.loaded,
         isFetching: state.elements.isFetching,
@@ -38,7 +39,7 @@ export default class ProposalComparatorView extends React.Component {
 
     render() {
         const elements = this.props.data.data;
-        const allAggregations = this.props.allAggregations;
+        const {allAggregations, comparison} = this.props;
 
         if (elements != null && elements.length==2 && allAggregations != null) {
             const elementA = elements[0];
@@ -47,6 +48,7 @@ export default class ProposalComparatorView extends React.Component {
             //Prepare the Aggregations for each element
             let aggregationsListA = [];
             let aggregationsListB = [];
+            let aggregationsListComparison = [];
 
             elementA.aggregations.map( function(agg, i){
                 if (agg in allAggregations)
@@ -55,6 +57,10 @@ export default class ProposalComparatorView extends React.Component {
             elementB.aggregations.map( function(agg, i){
                 if (agg in allAggregations)
                     aggregationsListB.push( allAggregations[agg]);
+            })
+            comparison.aggregations.map( function(agg, i){
+                if (agg in allAggregations)
+                    aggregationsListComparison.push( allAggregations[agg]);
             })
 
             //Prepare the final object for each element
@@ -65,6 +71,10 @@ export default class ProposalComparatorView extends React.Component {
             const elementB_merged = {
                 element: elementB,
                 aggregations: aggregationsListB,
+            }
+            const comparison_merged = {
+                element: comparison,
+                aggregations: aggregationsListComparison,
             }
 
             //Prepare each title
@@ -82,7 +92,8 @@ export default class ProposalComparatorView extends React.Component {
                                 title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
                                 elementA={elementA_merged}
                                 elementB={elementB_merged}
-                                mode="horizontal"
+                                comparison={comparison_merged}
+                                mode={"unique"}
                             />
                         </div>
                     }

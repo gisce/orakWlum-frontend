@@ -11,6 +11,7 @@ export default createReducer(initialState, {
     [RECEIVE_ELEMENTS]: (state, payload) =>
         Object.assign({}, state, {
             data: payload.data,
+            comparison: payload.comparison,
             allAggregations: payload.aggregations,
             isFetching: false,
             loaded: true,
