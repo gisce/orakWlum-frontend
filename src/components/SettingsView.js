@@ -5,6 +5,8 @@ import * as actionCreators from '../actions/settings';
 
 import { SettingsSources } from './SettingsSources'
 
+import { LoadingAnimation } from './LoadingAnimation';
+
 import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
@@ -54,7 +56,7 @@ export default class SettingsView extends React.Component {
             <div>
                 {
                     (!this.props.loaded) ?
-
+                        <LoadingAnimation /> || 
                         this.props.error &&
                             <div>
                                 <h1>There was an error fetching data</h1>
