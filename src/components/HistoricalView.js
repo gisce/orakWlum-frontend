@@ -7,6 +7,8 @@ import { debug } from '../utils/debug';
 
 import { Historical } from './Historical';
 
+import { LoadingAnimation } from './LoadingAnimation';
+
 function mapStateToProps(state) {
     return {
         data: state.historical,
@@ -59,7 +61,11 @@ export default class HistoricalView extends React.Component {
                 </div>
             );
         }
-        return (<div>{debug(this.props.data.data)}</div>);
+        return (
+            <div>
+                <LoadingAnimation />
+                {debug(this.props.data.data)}
+            </div>);
     }
 }
 

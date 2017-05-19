@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { SettingsSources } from '../SettingsSources'
+
 import TextField from 'material-ui/TextField';
 import {
   Step,
@@ -62,6 +64,12 @@ const validations = {
         allowEmpty: false,
         required: true,
     },
+    sources: {
+        description: 'Sources of the New Proposal',
+        type: 'array',
+        allowEmpty: false,
+        required: true,
+    },
 }
 
 const types = {
@@ -78,6 +86,7 @@ const types = {
 function mapStateToProps(state) {
     return {
         token: state.auth.token,
+        static_data: state.settings.static_data,
     };
 }
 
@@ -92,13 +101,23 @@ export class ProposalDefinition extends Component {
 
       let aggregations_list=[];
 
-      //initialize list
+      //initialize aggregations list
       props.aggregationsList.map(function(agg, i){
           aggregations_list.push( false );
       });
 
-      const element_type = (props.type)?props.type:"proposal";
+      let sources_list=[];
+      let sources_all=[];
+      let measures = [];
+      //initialize sources list
+      props.sourcesList.map(function(source, i){
+          if (source.active) {
+              sources_all.push( source );
+              sources_list.push( false );
+          }
+      });
 
+      const element_type = (props.type)?props.type:"proposal";
       const minDate = new Date();
 
       let createMethod = props.createProposal;
@@ -119,8 +138,13 @@ export class ProposalDefinition extends Component {
           name: "",
           date_start: minDate,
           date_end: null,
+
           aggregations: aggregations_list,
           aggregations_all: props.aggregationsList,
+
+          sources: sources_list,
+          sources_all: sources_all,
+
           name_validation: false,
           name_error_text: null,
           date_start_validation: false,
@@ -129,23 +153,26 @@ export class ProposalDefinition extends Component {
           date_end_error_text: null,
           aggregations_validation: false,
           aggregations_error_text: null,
+          sources_validation: false,
+          sources_error_text: null,
+
           readyToNext: false,
       };
 
       this.stepsLength = this.getSteps().length;
-      console.log(this.state.type);
     }
 
 
     componentWillMount = () => {
         //select all by default
+        this.handleSources("all");
         this.handleAggregations("all");
     }
 
     componentDidMount = () => {
         //override the readyToNext=true setted indirectly by componentWillMount
         this.setState({
-            readyToNext: false,
+            readyToNext: true,
         });
     }
 
@@ -164,10 +191,24 @@ export class ProposalDefinition extends Component {
             );
         }
 
+        const sourcesList = this.state.sources_all;
+
+        let sourcesWithStatus = [];
+        for (var i=0; i<sourcesList.length; i++) {
+            let source = sourcesList[i];
+
+            sourcesWithStatus.push(
+                {
+                    name:source.name,
+                    selected:this.state.sources[i],
+                }
+            );
+        }
 
         const proposalSummary = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
+            sources:this.state.sourcesNames,
             isNew: true,
             days_range: [
                 this.state.date_start,
@@ -238,6 +279,7 @@ export class ProposalDefinition extends Component {
                     <div>
                         <p>Great! Now <b>select the aggregations</b> to perform:</p>
                         <Table
+                            key={"aggregations_table"}
                             fixedHeader={true}
                             selectable={true}
                             multiSelectable={true}
@@ -286,8 +328,68 @@ export class ProposalDefinition extends Component {
                     </div>
                 )
             },
+
             {
                 key: "3",
+                title: "Sources",
+                content: (
+                    <div>
+                        <p>Finally <b>select the origins</b> to analyze:</p>
+
+                            <Table
+                                key={"sources_table"}
+                                fixedHeader={true}
+                                selectable={true}
+                                multiSelectable={true}
+                                onRowSelection={this.handleSources}
+                            >
+                                <TableHeader
+                                    displaySelectAll={false}
+                                    enableSelectAll={false}
+                                >
+                                  <TableRow>
+                                    <TableHeaderColumn>Name</TableHeaderColumn>
+                                  </TableRow>
+                                </TableHeader>
+
+                                <TableBody
+                                    stripedRows={false}
+                                    deselectOnClickaway={false}
+                                >
+                            {
+                                sourcesWithStatus.map(function(source, index) {
+                                    return (
+                                        <TableRow key={"tableRow_sources"+index} selected={source.selected}>
+                                          <TableRowColumn>{source.name}</TableRowColumn>
+                                        </TableRow>
+                                    )
+                                })
+                            }
+                                </TableBody>
+                            </Table>
+
+                        {
+                                this.state.sources_error_text &&
+                                <div>
+                                    <TextField
+                                        id="sourceError"
+                                        style={{marginTop: 0}}
+                                        floatingLabelText=""
+                                        value=""
+                                        errorText={this.state.sources_error_text}
+                                    />
+                                    <br/>
+                                    <br/>
+                                </div>
+                        }
+
+
+                    </div>
+                )
+            },
+
+            {
+                key: "4",
                 title: "Confirmation",
                 content: (
                     <div>
@@ -318,7 +420,9 @@ export class ProposalDefinition extends Component {
         const state_error_text = field_name + "_error_text";
         const state_validation = field_name + "_validation";
 
+
         if (field === '' || field.length == 0 || !field) {
+
             this.setState({
                 [state_error_text]: null,
                 [state_validation]: false,
@@ -491,6 +595,74 @@ export class ProposalDefinition extends Component {
         }
     }
 
+
+
+    handleSources = (selectedRowsSources) => {
+        let sources_list = [];
+        let sources_selected = [];
+        const sourcesAll = this.props.sourcesList;
+
+        //initialize list with all deselected
+        sourcesAll.map(function(agg, i){
+            sources_list.push( false );
+        });
+
+        if (selectedRowsSources == "all") {
+            //mark all as selected
+            sourcesAll.map(function(agg, i){
+                sources_list[i] =  true;
+                sources_selected.push(i);
+            });
+            selectedRowsSources = sources_list;
+        }
+        else {
+            if (selectedRowsSources != "none")
+                //mark the selected ones
+                selectedRowsSources.map(function(agg, i){
+                    sources_list[agg] = true;
+                    sources_selected.push(agg);
+                });
+        }
+
+        //Extract names to facilitate render of the summary
+        let sourcesNames = [];
+        sourcesAll.map( (agg,i) => {
+            sources_list[i] && sourcesNames.push(agg);
+        });
+
+        this.setState({
+            sources: sources_list,
+            sourcesNames: sourcesNames,
+            sourcesSelectedRows: sources_selected,
+        });
+
+        const basicValidation = this.validateField({sources: sources_list}, "sources_list", { properties: { sources: validations.sources} } );
+
+        if (basicValidation) {
+            // review that at least, one element is selected
+            let anySelected = false;
+            sources_list.map( (agg, i) => {
+                    if (agg) anySelected=true;
+                }
+            );
+
+            if (!anySelected) {
+                this.setState({
+                    sources_error_text: "Select at least one source",
+                    sources_validation: false,
+                    readyToNext: false,
+                });
+            }
+            else {
+                this.setState({
+                    sources_error_text: null,
+                    sources_validation: true,
+                    readyToNext: true,
+                });
+            }
+        }
+    }
+
     // auxiliar method responsible of validate the next step (for x -> prev -> next flows)
     validateNext = (index) => {
         let x = event;
@@ -508,6 +680,9 @@ export class ProposalDefinition extends Component {
 
             case 2:
                 this.handleAggregations(this.state.aggregationsSelectedRows);
+                break;
+            case 3:
+                this.handleSources(this.state.sourcesSelectedRows);
                 break;
         }
     }
@@ -605,19 +780,21 @@ export class ProposalDefinition extends Component {
     }
 
     createNewProposal (event) {
-        console.log("create");
+        console.debug("Creating new Element");
         const token = this.props.token;
 
         //Ensure 00:00:00 of each day
         let date_start = this.state.date_start;
         date_start.setHours(0, 0, 0, 0);
 
-        let date_end = this.state.date_end;
+        let date_end;
+        date_end = (this.state.date_end)?this.state.date_end:this.state.date_start;
         date_end.setHours(0, 0, 0, 0);
 
         const proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
+            sources:this.state.sourcesNames,
             isNew: true,
             days_range: [
                 date_start,
@@ -630,7 +807,7 @@ export class ProposalDefinition extends Component {
             },
         }
 
-
+        console.debug("data", proposalData);
         this.state.createMethod(token, proposalData);
     }
 

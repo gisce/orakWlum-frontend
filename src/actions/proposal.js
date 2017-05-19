@@ -1,10 +1,10 @@
-import { EXPORT_PROPOSAL_REQUEST, FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST } from '../constants/index'
+import { EXPORT_PROPOSAL_REQUEST, FETCH_PROPOSAL_REQUEST, RUN_PROPOSAL_REQUEST, RECEIVE_PROPOSAL, RECEIVE_RUN_PROPOSAL, RECEIVE_RUN_PROPOSAL_ERROR, FETCH_AGGREGATIONS_REQUEST, RECEIVE_AGGREGATIONS, DUPLICATE_PROPOSAL_REQUEST, DELETE_PROPOSAL_REQUEST, CREATE_PROPOSAL_REQUEST, FETCH_SETTINGS_REQUEST, RECEIVE_SETTINGS } from '../constants/index'
 import { data_download_api_resource, data_fetch_api_resource, data_create_api_resource, data_delete_api_resource } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect, redirectToRoute } from './auth'
 import { fetchProposals } from './proposals'
 
-import { createHistorical } from './historical'
+import { createHistorical, fetchHistorical } from './historical'
 
 
 
@@ -191,7 +191,7 @@ export function createProposal(token, proposal) {
             .then(response => {
                 if (response.result.status == "ok") {
 
-                    if (response.result.multi) 
+                    if (response.result.multi)
                         dispatch(redirectToRoute("/proposals"))
                     else {
                             dispatch(fetchProposal(token, response.result.id));
@@ -240,7 +240,7 @@ export function deleteProposal(token, proposal) {
                     dispatch(redirectToRoute("/proposals"));
                 }
                 else {
-                    console.log("ERROR:" + response.result.message);
+                    console.error("ERROR:" + response.result.message);
                 }
             })
             .catch(error => {
@@ -294,13 +294,52 @@ export function fetchAggregations(token) {
 
 
 
+/**********************
+  ###################
+   FETCH SOURCES triggering Settings REDUCER
+  ###################
++**********************/
+
+export function fetchSourcesRequest() {
+    return {
+        type: FETCH_SETTINGS_REQUEST,
+    };
+}
+
+export function receiveSources(data) {
+    return {
+        type: RECEIVE_SETTINGS,
+        payload: {
+            data,
+        },
+    };
+}
+
+export function fetchSources(token) {
+    return (dispatch) => {
+        dispatch(fetchSourcesRequest());
+        data_fetch_api_resource(token, "sources/")
+            .then(parseJSON)
+            .then(response => {
+                dispatch(receiveSources(response.result));
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+
+
+
 
 /*********************
   #################
    EXPORT PROPOSAL
   #################
 *********************/
-
 
 var FileSaver = require('../../node_modules/file-saver/FileSaver.min.js');
 

@@ -10,6 +10,7 @@ import { ProposalDefinition } from './ProposalDefinition';
 function mapStateToProps(state) {
     return {
         aggregations: state.proposal.aggregations_list,
+        settings: state.settings,
         token: state.auth.token,
     };
 }
@@ -21,24 +22,30 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProfileView extends React.Component {
     componentWillMount() {
-        this.fetchAggregations();
+        const token = this.props.token;
+        this.fetchSources(token);
+        this.fetchAggregations(token);
     }
 
-    fetchAggregations() {
-        const token = this.props.token;
+    fetchAggregations(token) {
         this.props.fetchAggregations(token);
+    }
+
+    fetchSources(token) {
+        this.props.fetchSources(token);
     }
 
     render() {
         return (
             <div>
-
                 <div>
-
                     <h1>New proposal</h1>
 
-                    {this.props.aggregations &&
-                        <ProposalDefinition aggregationsList={this.props.aggregations}/>
+                    {this.props.aggregations && this.props.settings.loaded &&
+                        <ProposalDefinition
+                            aggregationsList={this.props.aggregations}
+                            sourcesList={this.props.settings.data.measures}
+                        />
                     }
                 </div>
 

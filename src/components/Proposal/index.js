@@ -32,6 +32,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
+import ProposalIcon from 'material-ui/svg-icons/image/switch-camera';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -135,6 +136,11 @@ export class Proposal extends Component {
         this.animateChart = true;
 
         props.aggregations[0].selected = true;
+
+        if (props.comparation){
+            this.detail_open = true;
+            this.comparation = true;
+        }
     }
 
     dispatchNewRoute(route) {
@@ -280,6 +286,7 @@ export class Proposal extends Component {
         this.animateChart = true;
 
     };
+
 
 
     toggleDetail = () => {
@@ -430,8 +437,6 @@ export class Proposal extends Component {
 
         const daysRange_toShow = daysRangeFuture;
 
-
-
         const dayOfProposal = new Date(proposal.days_range[0]).getDay();
         const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
@@ -454,7 +459,7 @@ export class Proposal extends Component {
         const reRunProposal = this.reRunProposalQuestion;
         const duplicateProposal = this.duplicateProposalQuestion;
         const deleteProposal = this.deleteProposalQuestion;
-        const exportProposal=this.exportProposal;
+        const exportProposal = this.exportProposal;
 
         const toggleDetail = this.toggleDetail;
 
@@ -531,7 +536,7 @@ export class Proposal extends Component {
 
         // The Proposal graph toogle! //to switch between table and chart
         const proposalPictureToggle = (
-            (withPicture) &&
+            (withPicture) && (!this.comparation) &&
             <div
                 className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2"
                 style={styles.to_ri}>
@@ -595,16 +600,23 @@ export class Proposal extends Component {
 
 
         const proposalActions =
-             (!readOnly)?
+             (!readOnly && !this.comparation)?
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Reprocess" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)} title={"Export Proposal to a XLS file"}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
-              </CardActions>
+
+            {
+                (proposal.related_id)?
+                <FlatButton label="Historical" icon={<ProposalIcon/>} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
+                :
+                <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
+            }
+            </CardActions>
             :
             null;
 
@@ -694,4 +706,5 @@ export class Proposal extends Component {
 Proposal.propTypes = {
     readOnly: React.PropTypes.bool,
     proposalOld: React.PropTypes.bool,
+    comparation: React.PropTypes.bool,
 };

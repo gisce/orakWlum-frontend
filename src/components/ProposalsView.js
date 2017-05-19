@@ -10,6 +10,7 @@ import { ProposalList } from './ProposalList';
 import { ContentHeader } from './ContentHeader';
 
 import { Notification } from './Notification';
+import { LoadingAnimation } from './LoadingAnimation';
 
 
 
@@ -94,7 +95,7 @@ export default class ProposalsView extends React.Component {
                 </div>
             :
                 <div>
-                    <h3>There are no Proposals to show</h3>
+                    <LoadingAnimation />
                 </div>
             }
                 {debug(this.props.data.data)}

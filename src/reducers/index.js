@@ -10,6 +10,8 @@ import historical from './historical'
 import historicals from './historicals'
 import aggregations  from './aggregations'
 import password  from './password'
+import settings  from './settings'
+import elements  from './elements'
 import { LOGOUT_USER } from '../constants/index'
 
 const appReducer = combineReducers({
@@ -24,6 +26,8 @@ const appReducer = combineReducers({
     password,
     historical,
     historicals,
+    elements,
+    settings,
 });
 
 const rootReducer = (state, action) => {
