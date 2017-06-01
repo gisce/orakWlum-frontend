@@ -13,7 +13,7 @@ import { ProposalList } from '../ProposalList';
 import { dispatchNewRoute} from '../../utils/http_functions';
 import { date_to_string} from '../../utils/misc';
 
-import * as actionCreators from '../../actions/proposals';
+import * as actionCreators from '../../actions/elements';
 
 const styles = {
     calendar: {
