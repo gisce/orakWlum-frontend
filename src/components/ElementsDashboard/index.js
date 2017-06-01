@@ -8,6 +8,8 @@ import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 
+import { ProposalList } from '../ProposalList';
+
 import { dispatchNewRoute} from '../../utils/http_functions';
 import { date_to_string} from '../../utils/misc';
 
@@ -119,7 +121,7 @@ export class ElementsDashboard extends Component {
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
 
         console.log(elements);
-        console.log(aggregations);
+        //console.log(aggregations);
 
         // The calendar selector
         const the_calendar = (
@@ -180,18 +182,58 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
+        // The elements
+        let elements_matched = [];
+
+
+        console.log(date_to_string(selected_date, "%Y-%m-%d"));
+        const date_scope = date_to_string(selected_date, "%Y-%m-%d");
+
+        elements.map( function (element, index){
+
+            element.days_range_future.map (function (a_day, index_day) {
+                if (date_scope == a_day) {
+                    console.log("MATCH!", a_day);
+                    elements_matched.push(element);
+                }
+            })
+        });
+
+        console.log("ELEMENTS", elements_matched);
+
+        const the_elements = (
+            <ProposalList
+                title="Matched elements"
+                proposals={elements_matched}
+                aggregations={aggregations}
+                path={"/elements"}
+
+                sameWidth={true}
+                width={"small"}
+            />
+        )
+
+
         // The render result
         return (
-            <div className="row" style={styles.row}>
+            <div>
+                <div className="row" style={styles.row}>
 
-                <div ref="the_calendar" className="col-md-6">
-                    {the_calendar}
+                    <div ref="the_calendar" className="col-md-6">
+                        {the_calendar}
+                    </div>
+
+                    <div ref="the_calendar" className="col-md-6">
+                        {the_filters}
+                    </div>
+
                 </div>
 
-                <div ref="the_calendar" className="col-md-6">
-                    {the_filters}
+                <div className="row" style={styles.row}>
+                    <div ref="the_elements" className="col-md-12">
+                        {the_elements}
+                    </div>
                 </div>
-
             </div>
         );
     }
