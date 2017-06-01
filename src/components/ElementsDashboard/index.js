@@ -61,7 +61,6 @@ export class ElementsDashboard extends Component {
             style: styles.calendar,
         };
 
-
         // The available filter types
         this.filter_types = [
               {text: 'All', value: 'all'},
@@ -111,7 +110,7 @@ export class ElementsDashboard extends Component {
     updateType = (value) => {
         this.setState({
             selected_type: value,
-            searchText: "Proposal",
+            searchText: value,
         });
     };
 
@@ -119,9 +118,6 @@ export class ElementsDashboard extends Component {
         const {elements, aggregations} = this.props;
         const {selected_date, selected_type, searchText} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
-
-        console.log(elements);
-        //console.log(aggregations);
 
         // The calendar selector
         const the_calendar = (
@@ -185,21 +181,53 @@ export class ElementsDashboard extends Component {
         // The elements
         let elements_matched = [];
 
-
-        console.log(date_to_string(selected_date, "%Y-%m-%d"));
         const date_scope = date_to_string(selected_date, "%Y-%m-%d");
+        const type_scope = (selected_type == "All")? null : (selected_type == "Historical")? true : false;
 
         elements.map( function (element, index){
+            let matched=false;
 
-            element.days_range_future.map (function (a_day, index_day) {
-                if (date_scope == a_day) {
-                    console.log("MATCH!", a_day);
-                    elements_matched.push(element);
+            //Review days_range
+            const date_match = element.days_range.map (function (a_day, index_day) {
+                if (date_scope == a_day)
+                    return true;
+            });
+
+            //Review days_range_future if so far not matched
+            if (date_match.indexOf(true) != -1) {
+                matched = true;
+            }
+            else {
+                // try it (historicals don't have days_range_future)
+                try {
+                    //Review days_range_future
+                    const future_date_match = element.days_range_future.map (function (a_day, index_day) {
+                        if (date_scope == a_day)
+                            return true;
+                    });
+
+                    if (future_date_match.indexOf(true) != -1) {
+                        matched = true;
+                    }
                 }
-            })
-        });
+                catch (err) {
+                    matched = false;
+                }
+            }
 
-        console.log("ELEMENTS", elements_matched);
+            //Match type (just if date match and type is not "All" (null))
+            if (matched && type_scope != null) {
+                if (element.historical == type_scope)
+                    matched = true;
+                else
+                    matched = false;
+            }
+
+            //Save matched result
+            matched &&
+                elements_matched.push(element);
+
+        });
 
         const the_elements = (
             <ProposalList
@@ -207,18 +235,15 @@ export class ElementsDashboard extends Component {
                 proposals={elements_matched}
                 aggregations={aggregations}
                 path={"/elements"}
-
                 sameWidth={true}
                 width={"small"}
             />
         )
 
-
         // The render result
         return (
             <div>
                 <div className="row" style={styles.row}>
-
                     <div ref="the_calendar" className="col-md-6">
                         {the_calendar}
                     </div>
