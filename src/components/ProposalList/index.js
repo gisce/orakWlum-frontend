@@ -85,10 +85,14 @@ export class ProposalList extends Component {
     render() {
         const data_received = this.props.proposals;
 
-        const width=1024;
-        const height=300;
+        const {sameWidth, width} = this.props;
 
-        const howManyBig=1;
+        const max_width=1024;
+        const max_height=300;
+
+        const desiredSize = (width == "small")? 0 : 1;
+        const howManyBig = (sameWidth)? desiredSize * 1000000 : desiredSize * 1;
+
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
         // The Proposal Aggregations List
@@ -151,8 +155,8 @@ export class ProposalList extends Component {
                           stacked={true}
                           data={data}
                           components={components}
-                          width={ index < howManyBig ? width : width/2}
-                          height={ index < howManyBig ? height : height/2.3}
+                          width={ index < howManyBig ? max_width : max_width/2 }
+                          height={ index < howManyBig ? max_height : max_height/2.3 }
                           isLite
                     />
 
@@ -219,4 +223,6 @@ export class ProposalList extends Component {
 }
 
 ProposalList.propTypes = {
+    sameWidth: React.PropTypes.bool,
+    width: React.PropTypes.string,
 };
