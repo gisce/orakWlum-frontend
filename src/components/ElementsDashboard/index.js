@@ -71,9 +71,11 @@ export class ElementsDashboard extends Component {
         this.state = {
             selected_date: this.todayDate,
             selected_type: this.filter_types[0].text,
+            searchText: this.filter_types[0].text,
         };
     }
 
+    //Save the date state and force the <Calendar> update
     selectDay = (event ,date) => {
         const the_date = new Date(date);
 
@@ -86,11 +88,12 @@ export class ElementsDashboard extends Component {
         });
     };
 
-
+    //Select today date
     selectToday = (event) => {
         this.selectDay(event, this.todayDate);
     };
 
+    //Select one year ago!
     selectOneYearAgo = (event) => {
         this.selectDay(event, this.oneYearAgoDate);
     };
@@ -103,21 +106,21 @@ export class ElementsDashboard extends Component {
         this.selectDay(null, desired_date);
     };
 
+    //Change the type
     updateType = (value) => {
         this.setState({
             selected_type: value,
+            searchText: "Proposal",
         });
     };
 
     render = () => {
-
         const {elements, aggregations} = this.props;
-        const {selected_date, selected_type} = this.state;
+        const {selected_date, selected_type, searchText} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
 
         console.log(elements);
         console.log(aggregations);
-
 
         // The calendar selector
         const the_calendar = (
@@ -147,8 +150,7 @@ export class ElementsDashboard extends Component {
 
         );
 
-
-
+        // The filter to apply
         const the_filters = (
             <div>
                 <div className="row" style={styles.row}>
@@ -173,6 +175,7 @@ export class ElementsDashboard extends Component {
                           dataSource={this.filter_types}
                           value={selected_type}
                           onUpdateInput={(value) => this.updateType(value)}
+                          searchText={searchText}
                         />
                     </div>
                 </div>
