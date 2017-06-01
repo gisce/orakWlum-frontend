@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import Calendar from 'material-ui/DatePicker/Calendar';
 import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 
+import AutoComplete from 'material-ui/AutoComplete';
+
 import { dispatchNewRoute} from '../../utils/http_functions';
 import { date_to_string} from '../../utils/misc';
 
@@ -40,10 +42,6 @@ export class ElementsDashboard extends Component {
 
         const DateTimeFormat = global.Intl.DateTimeFormat;
 
-        this.state = {
-            selected_date: this.todayDate,
-        };
-
         this.calendar_settings = {
             locale: 'en-ES',
 
@@ -61,6 +59,18 @@ export class ElementsDashboard extends Component {
             style: styles.calendar,
         };
 
+
+        // The available filter types
+        this.filter_types = [
+              {text: 'All', value: 'all'},
+              {text: 'Proposal', value: 'proposal'},
+              {text: 'Historical', value: 'historical'},
+        ];
+
+        this.state = {
+            selected_date: this.todayDate,
+            selected_type: this.filter_types[0].text,
+        };
     }
 
     selectDay = (event ,date) => {
@@ -84,10 +94,16 @@ export class ElementsDashboard extends Component {
         this.selectDay(event, this.oneYearAgoDate);
     };
 
+    selectType = (value) => {
+        this.setState({
+            selected_type: value,
+        });
+    };
+
     render = () => {
 
         const {elements, aggregations} = this.props;
-        const {selected_date} = this.state;
+        const {selected_date, selected_type} = this.state;
         const selected_date_string = date_to_string(selected_date);
 
         console.log(elements);
@@ -123,6 +139,7 @@ export class ElementsDashboard extends Component {
         );
 
 
+
         const the_filters = (
             <div>
                 <div className="row" style={styles.row}>
@@ -133,6 +150,20 @@ export class ElementsDashboard extends Component {
                                 selected_date_string
                             )
                         }
+                    </div>
+                </div>
+
+                <div className="row" style={styles.row}>
+                    <div ref="selected_type" className="col-md-12">
+                        <AutoComplete
+                          floatingLabelText={"Type"}
+                          filter={AutoComplete.noFilter}
+                          openOnFocus={true}
+                          dataSource={this.filter_types}
+                          value={selected_type}
+                          onUpdateInput={(value) => this.selectType(value)}
+                        />
+                    {selected_type}
                     </div>
                 </div>
             </div>
