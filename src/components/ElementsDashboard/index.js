@@ -13,7 +13,6 @@ import { date_to_string} from '../../utils/misc';
 
 import * as actionCreators from '../../actions/proposals';
 
-
 const styles = {
     calendar: {
     },
@@ -147,7 +146,6 @@ export class ElementsDashboard extends Component {
                 cancelLabel={this.calendar_settings.cancelLabel}
                 onTouchTapCancel={this.selectOneYearAgo}
             />
-
         );
 
         // The filter to apply
@@ -186,10 +184,11 @@ export class ElementsDashboard extends Component {
         return (
             <div className="row" style={styles.row}>
 
-                <div ref="the_calendar" className="col-md-8">
+                <div ref="the_calendar" className="col-md-6">
                     {the_calendar}
                 </div>
-                <div ref="the_calendar" className="col-md-4">
+
+                <div ref="the_calendar" className="col-md-6">
                     {the_filters}
                 </div>
 
@@ -201,5 +200,4 @@ export class ElementsDashboard extends Component {
 ElementsDashboard.propTypes = {
     elements: React.PropTypes.array.isRequired,
     aggregations: React.PropTypes.object.isRequired,
-
 };
