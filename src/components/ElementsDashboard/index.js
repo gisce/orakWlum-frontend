@@ -37,8 +37,19 @@ export class ElementsDashboard extends Component {
 
     render() {
 
+        const {elements, aggregations} = this.props;
+
+        console.log(elements);
+
+        console.log(aggregations);
+
+
+        return null;
     }
 }
 
 ElementsDashboard.propTypes = {
+    elements: React.PropTypes.array.isRequired,
+    aggregations: React.PropTypes.object.isRequired,
+
 };

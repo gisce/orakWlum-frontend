@@ -61,6 +61,10 @@ export default class ElementsView extends React.Component {
     }
 
     render() {
+        const the_elements = this.props.data.data;
+        const the_aggregations = this.props.allAggregations;
+        const the_path = this.props.location.pathname;
+
         return (
             <div>
                 <Notification
@@ -81,9 +85,10 @@ export default class ElementsView extends React.Component {
                 <div>
                     <ElementsDashboard
                         title="Last proposals"
-                        proposals={this.props.data.data}
-                        aggregations={this.props.allAggregations}
-                        path={this.props.location.pathname}
+                        path={the_path}
+                        
+                        elements={the_elements}
+                        aggregations={the_aggregations}
                     />
 
                 </div>
