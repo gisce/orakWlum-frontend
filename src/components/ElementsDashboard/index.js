@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import {GridList, GridTile} from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import Calendar from 'material-ui/DatePicker/Calendar';
+import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
+
+import { dispatchNewRoute} from '../../utils/http_functions';
+import { date_to_string} from '../../utils/misc';
 
 import * as actionCreators from '../../actions/proposals';
 
-import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
-
-import { dispatchNewRoute} from '../../utils/http_functions';
 
 const styles = {
+    calendar: {
+    },
+
+    row: {
+        marginTop: 20,
+    }
+
 };
 
 function mapStateToProps(state) {
@@ -31,20 +35,111 @@ export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
 
+        this.todayDate = new Date();
+        this.oneYearAgoDate = new Date(new Date().setFullYear(this.todayDate.getFullYear() - 1));
+
+        const DateTimeFormat = global.Intl.DateTimeFormat;
+
         this.state = {
+            selected_date: this.todayDate,
         };
+
+        this.calendar_settings = {
+            locale: 'en-ES',
+
+            okLabel: 'Today',
+            cancelLabel: 'One Year Ago',
+
+            initialDate: this.todayDate,
+
+            firstDayOfWeek: 1,
+            dateTimeFormat: DateTimeFormat,
+
+            mode: "landscape",
+            container: "inline",
+
+            style: styles.calendar,
+        };
+
     }
 
-    render() {
+    selectDay = (event ,date) => {
+        const the_date = new Date(date);
+
+        // Force update the selected date in the <Calendar>
+        this.calendar_settings.initialDate = date;
+
+        // Save it as current state
+        this.setState({
+          selected_date: the_date,
+        });
+    };
+
+
+    selectToday = (event) => {
+        this.selectDay(event, this.todayDate);
+    };
+
+    selectOneYearAgo = (event) => {
+        this.selectDay(event, this.oneYearAgoDate);
+    };
+
+    render = () => {
 
         const {elements, aggregations} = this.props;
+        const {selected_date} = this.state;
+        const selected_date_string = date_to_string(selected_date);
 
         console.log(elements);
-
         console.log(aggregations);
 
 
-        return null;
+        // The calendar selector
+        const the_calendar = (
+            <Calendar
+                initialDate = {this.calendar_settings.initialDate}
+
+                locale = {this.calendar_settings.locale}
+                firstDayOfWeek = {this.calendar_settings.firstDayOfWeek}
+                DateTimeFormat = {this.calendar_settings.dateTimeFormat}
+
+                ref = "calendar"
+                open = {true}
+
+                mode = {this.calendar_settings.mode}
+                container = {this.calendar_settings.container}
+
+                style = {this.calendar_settings.style}
+
+                onTouchTapDay={this.selectDay}
+
+                okLabel={this.calendar_settings.okLabel}
+                onTouchTapOk={this.selectToday}
+
+                cancelLabel={this.calendar_settings.cancelLabel}
+                onTouchTapCancel={this.selectOneYearAgo}
+            />
+
+        );
+
+        // The render result
+        return (
+            <div className="row" style={styles.row}>
+
+                <div ref="the_calendar" className="col-md-8">
+                    {the_calendar}
+                </div>
+                <div ref="the_calendar" className="col-md-4">
+                    <strong>Selected day</strong>:&nbsp;
+                    {
+                        selected_date && (
+                            selected_date_string
+                        )
+                    }
+                </div>
+
+            </div>
+        );
     }
 }
 
