@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+//import * as actionCreators from '../actions/elements';
 import * as actionCreators from '../actions/proposals';
+
 import { debug } from '../utils/debug';
 
 import { dispatchNewRoute} from '../utils/http_functions';
@@ -23,6 +26,16 @@ function mapStateToProps(state) {
         isFetching: state.proposals.isFetching,
         message_text: state.proposals.message_text,
     };
+
+    return {
+        data: state.elements,
+        allAggregations: state.elements.allAggregations,
+        token: state.auth.token,
+        loaded: state.elements.loaded,
+        isFetching: state.elements.isFetching,
+        message_text: state.elements.message_text,
+    };
+
 }
 
 function mapDispatchToProps(dispatch) {
@@ -47,6 +60,7 @@ export default class ElementsView extends React.Component {
     fetchData(initial=true) {
         const token = this.props.token;
         this.props.fetchProposals(token, initial);
+        //this.props.fetchElements(token, initial);
     }
 
     refreshData() {
@@ -86,7 +100,7 @@ export default class ElementsView extends React.Component {
                     <ElementsDashboard
                         title="Last proposals"
                         path={the_path}
-                        
+
                         elements={the_elements}
                         aggregations={the_aggregations}
                     />
