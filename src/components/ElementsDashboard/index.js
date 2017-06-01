@@ -122,6 +122,22 @@ export class ElementsDashboard extends Component {
 
         );
 
+
+        const the_filters = (
+            <div>
+                <div className="row" style={styles.row}>
+                    <div ref="selected_date" className="col-md-12">
+                        <strong>Selected day</strong>:&nbsp;
+                        {
+                            selected_date && (
+                                selected_date_string
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+        )
+
         // The render result
         return (
             <div className="row" style={styles.row}>
@@ -130,12 +146,7 @@ export class ElementsDashboard extends Component {
                     {the_calendar}
                 </div>
                 <div ref="the_calendar" className="col-md-4">
-                    <strong>Selected day</strong>:&nbsp;
-                    {
-                        selected_date && (
-                            selected_date_string
-                        )
-                    }
+                    {the_filters}
                 </div>
 
             </div>
