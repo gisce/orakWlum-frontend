@@ -37,7 +37,7 @@ export function receiveElements(data, aggregations, comparison, initial) {
     };
 }
 
-export function fetchElements(token, elements, initial=false) {
+export function fetchElementsByIDS(token, elements, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
 

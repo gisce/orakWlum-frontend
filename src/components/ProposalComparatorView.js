@@ -36,7 +36,7 @@ export default class ProposalComparatorView extends React.Component {
 
     fetchData() {
         const token = this.props.token;
-        this.props.fetchElements(token, [this.idA, this.idB], true);
+        this.props.fetchElementsByIDS(token, [this.idA, this.idB], true);
     }
 
     render() {
