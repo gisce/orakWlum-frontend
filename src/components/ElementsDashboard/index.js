@@ -6,6 +6,7 @@ import Calendar from 'material-ui/DatePicker/Calendar';
 import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 
 import AutoComplete from 'material-ui/AutoComplete';
+import TextField from 'material-ui/TextField';
 
 import { dispatchNewRoute} from '../../utils/http_functions';
 import { date_to_string} from '../../utils/misc';
@@ -94,7 +95,15 @@ export class ElementsDashboard extends Component {
         this.selectDay(event, this.oneYearAgoDate);
     };
 
-    selectType = (value) => {
+    //Manual date update
+    updateDate = (value) => {
+        const parsed_date = value.replace(/ /g,'').split("/");
+        const desired_date = new Date(parsed_date[1] + " " + parsed_date[0] + " " + parsed_date[2]);
+
+        this.selectDay(null, desired_date);
+    };
+
+    updateType = (value) => {
         this.setState({
             selected_type: value,
         });
@@ -104,7 +113,7 @@ export class ElementsDashboard extends Component {
 
         const {elements, aggregations} = this.props;
         const {selected_date, selected_type} = this.state;
-        const selected_date_string = date_to_string(selected_date);
+        const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
 
         console.log(elements);
         console.log(aggregations);
@@ -144,12 +153,14 @@ export class ElementsDashboard extends Component {
             <div>
                 <div className="row" style={styles.row}>
                     <div ref="selected_date" className="col-md-12">
-                        <strong>Selected day</strong>:&nbsp;
-                        {
-                            selected_date && (
-                                selected_date_string
-                            )
-                        }
+                        <TextField
+                          floatingLabelText={"Selected date"}
+                          multiLine={false}
+                          fullWidth={false}
+                          rowsMax={1}
+                          value={selected_date_string}
+                          onChange={(value) => this.updateDate(value.target.value)}
+                        />
                     </div>
                 </div>
 
@@ -161,9 +172,8 @@ export class ElementsDashboard extends Component {
                           openOnFocus={true}
                           dataSource={this.filter_types}
                           value={selected_type}
-                          onUpdateInput={(value) => this.selectType(value)}
+                          onUpdateInput={(value) => this.updateType(value)}
                         />
-                    {selected_type}
                     </div>
                 </div>
             </div>
