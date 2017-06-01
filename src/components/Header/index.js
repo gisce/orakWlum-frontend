@@ -139,8 +139,8 @@ export class Header extends Component {
 
                                 <MenuItem
                                     leftIcon={<DashboardIcon/>}
-                                    primaryText={"Dashboard"}
-                                    disabled
+                                    primaryText={"Elements"}
+                                    onClick={() => this.dispatchRoute('/elements')}
                                 />
 
                                 <Divider />
