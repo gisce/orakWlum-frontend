@@ -89,7 +89,7 @@
       "react-addons-css-transition-group": "^15.5.2",
       "react-calendar-component": "^1.2.0",
       "react-date-picker": "^5.3.28",
-      "react-datepicker": "^0.39.0",
+      "react-datepicker": "^0.46.0",
       "react-document-meta": "^2.1.1",
       "react-dom": "^15.4.2",
       "react-forms": "^1.0.0-rc6",
