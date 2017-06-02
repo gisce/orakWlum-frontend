@@ -86,7 +86,7 @@
       "qs": "^6.3.0",
       "rc-datepicker": "^5.0.1",
       "react": "^15.5.4",
-      "react-addons-css-transition-group": "^15.4.2",
+      "react-addons-css-transition-group": "^15.5.2",
       "react-calendar-component": "^1.1.0",
       "react-date-picker": "^5.3.28",
       "react-datepicker": "^0.39.0",
