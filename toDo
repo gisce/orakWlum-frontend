@@ -1,8 +1,6 @@
-Remember to rollback the package definition for
-"react": "^15.3.2" (using 15.3.2)
-"react-dom": " ^15.3.2" (using 15.3.2)
+Remember to rollback the package definition for:
+    "react-router": "^3.0.2",
+to: 
+    "react-router": "^4.0.0", <---- issue!
 
-It's related to a bug with react-tap-event-plugin inside the following builds of react-15.3.2
-
-See https://github.com/thereactivestack/meteor-webpack/issues/21
-
+See https://github.com/reactjs/react-router-redux/issues/348
