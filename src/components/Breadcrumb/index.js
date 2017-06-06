@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { dispatchNewRoute} from '../../utils/http_functions';
@@ -62,5 +63,5 @@ export default class Breadcrumb extends React.Component {
 }
 
 Breadcrumb.propTypes = {
-    path: React.PropTypes.string,
+    path: PropTypes.string,
 };
