@@ -32,13 +32,7 @@ const styles = {
     },
 };
 
-const CustomTooltip  = React.createClass({
-  propTypes: {
-    type: PropTypes.string,
-    payload: PropTypes.array,
-    label: PropTypes.any,
-  },
-
+export class CustomTooltip extends Component {
   render() {
     const { active } = this.props;
 
@@ -78,7 +72,14 @@ const CustomTooltip  = React.createClass({
 
     return null;
   }
-});
+};
+
+CustomTooltip.propTypes = {
+  type: PropTypes.string,
+  payload: PropTypes.array,
+  label: PropTypes.any,
+};
+
 
 export class ProposalGraph extends Component {
     constructor(props) {
