@@ -98,18 +98,20 @@
       "react-loading-order-with-animation": "^1.0.0",
       "react-onclickoutside": "^6.0.1",
 
-      "react-redux": "^5.0.1",
-      "react-router": "^3.0.0",
-      "react-router-redux": "^4.0.7",
+      "react-redux": "^5.0.5",
+      "react-router": "^3.0.2",
+      "react-router-redux": "^4.0.8",
 
       "react-tap-event-plugin": "^2.0.1",
       "react-transform-hmr": "^1.0.4",
 
       "recharts": "^0.20.2",
+
       "redux": "^3.6.0",
-      "redux-form": "^6.4.3",
-      "redux-logger": "^2.7.4",
-      "redux-thunk": "^2.1.0",
+      "redux-form": "^6.7.0",
+      "redux-logger": "^3.0.6",
+      "redux-thunk": "^2.2.0",
+
       "resolve-url-loader": "^1.6.1",
       "revalidator": "^0.3.1",
       "rimraf": "^2.5.4",
