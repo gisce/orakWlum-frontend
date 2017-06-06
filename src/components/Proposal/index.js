@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -704,7 +705,7 @@ export class Proposal extends Component {
 }
 
 Proposal.propTypes = {
-    readOnly: React.PropTypes.bool,
-    proposalOld: React.PropTypes.bool,
-    comparation: React.PropTypes.bool,
+    readOnly: PropTypes.bool,
+    proposalOld: PropTypes.bool,
+    comparation: PropTypes.bool,
 };

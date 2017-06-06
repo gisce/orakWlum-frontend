@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /* theme creation */
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -35,7 +36,7 @@ import './styles/app.scss';
 
 class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
     static propTypes = {
-        children: React.PropTypes.node,
+        children: PropTypes.node,
     };
 
     render() {

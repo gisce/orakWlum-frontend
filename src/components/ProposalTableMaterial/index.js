@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -234,10 +235,10 @@ export class ProposalTableMaterial extends Component {
 }
 
 ProposalTableMaterial.propTypes = {
-    data: React.PropTypes.array.isRequired,
-    components: React.PropTypes.object.isRequired,
-    colors: React.PropTypes.object,
-    type: React.PropTypes.bool,
-    totals: React.PropTypes.bool,
-    unit: React.PropTypes.string,
+    data: PropTypes.array.isRequired,
+    components: PropTypes.object.isRequired,
+    colors: PropTypes.object,
+    type: PropTypes.bool,
+    totals: PropTypes.bool,
+    unit: PropTypes.string,
 };

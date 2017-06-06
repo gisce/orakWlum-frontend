@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {ComposedChart, AreaChart, Area, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
@@ -233,13 +234,13 @@ export class ProposalGraph extends Component {
 }
 
 ProposalGraph.propTypes = {
-    data: React.PropTypes.array,
-    components: React.PropTypes.object,
-    stacked: React.PropTypes.bool,
-    isLite: React.PropTypes.bool,
-    areaChart: React.PropTypes.bool,
-    animated: React.PropTypes.bool,
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    unit: React.PropTypes.string,
+    data: PropTypes.array,
+    components: PropTypes.object,
+    stacked: PropTypes.bool,
+    isLite: PropTypes.bool,
+    areaChart: PropTypes.bool,
+    animated: PropTypes.bool,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    unit: PropTypes.string,
 };

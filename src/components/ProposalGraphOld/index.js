@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 
@@ -83,9 +84,9 @@ export class ProposalGraphOld extends Component {
 }
 
 ProposalGraphOld.propTypes = {
-    proposal: React.PropTypes.object,
-    stacked: React.PropTypes.bool,
-    isLite: React.PropTypes.bool,
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
+    proposal: PropTypes.object,
+    stacked: PropTypes.bool,
+    isLite: PropTypes.bool,
+    width: PropTypes.number,
+    height: PropTypes.number,
 };

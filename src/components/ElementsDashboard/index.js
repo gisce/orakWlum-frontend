@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -265,6 +266,6 @@ export class ElementsDashboard extends Component {
 }
 
 ElementsDashboard.propTypes = {
-    elements: React.PropTypes.array.isRequired,
-    aggregations: React.PropTypes.object.isRequired,
+    elements: PropTypes.array.isRequired,
+    aggregations: PropTypes.object.isRequired,
 };

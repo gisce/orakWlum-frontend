@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -180,8 +181,8 @@ export class SettingsSources extends React.Component {
 }
 
 SettingsSources.propTypes = {
-    measures: React.PropTypes.array,
-    static_data: React.PropTypes.array,
-    reload: React.PropTypes.bool,
-    lite: React.PropTypes.bool,
+    measures: PropTypes.array,
+    static_data: PropTypes.array,
+    reload: PropTypes.bool,
+    lite: PropTypes.bool,
 };

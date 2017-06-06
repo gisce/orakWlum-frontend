@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/historicals';
@@ -105,9 +106,9 @@ export default class HistoricalsView extends React.Component {
 }
 
 HistoricalsView.propTypes = {
-    fetchProtectedDataHistoricals: React.PropTypes.func,
-    fetchProtectedData: React.PropTypes.func,
-    loaded: React.PropTypes.bool,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    fetchProtectedDataHistoricals: PropTypes.func,
+    fetchProtectedData: PropTypes.func,
+    loaded: PropTypes.bool,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

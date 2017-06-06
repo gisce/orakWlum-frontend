@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -60,5 +61,5 @@ export class PasswordChanger extends Component {
 }
 
 PasswordChanger.propTypes = {
-    open: React.PropTypes.bool,
+    open: PropTypes.bool,
 };

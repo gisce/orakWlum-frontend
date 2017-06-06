@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 
@@ -191,8 +192,8 @@ export class ProposalDetail extends Component {
 }
 
 ProposalDetail.propTypes = {
-    data: React.PropTypes.object.isRequired,
-    open: React.PropTypes.bool,
-    colors: React.PropTypes.object,
-    avg_info: React.PropTypes.object,
+    data: PropTypes.object.isRequired,
+    open: PropTypes.bool,
+    colors: PropTypes.object,
+    avg_info: PropTypes.object,
 };

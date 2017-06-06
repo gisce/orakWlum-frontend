@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -223,6 +224,6 @@ export class ProposalList extends Component {
 }
 
 ProposalList.propTypes = {
-    sameWidth: React.PropTypes.bool,
-    width: React.PropTypes.string,
+    sameWidth: PropTypes.bool,
+    width: PropTypes.string,
 };

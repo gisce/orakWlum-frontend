@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/profile';
@@ -46,7 +47,7 @@ export default class ProfileView extends React.Component {
             <div>
                 {
                     (!this.props.loaded) ?
-                        <LoadingAnimation /> || 
+                        <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
                                 <h1>There was an error</h1>
@@ -66,9 +67,9 @@ export default class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-    fetchProfile: React.PropTypes.func,
-    loaded: React.PropTypes.bool,
-    userName: React.PropTypes.string,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    fetchProfile: PropTypes.func,
+    loaded: PropTypes.bool,
+    userName: PropTypes.string,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 import { Proposal } from '../Proposal'
 import { Historical } from '../Historical'
@@ -166,9 +167,9 @@ export class ProposalComparator extends Component {
 }
 
 ProposalComparator.propTypes = {
-    elementA: React.PropTypes.object.isRequired,
-    elementB: React.PropTypes.object.isRequired,
-    comparison: React.PropTypes.object.isRequired,
-    title: React.PropTypes.string,
-    mode: React.PropTypes.string.isRequired,
+    elementA: PropTypes.object.isRequired,
+    elementB: PropTypes.object.isRequired,
+    comparison: PropTypes.object.isRequired,
+    title: PropTypes.string,
+    mode: PropTypes.string.isRequired,
 };
