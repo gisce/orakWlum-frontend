@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -276,8 +277,8 @@ export class SmartTable extends Component {
 }
 
 SmartTable.propTypes = {
-    header: React.PropTypes.array.isRequired,
-    data: React.PropTypes.array.isRequired,
-    title: React.PropTypes.string,
-    appendButtons: React.PropTypes.array,
+    header: PropTypes.array.isRequired,
+    data: PropTypes.array.isRequired,
+    title: PropTypes.string,
+    appendButtons: PropTypes.array,
 };
