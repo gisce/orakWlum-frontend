@@ -27,7 +27,7 @@ module.exports = {
             __DEVELOPMENT__: true,
         }),
         new ExtractTextPlugin('bundle.css'),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
