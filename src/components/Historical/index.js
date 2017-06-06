@@ -11,6 +11,7 @@ toDo: create a dummy component to render data from Proposal and Historical and k
 
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -693,7 +694,7 @@ export class Historical extends Component {
 }
 
 Historical.propTypes = {
-    readOnly: React.PropTypes.bool,
-    proposalOld: React.PropTypes.bool,
-    comparation: React.PropTypes.bool,
+    readOnly: PropTypes.bool,
+    proposalOld: PropTypes.bool,
+    comparation: PropTypes.bool,
 };
