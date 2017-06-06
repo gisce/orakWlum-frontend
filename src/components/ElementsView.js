@@ -53,6 +53,7 @@ export default class ElementsView extends React.Component {
             message_text: null,
         };
     }
+    
     componentDidMount() {
         this.fetchData();
     }

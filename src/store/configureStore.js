@@ -1,19 +1,17 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware  from 'redux-thunk'
+import { createLogger } from 'redux-logger';
+
 import rootReducer  from '../reducers'
 
 import Raven from "raven-js";
 import createRavenMiddleware from "raven-for-redux";
 
-
 import { DSN } from '../settings/index'
 Raven.config(DSN).install();
 
-
 const debugware = [];
 if (process.env.NODE_ENV !== 'production') {
-    const createLogger = require('redux-logger');
-
     debugware.push(createLogger({
         collapsed: true,
     }));
