@@ -1,6 +1,7 @@
 /* eslint camelcase: 0, no-underscore-dangle: 0 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
@@ -163,6 +164,6 @@ export default class RegisterView extends React.Component {
 }
 
 RegisterView.propTypes = {
-    registerUser: React.PropTypes.func,
-    registerStatusText: React.PropTypes.string,
+    registerUser: PropTypes.func,
+    registerStatusText: PropTypes.string,
 };
