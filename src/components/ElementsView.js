@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -53,7 +54,7 @@ export default class ElementsView extends React.Component {
             message_text: null,
         };
     }
-    
+
     componentDidMount() {
         this.fetchData();
     }
@@ -119,8 +120,8 @@ export default class ElementsView extends React.Component {
 }
 
 ElementsView.propTypes = {
-    fetchProposals: React.PropTypes.func,
-    loaded: React.PropTypes.bool,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    fetchProposals: PropTypes.func,
+    loaded: PropTypes.bool,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };
