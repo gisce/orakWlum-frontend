@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Refresh from 'material-ui/svg-icons/navigation/refresh';
@@ -67,9 +67,9 @@ export class ContentHeader extends Component {
 }
 
 ContentHeader.propTypes = {
-    title: React.PropTypes.string.isRequired,
-    addButton: React.PropTypes.bool,
-    refreshButton: React.PropTypes.bool,
-    addClickMethod: React.PropTypes.func,
-    refreshClickMethod: React.PropTypes.func,
+    title: PropTypes.string.isRequired,
+    addButton: PropTypes.bool,
+    refreshButton: PropTypes.bool,
+    addClickMethod: PropTypes.func,
+    refreshClickMethod: PropTypes.func,
 };
