@@ -19,7 +19,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
-            <Redirect from="/" to="proposals" />
+            <Redirect from="/" to="elements" />
             {routes}
         </Router>
     </Provider>,
