@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Snackbar from 'material-ui/Snackbar';
 
@@ -69,7 +70,7 @@ export class Notification extends Component {
 }
 
 Notification.propTypes = {
-    open: React.PropTypes.bool,
-    message: React.PropTypes.string,
-    width: React.PropTypes.number,
+    open: PropTypes.bool,
+    message: PropTypes.string,
+    width: PropTypes.number,
 };
