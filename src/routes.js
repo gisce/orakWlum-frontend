@@ -11,6 +11,7 @@ import RegisterView from './components/RegisterView';
 import ProtectedView from './components/ProtectedView';
 import Analytics from './components/Analytics';
 import NotFound from './components/NotFound';
+import Elements from './components/ElementsView';
 import Proposals from './components/ProposalsView';
 import Proposal from './components/ProposalView';
 import ProposalNew from './components/ProposalNewView';
@@ -35,6 +36,7 @@ export default (
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
+        <Route path="elements" component={requireAuthentication(Elements)} />
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />

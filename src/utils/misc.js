@@ -33,3 +33,22 @@ export function validateEmail(email) {
 export function MD5(text){
     return md5(text);
 }
+
+export function date_to_string(a_date, string_format="%d/%m/%Y"){
+
+    if (!a_date){
+        return null;
+    }
+
+    const full_year = a_date.getFullYear();
+    const year = ("" + full_year).slice(-2);
+
+    const month = ("0" + (a_date.getMonth()+1)).slice(-2);
+    const day = ("0" + a_date.getDate()).slice(-2);
+
+    return string_format
+            .replace("%d", day)
+            .replace("%m", month)
+            .replace("%Y", full_year)
+            .replace("%y", year)
+}
