@@ -6,7 +6,7 @@ import * as actionCreators from '../actions/profile';
 
 import { UserProfile } from './UserProfile';
 
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
 
