@@ -7,7 +7,7 @@ import * as actionCreators from '../actions/proposal';
 import { debug } from '../utils/debug';
 
 import { Proposal } from './Proposal';
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
