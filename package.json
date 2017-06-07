@@ -17,7 +17,6 @@
   "keywords": [
     "react",
     "reactjs",
-    "boilerplate",
     "redux",
     "hot",
     "reload",
@@ -119,7 +118,8 @@
       "raven-js": "latest",
       "raven-for-redux": "latest",
 
-      "prop-types": "^15.5.10"
+      "prop-types": "^15.5.10",
+      "materialized-reactions": "latest"
   },
   "dependencies": {}
 }

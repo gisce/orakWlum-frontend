@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import * as actionCreators from '../../actions/settings';
 
-import { SmartTable } from '../SmartTable'
+import { SmartTable } from 'materialized-reactions/SmartTable';
 
 const styles = {
 };

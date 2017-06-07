@@ -12,7 +12,7 @@ import { Notification } from './Notification';
 
 import { PRDetail } from './PRDetail';
 
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
