@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/aggregations';
 
-import { SmartTable } from './SmartTable';
-
-import { LoadingAnimation } from './LoadingAnimation';
+import { SmartTable } from 'materialized-reactions/SmartTable';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
 
@@ -74,6 +73,8 @@ export default class AggregationsView extends React.Component {
                     ]
                 )
             })
+
+            console.log(aggregations_adapted);
 
             Aggregations = <SmartTable header={headers} data={aggregations_adapted}/>
         }
