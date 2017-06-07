@@ -14,7 +14,7 @@ import { ElementsDashboard } from './ElementsDashboard';
 import { ContentHeader } from './ContentHeader';
 
 import { Notification } from './Notification';
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 
 
