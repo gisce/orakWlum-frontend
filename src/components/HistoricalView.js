@@ -8,7 +8,7 @@ import { debug } from '../utils/debug';
 
 import { Historical } from './Historical';
 
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
