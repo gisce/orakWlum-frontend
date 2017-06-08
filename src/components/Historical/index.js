@@ -155,10 +155,6 @@ export class Historical extends Component {
         }
     }
 
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
-    }
-
     dummyAsync = (cb) => {
         this.setState({loading: true}, () => {
             this.asyncTimer = setTimeout(cb, 2000);
