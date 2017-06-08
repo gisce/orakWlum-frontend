@@ -13,6 +13,10 @@ const tokenConfig = (token) => ({
 });
 
 export function dispatchNewRoute(route) {
+    //software update detection -> enforce a full refresh of the window to reach the updated version!
+    if (window.softwareUpdate)
+        return (window.location = route);
+
     browserHistory.push(route);
 }
 
