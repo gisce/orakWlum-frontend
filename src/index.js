@@ -5,12 +5,18 @@ import { Router, Redirect, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { syncHistoryWithStore } from 'react-router-redux';
 
+//SW
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+
 import configureStore from './store/configureStore';
 import routes from './routes';
 import './style.scss';
 
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
+
+//SW installation
+OfflinePluginRuntime.install();
 
 injectTapEventPlugin();
 const store = configureStore();
