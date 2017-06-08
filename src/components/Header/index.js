@@ -66,22 +66,12 @@ export class Header extends Component {
 
     }
 
-    dispatchRoute(e, route) {
-        if (e.metaKey || e.ctrlKey) {
-            const new_window = window.open(route, '_blank');
-            new_window.focus();
-
-            return;
-        }
-
-        e.preventDefault();
-
-        dispatchNewRoute(route);
+    dispatchRoute(event, route) {
+        dispatchNewRoute(route, event);
 
         this.setState({
             open: false,
         });
-
     }
 
     handleClickOutside() {
