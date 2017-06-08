@@ -36,9 +36,12 @@ module.exports = {
             jQuery: 'jquery',
         }),
         new OfflinePlugin({
+            updateStrategy: 'changed',
+            autoUpdate: 1000 * 60 * 60 * 1, //1h
             ServiceWorker:{
                 entry: 'sw.js',
                 events: true,
+                navigateFallbackURL: '/',
             }
         }),
     ],
