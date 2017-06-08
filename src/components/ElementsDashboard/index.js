@@ -11,7 +11,6 @@ import TextField from 'material-ui/TextField';
 
 import { ProposalList } from '../ProposalList';
 
-import { dispatchNewRoute} from '../../utils/http_functions';
 import { date_to_string} from '../../utils/misc';
 
 import * as actionCreators from '../../actions/elements';
