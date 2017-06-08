@@ -18,12 +18,9 @@
     "react",
     "reactjs",
     "redux",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
+    "orakwlum",
+    "okW",
+    "prediction"
   ],
   "author": "https://github.com/xavitorello, https://github.com/gisce",
   "license": "MIT",
