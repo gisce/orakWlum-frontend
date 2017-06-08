@@ -15,8 +15,11 @@ import './style.scss';
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
 
-//SW installation
-OfflinePluginRuntime.install();
+//SW installation handling version updates!
+OfflinePluginRuntime.install({
+    onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+    onUpdated: () => window.softwareUpdate = true,
+});
 
 injectTapEventPlugin();
 const store = configureStore();
