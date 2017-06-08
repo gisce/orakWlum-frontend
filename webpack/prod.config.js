@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var OfflinePlugin = require('offline-plugin');
+
 module.exports = {
     devtool: 'source-map',
 
