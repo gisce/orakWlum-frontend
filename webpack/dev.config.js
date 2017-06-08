@@ -35,6 +35,11 @@ module.exports = {
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
         }),
-        new OfflinePlugin(),
+        new OfflinePlugin({
+            ServiceWorker:{
+                entry: 'sw.js',
+                events: true,
+            }
+        }),
     ],
 };

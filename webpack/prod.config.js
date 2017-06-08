@@ -34,6 +34,11 @@ module.exports = {
                 warnings: false,
             },
         }),
-        new OfflinePlugin(),
+        new OfflinePlugin({
+            ServiceWorker:{
+                entry: 'sw.js',
+                events: true,
+            }
+        }),
     ],
 };
