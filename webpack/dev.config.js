@@ -33,5 +33,6 @@ module.exports = {
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
         }),
+        new OfflinePlugin(),
     ],
 };
