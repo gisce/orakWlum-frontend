@@ -72,8 +72,8 @@ export default class ElementsView extends React.Component {
         });
     }
 
-    addElement() {
-        dispatchNewRoute("/proposals/new");
+    addElement(event) {
+        dispatchNewRoute("/proposals/new", event);
     }
 
     render() {
@@ -91,7 +91,7 @@ export default class ElementsView extends React.Component {
                 <ContentHeader
         		    title="Dashboard"
         		    addButton={true}
-        		    addClickMethod={() => this.addElement()}
+        		    addClickMethod={(event) => this.addElement(event)}
 
         		    refreshButton={true}
         		    refreshClickMethod={() => this.refreshData()}
