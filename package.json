@@ -116,7 +116,10 @@
       "raven-for-redux": "latest",
 
       "prop-types": "^15.5.10",
-      "materialized-reactions": "latest"
+      "materialized-reactions": "latest",
+      
+      "offline-plugin"
+      
   },
   "dependencies": {}
 }
