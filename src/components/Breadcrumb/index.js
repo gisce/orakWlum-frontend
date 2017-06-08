@@ -10,8 +10,8 @@ function mapStateToProps(state) {
 }
 
 export default class Breadcrumb extends React.Component {
-    dispatchRoute(route) {
-        dispatchNewRoute(route);
+    dispatchRoute(event, route) {
+        dispatchNewRoute(route, event);
         this.setState({
             open: false,
         });
@@ -47,7 +47,7 @@ export default class Breadcrumb extends React.Component {
 
                                 section = section[0].toUpperCase() + section.slice(1);
                                 return <li
-                                            onClick={() => this.dispatchRoute(sectionUrl[index])}
+                                            onClick={(event) => this.dispatchRoute(event, sectionUrl[index])}
                                             key={index}
                                             className={classActive}
                                         >

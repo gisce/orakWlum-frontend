@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var OfflinePlugin = require('offline-plugin');
+
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: [
@@ -32,6 +34,15 @@ module.exports = {
         new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
+        }),
+        new OfflinePlugin({
+            updateStrategy: 'changed',
+            autoUpdate: 1000 * 60 * 60 * 1, //1h
+            ServiceWorker:{
+                entry: 'sw.js',
+                events: true,
+                navigateFallbackURL: '/',
+            }
         }),
     ],
 };

@@ -63,8 +63,8 @@ export default class ProposalsView extends React.Component {
         });
     }
 
-    addProposal() {
-        dispatchNewRoute("/proposals/new");
+    addProposal(event) {
+        dispatchNewRoute("/proposals/new", event);
     }
 
     render() {
@@ -78,7 +78,7 @@ export default class ProposalsView extends React.Component {
         		<ContentHeader
         		    title="Proposals List"
         		    addButton={true}
-        		    addClickMethod={() => this.addProposal()}
+        		    addClickMethod={(event) => this.addProposal(event)}
 
         		    refreshButton={true}
         		    refreshClickMethod={() => this.refreshData()}

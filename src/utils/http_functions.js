@@ -12,7 +12,21 @@ const tokenConfig = (token) => ({
     },
 });
 
-export function dispatchNewRoute(route) {
+export function dispatchNewRoute(route, event=false) {
+
+    //if event is provided handle opening in a new tab/window
+    if (event) {
+        if (event.metaKey || event.ctrlKey) {
+            const new_window = window.open(route, '_blank');
+            return;
+        }
+        event.preventDefault();
+    }
+
+    //software update detection -> enforce a full refresh of the window to reach the updated version!
+    if (window.softwareUpdate)
+        return (window.location = route);
+
     browserHistory.push(route);
 }
 

@@ -18,12 +18,9 @@
     "react",
     "reactjs",
     "redux",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
+    "orakwlum",
+    "okW",
+    "prediction"
   ],
   "author": "https://github.com/xavitorello, https://github.com/gisce",
   "license": "MIT",
@@ -119,7 +116,9 @@
       "raven-for-redux": "latest",
 
       "prop-types": "^15.5.10",
-      "materialized-reactions": "latest"
+      "materialized-reactions": "latest",
+      
+      "offline-plugin": "latest"
   },
   "dependencies": {}
 }

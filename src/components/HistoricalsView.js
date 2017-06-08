@@ -63,8 +63,8 @@ export default class HistoricalsView extends React.Component {
         });
     }
 
-    addHistorical() {
-        dispatchNewRoute("/historicals/new");
+    addHistorical(event) {
+        dispatchNewRoute("/historicals/new", event);
     }
 
     render() {
@@ -78,7 +78,7 @@ export default class HistoricalsView extends React.Component {
         		<ContentHeader
         		    title="Historicals List"
         		    addButton={true}
-        		    addClickMethod={() => this.addHistorical()}
+        		    addClickMethod={(event) => this.addHistorical(event)}
 
         		    refreshButton={true}
         		    refreshClickMethod={() => this.refreshData()}
