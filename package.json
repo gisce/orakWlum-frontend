@@ -117,8 +117,9 @@
 
       "prop-types": "^15.5.10",
       "materialized-reactions": "latest",
-      
-      "offline-plugin": "latest"
+
+      "offline-plugin": "latest",
+      "socket.io-client": "latest"
   },
   "dependencies": {}
 }
