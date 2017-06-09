@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-//import * as actionCreators from '../actions/elements';
-import * as actionCreators from '../actions/proposals';
+import * as actionCreators from '../actions/elements';
+//import * as actionCreators from '../actions/proposals';
 
 import { debug } from '../utils/debug';
 
@@ -19,6 +19,7 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 
 function mapStateToProps(state) {
+/*
     return {
         data: state.proposals,
         allAggregations: state.proposals.allAggregations,
@@ -27,6 +28,7 @@ function mapStateToProps(state) {
         isFetching: state.proposals.isFetching,
         message_text: state.proposals.message_text,
     };
+*/
 
     return {
         data: state.elements,
@@ -61,8 +63,8 @@ export default class ElementsView extends React.Component {
 
     fetchData(initial=true) {
         const token = this.props.token;
-        this.props.fetchProposals(token, initial);
-        //this.props.fetchElements(token, initial);
+        //this.props.fetchProposals(token, initial);
+        this.props.fetchElements(token, initial);
     }
 
     refreshData() {
