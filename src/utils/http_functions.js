@@ -1,10 +1,12 @@
 /* eslint camelcase: 0 */
 
 import { API_PREFIX } from '../constants/index'
-import axios  from 'axios'
-
+import axios from 'axios'
 import { browserHistory } from 'react-router';
 
+//websocket
+const io = require('socket.io-client');
+export const socket = io.connect('http://localhost', {reconnect: true});
 
 const tokenConfig = (token) => ({
     headers: {
