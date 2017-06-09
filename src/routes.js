@@ -23,6 +23,7 @@ import About from './components/AboutView';
 import Aggregations from './components/AggregationsView';
 import Settings from './components/SettingsView';
 import Comparator from './components/ProposalComparatorView';
+import Websocket from './components/Websocket';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -48,6 +49,7 @@ export default (
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
+        <Route path="websocket"   component={Websocket} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );
