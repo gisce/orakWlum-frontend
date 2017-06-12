@@ -51,7 +51,9 @@ export default class Websocket extends React.Component {
     }
 
     receive_message(content) {
-        const the_content = JSON.parse("" + content)
+        console.log(content)
+        const the_content = content;
+        //const the_content = JSON.parse("" + content)
 
         this.setState ( {
             message: the_content.message,
@@ -60,16 +62,24 @@ export default class Websocket extends React.Component {
         })
     }
 
-    fetchData() {
+    testRoom(){
+        socket.emit('room.test')
+    }
+
+    fetchDataa() {
         //const token = this.props.token;
         //const userName = this.props.userName;
         //this.props.fetchProfile(token);
     }
 
-    sendData(){
-        console.log("click")
-        //socket.emit('okw', "Clicked!");
-        socket.emit('elements.get', "Clicked!");
+    forceUpdateData(){
+        console.log("update")
+        socket.emit('room.update', "users");
+    }
+
+    fetchData(){
+        console.log("fetch")
+        socket.emit('elements.get', "fetch");
     }
 
     updateData(data) {
@@ -80,15 +90,26 @@ export default class Websocket extends React.Component {
     render() {
         return (
             <div>
-                <p>nooorlll</p>
                 <p>{this.state.message}</p>
-                <p>nooorlll</p>
 
                 <button
-                    onClick={() => this.sendData()}
+                    onClick={() => this.fetchData()}
                 >
-                    bla
+                    Fetch Data
                 </button>
+
+                <button
+                    onClick={() => this.forceUpdateData()}
+                >
+                    Update all instances
+                </button>
+
+                <button
+                    onClick={() => this.testRoom()}
+                >
+                    Clean all instances
+                </button>
+
 
                 {debug(this.state.response)}
             </div>
