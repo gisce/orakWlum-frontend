@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 const io = require('socket.io-client');
 //export const socket = io.connect('http://api.abe.okw.gisce.net', { reconnection: true, transports: ['websocket', 'polling'] });
 //export const socket = io.connect('http://api.abe.okw.gisce.net:8000', { reconnection: true, transports: ['websocket', 'polling'] });
-export const socket = io.connect(':8000', { 
+export const socket = io.connect(':8000', {
     reconnection: true,
     transports: ['websocket'],
     query: 'token=' + "rolf28282828",
@@ -20,27 +20,29 @@ const tokenConfig = (token) => ({
     },
 });
 
-
 //Connect socket
 export function socket_connect (token) {
-/*
-  var socket = io.connect('', {
-    query: 'token=' + token
-  });
-
-*/
-
   socket
-      .on('connect', function () {
+    //handle connection
+    .on('connect', function () {
         console.log('authenticated');
         socket.emit('connected');
-      })
-      .on('disconnect', function () {
+    })
+
+    //handle disconnections
+    .on('disconnect', function () {
         console.log('disconnected');
-  });
+    })
+;
 }
 
-
+//Abstract method to ask to emit something to the API
+export function ask_the_api (channel, params=null) {
+    socket.emit(
+        channel,
+        params
+    );
+}
 
 export function dispatchNewRoute(route, event=false) {
 
