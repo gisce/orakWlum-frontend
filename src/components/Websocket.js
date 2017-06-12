@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/profile';
+import * as actionCreators from '../actions/orakwlum';
 
 import { UserProfile } from './UserProfile';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
-import { socket, socket_connect } from '../utils/http_functions';
+import { socket, socket_connect, ask_the_api } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
@@ -19,6 +19,9 @@ function mapStateToProps(state) {
         isFetching: state.profile.isFetching,
         error: state.profile.error,
         errorMessage: state.profile.data,
+
+        elements: state.orakwlum.elements,
+        message: state.orakwlum.message,
     };
 }
 
@@ -31,87 +34,90 @@ function mapDispatchToProps(dispatch) {
 export default class Websocket extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            message: "rolf",
-        };
-
-
     }
 
     componentDidMount() {
-        this.fetchData();
-
-        socket_connect( "this.state.token" );
-
-        socket.on('message', (content) => {
-            console.debug('[Websocket] Message received');
-            this.receive_message(content);
-        });
-    }
-
-    receive_message(content) {
-        console.log(content)
-        const the_content = content;
-        //const the_content = JSON.parse("" + content)
-
-        this.setState ( {
-            message: the_content.message,
-            response: the_content.response,
-            status: the_content.status,
-        })
-    }
-
-    testRoom(){
-        socket.emit('room.test')
-    }
-
-    fetchDataa() {
-        //const token = this.props.token;
-        //const userName = this.props.userName;
-        //this.props.fetchProfile(token);
-    }
-
-    forceUpdateData(){
-        console.log("update")
-        socket.emit('room.update', "users");
-    }
-
-    fetchData(){
-        console.log("fetch")
-        socket.emit('elements.get', "fetch");
-    }
-
-    updateData(data) {
+        //initialize the connection
         const token = this.props.token;
-        this.props.updateProfile(token, data);
+        socket_connect("token29832382938298asda29");
+
+        const initial=true;
+
+        //listen events!
+        socket
+            .on('elements', (content) => {
+                console.debug('[Websocket] Elements received');
+                this.props.overrideElements(content, initial);
+            })
+
+            .on('element', (content) => {
+                console.debug('[Websocket] Element received');
+                this.props.extendElements(content, initial);
+            })
+
+            .on('message', (content) => {
+                console.debug('[Websocket] Message received');
+                this.props.overrideMessage(content, initial);
+            });
+
+    }
+
+    massiveCleanUp(){
+        console.debug("massive cleaning all elements")
+        ask_the_api('all_users.elements.cleanup', "users")
+    }
+
+    massiveFetchAllElements(){
+        console.debug("massive fetch all elements")
+        ask_the_api('all_users.elements.update', "users");
+    }
+
+    fetchAllElements(){
+        console.debug("fetching all elements")
+        ask_the_api('elements.get');
+    }
+
+    fetchOneElement(){
+        console.debug("updating some elements")
+        ask_the_api('element.get');
     }
 
     render() {
+        const {message, elements, loaded} = this.props;
+
         return (
             <div>
-                <p>{this.state.message}</p>
+
+            {
+                {loaded} &&
+                    <p>{message}</p>
+            }
 
                 <button
-                    onClick={() => this.fetchData()}
+                    onClick={() => this.fetchAllElements()}
                 >
-                    Fetch Data
+                    Fetch All element
                 </button>
 
                 <button
-                    onClick={() => this.forceUpdateData()}
+                    onClick={() => this.fetchOneElement()}
+                >
+                    Update one element
+                </button>
+
+                <button
+                    onClick={() => this.massiveFetchAllElements()}
                 >
                     Update all instances
                 </button>
 
                 <button
-                    onClick={() => this.testRoom()}
+                    onClick={() => this.massiveCleanUp()}
                 >
                     Clean all instances
                 </button>
 
-
-                {debug(this.state.response)}
+                {debug(elements)}
             </div>
         );
     }
@@ -119,7 +125,7 @@ export default class Websocket extends React.Component {
 
 Websocket.propTypes = {
     loaded: PropTypes.bool,
-    userName: PropTypes.string,
-    data: PropTypes.any,
+    message: PropTypes.string,
+    elements: PropTypes.object,
     token: PropTypes.string,
 };
