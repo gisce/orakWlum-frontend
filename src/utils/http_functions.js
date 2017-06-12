@@ -6,7 +6,13 @@ import { browserHistory } from 'react-router';
 
 //websocket
 const io = require('socket.io-client');
-export const socket = io.connect('http://localhost', {reconnect: true});
+//export const socket = io.connect('http://api.abe.okw.gisce.net', { reconnection: true, transports: ['websocket', 'polling'] });
+//export const socket = io.connect('http://api.abe.okw.gisce.net:8000', { reconnection: true, transports: ['websocket', 'polling'] });
+export const socket = io.connect(':8000', { 
+    reconnection: true,
+    transports: ['websocket'],
+    query: 'token=' + "rolf28282828",
+});
 
 const tokenConfig = (token) => ({
     headers: {
@@ -17,17 +23,20 @@ const tokenConfig = (token) => ({
 
 //Connect socket
 export function socket_connect (token) {
+/*
   var socket = io.connect('', {
     query: 'token=' + token
   });
 
-  socket.on('connect', function () {
-    console.log('authenticated');
-    socket.emit('connected');
+*/
 
-  }).on('disconnect', function () {
-    console.log('disconnected');
-
+  socket
+      .on('connect', function () {
+        console.log('authenticated');
+        socket.emit('connected');
+      })
+      .on('disconnect', function () {
+        console.log('disconnected');
   });
 }
 
