@@ -14,6 +14,25 @@ const tokenConfig = (token) => ({
     },
 });
 
+
+//Connect socket
+export function socket_connect (token) {
+  var socket = io.connect('', {
+    query: 'token=' + token
+  });
+
+  socket.on('connect', function () {
+    console.log('authenticated');
+    socket.emit('connected');
+
+  }).on('disconnect', function () {
+    console.log('disconnected');
+
+  });
+}
+
+
+
 export function dispatchNewRoute(route, event=false) {
 
     //if event is provided handle opening in a new tab/window
