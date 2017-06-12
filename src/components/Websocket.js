@@ -9,7 +9,7 @@ import { UserProfile } from './UserProfile';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
-import { socket } from '../utils/http_functions';
+import { socket, socket_connect } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
@@ -32,18 +32,32 @@ export default class Websocket extends React.Component {
     constructor(props) {
         super(props);
 
-        socket.on('connect', function () {
-            console.log('Connected!');
-            socket.emit('connected');
-        });
+        this.state = {
+            message: "rolf",
+        };
 
-        socket.on('message', function (content) {
-            console.log('message received:', content);
-        });
+
     }
 
     componentDidMount() {
         this.fetchData();
+
+        socket_connect( "this.state.token" );
+
+        socket.on('message', (content) => {
+            console.debug('[Websocket] Message received');
+            this.receive_message(content);
+        });
+    }
+
+    receive_message(content) {
+        const the_content = JSON.parse("" + content)
+
+        this.setState ( {
+            message: the_content.message,
+            response: the_content.response,
+            status: the_content.status,
+        })
     }
 
     fetchData() {
@@ -54,7 +68,8 @@ export default class Websocket extends React.Component {
 
     sendData(){
         console.log("click")
-        socket.emit('okw', "Clicked!");
+        //socket.emit('okw', "Clicked!");
+        socket.emit('elements.get', "Clicked!");
     }
 
     updateData(data) {
@@ -66,12 +81,16 @@ export default class Websocket extends React.Component {
         return (
             <div>
                 <p>nooorlll</p>
+                <p>{this.state.message}</p>
+                <p>nooorlll</p>
 
                 <button
                     onClick={() => this.sendData()}
                 >
                     bla
                 </button>
+
+                {debug(this.state.response)}
             </div>
         );
     }
