@@ -46,18 +46,18 @@ export default class Websocket extends React.Component {
 
         //listen events!
         socket
-            .on('elements', (content) => {
-                console.debug('[Websocket] Elements received');
+            .on('elements.override', (content) => {
+                console.debug('[Websocket] Elements to override received');
                 this.props.overrideElements(content, initial);
             })
 
-            .on('element', (content) => {
-                console.debug('[Websocket] Element received');
+            .on('elements.extend', (content) => {
+                console.debug('[Websocket] Elements to extend received');
                 this.props.extendElements(content, initial);
             })
 
             .on('aggregations', (content) => {
-                console.debug('[Websocket] Element received');
+                console.debug('[Websocket] Aggregations received');
                 this.props.overrideAggregations(content, initial);
             })
 
@@ -65,7 +65,6 @@ export default class Websocket extends React.Component {
                 console.debug('[Websocket] Message received');
                 this.props.overrideMessage(content, initial);
             });
-
 
         this.fetchAllElements();
     }
@@ -113,42 +112,52 @@ export default class Websocket extends React.Component {
                 <button
                     onClick={() => this.fetchAllElements()}
                 >
-                    Fetch All element
+                    reFetch elements
                 </button>
 
                 <button
                     onClick={() => this.fetchOneElement()}
                 >
-                    Update one element
+                    Fetch NEW rand element
                 </button>
 
                 <button
                     onClick={() => this.massiveFetchAllElements()}
                 >
-                    Update all instances
+                    Update ALL with rand
                 </button>
 
                 <button
                     onClick={() => this.massiveCleanUp()}
                 >
-                    Clean all instances
+                    Clear ALL instances
                 </button>
 
 
                 {
-                    ( aggregations != null && Object.keys(elements).length > 0) &&
+                    (
+                        ( aggregations != null && Object.keys(elements).length > 0) &&
 
-                    ( elements != null && Object.keys(elements).length > 0) &&
-                    <div>
-                        <ElementsDashboard
-                            title="Last proposals"
-                            path={the_path}
+                        ( elements != null)
+                    )?
 
-                            elements={the_elements}
-                            aggregations={aggregations}
-                        />
+                        <div>
+                            <ElementsDashboard
+                                title="Last proposals"
+                                path={the_path}
 
-                    </div>
+                                elements={the_elements}
+                                aggregations={aggregations}
+                            />
+
+                        </div>
+
+                    :
+
+                        <div>
+                            <LoadingAnimation />
+                        </div>
+
                 }
 
 
