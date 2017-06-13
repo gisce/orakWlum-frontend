@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 
-import { UserProfile } from './UserProfile';
+import { ElementsDashboard } from './ElementsDashboard';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
@@ -55,6 +55,11 @@ export default class Websocket extends React.Component {
                 this.props.extendElements(content, initial);
             })
 
+            .on('aggregations', (content) => {
+                console.debug('[Websocket] Element received');
+                this.props.overrideAggregations(content, initial);
+            })
+
             .on('message', (content) => {
                 console.debug('[Websocket] Message received');
                 this.props.overrideMessage(content, initial);
@@ -74,6 +79,7 @@ export default class Websocket extends React.Component {
 
     fetchAllElements(){
         console.debug("fetching all elements")
+        ask_the_api('aggregations.get');
         ask_the_api('elements.get');
     }
 
@@ -83,7 +89,9 @@ export default class Websocket extends React.Component {
     }
 
     render() {
-        const {message, elements, loaded} = this.props;
+        const {message, elements, aggregations, loaded} = this.props;
+
+        const the_path = this.props.location.pathname;
 
         return (
             <div>
@@ -117,7 +125,23 @@ export default class Websocket extends React.Component {
                     Clean all instances
                 </button>
 
-                {debug(elements)}
+
+                {
+                    (false && elements != null && Object.keys(elements).length > 0) &&
+                    <div>
+                        <ElementsDashboard
+                            title="Last proposals"
+                            path={the_path}
+
+                            elements={elements}
+                            aggregations={aggregations}
+                        />
+
+                    </div>
+                }
+
+
+                {debug(Object.keys(elements).length)}
             </div>
         );
     }
