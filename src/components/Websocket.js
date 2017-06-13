@@ -22,6 +22,7 @@ function mapStateToProps(state) {
 
         elements: state.orakwlum.elements,
         message: state.orakwlum.message,
+        aggregations: state.orakwlum.aggregations,
     };
 }
 
@@ -65,6 +66,8 @@ export default class Websocket extends React.Component {
                 this.props.overrideMessage(content, initial);
             });
 
+
+        this.fetchAllElements();
     }
 
     massiveCleanUp(){
@@ -92,6 +95,12 @@ export default class Websocket extends React.Component {
         const {message, elements, aggregations, loaded} = this.props;
 
         const the_path = this.props.location.pathname;
+
+        // Adapt elements object to array of content of each element
+        let the_elements = [];
+        for ( let [key, value] of Object.entries(elements)) {
+            the_elements.push(value);
+        }
 
         return (
             <div>
@@ -127,13 +136,15 @@ export default class Websocket extends React.Component {
 
 
                 {
-                    (false && elements != null && Object.keys(elements).length > 0) &&
+                    ( aggregations != null && Object.keys(elements).length > 0) &&
+
+                    ( elements != null && Object.keys(elements).length > 0) &&
                     <div>
                         <ElementsDashboard
                             title="Last proposals"
                             path={the_path}
 
-                            elements={elements}
+                            elements={the_elements}
                             aggregations={aggregations}
                         />
 
