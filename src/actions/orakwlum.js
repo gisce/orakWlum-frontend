@@ -3,6 +3,7 @@ import {
     RECEIVE_ELEMENTS,
     OVERRIDE_ELEMENTS,
     OVERRIDE_MESSAGE,
+    OVERRIDE_AGGREGATIONS
 } from '../constants/index'
 
 import {
@@ -39,7 +40,7 @@ export function reduceElements(reducer_type, response, initial) {
 
     //If the return is OK
     if (the_code == 200) {
-        const the_elements = response.result;
+        const the_elements = JSON.parse(response.result);
         const the_message = response.message;
 
         return {
@@ -85,6 +86,32 @@ export function overrideMessage(response, initial) {
 }
 
 
+
+
+
+
+//Handle how to reduce aggregations
+export function overrideAggregations(response, initial) {
+    const message = (initial)?null:"Aggregations list updated";
+
+    //Set the code, or 404
+    const the_code = (response.code? response.code : 404);
+
+    //If the return is OK
+    if (the_code == 200) {
+        const the_aggregations = JSON.parse(response.result);
+        const the_message = response.message;
+
+        return {
+            type: OVERRIDE_AGGREGATIONS,
+            payload: {
+                aggregations: the_aggregations,
+                message: the_message,
+            },
+        };
+    }
+    return {};
+}
 
 
 
