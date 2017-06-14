@@ -121,14 +121,14 @@ export function overrideAggregations(response, initial) {
 
 export function fetchElements(a_filter=null, initial=false) {
     return (dispatch) => {
-        dispatch(saveElements(initial));
+        dispatch(fetchElementsRequest(initial));
         ask_the_api("elements.get", a_filter);
     };
 }
 
 export function fetchElement(filter=null, initial=false) {
     return (dispatch) => {
-        dispatch(extendElements(initial));
+        dispatch(fetchElementsRequest(initial));
         ask_the_api("element.get", a_filter);
     };
 }
