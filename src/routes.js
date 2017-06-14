@@ -53,7 +53,7 @@ export default (
         <Route path="about"   component={requireAuthentication(About)} />
 
         <Route path="elements" component={Websocket} />
-        <Route path="elements/:elementID" component={requireAuthentication(Element)} />
+        <Route path="elements/:elementID" component={Element} />
 
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
