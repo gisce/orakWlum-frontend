@@ -13,12 +13,7 @@ import { socket, socket_connect, ask_the_api } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
-        data: state.profile,
         token: state.auth.token,
-        loaded: state.profile.loaded,
-        isFetching: state.profile.isFetching,
-        error: state.profile.error,
-        errorMessage: state.profile.data,
 
         elements: state.orakwlum.elements,
         message: state.orakwlum.message,
@@ -43,28 +38,6 @@ export default class Websocket extends React.Component {
         socket_connect("token29832382938298asda29");
 
         const initial=true;
-
-        //listen events!
-        socket
-            .on('elements.override', (content) => {
-                console.debug('[Websocket] Elements to override received');
-                this.props.overrideElements(content, initial);
-            })
-
-            .on('elements.extend', (content) => {
-                console.debug('[Websocket] Elements to extend received');
-                this.props.extendElements(content, initial);
-            })
-
-            .on('aggregations', (content) => {
-                console.debug('[Websocket] Aggregations received');
-                this.props.overrideAggregations(content, initial);
-            })
-
-            .on('message', (content) => {
-                console.debug('[Websocket] Message received');
-                this.props.overrideMessage(content, initial);
-            });
 
         this.fetchAllElements();
     }
@@ -149,7 +122,6 @@ export default class Websocket extends React.Component {
                                 elements={the_elements}
                                 aggregations={aggregations}
                             />
-
                         </div>
 
                     :
@@ -159,7 +131,6 @@ export default class Websocket extends React.Component {
                         </div>
 
                 }
-
 
                 {debug(Object.keys(elements).length)}
             </div>
