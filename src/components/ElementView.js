@@ -29,47 +29,54 @@ function mapDispatchToProps(dispatch) {
 export default class ElementView extends React.Component {
     componentDidMount() {
         this.fetchData();
+        //this.elementID = this.props.params.elementID;
+
     }
 
     fetchData() {
-        const token = this.props.token;
         const element_id = this.props.params.elementID;
-        //this.props.fetchProposal(token, element_id, true);
+        this.props.fetchElements(element_id, true);
     }
 
     render() {
         const elementID = this.props.params.elementID;
-
         const {aggregations, elements} = this.props;
-        const allAggregations = aggregations;
         
         const element = elements[elementID];
 
-        if (element != null && element.id == elementID) {
+        console.log(element != {});
+        console.log(element);
+
+        if (element != {} && element != undefined && element.id == elementID) {
+            console.log(element.id);
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
-                if (agg in allAggregations)
-                    aggregationsList.push( allAggregations[agg]);
+                if (agg in aggregations)
+                    aggregationsList.push( aggregations[agg]);
             })
 
             return (
                 <div>
-                        <div>
-                            <Proposal
-                                proposal={element}
-                                aggregations={aggregationsList}
-                            />
-                        </div>
+                    <div>
+                        <Proposal
+                            proposal={element}
+                            aggregations={aggregationsList}
+                        />
+                    </div>
         
-                        {debug(this.props.data)}
+                    {debug(element)}
                 </div>
             );
+
         } else {
             //try to fetch it!
+            console.log("fetch");
+            
+            this.fetchData();
             return (
                 <div>
                     <LoadingAnimation />
-                    {debug(this.props.data.data)}
+                    {debug(element)}
                 </div>
             );
         }
