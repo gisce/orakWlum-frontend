@@ -1,4 +1,4 @@
-import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS} from '../constants';
+import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST} from '../constants';
 import {createReducer} from '../utils/misc';
 
 const initialState = {
@@ -30,6 +30,10 @@ export default createReducer(initialState, {
         message: payload.message,
         isFetching: false,
         loaded: true
+    }),
+    [FETCH_AGGREGATIONS_REQUEST]: (state, payload) => Object.assign({}, state, {
+        isFetching: true,
+        message: payload.message
     }),
     [FETCH_ELEMENTS_REQUEST]: (state, payload) => Object.assign({}, state, {
         isFetching: true,
