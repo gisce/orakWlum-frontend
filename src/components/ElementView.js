@@ -27,15 +27,27 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ElementView extends React.Component {
-    componentDidMount() {
-        this.fetchData();
-        //this.elementID = this.props.params.elementID;
+    constructor(props) {
+        super(props);
+	}
 
+    componentDidMount() {
+        const elementID = this.props.params.elementID;
+        const {aggregations, elements} = this.props;
+
+        console.log(elementID in elements)
+
+        if (!(elementID in elements)){
+            console.log("not exist")
+            this.fetchData();
+        }
     }
 
     fetchData() {
         const element_id = this.props.params.elementID;
+        this.props.fetchAggregations(true);
         this.props.fetchElements(element_id, true);
+
     }
 
     render() {
@@ -44,11 +56,8 @@ export default class ElementView extends React.Component {
         
         const element = elements[elementID];
 
-        console.log(element != {});
-        console.log(element);
-
-        if (element != {} && element != undefined && element.id == elementID) {
-            console.log(element.id);
+        console.log(aggregations);
+        if (element != undefined && element.id == elementID && aggregations != undefined) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
                 if (agg in aggregations)
@@ -71,8 +80,6 @@ export default class ElementView extends React.Component {
         } else {
             //try to fetch it!
             console.log("fetch");
-            
-            this.fetchData();
             return (
                 <div>
                     <LoadingAnimation />
