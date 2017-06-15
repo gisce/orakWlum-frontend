@@ -38,8 +38,22 @@ export default class Websocket extends React.Component {
         socket_connect("token29832382938298asda29");
 
         const initial=true;
+        
+        const {elements, aggregations} = this.props;
 
-        this.fetchAllElements();
+        if (Object.keys(elements) == 0)
+            this.fetchElements();
+
+        if (Object.keys(aggregations) == 0)
+            this.fetchAggregations();
+    }
+
+    fetchAggregations() {
+        this.props.fetchAggregations();
+    }
+
+    fetchElements() {
+        this.props.fetchElements();
     }
 
     massiveCleanUp(){
@@ -50,12 +64,6 @@ export default class Websocket extends React.Component {
     massiveFetchAllElements(){
         console.debug("massive fetch all elements")
         ask_the_api('all_users.elements.update', "users");
-    }
-
-    fetchAllElements(){
-        console.debug("fetching all elements")
-        ask_the_api('aggregations.get');
-        ask_the_api('elements.get');
     }
 
     fetchOneElement(){
@@ -83,7 +91,7 @@ export default class Websocket extends React.Component {
             }
 
                 <button
-                    onClick={() => this.fetchAllElements()}
+                    onClick={() => this.fetchElements()}
                 >
                     reFetch elements
                 </button>
