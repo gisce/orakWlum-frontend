@@ -11,11 +11,6 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
-
-        loaded: state.orakwlum.loaded,
-        isFetching: state.orakwlum.isFetching,
-
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
     };
@@ -29,25 +24,24 @@ function mapDispatchToProps(dispatch) {
 export default class ElementView extends React.Component {
     constructor(props) {
         super(props);
-	}
 
-    componentDidMount() {
         const elementID = this.props.params.elementID;
         const {aggregations, elements} = this.props;
 
-        console.log(elementID in elements)
-
+        //Review if the element has been downloaded
         if (!(elementID in elements)){
-            console.log("not exist")
             this.fetchData();
         }
+	}
+
+    componentDidMount() {
     }
 
+    //Fetch all needed data
     fetchData() {
         const element_id = this.props.params.elementID;
         this.props.fetchAggregations(true);
         this.props.fetchElements(element_id, true);
-
     }
 
     render() {
@@ -56,7 +50,7 @@ export default class ElementView extends React.Component {
         
         const element = elements[elementID];
 
-        console.log(aggregations);
+        // Render Element if data is reached
         if (element != undefined && element.id == elementID && aggregations != undefined) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
@@ -78,8 +72,6 @@ export default class ElementView extends React.Component {
             );
 
         } else {
-            //try to fetch it!
-            console.log("fetch");
             return (
                 <div>
                     <LoadingAnimation />
@@ -91,8 +83,6 @@ export default class ElementView extends React.Component {
 }
 
 ElementView.propTypes = {
-    loaded: PropTypes.bool,
     elements: PropTypes.object,
     aggregations: PropTypes.array,
-    token: PropTypes.string,
 };
