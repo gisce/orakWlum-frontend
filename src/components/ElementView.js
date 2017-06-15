@@ -29,19 +29,29 @@ export default class ElementView extends React.Component {
         const {aggregations, elements} = this.props;
 
         //Review if the element has been downloaded
-        if (!(elementID in elements)){
-            this.fetchData();
-        }
+        if (!(elementID in elements))
+            this.fetchAggregations(true);
+
+        if (Objects.keys(aggregations) == 0)
+            this.fetchAggregations(true);
 	}
 
     componentDidMount() {
     }
 
+    fetchAggregations(initial) {
+        this.props.fetchAggregations(initial);
+    }
+
+    fetchElements(element_id, initial) {
+        this.props.fetchElements(element_id, initial);
+    }
+
     //Fetch all needed data
     fetchData() {
         const element_id = this.props.params.elementID;
-        this.props.fetchAggregations(true);
-        this.props.fetchElements(element_id, true);
+        this.fetchAggregations(false);
+        this.fetchElements(element_id, false);
     }
 
     render() {
