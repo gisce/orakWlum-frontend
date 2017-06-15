@@ -3,7 +3,8 @@ import {
     RECEIVE_ELEMENTS,
     OVERRIDE_ELEMENTS,
     OVERRIDE_MESSAGE,
-    OVERRIDE_AGGREGATIONS
+    OVERRIDE_AGGREGATIONS,
+    FETCH_AGGREGATIONS_REQUEST,
 } from '../constants/index'
 
 import {
@@ -19,6 +20,17 @@ import {
     logoutAndRedirect
 } from './auth'
 
+
+export function fetchAggregationsRequest(initial) {
+    const message = (initial)?null:"Refreshing aggregations list";
+
+    return {
+        type: FETCH_AGGREGATIONS_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
 
 export function fetchElementsRequest(initial) {
     const message = (initial)?null:"Refreshing elements list";
@@ -130,5 +142,12 @@ export function fetchElement(filter=null, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
         ask_the_api("element.get", a_filter);
+    };
+}
+
+export function fetchAggregations(a_filter=null, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchAggregationsRequest(initial));
+        ask_the_api("aggregations.get", a_filter);
     };
 }
