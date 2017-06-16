@@ -40,6 +40,48 @@ class Notification extends Component {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class Connection extends Component {
+
+
+    prepare_notification (content, title) {
+        let the_message = {
+            title,
+            message: content.message,
+        }
+
+        //Integrate a "view it" button that redirects to the related URL (if exist)
+        if ('url' in content && content.url)
+            the_message.action = {
+                label: 'View it!',
+                callback: (event) => {
+                  dispatchNewRoute("/" + content.url, event);
+                }
+            };
+
+        //Set the notification level
+        switch (content.code) {
+            case 200:
+                the_message.level = "info";
+                break;
+
+            case 1:
+                the_message.level = "success";
+                the_message.autoDismiss = 0;
+                break;
+
+            case -1:
+                the_message.level = "error";
+                the_message.autoDismiss = 0;
+                break;
+
+            default:
+                the_message.level = "warning";
+                break;
+        }
+
+        //Create the notification!
+        this.refs.notificationSystem.createNotification(the_message);
+    }
+
 	componentWillMount() {
 
         //initialize the connection
@@ -53,49 +95,20 @@ export class Connection extends Component {
 			.on('elements.override', (content) => {
 				console.debug('[Websocket] Elements to override received');
 				this.props.overrideElements(content, initial);
+
+                if (!content.silent) {
+                    this.prepare_notification(content, "Elements overrided");
+                }
+
 			})
 
 			.on('elements.extend', (content) => {
 				console.debug('[Websocket] Elements to extend received');
 				this.props.extendElements(content, initial);
 
-                let the_message = {
-                    title: 'okW Elements',
-                    message: content.message,
+                if (!content.silent) {
+                    this.prepare_notification(content, "Elements updated");;
                 }
-
-                //Integrate a "view it" button that redirects to the related URL (if exist)
-                if ('url' in content && content.url)
-                    the_message.action = {
-                        label: 'View it!',
-                        callback: (event) => {
-                          dispatchNewRoute("/" + content.url, event);
-                        }
-                    };
-
-                //Set the notification level
-                switch (content.code) {
-                    case 200:
-                        the_message.level = "info";
-                        break;
-
-                    case 1:
-                        the_message.level = "success";
-                        the_message.autoDismiss = 0;
-                        break;
-
-                    case -1:
-                        the_message.level = "error";
-                        the_message.autoDismiss = 0;
-                        break;
-
-                    default:
-                        the_message.level = "warning";
-                        break;
-                }
-
-                //Create the notification!
-                this.refs.notificationSystem.createNotification(the_message);
 			})
 
 			.on('aggregations', (content) => {
