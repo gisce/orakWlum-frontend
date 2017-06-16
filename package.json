@@ -117,7 +117,8 @@
     "materialized-reactions": "latest",
     "offline-plugin": "latest",
     "socket.io-client": "latest",
-    "redux-persist": "latest"
+    "redux-persist": "latest",
+    "react-notification-system": "latest"
   },
   "dependencies": {
     "binding": "^3.0.3",
