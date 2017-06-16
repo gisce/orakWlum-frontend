@@ -13,8 +13,6 @@ import { socket, socket_connect, ask_the_api } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
-
         elements: state.orakwlum.elements,
         message: state.orakwlum.message,
         aggregations: state.orakwlum.aggregations,
@@ -34,9 +32,6 @@ export default class Websocket extends React.Component {
 
     componentDidMount() {
         //initialize the connection
-        const token = this.props.token;
-        socket_connect("token29832382938298asda29");
-
         const initial=true;
 
         const {elements, aggregations} = this.props;
@@ -153,5 +148,4 @@ Websocket.propTypes = {
     loaded: PropTypes.bool,
     message: PropTypes.string,
     elements: PropTypes.object,
-    token: PropTypes.string,
 };

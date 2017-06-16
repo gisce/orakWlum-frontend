@@ -18,12 +18,9 @@ import localforage from 'localforage';
 import { persistStore } from 'redux-persist';
 import { asyncSessionStorage } from 'redux-persist/storages'
 
-
 import './style.scss';
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
-
-
 
 //SW installation handling version updates!
 OfflinePluginRuntime.install({
