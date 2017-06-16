@@ -37,11 +37,9 @@ class Notification extends Component {
 }
 
 
-
+//The Connection component that handles the Websocket and the related main listeners
 @connect(mapStateToProps, mapDispatchToProps)
 export class Connection extends Component {
-
-
     prepare_notification (content, title) {
         let the_message = {
             title,

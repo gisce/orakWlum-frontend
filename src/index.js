@@ -10,13 +10,20 @@ import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 import configureStore from './store/configureStore';
 import routes from './routes';
-import './style.scss';
+
+//localForage
+import localforage from 'localforage';
 
 //Prepare Redux rehydration
-import {persistStore} from 'redux-persist';
+import { persistStore } from 'redux-persist';
+import { asyncSessionStorage } from 'redux-persist/storages'
 
+
+import './style.scss';
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
+
+
 
 //SW installation handling version updates!
 OfflinePluginRuntime.install({
@@ -37,7 +44,8 @@ class AppProvider extends React.Component {
   }
 
   componentWillMount(){
-    persistStore(store, {}, () => {
+    persistStore(store, {storage: localforage}, () => {
+      console.debug("Rehydration complete")
       this.setState({ rehydrated: true })
     })
   }
