@@ -38,14 +38,15 @@ export default class Websocket extends React.Component {
         socket_connect("token29832382938298asda29");
 
         const initial=true;
-        
+
         const {elements, aggregations} = this.props;
+
+        if (Object.keys(aggregations) == 0)
+            this.fetchAggregations();
 
         if (Object.keys(elements) == 0)
             this.fetchElements();
 
-        if (Object.keys(aggregations) == 0)
-            this.fetchAggregations();
     }
 
     fetchAggregations() {
@@ -117,9 +118,9 @@ export default class Websocket extends React.Component {
 
                 {
                     (
-                        ( aggregations != null && Object.keys(elements).length > 0) &&
+                        ( aggregations != null && Object.keys(aggregations).length > 0) &&
 
-                        ( elements != null)
+                        ( elements != null && Object.keys(aggregations).length > 0)
                     )?
 
                         <div>
