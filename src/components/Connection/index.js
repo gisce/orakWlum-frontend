@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/orakwlum';
 
-import { socket, socket_connect, dispatchNewRoute } from '../../utils/http_functions';
+import { socket, dispatchNewRoute } from '../../utils/http_functions';
 
 var NotificationSystem = require('react-notification-system');
 
@@ -27,6 +27,12 @@ class Notification extends Component {
       this.refs.internalNotificationSystem.addNotification(the_notification);
     }
 
+    cleanNotifications = () => {
+      this.refs.internalNotificationSystem.clearNotifications();
+    }
+
+
+
     render() {
       return (
         <div>
@@ -40,7 +46,9 @@ class Notification extends Component {
 //The Connection component that handles the Websocket and the related main listeners
 @connect(mapStateToProps, mapDispatchToProps)
 export class Connection extends Component {
-    prepare_notification (content, title) {
+    prepareNotification (content, title) {
+        console.log("preparing")
+
         let the_message = {
             title,
             message: content.message,
@@ -80,6 +88,11 @@ export class Connection extends Component {
         this.refs.notificationSystem.createNotification(the_message);
     }
 
+    //Clean pending notifications
+    cleanNotifications() {
+        this.refs.notificationSystem.cleanNotifications();
+    }
+
 	componentWillMount() {
 
         //initialize the connection
@@ -95,7 +108,7 @@ export class Connection extends Component {
 				this.props.overrideElements(content, initial);
 
                 if (!content.silent) {
-                    this.prepare_notification(content, "Elements overrided");
+                    this.prepareNotification(content, "Elements overrided");
                 }
 
 			})
@@ -105,7 +118,7 @@ export class Connection extends Component {
 				this.props.extendElements(content, initial);
 
                 if (!content.silent) {
-                    this.prepare_notification(content, "Elements updated");;
+                    this.prepareNotification(content, "Elements updated");;
                 }
 			})
 
@@ -125,8 +138,8 @@ export class Connection extends Component {
                     code: 200,
                     message: 'Connection established!'
                 }
-                this.prepare_notification(content, "Connection");;
-                this.prepare_notification(content, "Connection");;
+                this.cleanNotifications(content, "Connection");;
+                this.prepareNotification(content, "Connection");;
             })
 
             .on('disconnect', () => {
@@ -135,13 +148,21 @@ export class Connection extends Component {
                     code: -1,
                     message: 'Can\'t reach the server',
                 }
-                this.prepare_notification(content, "Disconnected");;
+                this.prepareNotification(content, "Disconnected");;
             })
-
-
 	}
+
     render() {
-        return <Notification ref="notificationSystem"/>;
+        if (!socket.connected) {
+            setTimeout(() => {
+                this.prepareNotification({
+                    message: "okW is in off-line mode",
+                    code: 200,
+                }, "Working in off-line mode");
+            }, 1000)
+        }
+
+        return <Notification ref="notificationSystem" status={socket.connected}/>;
     }
 }
 
