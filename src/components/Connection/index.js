@@ -141,7 +141,7 @@ export class Connection extends Component {
             .on('connect', () => {
                 console.debug('Authenticated');
 
-                this.cleanNotifications();;
+                this.cleanNotifications();
                 this.prepareNotification({
                     code: 200,
                     title: 'Connected!',
@@ -152,12 +152,25 @@ export class Connection extends Component {
             .on('disconnect', () => {
                 console.debug('Disconnected');
 
+                this.cleanNotifications();
+
+                this.prepareNotification({
+                    title: 'Offline mode',
+                    message: "okW is in offline mode",
+                    code: 200,
+                    autoDismiss: 0,
+                    level: "warning",
+                    dismissible: false,
+                });
+
                 this.prepareNotification({
                     code: -1,
                     title: 'Disconnected',
                     message: 'Can\'t reach the server',
-                    autoDismiss: 0,
+                    level: "error",
                 });
+
+
             })
 	}
 
@@ -170,6 +183,8 @@ export class Connection extends Component {
                     message: "okW is in offline mode",
                     code: 200,
                     autoDismiss: 0,
+                    level: "warning",
+                    dismissible: false,
                 });
             }, 1000)
         }
