@@ -9,7 +9,7 @@ import { ElementsDashboard } from './ElementsDashboard';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
-import { socket, socket_connect, ask_the_api } from '../utils/http_functions';
+import { socket, ask_the_api } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {

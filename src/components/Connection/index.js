@@ -24,11 +24,12 @@ function mapDispatchToProps(dispatch) {
 //A notification wrapper for react-notification-system
 class Notification extends Component {
     createNotification = (the_notification) => {
-      this.refs.internalNotificationSystem.addNotification(the_notification);
+        console.log(the_notification);
+        this.refs.internalNotificationSystem.addNotification(the_notification);
     }
 
     cleanNotifications = () => {
-      this.refs.internalNotificationSystem.clearNotifications();
+        this.refs.internalNotificationSystem.clearNotifications();
     }
 
 
@@ -46,12 +47,12 @@ class Notification extends Component {
 //The Connection component that handles the Websocket and the related main listeners
 @connect(mapStateToProps, mapDispatchToProps)
 export class Connection extends Component {
-    prepareNotification (content, title) {
-        console.log("preparing")
+    prepareNotification (content) {
 
+        //Initialize a new message based on the provided one
         let the_message = {
-            title,
-            message: content.message,
+            ...{},
+            ...content,
         }
 
         //Integrate a "view it" button that redirects to the related URL (if exist)
@@ -63,26 +64,31 @@ export class Connection extends Component {
                 }
             };
 
-        //Set the notification level
-        switch (content.code) {
-            case 200:
-                the_message.level = "info";
-                break;
 
-            case 1:
-                the_message.level = "success";
-                the_message.autoDismiss = 0;
-                break;
+        //Set notification level based on the code if not provided
+        if (!('level' in content)) {
+            switch (content.code) {
+                case 200:
+                    console.log("entro");
+                    the_message.level = "info";
+                    break;
 
-            case -1:
-                the_message.level = "error";
-                the_message.autoDismiss = 0;
-                break;
+                case 1:
+                    the_message.level = "success";
+                    the_message.autoDismiss = 0;
+                    break;
 
-            default:
-                the_message.level = "warning";
-                break;
+                case -1:
+                    the_message.level = "error";
+                    the_message.autoDismiss = 0;
+                    break;
+
+                default:
+                    the_message.level = "warning";
+                    break;
+            }
         }
+
 
         //Create the notification!
         this.refs.notificationSystem.createNotification(the_message);
@@ -133,32 +139,38 @@ export class Connection extends Component {
 			})
 
             .on('connect', () => {
-                console.log('authenticated');
-                const content = {
+                console.debug('Authenticated');
+
+                this.cleanNotifications();;
+                this.prepareNotification({
                     code: 200,
-                    message: 'Connection established!'
-                }
-                this.cleanNotifications(content, "Connection");;
-                this.prepareNotification(content, "Connection");;
+                    title: 'Connected!',
+                    message: 'Connection established!',
+                });
             })
 
             .on('disconnect', () => {
-                console.log('disconnected');
-                const content = {
+                console.debug('Disconnected');
+
+                this.prepareNotification({
                     code: -1,
+                    title: 'Disconnected',
                     message: 'Can\'t reach the server',
-                }
-                this.prepareNotification(content, "Disconnected");;
+                    autoDismiss: 0,
+                });
             })
 	}
 
     render() {
+        //Detect offline mode!
         if (!socket.connected) {
             setTimeout(() => {
                 this.prepareNotification({
-                    message: "okW is in off-line mode",
+                    title: 'Offline mode',
+                    message: "okW is in offline mode",
                     code: 200,
-                }, "Working in off-line mode");
+                    autoDismiss: 0,
+                });
             }, 1000)
         }
 
