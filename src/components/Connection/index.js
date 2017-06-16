@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/orakwlum';
 
-import { socket, socket_connect } from '../../utils/http_functions';
+import { socket, socket_connect, dispatchNewRoute } from '../../utils/http_functions';
 
 var NotificationSystem = require('react-notification-system');
 
@@ -21,6 +21,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 
+//A notification wrapper for react-notification-system
 class Notification extends Component {
     createNotification = (the_notification) => {
       this.refs.internalNotificationSystem.addNotification(the_notification);
@@ -58,11 +59,43 @@ export class Connection extends Component {
 				console.debug('[Websocket] Elements to extend received');
 				this.props.extendElements(content, initial);
 
-                //Create a notification!
-                this.refs.notificationSystem.createNotification({
+                let the_message = {
+                    title: 'okW Elements',
                     message: content.message,
-                    level: "success",
-                });
+                }
+
+                //Integrate a "view it" button that redirects to the related URL (if exist)
+                if ('url' in content && content.url)
+                    the_message.action = {
+                        label: 'View it!',
+                        callback: (event) => {
+                          dispatchNewRoute("/" + content.url, event);
+                        }
+                    };
+
+                //Set the notification level
+                switch (content.code) {
+                    case 200:
+                        the_message.level = "info";
+                        break;
+
+                    case 1:
+                        the_message.level = "success";
+                        the_message.autoDismiss = 0;
+                        break;
+
+                    case -1:
+                        the_message.level = "error";
+                        the_message.autoDismiss = 0;
+                        break;
+
+                    default:
+                        the_message.level = "warning";
+                        break;
+                }
+
+                //Create the notification!
+                this.refs.notificationSystem.createNotification(the_message);
 			})
 
 			.on('aggregations', (content) => {
