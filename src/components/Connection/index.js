@@ -84,7 +84,7 @@ export class Connection extends Component {
 
         //initialize the connection
         const token = this.props.token;
-        socket_connect("token29832382938298asda29");
+        //socket_connect("token29832382938298asda29");
 
 		const initial=true;
 
@@ -117,7 +117,27 @@ export class Connection extends Component {
 			.on('message', (content) => {
 				console.debug('[Websocket] Message received');
 				this.props.overrideMessage(content, initial);
-			});
+			})
+
+            .on('connect', () => {
+                console.log('authenticated');
+                const content = {
+                    code: 200,
+                    message: 'Connection established!'
+                }
+                this.prepare_notification(content, "Connection");;
+                this.prepare_notification(content, "Connection");;
+            })
+
+            .on('disconnect', () => {
+                console.log('disconnected');
+                const content = {
+                    code: -1,
+                    message: 'Can\'t reach the server',
+                }
+                this.prepare_notification(content, "Disconnected");;
+            })
+
 
 	}
     render() {
