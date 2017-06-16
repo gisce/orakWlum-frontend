@@ -10,7 +10,7 @@ const io = require('socket.io-client');
 //export const socket = io.connect('http://api.abe.okw.gisce.net:8000', { reconnection: true, transports: ['websocket', 'polling'] });
 export const socket = io.connect(':8000', {
     reconnection: true,
-    transports: ['websocket'],
+    transports: ['websocket', 'polling'],
     query: 'token=' + "rolf28282828",
 });
 
