@@ -42,19 +42,21 @@ export default class Websocket extends React.Component {
         const {elements, aggregations} = this.props;
 
         if (Object.keys(aggregations) == 0)
-            this.fetchAggregations();
+            this.fetchAggregations(true);
 
         if (Object.keys(elements) == 0)
-            this.fetchElements();
+            this.fetchElements(true);
 
     }
 
-    fetchAggregations() {
-        this.props.fetchAggregations();
+    fetchAggregations(silent) {
+        const the_filter = null;
+        this.props.fetchAggregations(the_filter, silent);
     }
 
-    fetchElements() {
-        this.props.fetchElements();
+    fetchElements(silent) {
+        const the_filter = null;
+        this.props.fetchElements(the_filter, silent);
     }
 
     massiveCleanUp(){
