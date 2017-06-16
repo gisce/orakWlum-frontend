@@ -20,22 +20,6 @@ const tokenConfig = (token) => ({
     },
 });
 
-//Connect socket
-export function socket_connect (token) {
-  socket
-    //handle connection
-    .on('connect', function () {
-        console.log('authenticated');
-        socket.emit('connected');
-    })
-
-    //handle disconnections
-    .on('disconnect', function () {
-        console.log('disconnected');
-    })
-;
-}
-
 //Abstract method to ask to emit something to the API
 export function ask_the_api (channel, params=null) {
     socket.emit(
