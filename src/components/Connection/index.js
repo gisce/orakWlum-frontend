@@ -8,6 +8,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import { socket, socket_connect } from '../../utils/http_functions';
 
+var NotificationSystem = require('react-notification-system');
 
 function mapStateToProps(state) {
     return {
@@ -18,6 +19,22 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
+
+class Notification extends Component {
+    createNotification = (the_notification) => {
+      this.refs.internalNotificationSystem.addNotification(the_notification);
+    }
+
+    render() {
+      return (
+        <div>
+          <NotificationSystem ref="internalNotificationSystem" />
+        </div>
+        );
+    }
+}
+
 
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -40,6 +57,12 @@ export class Connection extends Component {
 			.on('elements.extend', (content) => {
 				console.debug('[Websocket] Elements to extend received');
 				this.props.extendElements(content, initial);
+
+                //Create a notification!
+                this.refs.notificationSystem.createNotification({
+                    message: content.message,
+                    level: "success",
+                });
 			})
 
 			.on('aggregations', (content) => {
@@ -54,7 +77,7 @@ export class Connection extends Component {
 
 	}
     render() {
-        return null;
+        return <Notification ref="notificationSystem"/>;
     }
 }
 
