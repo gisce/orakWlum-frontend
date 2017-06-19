@@ -354,10 +354,11 @@ export class ElementsDashboard extends Component {
                 </div>
                 :
                 <div className="row" style={styles.row}>
-                    <div ref="the_elements" className="col-md-8">
+                    <div ref="the_elements" className="col-md-9">
                         {the_elements}
                     </div>
-                    <div ref="the_selected_elements" className="col-md-4">
+
+                    <div ref="the_selected_elements" className="col-md-3">
                         <h3>Selected Elements</h3>
                         {selectedElementsList}
                     </div>
