@@ -10,7 +10,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { ProposalList } from '../ProposalList';
 
@@ -78,6 +78,7 @@ export class ElementsDashboard extends Component {
             selected_type: this.filter_types[0].text,
             searchText: this.filter_types[0].text,
             selectedElements: {},
+            multiElementMode: false,
         };
     }
 
@@ -120,6 +121,12 @@ export class ElementsDashboard extends Component {
         });
     };
 
+    toggleMultiElementSelection = () => {
+        this.setState({
+            multiElementMode: !this.state.multiElementMode,
+        });
+    }
+
     toggleSelectElement = (element, title) => {
         (element in this.state.selectedElements) ?
             this.unselectElement(element)
@@ -149,7 +156,7 @@ export class ElementsDashboard extends Component {
 
     render = () => {
         const {elements, aggregations} = this.props;
-        const {selected_date, selected_type, searchText, selectedElements} = this.state;
+        const {selected_date, selected_type, searchText, selectedElements, multiElementMode} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
 
         // The calendar selector
@@ -229,9 +236,10 @@ export class ElementsDashboard extends Component {
 
                 <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
-                        <FlatButton
-                            label="Multielement selection"
-                            onClick={(value) => this.updateDate(value.target.value)}
+                        <RaisedButton
+                            label="Select Multiple Elements"
+                            onClick={(value) => this.toggleMultiElementSelection()}
+                            primary={multiElementMode}
                         />
                     </div>
                 </div>
@@ -345,14 +353,16 @@ export class ElementsDashboard extends Component {
 
             {
                 //Render selectedElements if exist
-                (Object.keys(selectedElements) == 0) ?
+                (!multiElementMode) ?
 
                 <div className="row" style={styles.row}>
                     <div ref="the_elements" className="col-md-12">
                         {the_elements}
                     </div>
                 </div>
+
                 :
+
                 <div className="row" style={styles.row}>
                     <div ref="the_elements" className="col-md-9">
                         {the_elements}
