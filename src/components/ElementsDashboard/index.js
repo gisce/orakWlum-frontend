@@ -115,6 +115,15 @@ export class ElementsDashboard extends Component {
         });
     };
 
+    selectElement = (element) => {
+        this.setState({
+            selectedElements: {
+                ...this.state.elements,
+                element
+            },
+        });
+    }
+
     render = () => {
         const {elements, aggregations} = this.props;
         const {selected_date, selected_type, searchText} = this.state;
