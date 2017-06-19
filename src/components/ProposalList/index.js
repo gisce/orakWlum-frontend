@@ -137,7 +137,11 @@ export class ProposalList extends Component {
                 const current = predictionAdapted[aggregationSelected];
                 const data = current.result;
                 const components = current.components;
+                const selected = current.selected;
 
+                const title = "#" + (index+1) + " " + tile.name
+                const subtitle = <span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>
+                const proposalTag = <div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>
 
                 const the_graph = (tile.prediction && Object.keys(tile.prediction).length >0 ) ?
                     (
@@ -168,9 +172,9 @@ export class ProposalList extends Component {
                 return (
                     <GridTile
                         key={tile.id}
-                        title={"#" + (index+1) + " " + tile.name}
-                        subtitle={<span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>}
-                        actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
+                        title={title}
+                        subtitle={subtitle}
+                        actionIcon={proposalTag}
                         actionPosition="right"
                         titlePosition="top"
                         titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
