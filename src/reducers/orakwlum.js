@@ -1,20 +1,24 @@
 import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST} from '../constants';
 import {createReducer} from '../utils/misc';
 
+//deepmerge lib
+const deepmerge = require('deepmerge')
+
 const initialState = {
     isFetching: false,
     loaded: false,
     message: "",
     elements: {},
-    aggregations: {}
+    aggregations: {},
+    elemens_by_type: {},
+    elemens_by_date: {},
 };
 
 export default createReducer(initialState, {
     [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
-        elements: {
-            ...state.elements,
-            ...payload.elements
-        },
+        elements: deepmerge(state.elements, payload.elements),
+        elemens_by_type: deepmerge(state.elemens_by_type, payload.by_type),
+        elemens_by_date: deepmerge(state.elemens_by_date, payload.by_date),
         message: payload.message,
         isFetching: false,
         loaded: true
@@ -22,6 +26,8 @@ export default createReducer(initialState, {
     [OVERRIDE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
         elements: payload.elements,
         message: payload.message,
+        elemens_by_type: payload.by_type,
+        elemens_by_date: payload.by_date,
         isFetching: false,
         loaded: true
     }),
