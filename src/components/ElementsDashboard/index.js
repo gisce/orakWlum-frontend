@@ -14,6 +14,8 @@ import { ProposalList } from '../ProposalList';
 
 import { date_to_string} from '../../utils/misc';
 
+import { debug } from '../../utils/debug';
+
 import * as actionCreators from '../../actions/elements';
 
 const styles = {
@@ -116,16 +118,29 @@ export class ElementsDashboard extends Component {
         });
     };
 
+    toggleSelectElement = (element) => {
+        (element in this.state.selectedElements) ?
+            this.unselectElement(element)
+            :
+            this.selectElement(element)
+
+        console.log("state", this.state.selectedElements);
+    }
+
     selectElement = (element) => {
+        console.log("Selecting", element)
+
+        let currentElements = this.state.selectedElements;
+        currentElements[element] = element;
+
         this.setState({
-            selectedElements: {
-                ...this.state.elements,
-                element,
-            },
+            selectedElements: currentElements,
         });
+
     }
 
     unselectElement = (element) => {
+        console.log("deselecting" , element)
         let currentElements = this.state.selectedElements;
         delete currentElements[element];
 
@@ -284,13 +299,16 @@ export class ElementsDashboard extends Component {
                 path={"/elements"}
                 sameWidth={true}
                 width={"small"}
-                onClick={(element) => console.log(element)}
+                onClick={(element) => this.toggleSelectElement(element)}
             />
         )
 
         // The render result
         return (
             <div>
+                DEBUG
+                {debug(this.state.selectedElements)}
+
                 <div className="row" style={styles.row}>
                     <div ref="the_calendar" className="col-md-6">
                         {the_calendar}
@@ -313,6 +331,7 @@ export class ElementsDashboard extends Component {
                         {the_elements}
                     </div>
                 </div>
+
             </div>
         );
     }
