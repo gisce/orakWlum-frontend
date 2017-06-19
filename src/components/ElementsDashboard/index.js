@@ -14,13 +14,14 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { ProposalList } from '../ProposalList';
+import { ContentHeader } from '../ContentHeader';
 
 import { date_to_string} from '../../utils/misc';
 
 import { debug } from '../../utils/debug';
 import { dispatchNewRoute} from '../../utils/http_functions';
 
-import * as actionCreators from '../../actions/elements';
+import * as actionCreators from '../../actions/orakwlum';
 
 const styles = {
     calendar: {
@@ -87,6 +88,13 @@ export class ElementsDashboard extends Component {
             selectedElements: {},
             multiElementMode: false, //select
         };
+    }
+
+
+    refreshData(silent = true) {
+        const the_filter = null;
+        this.props.fetchElements(the_filter, silent);
+        this.props.fetchAggregations(the_filter, silent);
     }
 
     //Save the date state and force the <Calendar> update
@@ -414,6 +422,15 @@ export class ElementsDashboard extends Component {
         // The render result
         return (
             <div>
+                <ContentHeader
+                    title="Elements"
+                    addButton={true}
+                    addClickMethod={(event) => this.addHistorical(event)}
+
+                    refreshButton={true}
+                    refreshClickMethod={() => this.refreshData()}
+                />
+
                 <div className="row" style={styles.row}>
                     <div ref="the_calendar" className="col-md-6">
                         {the_calendar}
