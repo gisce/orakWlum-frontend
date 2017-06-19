@@ -118,16 +118,16 @@ export class ElementsDashboard extends Component {
         });
     };
 
-    toggleSelectElement = (element) => {
+    toggleSelectElement = (element, title) => {
         (element in this.state.selectedElements) ?
             this.unselectElement(element)
             :
-            this.selectElement(element)
+            this.selectElement(element, title)
     }
 
-    selectElement = (element) => {
+    selectElement = (element, title) => {
         let currentElements = this.state.selectedElements;
-        currentElements[element] = element;
+        currentElements[element] = title;
 
         this.setState({
             selectedElements: currentElements,
@@ -299,16 +299,27 @@ export class ElementsDashboard extends Component {
                 path={"/elements"}
                 sameWidth={true}
                 width={"small"}
-                onClick={(element) => this.toggleSelectElement(element)}
+                onClick={(element, title) => this.toggleSelectElement(element, title)}
             />
         )
+
+
+        // Selected Elements list
+        let selectedElementsList = [];
+        for ( let [key, value] of Object.entries(selectedElements)) {
+            console.log(selectedElementsList)
+            selectedElementsList.push(
+                <div>
+                    {value}
+                </div>
+            );
+        }
+
+
 
         // The render result
         return (
             <div>
-                DEBUG
-                {debug(this.state.selectedElements)}
-
                 <div className="row" style={styles.row}>
                     <div ref="the_calendar" className="col-md-6">
                         {the_calendar}
@@ -326,11 +337,25 @@ export class ElementsDashboard extends Component {
 
                 </div>
 
+            {
+                //Render selectedElements if exist
+                (Object.keys(selectedElements) == 0) ?
+
                 <div className="row" style={styles.row}>
                     <div ref="the_elements" className="col-md-12">
                         {the_elements}
                     </div>
                 </div>
+                :
+                <div className="row" style={styles.row}>
+                    <div ref="the_elements" className="col-md-8">
+                        {the_elements}
+                    </div>
+                    <div ref="the_selected_elements" className="col-md-4">
+                        {selectedElementsList}
+                    </div>
+                </div>
+            }
 
             </div>
         );
