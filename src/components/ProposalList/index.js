@@ -135,11 +135,10 @@ export class ProposalList extends Component {
         const lastProposals =data_received.map((tile, index) => {
                 const predictionAdapted=adaptProposalData(tile.prediction['result']);
                 const current = predictionAdapted[aggregationSelected];
-                const data = current.result;
-                const components = current.components;
-                const selected = current.selected;
+                const {result, components} = current;
+                const {selected} = tile;
 
-                const title = "#" + (index+1) + " " + tile.name
+                const title = tile.name + selected
                 const subtitle = <span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>
                 const proposalTag = <div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>
 
@@ -147,7 +146,7 @@ export class ProposalList extends Component {
                     (
                         <ProposalGraph
                               stacked={true}
-                              data={data}
+                              data={result}
                               components={components}
                               width={ index < howManyBig ? max_width : max_width/2 }
                               height={ index < howManyBig ? max_height : max_height/2.3 }
