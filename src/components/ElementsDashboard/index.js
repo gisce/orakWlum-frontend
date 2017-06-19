@@ -123,13 +123,9 @@ export class ElementsDashboard extends Component {
             this.unselectElement(element)
             :
             this.selectElement(element)
-
-        console.log("state", this.state.selectedElements);
     }
 
     selectElement = (element) => {
-        console.log("Selecting", element)
-
         let currentElements = this.state.selectedElements;
         currentElements[element] = element;
 
@@ -140,7 +136,6 @@ export class ElementsDashboard extends Component {
     }
 
     unselectElement = (element) => {
-        console.log("deselecting" , element)
         let currentElements = this.state.selectedElements;
         delete currentElements[element];
 
@@ -151,7 +146,7 @@ export class ElementsDashboard extends Component {
 
     render = () => {
         const {elements, aggregations} = this.props;
-        const {selected_date, selected_type, searchText} = this.state;
+        const {selected_date, selected_type, searchText, selectedElements} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
 
         // The calendar selector
@@ -284,6 +279,11 @@ export class ElementsDashboard extends Component {
                 else
                     matched = false;
             }
+
+            element.selected = (element.id in selectedElements)?
+                true
+                :
+                false
 
             //Save matched result
             matched &&
