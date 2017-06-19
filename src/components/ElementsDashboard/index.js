@@ -18,6 +18,7 @@ import { ProposalList } from '../ProposalList';
 import { date_to_string} from '../../utils/misc';
 
 import { debug } from '../../utils/debug';
+import { dispatchNewRoute} from '../../utils/http_functions';
 
 import * as actionCreators from '../../actions/elements';
 
@@ -155,7 +156,20 @@ export class ElementsDashboard extends Component {
             this.selectElement(element, title)
     }
 
-    //Select and element
+    //Dispatch two elements comparation
+    compareSelectedElements = () => {
+        const {selectedElements} = this.state;
+
+        let compare_location = '/compare'
+        if (Object.keys(selectedElements).length == 2){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                compare_location += "/" + key;
+            }
+            dispatchNewRoute(compare_location);
+        }
+    }
+
+    //Select an element
     selectElement = (element, title) => {
         let currentElements = this.state.selectedElements;
         currentElements[element] = title;
@@ -166,7 +180,7 @@ export class ElementsDashboard extends Component {
 
     }
 
-    //unSelect and element
+    //unSelect an element
     unselectElement = (element) => {
         console.log("unselecting", element)
         let currentElements = this.state.selectedElements;
@@ -273,8 +287,8 @@ export class ElementsDashboard extends Component {
                     <div ref="selected_type" className="col-md-12">
                         <RaisedButton
                             label="Compare selected elements"
-                            onClick={(value) => this.toggleMultiElementSelection()}
-                            disabled={!multiElementMode}
+                            onClick={(event) => this.compareSelectedElements()}
+                            disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
                         />
                     </div>
                 </div>
