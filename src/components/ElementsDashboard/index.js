@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import Calendar from 'material-ui/DatePicker/Calendar';
 import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
+import {List, ListItem} from 'material-ui/List';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
@@ -309,13 +311,11 @@ export class ElementsDashboard extends Component {
         let selectedElementsList = [];
         for ( let [key, value] of Object.entries(selectedElements)) {
             selectedElementsList.push(
-                <div key={key}>
-                    {value}
-                    <span onClick={(event) => this.unselectElement(key)} >
-                        __x
-                    </span>
-
-                </div>
+                <ListItem
+                    key={key}
+                    primaryText={value}
+                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(key)}/>}
+                />
             );
         }
 
@@ -336,7 +336,9 @@ export class ElementsDashboard extends Component {
 
                     <div ref="the_calendar" className="col-md-3">
                         <h3>Actions</h3>
-                        {the_actions}
+                        <List>
+                            {the_actions}
+                        </List>
                     </div>
 
                 </div>
