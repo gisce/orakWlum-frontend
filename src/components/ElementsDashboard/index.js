@@ -248,7 +248,8 @@ export class ElementsDashboard extends Component {
                         {the_calendar}
                     </div>
 
-                    <div ref="the_calendar" className="col-md-6">
+                    <div ref="the_filters" className="col-md-3">
+                        <h3>Filters</h3>
                         {the_filters}
                     </div>
 
