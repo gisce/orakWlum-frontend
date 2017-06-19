@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/aggregations';
 
-import { SmartTable } from './SmartTable';
-
-import { LoadingAnimation } from './LoadingAnimation';
+import { SmartTable } from 'materialized-reactions/SmartTable';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
 
@@ -74,6 +74,8 @@ export default class AggregationsView extends React.Component {
                 )
             })
 
+            console.log(aggregations_adapted);
+
             Aggregations = <SmartTable header={headers} data={aggregations_adapted}/>
         }
 
@@ -81,7 +83,7 @@ export default class AggregationsView extends React.Component {
             <div>
                 {
                     (!this.props.loaded) ?
-                        <LoadingAnimation /> || 
+                        <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
                                 <h1>There was an error</h1>
@@ -100,9 +102,9 @@ export default class AggregationsView extends React.Component {
 }
 
 AggregationsView.propTypes = {
-    aggregations: React.PropTypes.object,
-    fetchAggregations: React.PropTypes.func,
-    loaded: React.PropTypes.bool,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    aggregations: PropTypes.object,
+    fetchAggregations: PropTypes.func,
+    loaded: PropTypes.bool,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

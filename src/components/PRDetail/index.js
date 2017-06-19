@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -87,6 +88,6 @@ export class PRDetail extends Component {
 }
 
 PRDetail.propTypes = {
-    PR: React.PropTypes.object.isRequired,
-    open: React.PropTypes.bool,
+    PR: PropTypes.object.isRequired,
+    open: PropTypes.bool,
 };

@@ -65,6 +65,7 @@ const common = {
             test: /\.jpg$/,
             loader: 'file?name=[name].[ext]',
         }],
+        noParse: [new RegExp('node_modules/localforage/dist/localforage.js')]
     },
 
     postcss: (webpack) => (

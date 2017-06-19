@@ -37,7 +37,7 @@ export function receiveElements(data, aggregations, comparison, initial) {
     };
 }
 
-export function fetchElements(token, elements, initial=false) {
+export function fetchElementsByIDS(token, elements, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
 
@@ -45,6 +45,22 @@ export function fetchElements(token, elements, initial=false) {
             .then(parseJSON)
             .then(response => {
                 dispatch(receiveElements(response.result, response.aggregations, response.comparison, initial));
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    dispatch(logoutAndRedirect(error));
+                }
+            });
+    };
+}
+
+export function fetchElements(token, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchElementsRequest(initial));
+        data_fetch_api_resource(token, "elements")
+            .then(parseJSON)
+            .then(response => {
+                dispatch(receiveElements(response.result, response.aggregations, null, initial));
             })
             .catch(error => {
                 if (error.status === 401) {

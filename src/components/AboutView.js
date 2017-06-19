@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/about';
@@ -11,7 +12,7 @@ import { Notification } from './Notification';
 
 import { PRDetail } from './PRDetail';
 
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
@@ -103,8 +104,8 @@ export default class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-    fetchVersion: React.PropTypes.func,
-    loaded: React.PropTypes.bool,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    fetchVersion: PropTypes.func,
+    loaded: PropTypes.bool,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -833,5 +834,5 @@ export class ProposalDefinition extends Component {
 }
 
 ProposalDefinition.propTypes = {
-    open: React.PropTypes.bool,
+    open: PropTypes.bool,
 };

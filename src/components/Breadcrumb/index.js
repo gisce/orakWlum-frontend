@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { dispatchNewRoute} from '../../utils/http_functions';
@@ -9,8 +10,8 @@ function mapStateToProps(state) {
 }
 
 export default class Breadcrumb extends React.Component {
-    dispatchRoute(route) {
-        dispatchNewRoute(route);
+    dispatchRoute(event, route) {
+        dispatchNewRoute(route, event);
         this.setState({
             open: false,
         });
@@ -46,7 +47,7 @@ export default class Breadcrumb extends React.Component {
 
                                 section = section[0].toUpperCase() + section.slice(1);
                                 return <li
-                                            onClick={() => this.dispatchRoute(sectionUrl[index])}
+                                            onClick={(event) => this.dispatchRoute(event, sectionUrl[index])}
                                             key={index}
                                             className={classActive}
                                         >
@@ -62,5 +63,5 @@ export default class Breadcrumb extends React.Component {
 }
 
 Breadcrumb.propTypes = {
-    path: React.PropTypes.string,
+    path: PropTypes.string,
 };

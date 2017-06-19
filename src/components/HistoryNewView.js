@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debug } from '../utils/debug';
@@ -57,6 +58,6 @@ export default class HistoryNewView extends React.Component {
 }
 
 HistoryNewView.propTypes = {
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

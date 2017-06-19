@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -85,10 +86,14 @@ export class ProposalList extends Component {
     render() {
         const data_received = this.props.proposals;
 
-        const width=1024;
-        const height=300;
+        const {sameWidth, width} = this.props;
 
-        const howManyBig=1;
+        const max_width=1024;
+        const max_height=300;
+
+        const desiredSize = (width == "small")? 0 : 1;
+        const howManyBig = (sameWidth)? desiredSize * 1000000 : desiredSize * 1;
+
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
         // The Proposal Aggregations List
@@ -143,7 +148,7 @@ export class ProposalList extends Component {
                         titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                         cols={index < howManyBig ? 2 : 1}
                         rows={index < howManyBig ? 2 : 1}
-                        onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
+                        onClick={(event) => dispatchNewRoute(this.state.path + (tile.id), event)}
                         style={styles.gridTile}
                     >
                     <div><br/><br/><br/><br/></div>
@@ -151,8 +156,8 @@ export class ProposalList extends Component {
                           stacked={true}
                           data={data}
                           components={components}
-                          width={ index < howManyBig ? width : width/2}
-                          height={ index < howManyBig ? height : height/2.3}
+                          width={ index < howManyBig ? max_width : max_width/2 }
+                          height={ index < howManyBig ? max_height : max_height/2.3 }
                           isLite
                     />
 
@@ -171,7 +176,7 @@ export class ProposalList extends Component {
                         titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                         cols={index < howManyBig ? 2 : 1}
                         rows={index < howManyBig ? 2 : 1}
-                        onClick={() => dispatchNewRoute(this.state.path + (tile.id))}
+                        onClick={(event) => dispatchNewRoute(this.state.path + (tile.id), event)}
                         style={styles.gridTile}
                     >
                         <div><br/><br/><br/><br/>
@@ -219,4 +224,6 @@ export class ProposalList extends Component {
 }
 
 ProposalList.propTypes = {
+    sameWidth: PropTypes.bool,
+    width: PropTypes.string,
 };

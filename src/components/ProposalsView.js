@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/proposals';
@@ -10,7 +11,7 @@ import { ProposalList } from './ProposalList';
 import { ContentHeader } from './ContentHeader';
 
 import { Notification } from './Notification';
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 
 
@@ -62,8 +63,8 @@ export default class ProposalsView extends React.Component {
         });
     }
 
-    addProposal() {
-        dispatchNewRoute("/proposals/new");
+    addProposal(event) {
+        dispatchNewRoute("/proposals/new", event);
     }
 
     render() {
@@ -77,7 +78,7 @@ export default class ProposalsView extends React.Component {
         		<ContentHeader
         		    title="Proposals List"
         		    addButton={true}
-        		    addClickMethod={() => this.addProposal()}
+        		    addClickMethod={(event) => this.addProposal(event)}
 
         		    refreshButton={true}
         		    refreshClickMethod={() => this.refreshData()}
@@ -105,9 +106,9 @@ export default class ProposalsView extends React.Component {
 }
 
 ProposalsView.propTypes = {
-    fetchProtectedDataProposals: React.PropTypes.func,
-    fetchProtectedData: React.PropTypes.func,
-    loaded: React.PropTypes.bool,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    fetchProtectedDataProposals: PropTypes.func,
+    fetchProtectedData: PropTypes.func,
+    loaded: PropTypes.bool,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

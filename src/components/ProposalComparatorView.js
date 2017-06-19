@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -7,7 +8,7 @@ import { debug } from '../utils/debug';
 
 import { ProposalComparator } from './ProposalComparator';
 
-import { LoadingAnimation } from './LoadingAnimation';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
 
@@ -36,7 +37,7 @@ export default class ProposalComparatorView extends React.Component {
 
     fetchData() {
         const token = this.props.token;
-        this.props.fetchElements(token, [this.idA, this.idB], true);
+        this.props.fetchElementsByIDS(token, [this.idA, this.idB], true);
     }
 
     render() {
@@ -112,7 +113,7 @@ export default class ProposalComparatorView extends React.Component {
 }
 
 ProposalComparatorView.propTypes = {
-    loaded: React.PropTypes.bool,
-    data: React.PropTypes.any,
-    token: React.PropTypes.string,
+    loaded: PropTypes.bool,
+    data: PropTypes.any,
+    token: PropTypes.string,
 };

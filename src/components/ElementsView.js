@@ -2,28 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/historicals';
+
+import * as actionCreators from '../actions/elements';
+//import * as actionCreators from '../actions/proposals';
+
 import { debug } from '../utils/debug';
 
 import { dispatchNewRoute} from '../utils/http_functions';
 
-import { ProposalList } from './ProposalList';
+import { ElementsDashboard } from './ElementsDashboard';
 import { ContentHeader } from './ContentHeader';
 
 import { Notification } from './Notification';
-
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 
+
 function mapStateToProps(state) {
+/*
     return {
-        data: state.historicals,
-        allAggregations: state.historicals.allAggregations,
+        data: state.proposals,
+        allAggregations: state.proposals.allAggregations,
         token: state.auth.token,
-        loaded: state.historicals.loaded,
-        isFetching: state.historicals.isFetching,
-        message_text: state.historicals.message_text,
+        loaded: state.proposals.loaded,
+        isFetching: state.proposals.isFetching,
+        message_text: state.proposals.message_text,
     };
+*/
+
+    return {
+        data: state.elements,
+        allAggregations: state.elements.allAggregations,
+        token: state.auth.token,
+        loaded: state.elements.loaded,
+        isFetching: state.elements.isFetching,
+        message_text: state.elements.message_text,
+    };
+
 }
 
 function mapDispatchToProps(dispatch) {
@@ -31,29 +46,25 @@ function mapDispatchToProps(dispatch) {
 }
 
 const style = {
-    buttonAdd: {
-        marginRight: 20,
-    },
-    buttonPosition: {
-        textAlign: 'right',
-    }
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class HistoricalsView extends React.Component {
+export default class ElementsView extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             message_text: null,
         };
     }
+
     componentDidMount() {
         this.fetchData();
     }
 
     fetchData(initial=true) {
         const token = this.props.token;
-        this.props.fetchHistoricals(token, initial);
+        //this.props.fetchProposals(token, initial);
+        this.props.fetchElements(token, initial);
     }
 
     refreshData() {
@@ -63,11 +74,15 @@ export default class HistoricalsView extends React.Component {
         });
     }
 
-    addHistorical(event) {
-        dispatchNewRoute("/historicals/new", event);
+    addElement(event) {
+        dispatchNewRoute("/proposals/new", event);
     }
 
     render() {
+        const the_elements = this.props.data.data;
+        const the_aggregations = this.props.allAggregations;
+        const the_path = this.props.location.pathname;
+
         return (
             <div>
                 <Notification
@@ -75,10 +90,10 @@ export default class HistoricalsView extends React.Component {
                     open={this.state.message_open}
                 />
 
-        		<ContentHeader
-        		    title="Historicals List"
+                <ContentHeader
+        		    title="Dashboard"
         		    addButton={true}
-        		    addClickMethod={(event) => this.addHistorical(event)}
+        		    addClickMethod={(event) => this.addElement(event)}
 
         		    refreshButton={true}
         		    refreshClickMethod={() => this.refreshData()}
@@ -86,11 +101,12 @@ export default class HistoricalsView extends React.Component {
             {
                 this.props.loaded?
                 <div>
-                    <ProposalList
-                        title="Last historicals"
-                        proposals={this.props.data.data}
-                        aggregations={this.props.allAggregations}
-                        path={this.props.location.pathname}
+                    <ElementsDashboard
+                        title="Last proposals"
+                        path={the_path}
+
+                        elements={the_elements}
+                        aggregations={the_aggregations}
                     />
 
                 </div>
@@ -105,9 +121,8 @@ export default class HistoricalsView extends React.Component {
     }
 }
 
-HistoricalsView.propTypes = {
-    fetchProtectedDataHistoricals: PropTypes.func,
-    fetchProtectedData: PropTypes.func,
+ElementsView.propTypes = {
+    fetchProposals: PropTypes.func,
     loaded: PropTypes.bool,
     data: PropTypes.any,
     token: PropTypes.string,

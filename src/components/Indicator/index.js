@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Paper from 'material-ui/Paper';
@@ -135,18 +136,18 @@ export class Indicator extends Component {
                     <h3 style={styles.header}>{title}</h3>
 
                     {separator}
-                    <span title={valueInfo} style={styles.value}>{value_list[0]}</span> 
+                    <span title={valueInfo} style={styles.value}>{value_list[0]}</span>
                     {
                         (has_unit) &&
-                        <span 
+                        <span
                             style={styles.valueUnit}
                         >{value_list[1]}
                         </span>
                     }
 
-                    { 
+                    {
                         (hasSubvalue) &&
-                    <span 
+                    <span
                         title={subvalueInfo}
                         style={styles.subvalue}
                     >
@@ -164,19 +165,19 @@ export class Indicator extends Component {
 }
 
 Indicator.propTypes = {
-    title: React.PropTypes.string.isRequired,
-    value: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number,
+    title: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
     ]).isRequired,
-    subvalue: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.number,
+    subvalue: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
     ]),
-    valueInfo: React.PropTypes.string,
-    subvalueInfo: React.PropTypes.string,
-    percentage: React.PropTypes.bool,
-    total: React.PropTypes.number,
-    small: React.PropTypes.bool,
-    color: React.PropTypes.string,
+    valueInfo: PropTypes.string,
+    subvalueInfo: PropTypes.string,
+    percentage: PropTypes.bool,
+    total: PropTypes.number,
+    small: PropTypes.bool,
+    color: PropTypes.string,
 };

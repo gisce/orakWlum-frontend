@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var OfflinePlugin = require('offline-plugin');
+
 module.exports = {
     devtool: 'source-map',
 
@@ -31,6 +33,15 @@ module.exports = {
             compress: {
                 warnings: false,
             },
+        }),
+        new OfflinePlugin({
+            updateStrategy: 'changed',
+            autoUpdate: 1000 * 60 * 60 * 1, //1h
+            ServiceWorker:{
+                entry: 'sw.js',
+                events: true,
+                navigateFallbackURL: '/',
+            }
         }),
     ],
 };

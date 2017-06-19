@@ -1,6 +1,7 @@
 /* eslint camelcase: 0, no-underscore-dangle: 0 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TextField from 'material-ui/TextField';
@@ -183,7 +184,7 @@ export default class LoginView extends React.Component {
 }
 
 LoginView.propTypes = {
-    loginUser: React.PropTypes.func,
-    statusText: React.PropTypes.string,
-    statusType: React.PropTypes.string,
+    loginUser: PropTypes.func,
+    statusText: PropTypes.string,
+    statusType: PropTypes.string,
 };

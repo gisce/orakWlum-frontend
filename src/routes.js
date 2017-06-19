@@ -11,6 +11,7 @@ import RegisterView from './components/RegisterView';
 import ProtectedView from './components/ProtectedView';
 import Analytics from './components/Analytics';
 import NotFound from './components/NotFound';
+import Elements from './components/ElementsView';
 import Proposals from './components/ProposalsView';
 import Proposal from './components/ProposalView';
 import ProposalNew from './components/ProposalNewView';
@@ -22,6 +23,9 @@ import About from './components/AboutView';
 import Aggregations from './components/AggregationsView';
 import Settings from './components/SettingsView';
 import Comparator from './components/ProposalComparatorView';
+
+import Websocket from './components/Websocket';
+import Element from './components/ElementView';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -35,6 +39,7 @@ export default (
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
+        <Route path="elementss" component={requireAuthentication(Elements)} />
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
@@ -46,6 +51,10 @@ export default (
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
+
+        <Route path="elements" component={Websocket} />
+        <Route path="elements/:elementID" component={Element} />
+
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );
