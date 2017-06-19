@@ -131,10 +131,15 @@ export class ProposalList extends Component {
 
         // Last Proposals (the first bug, the other ones 2 per row)
         const lastProposals =proposals.map((tile, index) => {
-                const predictionAdapted=adaptProposalData(tile.prediction['result']);
-                const current = predictionAdapted[aggregationSelected];
-                const {result, components} = current;
                 const {selected} = tile;
+
+                let result, components;
+                if ('prediction' in tile && tile.prediction != null && 'result' in tile.prediction) {
+                    const predictionAdapted = adaptProposalData(tile.prediction['result']);
+                    const current = predictionAdapted[aggregationSelected];
+                    result = current.result;
+                    components = current.components;
+                }
 
                 const pastday_str = days[new Date(tile.days_range[0]).getDay()];
                 const pastday = new Date(tile.days_range[0]).toLocaleDateString();
