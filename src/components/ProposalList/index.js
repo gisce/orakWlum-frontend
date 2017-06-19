@@ -106,6 +106,8 @@ export class ProposalList extends Component {
         const aggregations = this.props.aggregations;
         const aggregationSelected = this.state.aggregationSelected;
 
+        const onclick = (this.props.onClick) ? this.props.onClick : false;
+
         const proposalAggregations = (
             aggregations &&
                 <div
@@ -148,7 +150,7 @@ export class ProposalList extends Component {
                         titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                         cols={index < howManyBig ? 2 : 1}
                         rows={index < howManyBig ? 2 : 1}
-                        onClick={(event) => dispatchNewRoute(this.state.path + (tile.id), event)}
+                        onClick={(event) => (onclick)? onclick(tile.id) : dispatchNewRoute(this.state.path + (tile.id), event)}
                         style={styles.gridTile}
                     >
                     <div><br/><br/><br/><br/></div>
@@ -176,7 +178,7 @@ export class ProposalList extends Component {
                         titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                         cols={index < howManyBig ? 2 : 1}
                         rows={index < howManyBig ? 2 : 1}
-                        onClick={(event) => dispatchNewRoute(this.state.path + (tile.id), event)}
+                        onClick={(event) => (onclick)? onclick(tile.id) : dispatchNewRoute(this.state.path + (tile.id), event)}
                         style={styles.gridTile}
                     >
                         <div><br/><br/><br/><br/>
