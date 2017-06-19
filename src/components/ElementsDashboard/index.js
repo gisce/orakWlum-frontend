@@ -230,7 +230,7 @@ export class ElementsDashboard extends Component {
                 <div className="row" style={styles.row}>
                     <div ref="selected_date" className="col-md-12">
                         <TextField
-                          floatingLabelText={"Selected date"}
+                          floatingLabelText={"Initial date"}
                           multiLine={false}
                           fullWidth={false}
                           rowsMax={1}
@@ -243,7 +243,7 @@ export class ElementsDashboard extends Component {
                 <div className="row" style={styles.row}>
                     <div ref="selected_enddate" className="col-md-12">
                         <DatePicker
-                            floatingLabelText={"Due to date"}
+                            floatingLabelText={"Ending date"}
                             container="inline"
                             mode="landscape"
                             autoOk={true}
@@ -276,7 +276,7 @@ export class ElementsDashboard extends Component {
                 <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
                         <RaisedButton
-                            label="Select Multiple Elements"
+                            label="Select Mode"
                             onClick={(value) => this.toggleMultiElementSelection()}
                             primary={multiElementMode}
                         />
@@ -286,7 +286,7 @@ export class ElementsDashboard extends Component {
                 <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
                         <RaisedButton
-                            label="Compare selected elements"
+                            label="Compare"
                             onClick={(event) => this.compareSelectedElements()}
                             disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
                         />
