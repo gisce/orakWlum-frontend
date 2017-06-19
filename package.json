@@ -119,7 +119,8 @@
     "socket.io-client": "latest",
     "redux-persist": "latest",
     "react-notification-system": "latest",
-    "localforage": "latest"
+    "localforage": "latest",
+    "deepmerge": "latest"
   },
   "dependencies": {
     "binding": "^3.0.3",
