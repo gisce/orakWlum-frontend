@@ -8,6 +8,7 @@ import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 import { ProposalList } from '../ProposalList';
 
@@ -178,6 +179,33 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
+        // The actions to apply
+        const the_actions = (
+            <div>
+                <div className="row" style={styles.row}>
+                    <div ref="selected_date" className="col-md-12">
+                        <TextField
+                          floatingLabelText={"Due to date"}
+                          multiLine={false}
+                          fullWidth={false}
+                          rowsMax={1}
+                          value={selected_date_string}
+                          onChange={(value) => this.updateDate(value.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="row" style={styles.row}>
+                    <div ref="selected_type" className="col-md-12">
+                        <FlatButton
+                            label="Multielement selection"
+                            onClick={(value) => this.updateDate(value.target.value)}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+
         // The elements
         let elements_matched = [];
 
@@ -237,6 +265,7 @@ export class ElementsDashboard extends Component {
                 path={"/elements"}
                 sameWidth={true}
                 width={"small"}
+                onClick={(element) => console.log(element)}
             />
         )
 
@@ -251,6 +280,11 @@ export class ElementsDashboard extends Component {
                     <div ref="the_filters" className="col-md-3">
                         <h3>Filters</h3>
                         {the_filters}
+                    </div>
+
+                    <div ref="the_calendar" className="col-md-3">
+                        <h3>Actions</h3>
+                        {the_actions}
                     </div>
 
                 </div>
