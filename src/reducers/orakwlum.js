@@ -10,15 +10,15 @@ const initialState = {
     message: "",
     elements: {},
     aggregations: {},
-    elemens_by_type: {},
-    elemens_by_date: {},
+    elements_by_type: {},
+    elements_by_date: {},
 };
 
 export default createReducer(initialState, {
     [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
         elements: deepmerge(state.elements, payload.elements),
-        elemens_by_type: deepmerge(state.elemens_by_type, payload.by_type),
-        elemens_by_date: deepmerge(state.elemens_by_date, payload.by_date),
+        elements_by_type: deepmerge(state.elements_by_type, payload.by_type),
+        elements_by_date: deepmerge(state.elements_by_date, payload.by_date),
         message: payload.message,
         isFetching: false,
         loaded: true
@@ -26,8 +26,8 @@ export default createReducer(initialState, {
     [OVERRIDE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
         elements: payload.elements,
         message: payload.message,
-        elemens_by_type: payload.by_type,
-        elemens_by_date: payload.by_date,
+        elements_by_type: payload.by_type,
+        elements_by_date: payload.by_date,
         isFetching: false,
         loaded: true
     }),
