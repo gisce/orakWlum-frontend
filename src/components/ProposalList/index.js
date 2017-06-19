@@ -9,6 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import * as actionCreators from '../../actions/proposals';
+import { CheckedTag } from '../CheckedTag';
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 
@@ -84,9 +85,7 @@ export class ProposalList extends Component {
     };
 
     render() {
-        const data_received = this.props.proposals;
-
-        const {sameWidth, width} = this.props;
+        const {proposals, sameWidth, width, aggregations} = this.props;
 
         const max_width=1024;
         const max_height=300;
@@ -103,7 +102,6 @@ export class ProposalList extends Component {
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
 
         const changeProposalAggregation=this.changeProposalAggregation;
-        const aggregations = this.props.aggregations;
         const aggregationSelected = this.state.aggregationSelected;
 
         const onclick = (this.props.onClick) ? this.props.onClick : false;
@@ -132,15 +130,23 @@ export class ProposalList extends Component {
         )
 
         // Last Proposals (the first bug, the other ones 2 per row)
-        const lastProposals =data_received.map((tile, index) => {
+        const lastProposals =proposals.map((tile, index) => {
                 const predictionAdapted=adaptProposalData(tile.prediction['result']);
                 const current = predictionAdapted[aggregationSelected];
                 const {result, components} = current;
                 const {selected} = tile;
 
-                const title = tile.name + selected
-                const subtitle = <span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>
-                const proposalTag = <div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>
+                const pastday_str = days[new Date(tile.days_range[0]).getDay()];
+                const pastday = new Date(tile.days_range[0]).toLocaleDateString();
+
+                const title = tile.name
+                const subtitle = <span>{pastday_str} {pastday}</span>
+                const proposalTag = (
+                    <div style={styles.wrapper}>
+                        {(selected)? <CheckedTag/> : null}
+                        <ProposalTag tag={tile.status} lite={true} />
+                    </div>
+                )
 
                 const the_graph = (tile.prediction && Object.keys(tile.prediction).length >0 ) ?
                     (
@@ -216,4 +222,5 @@ export class ProposalList extends Component {
 ProposalList.propTypes = {
     sameWidth: PropTypes.bool,
     width: PropTypes.string,
+    onClick: PropTypes.func,
 };
