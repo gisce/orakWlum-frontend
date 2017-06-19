@@ -73,6 +73,7 @@ export class ElementsDashboard extends Component {
             selected_date: this.todayDate,
             selected_type: this.filter_types[0].text,
             searchText: this.filter_types[0].text,
+            selectedElements: {},
         };
     }
 
