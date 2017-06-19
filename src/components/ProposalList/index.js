@@ -133,12 +133,38 @@ export class ProposalList extends Component {
 
         // Last Proposals (the first bug, the other ones 2 per row)
         const lastProposals =data_received.map((tile, index) => {
-            if (tile.prediction && Object.keys(tile.prediction).length >0 ) {
                 const predictionAdapted=adaptProposalData(tile.prediction['result']);
                 const current = predictionAdapted[aggregationSelected];
                 const data = current.result;
                 const components = current.components;
 
+
+                const the_graph = (tile.prediction && Object.keys(tile.prediction).length >0 ) ?
+                    (
+                        <ProposalGraph
+                              stacked={true}
+                              data={data}
+                              components={components}
+                              width={ index < howManyBig ? max_width : max_width/2 }
+                              height={ index < howManyBig ? max_height : max_height/2.3 }
+                              isLite
+                        />
+                    )
+                :
+                    (
+                         <p style={styles.proposalMessage}>
+                             {
+                             (tile.status.lite == "RUN")?
+                                 <span><b>Prediction is runnig!</b><br/>Refresh it passed a few seconds...</span>
+                             :
+                                 (tile.status.lite == "ERROR")?
+                                     <span>Prediction have errors</span>
+                                     :
+                                     <span>Prediction not ready</span>
+                             }
+                         </p>
+                    )
+
                 return (
                     <GridTile
                         key={tile.id}
@@ -153,53 +179,12 @@ export class ProposalList extends Component {
                         onClick={(event) => (onclick)? onclick(tile.id) : dispatchNewRoute(this.state.path + (tile.id), event)}
                         style={styles.gridTile}
                     >
-                    <div><br/><br/><br/><br/></div>
-                    <ProposalGraph
-                          stacked={true}
-                          data={data}
-                          components={components}
-                          width={ index < howManyBig ? max_width : max_width/2 }
-                          height={ index < howManyBig ? max_height : max_height/2.3 }
-                          isLite
-                    />
+                        <div><br/><br/><br/><br/></div>
+
+                        {the_graph}
 
                     </GridTile>
                 );
-            }
-            else {
-                return (
-                    <GridTile
-                        key={tile.id}
-                        title={"#" + (index+1) + " " + tile.name}
-                        subtitle={<span>{days[new Date(tile.days_range[0]).getDay()]} {new Date(tile.days_range[0]).toLocaleDateString()}</span>}
-                        actionIcon={<div style={styles.wrapper}><ProposalTag tag={tile.status} lite={true} /></div>}
-                        actionPosition="right"
-                        titlePosition="top"
-                        titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                        cols={index < howManyBig ? 2 : 1}
-                        rows={index < howManyBig ? 2 : 1}
-                        onClick={(event) => (onclick)? onclick(tile.id) : dispatchNewRoute(this.state.path + (tile.id), event)}
-                        style={styles.gridTile}
-                    >
-                        <div><br/><br/><br/><br/>
-
-                        <p style={styles.proposalMessage}>
-                        {
-                        (tile.status.lite == "RUN")?
-                            <span><b>Prediction is runnig!</b><br/>Refresh it passed a few seconds...</span>
-                        :
-                            (tile.status.lite == "ERROR")?
-                                <span>Prediction have errors</span>
-                                :
-                                <span>Prediction not ready</span>
-                        }
-                        </p>
-                        </div>
-                    </GridTile>
-                );
-
-            }
-
         });
 
         const ProposalList = () => (
