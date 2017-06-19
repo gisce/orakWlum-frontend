@@ -136,6 +136,7 @@ export class ElementsDashboard extends Component {
     }
 
     unselectElement = (element) => {
+        console.log("unselecting", element)
         let currentElements = this.state.selectedElements;
         delete currentElements[element];
 
@@ -307,10 +308,13 @@ export class ElementsDashboard extends Component {
         // Selected Elements list
         let selectedElementsList = [];
         for ( let [key, value] of Object.entries(selectedElements)) {
-            console.log(selectedElementsList)
             selectedElementsList.push(
-                <div>
+                <div key={key}>
                     {value}
+                    <span onClick={(event) => this.unselectElement(key)} >
+                        __x
+                    </span>
+
                 </div>
             );
         }
@@ -352,6 +356,7 @@ export class ElementsDashboard extends Component {
                         {the_elements}
                     </div>
                     <div ref="the_selected_elements" className="col-md-4">
+                        <h3>Selected Elements</h3>
                         {selectedElementsList}
                     </div>
                 </div>
