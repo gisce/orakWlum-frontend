@@ -41,7 +41,10 @@ class AppProvider extends React.Component {
   }
 
   componentWillMount(){
-    persistStore(store, {storage: localforage}, () => {
+    persistStore(store, {
+        storage: localforage,
+        blacklist: ['routing']
+    }, () => {
       console.debug("Rehydration complete")
       this.setState({ rehydrated: true })
     })
