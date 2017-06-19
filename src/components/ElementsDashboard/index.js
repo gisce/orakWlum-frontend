@@ -46,6 +46,10 @@ export class ElementsDashboard extends Component {
         super(props);
 
         this.todayDate = new Date();
+        this.todayDate.setHours(0);
+        this.todayDate.setMinutes(0);
+        this.todayDate.setSeconds(0);
+
         this.oneYearAgoDate = new Date(new Date().setFullYear(this.todayDate.getFullYear() - 1));
 
         const DateTimeFormat = global.Intl.DateTimeFormat;
@@ -115,18 +119,17 @@ export class ElementsDashboard extends Component {
         this.selectDay(null, desired_date);
     };
 
+    //Date formatter
     formatDate = (date) => {
         return date_to_string(date).replace(/\//g, " / ");
     }
 
-    //Manual enddate update
+    //Enddate update with lite validation
     updateEndDate = (event, date) => {
-
         (date >= this.state.selected_date) &&
-        
-        this.setState({
-          selected_enddate: date,
-        });
+            this.setState({
+              selected_enddate: date,
+            });
     };
 
     //Change the type
@@ -137,12 +140,14 @@ export class ElementsDashboard extends Component {
         });
     };
 
+    //Toggle multiElementMode flag
     toggleMultiElementSelection = () => {
         this.setState({
             multiElementMode: !this.state.multiElementMode,
         });
     }
 
+    //Toggle selection of element
     toggleSelectElement = (element, title) => {
         (element in this.state.selectedElements) ?
             this.unselectElement(element)
@@ -150,6 +155,7 @@ export class ElementsDashboard extends Component {
             this.selectElement(element, title)
     }
 
+    //Select and element
     selectElement = (element, title) => {
         let currentElements = this.state.selectedElements;
         currentElements[element] = title;
@@ -160,6 +166,7 @@ export class ElementsDashboard extends Component {
 
     }
 
+    //unSelect and element
     unselectElement = (element) => {
         console.log("unselecting", element)
         let currentElements = this.state.selectedElements;
@@ -277,7 +284,8 @@ export class ElementsDashboard extends Component {
         // The elements
         let elements_matched = [];
 
-        const date_scope = date_to_string(selected_date, "%Y-%m-%d");
+        //const date_scope = date_to_string(selected_date, "%Y-%m-%d");
+        //const dateend_scope = date_to_string(selected_enddate, "%Y-%m-%d");
         const type_scope = (selected_type == "All")? null : (selected_type == "Historical")? true : false;
 
         elements.map( function (element, index){
@@ -285,30 +293,40 @@ export class ElementsDashboard extends Component {
 
             //Review days_range
             const date_match = element.days_range.map (function (a_day, index_day) {
-                if (date_scope == a_day)
+                const element_date = new Date(a_day);
+                let extended_enddate = new Date( selected_enddate)
+                extended_enddate.setHours( selected_enddate.getHours() + 12);
+
+                if (selected_date <= element_date && element_date <= extended_enddate ) {
                     return true;
+                }
             });
 
             //Review days_range_future if so far not matched
             if (date_match.indexOf(true) != -1) {
                 matched = true;
             }
-            else {
-                // try it (historicals don't have days_range_future)
-                try {
-                    //Review days_range_future
-                    const future_date_match = element.days_range_future.map (function (a_day, index_day) {
-                        if (date_scope == a_day)
-                            return true;
-                    });
 
-                    if (future_date_match.indexOf(true) != -1) {
-                        matched = true;
+
+            // try it (historicals don't have days_range_future)
+            try {
+                //Review days_range_future
+                const future_date_match = element.days_range_future.map (function (a_day, index_day) {
+                    const element_date = new Date(a_day);
+
+                    let extended_enddate = new Date( selected_enddate)
+                    extended_enddate.setHours( selected_enddate.getHours() + 12);
+
+                    if (selected_date <= element_date && element_date <= extended_enddate ){
+                        return true;
                     }
+                });
+
+                if (future_date_match.indexOf(true) != -1) {
+                    matched = true;
                 }
-                catch (err) {
-                    matched = false;
-                }
+            }
+            catch (err) {
             }
 
             //Match type (just if date match and type is not "All" (null))
