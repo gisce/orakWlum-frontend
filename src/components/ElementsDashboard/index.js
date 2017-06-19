@@ -7,6 +7,7 @@ import Calendar from 'material-ui/DatePicker/Calendar';
 import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 import {List, ListItem} from 'material-ui/List';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import DatePicker from 'material-ui/DatePicker';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
@@ -75,10 +76,11 @@ export class ElementsDashboard extends Component {
 
         this.state = {
             selected_date: this.todayDate,
+            selected_enddate: Object.assign(this.todayDate),
             selected_type: this.filter_types[0].text,
             searchText: this.filter_types[0].text,
             selectedElements: {},
-            multiElementMode: false,
+            multiElementMode: false, //select
         };
     }
 
@@ -111,6 +113,20 @@ export class ElementsDashboard extends Component {
         const desired_date = new Date(parsed_date[1] + " " + parsed_date[0] + " " + parsed_date[2]);
 
         this.selectDay(null, desired_date);
+    };
+
+    formatDate = (date) => {
+        return date_to_string(date).replace(/\//g, " / ");
+    }
+
+    //Manual enddate update
+    updateEndDate = (event, date) => {
+
+        (date >= this.state.selected_date) &&
+        
+        this.setState({
+          selected_enddate: date,
+        });
     };
 
     //Change the type
@@ -156,8 +172,9 @@ export class ElementsDashboard extends Component {
 
     render = () => {
         const {elements, aggregations} = this.props;
-        const {selected_date, selected_type, searchText, selectedElements, multiElementMode} = this.state;
+        const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
+        const selected_enddate_string = date_to_string(selected_enddate).replace(/\//g, " / ");
 
         // The calendar selector
         const the_calendar = (
@@ -203,6 +220,20 @@ export class ElementsDashboard extends Component {
                 </div>
 
                 <div className="row" style={styles.row}>
+                    <div ref="selected_enddate" className="col-md-12">
+                        <DatePicker
+                            floatingLabelText={"Due to date"}
+                            container="inline"
+                            mode="landscape"
+                            autoOk={true}
+                            value={selected_enddate}
+                            onChange={this.updateEndDate}
+                            formatDate={this.formatDate}
+                        />
+                    </div>
+                </div>
+
+                <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
                         <AutoComplete
                           floatingLabelText={"Type"}
@@ -222,14 +253,11 @@ export class ElementsDashboard extends Component {
         const the_actions = (
             <div>
                 <div className="row" style={styles.row}>
-                    <div ref="selected_date" className="col-md-12">
-                        <TextField
-                          floatingLabelText={"Due to date"}
-                          multiLine={false}
-                          fullWidth={false}
-                          rowsMax={1}
-                          value={selected_date_string}
-                          onChange={(value) => this.updateDate(value.target.value)}
+                    <div ref="selected_type" className="col-md-12">
+                        <RaisedButton
+                            label="Select Multiple Elements"
+                            onClick={(value) => this.toggleMultiElementSelection()}
+                            primary={multiElementMode}
                         />
                     </div>
                 </div>
@@ -237,9 +265,9 @@ export class ElementsDashboard extends Component {
                 <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
                         <RaisedButton
-                            label="Select Multiple Elements"
+                            label="Compare selected elements"
                             onClick={(value) => this.toggleMultiElementSelection()}
-                            primary={multiElementMode}
+                            disabled={!multiElementMode}
                         />
                     </div>
                 </div>
@@ -302,16 +330,28 @@ export class ElementsDashboard extends Component {
 
         });
 
+
+        // Matched elements rendered in a <ProposalList> (with overrided onClick if needed)
         const the_elements = (
-            <ProposalList
-                title="Matched elements"
-                proposals={elements_matched}
-                aggregations={aggregations}
-                path={"/elements"}
-                sameWidth={true}
-                width={"small"}
-                onClick={(element, title) => this.toggleSelectElement(element, title)}
-            />
+            (multiElementMode)?
+                <ProposalList
+                    title="Matched elements"
+                    proposals={elements_matched}
+                    aggregations={aggregations}
+                    path={"/elements"}
+                    sameWidth={true}
+                    width={"small"}
+                    onClick={(element, title) => this.toggleSelectElement(element, title)}
+                />
+                :
+                <ProposalList
+                    title="Matched elements"
+                    proposals={elements_matched}
+                    aggregations={aggregations}
+                    path={"/elements"}
+                    sameWidth={true}
+                    width={"small"}
+                />
         )
 
 
@@ -344,9 +384,7 @@ export class ElementsDashboard extends Component {
 
                     <div ref="the_calendar" className="col-md-3">
                         <h3>Actions</h3>
-                        <List>
                             {the_actions}
-                        </List>
                     </div>
 
                 </div>
@@ -370,7 +408,9 @@ export class ElementsDashboard extends Component {
 
                     <div ref="the_selected_elements" className="col-md-3">
                         <h3>Selected Elements</h3>
-                        {selectedElementsList}
+                        <List>
+                            {selectedElementsList}
+                        </List>
                     </div>
                 </div>
             }
