@@ -1,32 +1,16 @@
 /* eslint camelcase: 0 */
 
 import { API_PREFIX } from '../constants/index'
-import axios from 'axios'
+import axios  from 'axios'
+
 import { browserHistory } from 'react-router';
 
-//websocket
-const io = require('socket.io-client');
-//export const socket = io.connect('http://api.abe.okw.gisce.net', { reconnection: true, transports: ['websocket', 'polling'] });
-//export const socket = io.connect('http://api.abe.okw.gisce.net:8000', { reconnection: true, transports: ['websocket', 'polling'] });
-export const socket = io.connect(':8000', {
-    reconnection: true,
-    transports: ['websocket', 'polling'],
-    query: 'token=' + "rolf28282828",
-});
 
 const tokenConfig = (token) => ({
     headers: {
         'Authorization': token, // eslint-disable-line quote-props
     },
 });
-
-//Abstract method to ask to emit something to the API
-export function ask_the_api (channel, params=null) {
-    socket.emit(
-        channel,
-        params
-    );
-}
 
 export function dispatchNewRoute(route, event=false) {
 

@@ -25,8 +25,8 @@ import AboutIcon from 'material-ui/svg-icons/action/info-outline';
 import AggregationsIcon from 'material-ui/svg-icons/action/donut-large';
 
 import FontIcon from 'material-ui/FontIcon';
-
 import Breadcrumb from '../Breadcrumb';
+import {Connection} from '../Connection';
 
 import { dispatchNewRoute} from '../../utils/http_functions';
 
@@ -97,6 +97,8 @@ export class Header extends Component {
     render() {
         return (
             <header>
+                <Connection />
+
                 <LeftNav
                     open={this.state.open}
                     docked={false}

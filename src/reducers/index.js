@@ -12,6 +12,7 @@ import aggregations  from './aggregations'
 import password  from './password'
 import settings  from './settings'
 import elements  from './elements'
+import orakwlum  from './orakwlum'
 import { LOGOUT_USER } from '../constants/index'
 
 const appReducer = combineReducers({
@@ -28,6 +29,7 @@ const appReducer = combineReducers({
     historicals,
     elements,
     settings,
+    orakwlum,
 });
 
 const rootReducer = (state, action) => {

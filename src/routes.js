@@ -24,6 +24,9 @@ import Aggregations from './components/AggregationsView';
 import Settings from './components/SettingsView';
 import Comparator from './components/ProposalComparatorView';
 
+import Websocket from './components/Websocket';
+import Element from './components/ElementView';
+
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
 import { requireNoAuthentication } from './components/notAuthenticatedComponent';
@@ -36,7 +39,7 @@ export default (
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
-        <Route path="elements" component={requireAuthentication(Elements)} />
+        <Route path="elementss" component={requireAuthentication(Elements)} />
         <Route path="proposals" component={requireAuthentication(Proposals)} />
         <Route path="proposals/new" component={requireAuthentication(ProposalNew)} />
         <Route path="proposals/:proposalId" component={requireAuthentication(Proposal)} />
@@ -48,6 +51,10 @@ export default (
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
+
+        <Route path="elements" component={Websocket} />
+        <Route path="elements/:elementID" component={Element} />
+
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );
