@@ -286,6 +286,16 @@ export class ElementsDashboard extends Component {
                 <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
                         <RaisedButton
+                            label="Concatenate"
+                            onClick={(event) => this.compareSelectedElements()}
+                            disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
+                        />
+                    </div>
+                </div>
+
+                <div className="row" style={styles.row}>
+                    <div ref="selected_type" className="col-md-12">
+                        <RaisedButton
                             label="Compare"
                             onClick={(event) => this.compareSelectedElements()}
                             disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
