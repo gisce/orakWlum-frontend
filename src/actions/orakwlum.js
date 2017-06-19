@@ -50,9 +50,40 @@ export function reduceElements(reducer_type, response, initial) {
     //Set the code, or 404
     const the_code = (response.code? response.code : 404);
 
+
+    let by_date = {}
+    let by_date_future = {}
+    let by_type = {}
+
     //If the return is OK
     if (the_code == 200) {
         const the_elements = JSON.parse(response.result);
+
+        for ( let [key, value] of Object.entries(the_elements)) {
+
+            // Add current ID in by_type[type] object
+            if ('element_type' in value && value.element_type) {
+                if (!(value.element_type in by_type))
+                    by_type[value.element_type] = {};
+
+                by_type[value.element_type] = {
+                    ...by_type[value.element_type],
+                    [key]: value,
+                }
+            }
+
+            // Add current ID in by_date[type] object
+            if ('days_list' in value && Object(value.days_list).length > 0) {
+                if (!(value.days_list[0] in by_date))
+                    by_date[value.days_list[0]] = {};
+
+                by_date[value.days_list[0]] = {
+                    ...by_type[value.days_list[0]],
+                    [key]: value,
+                }
+            }
+        }
+
         const the_message = response.message;
 
         return {
@@ -60,6 +91,8 @@ export function reduceElements(reducer_type, response, initial) {
             payload: {
                 elements: the_elements,
                 message: the_message,
+                by_type,
+                by_date,
             },
         };
     }
@@ -81,8 +114,6 @@ export function overrideMessage(response, initial) {
 
     //Set the code, or 404
     const the_code = (response.code? response.code : 404);
-
-    console.log(the_code);
 
     //If the return is OK
     if (the_code == 200) {
