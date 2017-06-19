@@ -48,11 +48,15 @@ export class ElementsDashboard extends Component {
         super(props);
 
         this.todayDate = new Date();
+        this.todayDate.setDate(1);
         this.todayDate.setHours(0);
         this.todayDate.setMinutes(0);
         this.todayDate.setSeconds(0);
 
         this.oneYearAgoDate = new Date(new Date().setFullYear(this.todayDate.getFullYear() - 1));
+
+        this.endingDate = new Date(new Date(this.todayDate).setMonth(this.todayDate.getMonth()+1));
+        this.endingDate.setDate(-1 + 1);
 
         const DateTimeFormat = global.Intl.DateTimeFormat;
 
@@ -82,7 +86,7 @@ export class ElementsDashboard extends Component {
 
         this.state = {
             selected_date: this.todayDate,
-            selected_enddate: Object.assign(this.todayDate),
+            selected_enddate: this.endingDate,
             selected_type: this.filter_types[0].text,
             searchText: this.filter_types[0].text,
             selectedElements: {},
