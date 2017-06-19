@@ -35,6 +35,8 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
+        elements_by_date: state.orakwlum.elements_by_date,
+        elements_by_type: state.orakwlum.elements_by_type,
     };
 }
 
@@ -137,6 +139,11 @@ export class ElementsDashboard extends Component {
         return date_to_string(date).replace(/\//g, " / ");
     }
 
+    //Date formatter
+    formatDateFromAPI = (date) => {
+        return date_to_string(date, "%Y-%m-%d");
+    }
+
     //Enddate update with lite validation
     updateEndDate = (event, date) => {
         (date >= this.state.selected_date) &&
@@ -194,7 +201,6 @@ export class ElementsDashboard extends Component {
 
     //unSelect an element
     unselectElement = (element) => {
-        console.log("unselecting", element)
         let currentElements = this.state.selectedElements;
         delete currentElements[element];
 
@@ -204,7 +210,7 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
-        const {elements, aggregations} = this.props;
+        const {elements, aggregations, elements_by_date, elements_by_type} = this.props;
         const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
         const selected_enddate_string = date_to_string(selected_enddate).replace(/\//g, " / ");
@@ -320,69 +326,31 @@ export class ElementsDashboard extends Component {
         // The elements
         let elements_matched = [];
 
-        //const date_scope = date_to_string(selected_date, "%Y-%m-%d");
-        //const dateend_scope = date_to_string(selected_enddate, "%Y-%m-%d");
-        const type_scope = (selected_type == "All")? null : (selected_type == "Historical")? true : false;
+        // Initialize dates
+        let current_date = new Date(selected_date);
+        const end_date = new Date(selected_enddate);
 
-        elements.map( function (element, index){
-            let matched=false;
+        //Parse to lower selected_type (to match API ids)
+        const selected_type_id = selected_type.toLowerCase();
 
-            //Review days_range
-            const date_match = element.days_range.map (function (a_day, index_day) {
-                const element_date = new Date(a_day);
-                let extended_enddate = new Date( selected_enddate)
-                extended_enddate.setHours( selected_enddate.getHours() + 12);
+        //For each candidate day
+        while (current_date <= end_date) {
+            const current_date_str = this.formatDateFromAPI(current_date);
+            if (current_date_str in elements_by_date) {
+                const elements_for_current_date = elements_by_date[current_date_str];
 
-                if (selected_date <= element_date && element_date <= extended_enddate ) {
-                    return true;
-                }
-            });
-
-            //Review days_range_future if so far not matched
-            if (date_match.indexOf(true) != -1) {
-                matched = true;
-            }
-
-
-            // try it (historicals don't have days_range_future)
-            try {
-                //Review days_range_future
-                const future_date_match = element.days_range_future.map (function (a_day, index_day) {
-                    const element_date = new Date(a_day);
-
-                    let extended_enddate = new Date( selected_enddate)
-                    extended_enddate.setHours( selected_enddate.getHours() + 12);
-
-                    if (selected_date <= element_date && element_date <= extended_enddate ){
-                        return true;
-                    }
-                });
-
-                if (future_date_match.indexOf(true) != -1) {
-                    matched = true;
+                //Fetch all elements for current_day
+                for ( let [id, element] of Object.entries(elements_for_current_date)) {
+                    //Validate type
+                    if (selected_type_id == "all" || element.element_type == selected_type_id)
+                        elements_matched.push(element);
                 }
             }
-            catch (err) {
-            }
 
-            //Match type (just if date match and type is not "All" (null))
-            if (matched && type_scope != null) {
-                if (element.historical == type_scope)
-                    matched = true;
-                else
-                    matched = false;
-            }
-
-            element.selected = (element.id in selectedElements)?
-                true
-                :
-                false
-
-            //Save matched result
-            matched &&
-                elements_matched.push(element);
-
-        });
+            //+1 day
+            const current_date_tmp = current_date.getDate()
+            current_date.setDate(current_date_tmp + 1);
+        }
 
 
         // Matched elements rendered in a <ProposalList> (with overrided onClick if needed)
