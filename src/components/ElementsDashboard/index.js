@@ -119,8 +119,17 @@ export class ElementsDashboard extends Component {
         this.setState({
             selectedElements: {
                 ...this.state.elements,
-                element
+                element,
             },
+        });
+    }
+
+    unselectElement = (element) => {
+        let currentElements = this.state.selectedElements;
+        delete currentElements[element];
+
+        this.setState({
+            selectedElements: currentElements,
         });
     }
 
