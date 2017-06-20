@@ -180,13 +180,25 @@ export class ElementsDashboard extends Component {
     compareSelectedElements = () => {
         const {selectedElements} = this.state;
 
-        let compare_location = '/compare'
+        let location = '/compare'
         if (Object.keys(selectedElements).length == 2){
             for ( let [key, value] of Object.entries(selectedElements)) {
-                compare_location += "/" + key;
+                location += "/" + key;
             }
-            dispatchNewRoute(compare_location);
+            dispatchNewRoute(location);
         }
+    }
+
+    //Dispatch an elements concatenation
+    concatenateSelectedElements = () => {
+        const {selectedElements} = this.state;
+
+        let location = '/concatenate';
+
+        for ( let key of Object.keys(selectedElements)) {
+            location += "/" + key;
+        }
+        dispatchNewRoute(location);
     }
 
     //Select an element
@@ -315,7 +327,7 @@ export class ElementsDashboard extends Component {
                     <div ref="selected_type" className="col-md-12">
                         <RaisedButton
                             label="Concatenate"
-                            onClick={(event) => this.compareSelectedElements()}
+                            onClick={(event) => this.concatenateSelectedElements()}
                             disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
                         />
                     </div>
