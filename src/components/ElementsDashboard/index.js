@@ -49,7 +49,7 @@ export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
 
-        this.todayDate = new Date();
+        this.todayDate = new Date("2016/03/01");
         this.todayDate.setDate(1);
         this.todayDate.setHours(0);
         this.todayDate.setMinutes(0);
@@ -197,6 +197,8 @@ export class ElementsDashboard extends Component {
             selectedElements: currentElements,
         });
 
+        elements[element].selected = true;
+
     }
 
     //unSelect an element
@@ -342,8 +344,13 @@ export class ElementsDashboard extends Component {
                 //Fetch all elements for current_day
                 for ( let [id, element] of Object.entries(elements_for_current_date)) {
                     //Validate type
-                    if (selected_type_id == "all" || element.element_type == selected_type_id)
+                    if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                        element.selected = (element.id in selectedElements)?
+                            true
+                            :
+                            false;
                         elements_matched.push(element);
+                    }
                 }
             }
 
