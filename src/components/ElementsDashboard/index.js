@@ -12,6 +12,7 @@ import DatePicker from 'material-ui/DatePicker';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
 
 import { ProposalList } from '../ProposalList';
 import { ContentHeader } from '../ContentHeader';
@@ -208,6 +209,13 @@ export class ElementsDashboard extends Component {
 
         this.setState({
             selectedElements: currentElements,
+        });
+    }
+
+    //unSelect all elements
+    unselectAllElements = () => {
+        this.setState({
+            selectedElements: [],
         });
     }
 
@@ -446,7 +454,21 @@ export class ElementsDashboard extends Component {
 
                     <div ref="the_selected_elements" className="col-md-3">
                         <h3>Selected Elements</h3>
+
                         <List>
+                            {
+                                (selectedElementsList.length > 0) &&
+                                    (
+                                        <div>
+                                            <ListItem
+                                                key={"unSelectAllElementsListItem"}
+                                                primaryText={"Clear list"}
+                                                onClick={(event) => this.unselectAllElements()}
+                                            />
+                                            <Divider />
+                                        </div>
+                                    )
+                            }
                             {selectedElementsList}
                         </List>
                     </div>
