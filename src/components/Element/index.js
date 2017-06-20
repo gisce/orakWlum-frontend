@@ -274,7 +274,7 @@ export class Elementt extends Component {
         });
 
         const token = this.props.token;
-        this.props.runElement(token, proposalID);
+        this.props.runElement(proposalID);
 
         this.dummyAsync(() =>
             this.animateChart = true
