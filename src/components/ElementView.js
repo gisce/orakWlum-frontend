@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
-import { Proposal } from './Proposal';
+import { Elementt } from './Element';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
@@ -71,7 +71,7 @@ export default class ElementView extends React.Component {
             return (
                 <div>
                     <div>
-                        <Proposal
+                        <Elementt
                             proposal={element}
                             aggregations={aggregationsList}
                         />
