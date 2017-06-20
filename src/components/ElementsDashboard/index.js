@@ -36,6 +36,8 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
+        elements: state.orakwlum.elements,
+        aggregations: state.orakwlum.aggregations,
         elements_by_date: state.orakwlum.elements_by_date,
         elements_by_type: state.orakwlum.elements_by_type,
     };
@@ -493,6 +495,4 @@ export class ElementsDashboard extends Component {
 }
 
 ElementsDashboard.propTypes = {
-    elements: PropTypes.array.isRequired,
-    aggregations: PropTypes.object.isRequired,
 };
