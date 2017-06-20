@@ -5,6 +5,7 @@ import {
     OVERRIDE_MESSAGE,
     OVERRIDE_AGGREGATIONS,
     FETCH_AGGREGATIONS_REQUEST,
+    RUN_ELEMENT_REQUEST,
 } from '../constants/index'
 
 import {
@@ -180,5 +181,29 @@ export function fetchAggregations(a_filter=null, initial=false) {
     return (dispatch) => {
         dispatch(fetchAggregationsRequest(initial));
         ask_the_api("aggregations.get", a_filter);
+    };
+}
+
+
+
+/**************
+The Updaters !
+**************/
+
+export function runElementRequest() {
+    const message = "(re)Processing proposal";
+
+    return {
+        type: RUN_ELEMENT_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function runElement(a_filter=null) {
+    return (dispatch) => {
+        dispatch(runElementRequest());
+        ask_the_api("elements.run", a_filter);
     };
 }
