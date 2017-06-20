@@ -124,9 +124,6 @@ export default class Websocket extends React.Component {
                             <ElementsDashboard
                                 title="Last proposals"
                                 path={the_path}
-
-                                elements={the_elements}
-                                aggregations={aggregations}
                             />
                         </div>
 
