@@ -32,7 +32,7 @@ export default class ElementView extends React.Component {
         if (!(elementID in elements))
             this.fetchAggregations(true);
 
-        if (Objects.keys(aggregations) == 0)
+        if (Object.keys(aggregations) == 0)
             this.fetchAggregations(true);
 	}
 
@@ -57,7 +57,7 @@ export default class ElementView extends React.Component {
     render() {
         const elementID = this.props.params.elementID;
         const {aggregations, elements} = this.props;
-        
+
         const element = elements[elementID];
 
         // Render Element if data is reached
@@ -76,7 +76,7 @@ export default class ElementView extends React.Component {
                             aggregations={aggregationsList}
                         />
                     </div>
-        
+
                     {debug(element)}
                 </div>
             );
