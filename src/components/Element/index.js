@@ -13,7 +13,7 @@ import {orange300, orange900, green300, green900, red300, red900} from 'material
 
 import Toggle from 'material-ui/Toggle';
 
-import * as actionCreators from '../../actions/proposal';
+import * as actionCreators from '../../actions/orakwlum';
 
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
@@ -33,7 +33,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
-import ProposalIcon from 'material-ui/svg-icons/image/switch-camera';
+import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 
 import {adaptProposalData} from '../../utils/graph';
 
@@ -150,7 +150,7 @@ export class Elementt extends Component {
         });
     };
 
-    toogleProposalRender = (event, status) => {
+    toogleElementRender = (event, status) => {
         this.setState({
             proposalTable: status,
             message_open: false,
@@ -158,7 +158,7 @@ export class Elementt extends Component {
         this.animateChart = false;
     };
 
-    changeProposalAggregation = (event, agg) => {
+    changeElementAggregation = (event, agg) => {
         //initialize selection of all elements
         this.state.aggregations.map( function(agg, i) {
             agg.selected = false;
@@ -186,7 +186,7 @@ export class Elementt extends Component {
       this.setState({confirmation_open: false});
     };
 
-    refreshProposalQuestion = (event, proposalID) => {
+    refreshElementQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
@@ -202,12 +202,12 @@ export class Elementt extends Component {
             label="Submit"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={() => this.refreshProposal(proposalID)}
+            onTouchTap={() => this.refreshElement(proposalID)}
           />,
         ];
 
         this.confirmation.title = "Refresh current proposal";
-        this.confirmation.text = <div><p>The Proposal will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p><p>Are you sure about to <b>refresh this Proposal</b>?</p></div>;
+        this.confirmation.text = <div><p>The Element will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p><p>Are you sure about to <b>refresh this Element</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
@@ -217,14 +217,14 @@ export class Elementt extends Component {
 
     };
 
-    refreshProposal = (proposalID) => {
+    refreshElement = (proposalID) => {
         this.setState({
             confirmation_open: false,
         });
         this.animateChart = false;
 
         const token = this.props.token;
-        this.props.fetchProposal(token, proposalID);
+        this.props.fetchElements(proposalID);
 
         this.setState({
             message_open: true,
@@ -236,7 +236,7 @@ export class Elementt extends Component {
 
 
 
-    reRunProposalQuestion = (event, proposalID) => {
+    reRunElementQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
@@ -250,12 +250,12 @@ export class Elementt extends Component {
             label="Submit"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={() => this.reRunProposal(proposalID)}
+            onTouchTap={() => this.reRunElement(proposalID)}
           />,
         ];
 
-        this.confirmation.title = "Reprocess current Proposal";
-        this.confirmation.text = <div><p>The Proposal will be reprocessed using the last data on DB. It can take a few seconds...</p><p>Are you sure about to <b>reprocess this Proposal</b>?</p></div>;
+        this.confirmation.title = "Reprocess current Element";
+        this.confirmation.text = <div><p>The Element will be reprocessed using the last data on DB. It can take a few seconds...</p><p>Are you sure about to <b>reprocess this Element</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.setState({
@@ -266,7 +266,7 @@ export class Elementt extends Component {
         this.animateChart = false;
     };
 
-    reRunProposal = (proposalID) => {
+    reRunElement = (proposalID) => {
         this.animateChart = false;
         this.setState({
             message_open: true,
@@ -274,7 +274,7 @@ export class Elementt extends Component {
         });
 
         const token = this.props.token;
-        this.props.runProposal(token, proposalID);
+        this.props.runElement(token, proposalID);
 
         this.dummyAsync(() =>
             this.animateChart = true
@@ -298,7 +298,7 @@ export class Elementt extends Component {
 
 
 
-    duplicateProposalQuestion = (event, proposalID) => {
+    duplicateElementQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
@@ -312,12 +312,12 @@ export class Elementt extends Component {
             label="Submit"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={() => this.duplicateProposal(proposalID)}
+            onTouchTap={() => this.duplicateElement(proposalID)}
           />,
         ];
 
-        this.confirmation.title = "Duplicate current Proposal";
-        this.confirmation.text = <div><p>The Proposal will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Proposal once it's cloned.</p><p>Are you sure about to <b>duplicate this Proposal</b>?</p></div>;
+        this.confirmation.title = "Duplicate current Element";
+        this.confirmation.text = <div><p>The Element will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Element once it's cloned.</p><p>Are you sure about to <b>duplicate this Element</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.animateChart = false;
@@ -327,17 +327,17 @@ export class Elementt extends Component {
         });
     };
 
-    duplicateProposal = (proposalID) => {
+    duplicateElement = (proposalID) => {
         this.animateChart = false;
         this.setState({
             message_open: true,
             confirmation_open: false,
         });
         const token = this.props.token;
-        this.props.duplicateProposal(token, proposalID);
+        this.props.duplicateElement(token, proposalID);
     };
 
-    deleteProposalQuestion = (event, proposalID) => {
+    deleteElementQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
@@ -351,12 +351,12 @@ export class Elementt extends Component {
             label="Submit"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={() => this.deleteProposal(proposalID)}
+            onTouchTap={() => this.deleteElement(proposalID)}
           />,
         ];
 
-        this.confirmation.title = "Delete current Proposal";
-        this.confirmation.text = <div><p>The Proposal will be deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Proposal</b>?</p></div>;
+        this.confirmation.title = "Delete current Element";
+        this.confirmation.text = <div><p>The Element will be deleted. This process can't be undone...</p><p>Are you sure about to <b>delete this Element</b>?</p></div>;
         this.confirmation.actionsButtons = actionsButtons;
 
         this.animateChart = false;
@@ -366,17 +366,17 @@ export class Elementt extends Component {
         });
     };
 
-    deleteProposal = (proposalID) => {
+    deleteElement = (proposalID) => {
         this.animateChart = false;
         this.setState({
             message_open: true,
             confirmation_open: false,
         });
         const token = this.props.token;
-        this.props.deleteProposal(token, proposalID);
+        this.props.deleteElement(token, proposalID);
     };
 
-    exportProposal = (event, proposalID) => {
+    exportElement = (event, proposalID) => {
         event.preventDefault();
 
         this.setState({
@@ -386,7 +386,7 @@ export class Elementt extends Component {
         });
 
         const token = this.props.token;
-        this.props.exportProposal(token, proposalID);
+        this.props.exportElement(token, proposalID);
     };
 
 
@@ -414,7 +414,7 @@ export class Elementt extends Component {
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
 
-        /// Process Proposal dates
+        /// Process Element dates
 
 
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
@@ -434,14 +434,14 @@ export class Elementt extends Component {
 
         const daysRange_toShow = daysRangeFuture;
 
-        const dayOfProposal = new Date(proposal.days_range[0]).getDay();
-        const dayOfProposalFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
+        const dayOfElement = new Date(proposal.days_range[0]).getDay();
+        const dayOfElementFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
 
         const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
 
         const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
-        const subtitle = <span>Using {days[dayOfProposal]} {day_string}</span>;
+        const subtitle = <span>Using {days[dayOfElement]} {day_string}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
@@ -449,14 +449,14 @@ export class Elementt extends Component {
         const prediction = proposal.prediction;
 
         const aggregationSelected = this.state.aggregationSelected;
-        const changeProposalAggregation=this.changeProposalAggregation;
+        const changeElementAggregation=this.changeElementAggregation;
         const aggregations = this.state.aggregations;
 
-        const refreshProposal = this.refreshProposalQuestion;
-        const reRunProposal = this.reRunProposalQuestion;
-        const duplicateProposal = this.duplicateProposalQuestion;
-        const deleteProposal = this.deleteProposalQuestion;
-        const exportProposal = this.exportProposal;
+        const refreshElement = this.refreshElementQuestion;
+        const reRunElement = this.reRunElementQuestion;
+        const duplicateElement = this.duplicateElementQuestion;
+        const deleteElement = this.deleteElementQuestion;
+        const exportElement = this.exportElement;
 
         const toggleDetail = this.toggleDetail;
 
@@ -496,7 +496,7 @@ export class Elementt extends Component {
         }
 
 
-        // The Proposal status!
+        // The Element status!
         const proposalStatus = (
             proposal.status &&
             <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
@@ -505,7 +505,7 @@ export class Elementt extends Component {
         )
 
 
-        // The Proposal Aggregations List
+        // The Element Aggregations List
         const aggregationsStyle = (withPicture)?styles.aggregations:styles.aggregationsRight;
         const proposalAggregations = (
             aggregations &&
@@ -516,7 +516,7 @@ export class Elementt extends Component {
                 {
                     aggregations.map( function(agg, i) {
                         return (
-                            <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
+                            <div key={"aggregationDivTag_"+i} onClick={(e) => changeElementAggregation(e, agg)}>
                                  <ProposalTag
                                      key={"aggregationTag_"+i}
                                      tag={agg.lite}
@@ -531,7 +531,7 @@ export class Elementt extends Component {
         )
 
 
-        // The Proposal graph toogle! //to switch between table and chart
+        // The Element graph toogle! //to switch between table and chart
         const proposalPictureToggle = (
             (withPicture) && (!this.comparation) &&
             <div
@@ -549,7 +549,7 @@ export class Elementt extends Component {
                   </div>
                   <div id="toogleElement" className="col-xs-3">
                       <Toggle
-                          onToggle={this.toogleProposalRender}
+                          onToggle={this.toogleElementRender}
                           style={styles.toggle}
                           toggled={proposalTable}
                       />
@@ -569,7 +569,7 @@ export class Elementt extends Component {
                   </div>
                   <div id="toogleElement" className="col-xs-3">
                       <Toggle
-                          onToggle={this.toogleProposalRender}
+                          onToggle={this.toogleElementRender}
                           style={styles.toggle}
                           toggled={proposalTable}
                       />
@@ -583,7 +583,7 @@ export class Elementt extends Component {
             )
 
 
-        // The Proposal graph!
+        // The Element graph!
         const proposalPicture =
             (withPicture)?
                 (prediction && Object.keys(prediction).length > 0) &&
@@ -599,17 +599,17 @@ export class Elementt extends Component {
         const proposalActions =
              (!readOnly && !this.comparation)?
               <CardActions>
-                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshProposal(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunProposal(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"}/>
-                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportProposal(e, proposal.id)} title={"Export Proposal to a XLS file"}/>
+                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
-                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateProposal(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
-                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteProposal(e, proposal.id)} title={"Delete current proposal"}/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
+                <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
             {
                 (proposal.related_id)?
-                <FlatButton label="Historical" icon={<ProposalIcon/>} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
+                <FlatButton label="Historical" icon={<ElementIcon/>} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
                 :
                 <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
             }
@@ -636,8 +636,8 @@ export class Elementt extends Component {
         ;
 
 
-        // The resulting Proposal element
-        const Proposal = () => (
+        // The resulting Element element
+        const Element = () => (
             <Card>
               <CardTitle title={title} subtitle={subtitle} />
 
@@ -657,7 +657,7 @@ export class Elementt extends Component {
 
               <CardText>
           {       proposal.creation_date &&
-                  <p><span>Proposal was created on {creationDate} {ownerText}</span></p>
+                  <p><span>Element was created on {creationDate} {ownerText}</span></p>
           }
           {       proposal.execution_date &&
                   <p><span>Last execution was done at {lastExecution}</span></p>
@@ -694,7 +694,7 @@ export class Elementt extends Component {
                     open={this.state.message_open}
                 />
 
-                <Proposal/>
+                <Element/>
             </div>
         );
     }
