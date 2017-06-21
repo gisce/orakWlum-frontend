@@ -26,6 +26,7 @@ import Comparator from './components/ProposalComparatorView';
 
 import Websocket from './components/Websocket';
 import Element from './components/ElementView';
+import Concatenator from './components/ElementsConcatenation';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -46,7 +47,6 @@ export default (
         <Route path="historicals" component={requireAuthentication(Historicals)} />
         <Route path="historicals/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="historicals/:historicalId" component={requireAuthentication(Historical)} />
-        <Route path="compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
@@ -54,6 +54,9 @@ export default (
 
         <Route path="elements" component={Websocket} />
         <Route path="elements/:elementID" component={Element} />
+
+        <Route path="compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+        <Route path="concatenate/:elementsList" component={Concatenator} />
 
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
