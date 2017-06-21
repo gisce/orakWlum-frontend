@@ -21,10 +21,9 @@ const tokenConfig = (token) => ({
 });
 
 //Abstract method to ask to emit something to the API
-export function ask_the_api (channel, params=null) {
+export function ask_the_api (...args) {
     socket.emit(
-        channel,
-        params
+        ...args,
     );
 }
 
