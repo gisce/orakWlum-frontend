@@ -128,7 +128,7 @@ export class Connection extends Component {
                 }
 			})
 
-			.on('elements.extend.volatile', (content) => {
+			.on('elements.extend.virtual', (content) => {
 				console.debug('[Websocket] Volatile Elements to extend received');
 				this.props.extendElementsVolatile(content, initial);
 
