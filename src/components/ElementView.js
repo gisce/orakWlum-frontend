@@ -30,7 +30,7 @@ export default class ElementView extends React.Component {
 
         //Review if the element has been downloaded
         if (!(elementID in elements))
-            this.fetchAggregations(true);
+            this.fetchElements(elementID, true);
 
         if (Object.keys(aggregations) == 0)
             this.fetchAggregations(true);
