@@ -169,6 +169,13 @@ export function overrideAggregations(response, initial) {
  The Fetchers!
 **************/
 
+export function fetchConcatenate(ids_list, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchElementsRequest(initial));
+        ask_the_api("elements.concatenate", ids_list);
+    };
+}
+
 export function fetchComparation(ids_list, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
