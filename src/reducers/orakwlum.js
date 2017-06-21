@@ -15,7 +15,7 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
-    [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
+    [RECEIVE_ELEMENTS_VOLATILE]: (state, payload) => Object.assign({}, state, {
         elements_volatile: deepmerge(state.elements_volatile, payload.elements),
         elements_by_type: deepmerge(state.elements_by_type, payload.by_type),
         elements_by_date: deepmerge(state.elements_by_date, payload.by_date),
@@ -23,7 +23,7 @@ export default createReducer(initialState, {
         isFetching: false,
         loaded: true
     }),
-    [RECEIVE_ELEMENTS_VOLATILE]: (state, payload) => Object.assign({}, state, {
+    [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
         elements: deepmerge(state.elements, payload.elements),
         elements_by_type: deepmerge(state.elements_by_type, payload.by_type),
         elements_by_date: deepmerge(state.elements_by_date, payload.by_date),
