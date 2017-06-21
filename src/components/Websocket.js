@@ -40,7 +40,7 @@ export default class Websocket extends React.Component {
             this.fetchAggregations(true);
 
         if (Object.keys(elements) == 0)
-            this.fetchElements(true);
+            this.overrideElements(true);
 
     }
 
@@ -52,6 +52,12 @@ export default class Websocket extends React.Component {
     fetchElements(silent) {
         const the_filter = null;
         this.props.fetchElements(the_filter, silent);
+    }
+
+    overrideElements(silent) {
+        const the_filter = null;
+        const override = true;
+        this.props.fetchElements(the_filter, silent, override);
     }
 
     massiveCleanUp(){
@@ -89,7 +95,7 @@ export default class Websocket extends React.Component {
             }
 
                 <button
-                    onClick={() => this.fetchElements()}
+                    onClick={() => this.overrideElements()}
                 >
                     reFetch elements
                 </button>
