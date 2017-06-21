@@ -6,6 +6,7 @@ import {
     OVERRIDE_AGGREGATIONS,
     FETCH_AGGREGATIONS_REQUEST,
     RUN_ELEMENT_REQUEST,
+    RECEIVE_ELEMENTS_VOLATILE,
 } from '../constants/index'
 
 import {
@@ -110,6 +111,11 @@ export function extendElements (response, initial) {
     return reduceElements(RECEIVE_ELEMENTS, response, initial);
 }
 
+//Extend (merge) fetched VOLATILE elements
+export function extendElementsVolatile (response, initial) {
+    return reduceElements(RECEIVE_ELEMENTS_VOLATILE, response, initial);
+}
+
 export function overrideMessage(response, initial) {
     const message = (initial)?null:"Message updated";
 
@@ -162,6 +168,13 @@ export function overrideAggregations(response, initial) {
 /**************
  The Fetchers!
 **************/
+
+export function fetchComparation(ids_list, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchElementsRequest(initial));
+        ask_the_api("elements.compare", ids_list);
+    };
+}
 
 export function fetchElements(a_filter=null, initial=false) {
     return (dispatch) => {
