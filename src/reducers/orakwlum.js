@@ -8,9 +8,10 @@ const initialState = {
     isFetching: false,
     loaded: false,
     message: "",
-    elements: {},
     aggregations: {},
-    elements_by_type: {},
+    elements: {},
+    elements_volatile: {},
+    elements_by_date: {},
     elements_by_date: {},
 };
 
