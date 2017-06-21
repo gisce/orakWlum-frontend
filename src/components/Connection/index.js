@@ -128,6 +128,15 @@ export class Connection extends Component {
                 }
 			})
 
+			.on('elements.extend.volatile', (content) => {
+				console.debug('[Websocket] Volatile Elements to extend received');
+				this.props.extendElementsVolatile(content, initial);
+
+                if (!content.silent) {
+                    this.prepareNotification(content, "Elements updated");;
+                }
+			})
+
 			.on('aggregations', (content) => {
 				console.debug('[Websocket] Aggregations received');
 				this.props.overrideAggregations(content, initial);
