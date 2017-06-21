@@ -183,10 +183,11 @@ export function fetchComparation(ids_list, initial=false) {
     };
 }
 
-export function fetchElements(a_filter=null, initial=false) {
+export function fetchElements(a_filter=null, initial=false, override=false) {
+    const response = (override)? "elements.override" : "elements.extend";
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
-        ask_the_api("elements.get", a_filter);
+        ask_the_api("elements.get", a_filter, initial, response);
     };
 }
 
