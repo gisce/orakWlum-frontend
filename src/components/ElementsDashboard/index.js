@@ -119,6 +119,9 @@ export class ElementsDashboard extends Component {
         this.setState({
           selected_date: the_date,
         });
+
+        //Force a elements refiltering
+        this.filterElements()
     };
 
     //Select today date
@@ -137,6 +140,9 @@ export class ElementsDashboard extends Component {
         const desired_date = new Date(parsed_date[1] + " " + parsed_date[0] + " " + parsed_date[2]);
 
         this.selectDay(null, desired_date);
+
+        //Force a elements refiltering
+        this.filterElements()
     };
 
     //Date formatter
@@ -155,6 +161,9 @@ export class ElementsDashboard extends Component {
             this.setState({
               selected_enddate: date,
             });
+
+        //Force a elements refiltering
+        this.filterElements()
     };
 
     //Change the type
@@ -163,6 +172,9 @@ export class ElementsDashboard extends Component {
             selected_type: value,
             searchText: value,
         });
+
+        //Force a elements refiltering
+        this.filterElements()
     };
 
     //Toggle multiElementMode flag
@@ -237,9 +249,50 @@ export class ElementsDashboard extends Component {
         });
     }
 
+    filterElements = () => {
+        // The elements
+        let elements_matched = [];
+
+        // Initialize dates
+        let current_date = new Date(selected_date);
+        const end_date = new Date(selected_enddate);
+
+        //Parse to lower selected_type (to match API ids)
+        const selected_type_id = selected_type.toLowerCase();
+
+        //For each candidate day
+        while (current_date <= end_date) {
+            const current_date_str = this.formatDateFromAPI(current_date);
+            if (current_date_str in elements_by_date) {
+                const elements_for_current_date = elements_by_date[current_date_str];
+
+                //Fetch all elements for current_day
+                for ( let [id, element] of Object.entries(elements_for_current_date)) {
+                    //Validate type
+                    if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                        element.selected = (element.id in selectedElements)?
+                            true
+                            :
+                            false;
+                        elements_matched.push(element);
+                    }
+                }
+            }
+
+            //+1 day
+            const current_date_tmp = current_date.getDate()
+            current_date.setDate(current_date_tmp + 1);
+
+            //Save matched elements
+            this.setState({
+                elements_matched,
+            })
+        }
+    }
+
     render = () => {
         const {elements, aggregations, elements_by_date, elements_by_type} = this.props;
-        const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode} = this.state;
+        const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
         const selected_enddate_string = date_to_string(selected_enddate).replace(/\//g, " / ");
 
@@ -351,39 +404,7 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
-        // The elements
-        let elements_matched = [];
 
-        // Initialize dates
-        let current_date = new Date(selected_date);
-        const end_date = new Date(selected_enddate);
-
-        //Parse to lower selected_type (to match API ids)
-        const selected_type_id = selected_type.toLowerCase();
-
-        //For each candidate day
-        while (current_date <= end_date) {
-            const current_date_str = this.formatDateFromAPI(current_date);
-            if (current_date_str in elements_by_date) {
-                const elements_for_current_date = elements_by_date[current_date_str];
-
-                //Fetch all elements for current_day
-                for ( let [id, element] of Object.entries(elements_for_current_date)) {
-                    //Validate type
-                    if (selected_type_id == "all" || element.element_type == selected_type_id) {
-                        element.selected = (element.id in selectedElements)?
-                            true
-                            :
-                            false;
-                        elements_matched.push(element);
-                    }
-                }
-            }
-
-            //+1 day
-            const current_date_tmp = current_date.getDate()
-            current_date.setDate(current_date_tmp + 1);
-        }
 
 
         // Matched elements rendered in a <ProposalList> (with overrided onClick if needed)
