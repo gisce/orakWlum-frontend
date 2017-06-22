@@ -96,9 +96,15 @@ export class ElementsDashboard extends Component {
             searchText: this.filter_types[0].text,
             selectedElements: {},
             multiElementMode: false, //select
+            elements_matched: [],
         };
+
     }
 
+    componentWillMount() {
+        //Filter elements
+        this.filterElements()
+    }
 
     refreshData(silent = true) {
         const the_filter = null;
@@ -250,6 +256,9 @@ export class ElementsDashboard extends Component {
     }
 
     filterElements = () => {
+        const {elements, elements_by_date, elements_by_type} = this.props;
+
+        const {selected_date, selected_enddate, selected_type, selectedElements} = this.state;
         // The elements
         let elements_matched = [];
 
@@ -291,7 +300,7 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
-        const {elements, aggregations, elements_by_date, elements_by_type} = this.props;
+        const {aggregations} = this.props;
         const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
         const selected_enddate_string = date_to_string(selected_enddate).replace(/\//g, " / ");
