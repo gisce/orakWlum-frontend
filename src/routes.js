@@ -54,9 +54,9 @@ export default (
 
         <Route path="elements" component={Websocket} />
         <Route path="elements/:elementID" component={Element} />
+        <Route path="elements/concatenate/:elementsList" component={Concatenator} />
 
         <Route path="compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
-        <Route path="concatenate/:elementsList" component={Concatenator} />
 
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
