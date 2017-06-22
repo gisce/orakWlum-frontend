@@ -99,6 +99,9 @@ export class ElementsDashboard extends Component {
             elements_matched: [],
         };
 
+        this.selected_date = this.todayDate
+        this.selected_enddate = this.endingDate
+        this.selected_type = this.filter_types[0].text
     }
 
     componentWillMount() {
@@ -126,6 +129,7 @@ export class ElementsDashboard extends Component {
           selected_date: the_date,
         });
 
+        this.selected_date = the_date
         //Force a elements refiltering
         this.filterElements()
     };
@@ -163,13 +167,15 @@ export class ElementsDashboard extends Component {
 
     //Enddate update with lite validation
     updateEndDate = (event, date) => {
-        (date >= this.state.selected_date) &&
+        if (date >= this.selected_date){
+            this.selected_enddate = date;
+
             this.setState({
               selected_enddate: date,
             });
 
-        //Force a elements refiltering
-        this.filterElements()
+            this.filterElements()
+        }
     };
 
     //Change the type
@@ -178,6 +184,8 @@ export class ElementsDashboard extends Component {
             selected_type: value,
             searchText: value,
         });
+
+        this.selected_type = value
 
         //Force a elements refiltering
         this.filterElements()
@@ -257,8 +265,12 @@ export class ElementsDashboard extends Component {
 
     filterElements = () => {
         const {elements, elements_by_date, elements_by_type} = this.props;
+        const {selected_date, selected_enddate, selected_type} = this;
+        const {selectedElements} = this.state;
 
-        const {selected_date, selected_enddate, selected_type, selectedElements} = this.state;
+
+        console.debug("filterElements", selected_date, selected_enddate, selected_type)
+
         // The elements
         let elements_matched = [];
 
