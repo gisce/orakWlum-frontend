@@ -238,9 +238,14 @@ export class ElementsDashboard extends Component {
         let currentElements = this.state.selectedElements;
         currentElements[element] = title;
 
+        let elements_matched = this.state.elements_matched;
+        elements_matched[element].selected = true
+
         this.setState({
             selectedElements: currentElements,
         });
+
+
 
         //currentElements[element].selected = true;
 
@@ -249,6 +254,9 @@ export class ElementsDashboard extends Component {
     //unSelect an element
     unselectElement = (element) => {
         let currentElements = this.state.selectedElements;
+        let elements_matched = this.state.elements_matched;
+        elements_matched[element].selected = false
+
         delete currentElements[element];
 
         this.setState({
@@ -291,10 +299,11 @@ export class ElementsDashboard extends Component {
                 for ( let [id, element] of Object.entries(elements_for_current_date)) {
                     //Validate type
                     if (selected_type_id == "all" || element.element_type == selected_type_id) {
-                        element.selected = (element.id in selectedElements)?
+/*                         element.selected = (element.id in selectedElements)?
                             true
                             :
                             false;
+ */
                         elements_matched.push(element);
                     }
                 }
