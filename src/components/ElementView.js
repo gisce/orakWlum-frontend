@@ -61,7 +61,7 @@ export default class ElementView extends React.Component {
         const element = elements[elementID];
 
         // Render Element if data is reached
-        if (element != undefined && element.id == elementID && aggregations != undefined) {
+        if (element != undefined && element.id == elementID && aggregations != undefined && Object.keys(aggregations) != 0) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
                 if (agg in aggregations)

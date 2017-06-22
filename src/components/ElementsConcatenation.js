@@ -66,7 +66,7 @@ export default class ElementsConcatenationView extends React.Component {
         const element = elements[this.elementID];
 
         // Render Element if data is reached
-        if (element != undefined && element.id == this.elementID && aggregations != undefined) {
+        if (element != undefined && element.id == this.elementID && aggregations != undefined && Object.keys(aggregations) != 0) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
                 if (agg in aggregations)
