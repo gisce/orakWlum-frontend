@@ -11,7 +11,7 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
-        elements: state.orakwlum.elements,
+        elements: state.orakwlum.elements_volatile,
         aggregations: state.orakwlum.aggregations,
     };
 }
@@ -21,20 +21,20 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ElementView extends React.Component {
+export default class ElementsConcatenationView extends React.Component {
     constructor(props) {
         super(props);
 
         //Save the comma-separated string as ID
-        const elementID = this.props.params.elementsList;
+        this.elementID = this.props.params.elementsList;
 
         //Prepare the list of IDs
-        const elementsList = elementID.split(",")
+        const elementsList = this.elementID.split(",")
 
         const {aggregations, elements} = this.props;
 
         //Review if the element has been downloaded
-        if (!(elementID in elements))
+        if (!(this.elementID in elements))
             this.fetchConcatenate(elementsList, true);
 
         //Review if all aggregations has been downloaded
@@ -55,19 +55,18 @@ export default class ElementView extends React.Component {
 
     //Fetch all needed data
     fetchData() {
-        const element_id = this.props.params.elementID;
+        const element_id = this.props.params.elementsList;
         this.fetchAggregations(false);
         this.fetchElements(element_id, false);
     }
 
     render() {
-        const elementID = this.props.params.elementID;
         const {aggregations, elements} = this.props;
 
-        const element = elements[elementID];
+        const element = elements[this.elementID];
 
         // Render Element if data is reached
-        if (element != undefined && element.id == elementID && aggregations != undefined) {
+        if (element != undefined && element.id == this.elementID && aggregations != undefined) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
                 if (agg in aggregations)
@@ -98,7 +97,7 @@ export default class ElementView extends React.Component {
     }
 }
 
-ElementView.propTypes = {
+ElementsConcatenationView.propTypes = {
     elements: PropTypes.object,
     aggregations: PropTypes.array,
 };
