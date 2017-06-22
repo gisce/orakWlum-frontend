@@ -312,12 +312,12 @@ export class ElementsDashboard extends Component {
             //+1 day
             const current_date_tmp = current_date.getDate()
             current_date.setDate(current_date_tmp + 1);
-
-            //Save matched elements
-            this.setState({
-                elements_matched,
-            })
         }
+
+        //Save matched elements
+        this.setState({
+            elements_matched,
+        })
     }
 
     render = () => {
