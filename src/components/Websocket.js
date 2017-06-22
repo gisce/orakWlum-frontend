@@ -60,21 +60,6 @@ export default class Websocket extends React.Component {
         this.props.fetchElements(the_filter, silent, override);
     }
 
-    massiveCleanUp(){
-        console.debug("massive cleaning all elements")
-        ask_the_api('all_users.elements.cleanup', "users")
-    }
-
-    massiveFetchAllElements(){
-        console.debug("massive fetch all elements")
-        ask_the_api('all_users.elements.update', "users");
-    }
-
-    fetchOneElement(){
-        console.debug("updating some elements")
-        ask_the_api('element.get');
-    }
-
     render() {
         const {message, elements, aggregations, loaded} = this.props;
 
