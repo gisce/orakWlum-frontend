@@ -89,36 +89,6 @@ export default class Websocket extends React.Component {
         return (
             <div>
 
-            {
-                {loaded} &&
-                    <p>{message}</p>
-            }
-
-                <button
-                    onClick={() => this.overrideElements()}
-                >
-                    reFetch elements
-                </button>
-
-                <button
-                    onClick={() => this.fetchOneElement()}
-                >
-                    Fetch NEW rand element
-                </button>
-
-                <button
-                    onClick={() => this.massiveFetchAllElements()}
-                >
-                    Update ALL with rand
-                </button>
-
-                <button
-                    onClick={() => this.massiveCleanUp()}
-                >
-                    Clear ALL instances
-                </button>
-
-
                 {
                     (
                         ( aggregations != null && Object.keys(aggregations).length > 0) &&
