@@ -1,7 +1,7 @@
 /* eslint new-cap: 0 */
 
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 
 /* containers */
 import { App } from './containers/App';
@@ -52,12 +52,14 @@ export default (
         <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
 
-        <Route path="elements" component={Websocket} />
-        <Route path="elements/:elementID" component={Element} />
-        <Route path="elements/concatenate/:elementsList" component={Concatenator} />
+        <Route name="Elements" path="elements" component={Websocket} />
+        <Redirect from="elements/concatenate" to="Elements" />
 
-        <Route path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+        <Route name="Element" path="elements/:elementID" component={Element} />
+        <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={Concatenator} />
+        <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
 
-        <Route path="*" component={DetermineAuth(NotFound)} />
+        <Route path="*" component={NotFound} />
+
     </Route>
 );
