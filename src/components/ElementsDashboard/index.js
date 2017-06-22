@@ -102,8 +102,10 @@ export class ElementsDashboard extends Component {
 
     refreshData(silent = true) {
         const the_filter = null;
-        this.props.fetchElements(the_filter, silent);
+        const override = false;
+
         this.props.fetchAggregations(the_filter, silent);
+        this.props.refreshElements(the_filter, silent, override);
     }
 
     //Save the date state and force the <Calendar> update
