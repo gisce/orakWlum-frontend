@@ -56,7 +56,7 @@ export default (
         <Route path="elements/:elementID" component={Element} />
         <Route path="elements/concatenate/:elementsList" component={Concatenator} />
 
-        <Route path="compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+        <Route path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
 
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
