@@ -34,8 +34,8 @@ export default class ElementsConcatenationView extends React.Component {
         const {aggregations, elements} = this.props;
 
         //Review if the element has been downloaded
-        if (!(this.elementID in elements))
-            this.fetchConcatenate(elementsList, true);
+        //if (!(this.elementID in elements)) -> ask it ever!
+        this.fetchConcatenate(elementsList, true);
 
         //Review if all aggregations has been downloaded
         if (Object.keys(aggregations) == 0)
