@@ -389,7 +389,6 @@ export class ElementsDashboard extends Component {
                     title="Matched elements"
                     proposals={elements_matched}
                     aggregations={aggregations}
-                    path={"/elements"}
                     sameWidth={true}
                     width={"small"}
                     onClick={(element, title) => this.toggleSelectElement(element, title)}
@@ -399,7 +398,6 @@ export class ElementsDashboard extends Component {
                     title="Matched elements"
                     proposals={elements_matched}
                     aggregations={aggregations}
-                    path={"/elements"}
                     sameWidth={true}
                     width={"small"}
                 />
