@@ -196,9 +196,11 @@ export class ElementsDashboard extends Component {
         const {selectedElements} = this.state;
 
         let location = '/concatenate';
+        let separator = "/"
 
         for ( let key of Object.keys(selectedElements)) {
-            location += "," + key;
+            location += separator + key;
+            separator = ","
         }
         dispatchNewRoute(location);
     }
@@ -212,7 +214,7 @@ export class ElementsDashboard extends Component {
             selectedElements: currentElements,
         });
 
-        elements[element].selected = true;
+        //currentElements[element].selected = true;
 
     }
 
