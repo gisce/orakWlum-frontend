@@ -145,6 +145,13 @@ export class Connection extends Component {
 			.on('message', (content) => {
 				console.debug('[Websocket] Message received');
 				this.props.overrideMessage(content, initial);
+
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
+
+                    this.prepareNotification(content);;
+                }
 			})
 
             .on('connect', () => {
