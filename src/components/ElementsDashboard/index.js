@@ -198,7 +198,7 @@ export class ElementsDashboard extends Component {
         let location = '/concatenate';
 
         for ( let key of Object.keys(selectedElements)) {
-            location += "/" + key;
+            location += "," + key;
         }
         dispatchNewRoute(location);
     }
