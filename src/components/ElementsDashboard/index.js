@@ -266,8 +266,16 @@ export class ElementsDashboard extends Component {
 
     //unSelect all elements
     unselectAllElements = () => {
+        let elements_matched = this.state.elements_matched;
+
+        // Unselect all matched elements
+        for ( let [key, value] of Object.entries(elements_matched)) {
+            value.selected = false;
+        }
+
         this.setState({
             selectedElements: [],
+            elements_matched,
         });
     }
 
