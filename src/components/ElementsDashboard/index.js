@@ -299,11 +299,6 @@ export class ElementsDashboard extends Component {
                 for ( let [id, element] of Object.entries(elements_for_current_date)) {
                     //Validate type
                     if (selected_type_id == "all" || element.element_type == selected_type_id) {
-/*                         element.selected = (element.id in selectedElements)?
-                            true
-                            :
-                            false;
- */
                         elements_matched.push(element);
                     }
                 }
