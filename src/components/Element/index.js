@@ -415,8 +415,6 @@ export class Elementt extends Component {
 
 
         /// Process Element dates
-
-
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
         const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
 
@@ -424,13 +422,13 @@ export class Elementt extends Component {
             (proposalDaysRange.length == 1)?
                 "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions)
                 :
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[1]).toLocaleDateString(locale, dateOptions);
+                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[proposalDaysRange.length - 1]).toLocaleDateString(locale, dateOptions);
 
         const daysRangeFuture =
             (proposalDaysRangeFuture.length == 1)?
                 "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions)
                 :
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangeFuture[1]).toLocaleDateString(locale, dateOptions);
+                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangeFuture[proposalDaysRangeFuture.length - 1]).toLocaleDateString(locale, dateOptions);
 
         const daysRange_toShow = daysRangeFuture;
 
