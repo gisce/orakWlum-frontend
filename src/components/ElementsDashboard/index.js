@@ -199,11 +199,11 @@ export class ElementsDashboard extends Component {
     }
 
     //Toggle selection of element
-    toggleSelectElement = (element, title) => {
+    toggleSelectElement = (count, element, title) => {
         (element in this.state.selectedElements) ?
-            this.unselectElement(element)
+            this.unselectElement(count, element)
             :
-            this.selectElement(element, title)
+            this.selectElement(count, element, title)
     }
 
     //Dispatch two elements comparation
@@ -234,33 +234,33 @@ export class ElementsDashboard extends Component {
     }
 
     //Select an element
-    selectElement = (element, title) => {
+    selectElement = (count, element, title) => {
         let currentElements = this.state.selectedElements;
         currentElements[element] = title;
 
         let elements_matched = this.state.elements_matched;
-        elements_matched[element].selected = true
+        elements_matched[count].selected = true
 
         this.setState({
             selectedElements: currentElements,
+            elements_matched,
         });
-
-
 
         //currentElements[element].selected = true;
 
     }
 
     //unSelect an element
-    unselectElement = (element) => {
+    unselectElement = (count, element) => {
         let currentElements = this.state.selectedElements;
         let elements_matched = this.state.elements_matched;
-        elements_matched[element].selected = false
+        elements_matched[count].selected = false
 
         delete currentElements[element];
 
         this.setState({
             selectedElements: currentElements,
+            elements_matched,
         });
     }
 
@@ -441,7 +441,7 @@ export class ElementsDashboard extends Component {
                     aggregations={aggregations}
                     sameWidth={true}
                     width={"small"}
-                    onClick={(element, title) => this.toggleSelectElement(element, title)}
+                    onClick={(count, element, title) => this.toggleSelectElement(count, element, title)}
                 />
                 :
                 <ProposalList
