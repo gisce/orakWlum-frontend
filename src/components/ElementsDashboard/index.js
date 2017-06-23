@@ -482,14 +482,16 @@ export class ElementsDashboard extends Component {
 
         // Selected Elements list
         let selectedElementsList = [];
+        let count=0;
         for ( let [key, value] of Object.entries(selectedElements)) {
             selectedElementsList.push(
                 <ListItem
                     key={key}
                     primaryText={value}
-                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(key)}/>}
+                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(count, key)}/>}
                 />
             );
+            count++;
         }
 
 
