@@ -53,7 +53,10 @@ export default (
         <Route path="about"   component={requireAuthentication(About)} />
 
         <Route name="Elements" path="elements" component={Websocket} />
+        <Route name="Elements" path="elements/type/historical" component={Websocket} />
+        <Route name="Elements" path="elements/type/proposal" component={Websocket} />
         <Redirect from="elements/concatenate" to="Elements" />
+        <Redirect from="elements/type/all" to="Elements" />
 
         <Route name="Element" path="elements/:elementID" component={Element} />
         <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={Concatenator} />
