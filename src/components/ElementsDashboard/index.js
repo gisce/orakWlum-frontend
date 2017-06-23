@@ -87,6 +87,8 @@ export class ElementsDashboard extends Component {
               {text: 'All', value: 'all'},
               {text: 'Proposal', value: 'proposal'},
               {text: 'Historical', value: 'historical'},
+              {text: 'Concatenation', value: 'concatenation'},
+              {text: 'Comparation', value: 'comparation'},
         ];
 
         this.selected_date = this.todayDate
