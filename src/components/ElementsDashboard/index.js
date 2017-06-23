@@ -89,19 +89,35 @@ export class ElementsDashboard extends Component {
               {text: 'Historical', value: 'historical'},
         ];
 
+        this.selected_date = this.todayDate
+        this.selected_enddate = this.endingDate
+
+        switch(this.props.path) {
+            case "/elements/type/proposal":
+                this.selected_type = "proposal"
+                this.selected_type_search = "Proposal"
+                break;;
+
+            case "/elements/type/historical":
+                this.selected_type = "historical"
+                this.selected_type_search = "Historical"
+                break;;
+
+            default:
+                this.selected_type = this.filter_types[0].text
+                this.selected_type_search = this.filter_types[0].text
+        }
+
         this.state = {
             selected_date: this.todayDate,
             selected_enddate: this.endingDate,
-            selected_type: this.filter_types[0].text,
-            searchText: this.filter_types[0].text,
+            selected_type: this.selected_type,
+            searchText: this.selected_type_search,
             selectedElements: {},
             multiElementMode: false, //select
             elements_matched: [],
         };
 
-        this.selected_date = this.todayDate
-        this.selected_enddate = this.endingDate
-        this.selected_type = this.filter_types[0].text
     }
 
     componentWillMount() {
