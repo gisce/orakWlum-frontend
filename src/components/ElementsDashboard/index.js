@@ -228,7 +228,7 @@ export class ElementsDashboard extends Component {
     compareSelectedElements = () => {
         const {selectedElements} = this.state;
 
-        let location = '/compare'
+        let location = '/elements/compare'
         if (Object.keys(selectedElements).length == 2){
             for ( let [key, value] of Object.entries(selectedElements)) {
                 location += "/" + key;
@@ -241,7 +241,7 @@ export class ElementsDashboard extends Component {
     concatenateSelectedElements = () => {
         const {selectedElements} = this.state;
 
-        let location = '/concatenate';
+        let location = '/elements/concatenate';
         let separator = "/"
 
         for ( let key of Object.keys(selectedElements)) {
