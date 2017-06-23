@@ -149,7 +149,7 @@ export class Header extends Component {
                                 <Divider />
 
                                 <MenuItem
-                                    onClick={(event) => this.dispatchRoute(event,'/proposals')}
+                                    onClick={(event) => this.dispatchRoute(event,'/elements/type/proposal')}
                                     leftIcon={<ProposalIcon/>}
                                     primaryText="Proposals"
                                 />
