@@ -55,12 +55,13 @@ export default (
         <Route name="elements" path="elements" component={Websocket} />
         <Route name="elements.type:historical" path="elements/type/historical" component={Websocket} />
         <Route name="elements.type:proposal" path="elements/type/proposal" component={Websocket} />
-        <Redirect from="elements/concatenate" to="Elements" />
-        <Redirect from="elements/type/all" to="Elements" />
+        <Redirect from="elements/type/all" to="elements" />
+
+        <Redirect from="elements/concatenate" to="elements" />
 
         <Route name="Element" path="elements/:elementID" component={Element} />
         <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={Concatenator} />
-        <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+        <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={Comparator} />
 
         <Route path="*" component={NotFound} />
 
