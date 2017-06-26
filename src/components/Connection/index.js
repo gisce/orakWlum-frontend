@@ -139,7 +139,6 @@ export class Connection extends Component {
                 }
 			})
 
-
 			.on('elements.file', (content) => {
 				console.debug('[Websocket] Exported element received');
 
@@ -151,8 +150,6 @@ export class Connection extends Component {
                     this.prepareNotification(content, "XLS document exported");;
                 }
 			})
-
-
 
 			.on('aggregations', (content) => {
 				console.debug('[Websocket] Aggregations received');

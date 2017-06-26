@@ -495,7 +495,6 @@ export class ElementsDashboard extends Component {
         }
 
 
-
         // The render result
         return (
             <div>
