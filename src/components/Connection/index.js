@@ -142,11 +142,10 @@ export class Connection extends Component {
 
 			.on('elements.file', (content) => {
 				console.debug('[Websocket] Exported element received');
-				//this.props.extendElementsVolatile(content, initial);
 
-                const file_buffer = Buffer.from(content);
+                const file_buffer = Buffer.from(content.result);
                 var file = new Blob( [ file_buffer ]);
-                FileSaver.saveAs(file, "filename.xls");
+                FileSaver.saveAs(file, content.filename);
 /*
                 window.atob
                 const filename = content.result.filename;
