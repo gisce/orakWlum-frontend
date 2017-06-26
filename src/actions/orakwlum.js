@@ -7,6 +7,7 @@ import {
     FETCH_AGGREGATIONS_REQUEST,
     RUN_ELEMENT_REQUEST,
     RECEIVE_ELEMENTS_VOLATILE,
+    FETCH_EXPORT_ELEMENTS_REQUEST,
 } from '../constants/index'
 
 import {
@@ -39,6 +40,17 @@ export function fetchElementsRequest(initial) {
 
     return {
         type: FETCH_ELEMENTS_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function fetchElementsExportRequest(initial) {
+    const message = (initial)?null:"Exporting elements";
+
+    return {
+        type: FETCH_EXPORT_ELEMENTS_REQUEST,
         payload: {
             message,
         },
@@ -178,7 +190,7 @@ export function fetchConcatenate(ids_list, initial=false) {
 
 export function fetchComparation(ids_list, initial=false) {
     return (dispatch) => {
-        dispatch(fetchElementsRequest(initial));
+        dispatch(fetchElementsComparationRequest(initial));
         ask_the_api("elements.compare", ids_list);
     };
 }
@@ -215,7 +227,7 @@ export function fetchAggregations(a_filter=null, initial=false) {
 
 export function exportElement(a_filter=null, initial=false) {
     return (dispatch) => {
-        dispatch(fetchElementsRequest(initial));
+        dispatch(fetchElementsExportRequest(initial));
         ask_the_api("elements.concatenate.export", a_filter);
     };
 }
