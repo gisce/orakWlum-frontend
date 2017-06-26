@@ -10,6 +10,8 @@ import { socket, dispatchNewRoute } from '../../utils/http_functions';
 
 var NotificationSystem = require('react-notification-system');
 
+var FileSaver = require('../../../node_modules/file-saver/FileSaver.min.js');
+
 function mapStateToProps(state) {
     return {
         token: state.auth.token,
@@ -136,6 +138,56 @@ export class Connection extends Component {
                     this.prepareNotification(content, "Elements updated");;
                 }
 			})
+
+
+			.on('elements.file', (content) => {
+				console.debug('[Websocket] Exported element received');
+				//this.props.extendElementsVolatile(content, initial);
+
+                const file_buffer = Buffer.from(content);
+                var file = new Blob( [ file_buffer ]);
+                FileSaver.saveAs(file, "filename.xls");
+/*
+                window.atob
+                const filename = content.result.filename;
+
+                const file_buffer = Buffer.from(content.result.result);
+
+                console.log("buffer", file_buffer);
+
+                const file_decoded = window.atob(file_buffer);
+                console.log("decoded", file_decoded);
+
+                var file = new Blob( [ file_decoded ]);
+                console.log("file",file);
+
+                FileSaver.saveAs(file, filename); */
+
+/*
+                const file_buffer = Buffer.from(content.result.result);
+                var file = new Blob( [ file_buffer ], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"});
+
+
+
+                console.log(file_buffer.length)
+
+                  var result = "";
+                  for (var i = 0; i < file_buffer.length; i++) {
+                    result += String.fromCharCode(parseInt(file_buffer[i], 2));
+                  }
+
+                  console.log("result", result);
+
+
+                FileSaver.saveAs(file, filename);
+*/
+
+                if (!content.silent) {
+                    this.prepareNotification(content, "Elements updated");;
+                }
+			})
+
+
 
 			.on('aggregations', (content) => {
 				console.debug('[Websocket] Aggregations received');
