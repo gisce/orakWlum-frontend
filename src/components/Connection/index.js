@@ -144,45 +144,11 @@ export class Connection extends Component {
 				console.debug('[Websocket] Exported element received');
 
                 const file_buffer = Buffer.from(content.result);
-                var file = new Blob( [ file_buffer ]);
+                const file = new Blob( [ file_buffer ]);
                 FileSaver.saveAs(file, content.filename);
-/*
-                window.atob
-                const filename = content.result.filename;
-
-                const file_buffer = Buffer.from(content.result.result);
-
-                console.log("buffer", file_buffer);
-
-                const file_decoded = window.atob(file_buffer);
-                console.log("decoded", file_decoded);
-
-                var file = new Blob( [ file_decoded ]);
-                console.log("file",file);
-
-                FileSaver.saveAs(file, filename); */
-
-/*
-                const file_buffer = Buffer.from(content.result.result);
-                var file = new Blob( [ file_buffer ], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"});
-
-
-
-                console.log(file_buffer.length)
-
-                  var result = "";
-                  for (var i = 0; i < file_buffer.length; i++) {
-                    result += String.fromCharCode(parseInt(file_buffer[i], 2));
-                  }
-
-                  console.log("result", result);
-
-
-                FileSaver.saveAs(file, filename);
-*/
 
                 if (!content.silent) {
-                    this.prepareNotification(content, "Elements updated");;
+                    this.prepareNotification(content, "XLS document exported");;
                 }
 			})
 
