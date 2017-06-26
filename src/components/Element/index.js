@@ -36,6 +36,7 @@ import ExportIcon from 'material-ui/svg-icons/file/file-download';
 import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 
 import {adaptProposalData} from '../../utils/graph';
+import {capitalize} from '../../utils/misc';
 
 const locale = 'es';
 const dateOptions = {
@@ -413,6 +414,9 @@ export class Elementt extends Component {
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
 
+        const element_type = (proposal.element_type)?proposal.element_type:"Unknown";
+
+
         /// Process Element dates
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
         const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
@@ -437,7 +441,7 @@ export class Elementt extends Component {
         const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
 
-        const title = <span>{proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
+        const title = <span>{capitalize(element_type)} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
         const subtitle = <span>Using {days[dayOfElement]} {day_string}</span>;
 
         const offset = (withPicture)?0:1;
