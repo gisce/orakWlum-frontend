@@ -52,7 +52,7 @@ export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
 
-        this.todayDate = new Date("2016/03/01");
+        this.todayDate = new Date("2016/04/01");
         this.todayDate.setDate(1);
         this.todayDate.setHours(0);
         this.todayDate.setMinutes(0);
