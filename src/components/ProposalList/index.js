@@ -143,12 +143,19 @@ export class ProposalList extends Component {
                 const pastday_str = days[new Date(tile.days_range[0]).getDay()];
                 const pastday = new Date(tile.days_range[0]).toLocaleDateString();
 
-                const title = capitalize(tile.element_type.slice(0,3)) + " " + tile.name
+                const title = tile.name
                 const subtitle = <span>{pastday_str} {pastday}</span>
+
+                const element_type = {
+                    color: 'pending',
+                    lite: tile.element_type.toUpperCase().slice(0,3),
+                    full: tile.element_type.toUpperCase(),
+                }
+
                 const proposalTag = (
                     <div style={styles.wrapper}>
                         {(selected)? <CheckedTag/> : null}
-                        <ProposalTag tag={tile.status} lite={true} />
+                        <ProposalTag tag={element_type} lite={true} />
                     </div>
                 )
 
