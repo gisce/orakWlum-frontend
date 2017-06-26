@@ -385,8 +385,7 @@ export class Elementt extends Component {
             confirmation_open: false,
         });
 
-        const token = this.props.token;
-        this.props.exportElement(token, proposalID);
+        this.props.exportElement(proposalID);
     };
 
 
