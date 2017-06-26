@@ -14,8 +14,8 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 
 import {adaptProposalData} from '../../utils/graph';
-
 import { dispatchNewRoute} from '../../utils/http_functions';
+import {capitalize} from '../../utils/misc';
 
 const styles = {
   root: {
@@ -143,7 +143,7 @@ export class ProposalList extends Component {
                 const pastday_str = days[new Date(tile.days_range[0]).getDay()];
                 const pastday = new Date(tile.days_range[0]).toLocaleDateString();
 
-                const title = tile.name
+                const title = capitalize(tile.element_type.slice(0,3) + " " + tile.name)
                 const subtitle = <span>{pastday_str} {pastday}</span>
                 const proposalTag = (
                     <div style={styles.wrapper}>
