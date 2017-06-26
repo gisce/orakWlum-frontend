@@ -77,7 +77,7 @@ export function redirectToRoute(route) {
     };
 }
 
-export function loginUser(email, password, redirect = "/proposals") {
+export function loginUser(email, password, redirect = "/elements") {
     return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
