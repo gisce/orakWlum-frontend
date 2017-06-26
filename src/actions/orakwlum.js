@@ -8,6 +8,7 @@ import {
     RUN_ELEMENT_REQUEST,
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
+    FETCH_COMPARATION_ELEMENTS_REQUEST,
 } from '../constants/index'
 
 import {
@@ -51,6 +52,17 @@ export function fetchElementsExportRequest(initial) {
 
     return {
         type: FETCH_EXPORT_ELEMENTS_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function fetchElementsComparationRequest(initial) {
+    const message = (initial)?null:"Comparing elements";
+
+    return {
+        type: FETCH_COMPARATION_ELEMENTS_REQUEST,
         payload: {
             message,
         },
