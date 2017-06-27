@@ -248,6 +248,8 @@ export class ElementsDashboard extends Component {
             location += separator + key;
             separator = ","
         }
+
+        this.unselectAllElements()
         dispatchNewRoute(location);
     }
 
