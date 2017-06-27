@@ -30,7 +30,7 @@ export default class ProposalComparatorView extends React.Component {
 
         this.idA = this.props.params.elementA;
         this.idB = this.props.params.elementB;
-        this.idComp = "" + this.idA + "," + this.idB;
+        this.idComp = "comparation_" + this.idA + "," + this.idB;
 
         const {elements, elements_volatile, aggregations} = this.props;
 

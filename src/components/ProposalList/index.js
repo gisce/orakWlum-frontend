@@ -84,6 +84,7 @@ export class ProposalList extends Component {
     };
 
     render() {
+        console.log("render ProposalList");
         const {proposals, sameWidth, width, aggregations} = this.props;
 
         const max_width=1024;
