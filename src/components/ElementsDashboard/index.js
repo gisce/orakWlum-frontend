@@ -233,6 +233,7 @@ export class ElementsDashboard extends Component {
             for ( let [key, value] of Object.entries(selectedElements)) {
                 location += "/" + key;
             }
+            this.unselectAllElements()
             dispatchNewRoute(location);
         }
     }
@@ -344,6 +345,7 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
+        console.log ("render ElementsDash")
         const {aggregations} = this.props;
         const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
