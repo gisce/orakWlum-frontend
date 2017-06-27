@@ -25,16 +25,38 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalComparatorView extends React.Component {
-    componentWillMount() {
+    constructor(props){
+        super(props);
+
         this.idA = this.props.params.elementA;
         this.idB = this.props.params.elementB;
         this.idComp = "" + this.idA + "," + this.idB;
 
-        this.fetchData();
+        const {elements, elements_volatile, aggregations} = this.props;
+
+        if (Object.keys(aggregations) == 0)
+            this.fetchAggregations(true);
+
+        if (!(this.idComp in elements_volatile))
+            this.fetchComparation();
+
+        if (!(this.idA in elements))
+            this.fetchElement(this.idA)
+
+        if (!(this.idB in elements))
+            this.fetchElement(this.idB)
     }
 
-    fetchData(initial=true) {
+    fetchAggregations(initial) {
+        this.props.fetchAggregations(initial);
+    }
+
+    fetchComparation(initial=true) {
         this.props.fetchComparation([this.idA, this.idB], initial);
+    }
+
+    fetchElement(element, silent=true) {
+        this.props.fetchElements(element, silent);
     }
 
     render() {
@@ -86,17 +108,15 @@ export default class ProposalComparatorView extends React.Component {
 
             return (
                 <div>
-                    {this.props.loaded &&
-                        <div>
-                            <ProposalComparator
-                                title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
-                                elementA={elementA_merged}
-                                elementB={elementB_merged}
-                                comparison={comparison_merged}
-                                mode={"unique"}
-                            />
-                        </div>
-                    }
+                    <div>
+                        <ProposalComparator
+                            title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
+                            elementA={elementA_merged}
+                            elementB={elementB_merged}
+                            comparison={comparison_merged}
+                            mode={"unique"}
+                        />
+                    </div>
                     {debug(this.props)}
                 </div>
             );
