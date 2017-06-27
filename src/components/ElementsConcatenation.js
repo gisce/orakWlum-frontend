@@ -26,7 +26,7 @@ export default class ElementsConcatenationView extends React.Component {
         super(props);
 
         //Save the comma-separated string as ID
-        this.elementID = this.props.params.elementsList;
+        this.elementID = "concatenation_" + this.props.params.elementsList;
 
         //Prepare the list of IDs
         const elementsList = this.elementID.split(",")
