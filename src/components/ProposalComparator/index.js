@@ -6,6 +6,7 @@ import { Historical } from '../Historical'
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Elementt } from '../Element';
 
 const styles = {
     container: {
@@ -93,7 +94,7 @@ export class ProposalComparator extends Component {
         )
         ;
 
-        const Comparison = (comparison.element.historical)?
+        const Comparisong = (comparison.element.historical)?
         (
             <Historical
                 proposal={comparison.element}
@@ -111,6 +112,11 @@ export class ProposalComparator extends Component {
         )
         ;
 
+        const Comparison =
+            <Elementt
+                proposal={comparison.element}
+                aggregations={comparison.aggregations}
+            />
 
         const change_mode_button  = (
             <RaisedButton
