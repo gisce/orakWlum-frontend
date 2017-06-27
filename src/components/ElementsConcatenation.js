@@ -26,7 +26,8 @@ export default class ElementsConcatenationView extends React.Component {
         super(props);
 
         //Save the comma-separated string as ID
-        this.elementID = "concatenation_" + this.props.params.elementsList;
+        this.elementID = this.props.params.elementsList;
+        this.fake_elementID = "concatenation_" + this.elementID;
 
         //Prepare the list of IDs
         const elementsList = this.elementID.split(",")
@@ -35,7 +36,7 @@ export default class ElementsConcatenationView extends React.Component {
 
         //Review if the element has been downloaded
         //if (!(this.elementID in elements)) -> ask it ever!
-        if (!(this.elementID in elements))
+        if (!(this.fake_elementID in elements))
             this.fetchConcatenate(elementsList, true);
 
         //Review if all aggregations has been downloaded
@@ -64,10 +65,10 @@ export default class ElementsConcatenationView extends React.Component {
     render() {
         const {aggregations, elements} = this.props;
 
-        const element = elements[this.elementID];
+        const element = elements[this.fake_elementID];
 
         // Render Element if data is reached
-        if (element != undefined && element.id == this.elementID && aggregations != undefined && Object.keys(aggregations) != 0) {
+        if (element != undefined && element.id == this.fake_elementID && aggregations != undefined && Object.keys(aggregations) != 0) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
                 if (agg in aggregations)
