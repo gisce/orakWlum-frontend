@@ -37,10 +37,10 @@ export default class Websocket extends React.Component {
         const {elements, aggregations} = this.props;
 
         if (Object.keys(aggregations) == 0)
-            this.fetchAggregations(true);
+            this.fetchAggregations(false);
 
         if (Object.keys(elements) == 0)
-            this.overrideElements(true);
+            this.overrideElements(false);
 
     }
 
