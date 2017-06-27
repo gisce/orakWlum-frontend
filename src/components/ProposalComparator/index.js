@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
-import { Proposal } from '../Proposal'
-import { Historical } from '../Historical'
-
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Elementt } from '../Element';
@@ -58,59 +55,19 @@ export class ProposalComparator extends Component {
 
         const {mode} = this.state;
 
-        const ElementA = (elementA.element.historical)?
-            (
-                <Historical
+        const ElementA =
+                <Elementt
                     proposal={elementA.element}
                     aggregations={elementA.aggregations}
                     comparation={true}
                 />
-            )
-            :
-            (
-                <Proposal
-                    proposal={elementA.element}
-                    aggregations={elementA.aggregations}
-                    comparation={true}
-                />
-            )
-        ;
 
-        const ElementB = (elementB.element.historical)?
-        (
-            <Historical
+        const ElementB =
+            <Elementt
                 proposal={elementB.element}
                 aggregations={elementB.aggregations}
                 comparation={true}
             />
-        )
-        :
-        (
-            <Proposal
-                proposal={elementB.element}
-                aggregations={elementB.aggregations}
-                comparation={true}
-            />
-        )
-        ;
-
-        const Comparisong = (comparison.element.historical)?
-        (
-            <Historical
-                proposal={comparison.element}
-                aggregations={comparison.aggregations}
-                comparation={false}
-            />
-        )
-        :
-        (
-            <Proposal
-                proposal={comparison.element}
-                aggregations={comparison.aggregations}
-                comparation={false}
-            />
-        )
-        ;
 
         const Comparison =
             <Elementt
