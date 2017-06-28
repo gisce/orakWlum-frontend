@@ -8,21 +8,34 @@ import { browserHistory } from 'react-router';
 const io = require('socket.io-client');
 //export const socket = io.connect('http://api.abe.okw.gisce.net', { reconnection: true, transports: ['websocket', 'polling'] });
 //export const socket = io.connect('http://api.abe.okw.gisce.net:8000', { reconnection: true, transports: ['websocket', 'polling'] });
-export const socket = io.connect(':8000', {
+/*
+export const sockett = io.connect(':8000', {
     reconnection: true,
     transports: ['websocket', 'polling'],
     query: 'token=' + "rolf28282828",
 });
-
+*/
 const tokenConfig = (token) => ({
     headers: {
         'Authorization': token, // eslint-disable-line quote-props
     },
 });
 
+
+//Create a socket integrating the token
+export function createSocket(token) {
+    console.debyg("[socket] Creating socket");
+
+    window.socket = io.connect(':8000', {
+        reconnection: true,
+        transports: ['websocket', 'polling'],
+        query: 'token=' + token,
+    });
+}
+
 //Abstract method to ask to emit something to the API
 export function ask_the_api (...args) {
-    socket.emit(
+    window.socket.emit(
         ...args,
     );
 }
