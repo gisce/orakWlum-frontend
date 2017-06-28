@@ -14,7 +14,6 @@ var FileSaver = require('../../../node_modules/file-saver/FileSaver.min.js');
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
     };
 }
 
@@ -22,33 +21,15 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
-//A notification wrapper for react-notification-system
-class Notification extends Component {
-    createNotification = (the_notification) => {
-        console.log(the_notification);
-        this.refs.internalNotificationSystem.addNotification(the_notification);
-    }
-
-    cleanNotifications = () => {
-        this.refs.internalNotificationSystem.clearNotifications();
-    }
-
-    render() {
-      return (
-        <div>
-          <NotificationSystem ref="internalNotificationSystem" />
-        </div>
-        );
-    }
-}
-
-
 //The Connection component that handles the Websocket and the related main listeners
 @connect(mapStateToProps, mapDispatchToProps)
 export class Connection extends Component {
-    prepareNotification (content) {
+    constructor(props) {
+        super(props)
+        this._notificationSystem = null;
+    }
 
+    prepareNotification (content) {
         //Initialize a new message based on the provided one
         let the_message = {
             ...{},
@@ -63,7 +44,6 @@ export class Connection extends Component {
                   dispatchNewRoute("/" + content.url, event);
                 }
             };
-
 
         //Set notification level based on the code if not provided
         if (!('level' in content)) {
@@ -89,22 +69,22 @@ export class Connection extends Component {
             }
         }
 
-
         //Create the notification!
-        this.refs.notificationSystem.createNotification(the_message);
+        this._notificationSystem.addNotification(the_message);
     }
 
     //Clean pending notifications
     cleanNotifications() {
-        this.refs.notificationSystem.cleanNotifications();
+        this._notificationSystem.clearNotifications();
+    }
+
+    componentDidMount() {
+        //Bind ref when component is mounted
+        this._notificationSystem = this.refs.internalNotificationSystem;
     }
 
 	componentWillMount() {
-
         //initialize the connection
-        const token = this.props.token;
-        //socket_connect("token29832382938298asda29");
-
 		const initial=true;
 
 		//listen events!
@@ -203,7 +183,6 @@ export class Connection extends Component {
 	}
 
     render() {
-
         //Activate Offline mode if needed
         setTimeout(() => {
             if (!window.socket.connected) {
@@ -218,10 +197,9 @@ export class Connection extends Component {
             }
         }, 1000)
 
-        return <Notification ref="notificationSystem" status={window.socket.connected}/>;
+        return <NotificationSystem ref="internalNotificationSystem" />
     }
 }
 
 Connection.propTypes = {
-    token: PropTypes.string,
 };
