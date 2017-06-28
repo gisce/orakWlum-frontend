@@ -1,5 +1,5 @@
 import { FETCH_SETTINGS_REQUEST, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, UPDATE_SETTINGS_OK, UPDATE_SETTINGS_KO, RECEIVE_SETTINGS_KO } from '../constants/index'
-import { data_fetch_api_resource, data_update_api_resource } from '../utils/http_functions'
+import { data_fetch_api_resource, data_update_api_resource, ask_the_api } from '../utils/http_functions'
 import { parseJSON } from '../utils/misc'
 import { logoutAndRedirect } from './auth'
 
@@ -56,22 +56,10 @@ export function updateSettingsRequest() {
         type: UPDATE_SETTINGS_REQUEST,
     };
 }
-export function fetchSettings(token) {
+export function fetchSettings(a_filter=null, silent=false, override=false) {
     return (dispatch) => {
         dispatch(fetchSettingsRequest());
-        data_fetch_api_resource(token, "sources/" )
-            .then(parseJSON)
-            .then(response => {
-                dispatch(receiveSettings(response.result));
-            })
-            .catch(error => {
-                if (error.response.status === 409 || error.status === 409) {
-                    dispatch(receiveSettingsError(error.response.data));
-                }
-                if (error.status === 401) {
-                    dispatch(logoutAndRedirect());
-                }
-            });
+        ask_the_api("sources.get", a_filter, silent);
     };
 }
 
