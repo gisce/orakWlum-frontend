@@ -73,15 +73,16 @@ export function requireAuthentication(Component) {
         }
 
         render() {
+            const the_connection = <Connection />
+
             return (
                 <div>
                     {this.props.isAuthenticated && this.state.loaded_if_needed
-                        ? <div><Connection /><Component {...this.props} /></div>
+                        ? <div>{the_connection}<Component {...this.props} /></div>
                         : null
                     }
                 </div>
             );
-
         }
     }
 
