@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/aggregations';
+import * as actionCreators from '../actions/orakwlum';
 
 import { SmartTable } from 'materialized-reactions/SmartTable';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
@@ -11,13 +11,9 @@ import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
-        data: state.aggregations,
-        token: state.auth.token,
-        loaded: state.aggregations.loaded,
-        isFetching: state.aggregations.isFetching,
         error: state.aggregations.error,
         errorMessage: state.aggregations.data,
-        aggregations: state.aggregations.aggregations_list,
+        aggregations: state.orakwlum.aggregations,
     };
 }
 
@@ -28,19 +24,21 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AggregationsView extends React.Component {
     componentDidMount() {
-        this.fetchData();
+        if (Object.keys(props.aggregations).length == 0)
+            this.fetchData();
     }
 
-    fetchData() {
-        const token = this.props.token;
-        this.props.fetchAggregations(token);
+    fetchData(silent = true) {
+        const the_filter = null;
+        this.props.fetchAggregations(the_filter, silent);
     }
 
     render() {
-
         let Aggregations;
+        const {aggregations} = this.props;
+        console.log(aggregations);
 
-        if (this.props.loaded && this.props.aggregations) {
+        if (aggregations && Object.keys(aggregations).length > 0) {
             const headers = [
                 {
                     title: 'Name',
