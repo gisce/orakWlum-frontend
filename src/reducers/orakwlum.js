@@ -1,4 +1,4 @@
-import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE} from '../constants';
+import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS} from '../constants';
 import {createReducer} from '../utils/misc';
 
 //deepmerge lib
@@ -29,7 +29,7 @@ export default createReducer(initialState, {
     }),
     [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
         elements: (state.elements == undefined || state.elements == null || Object.keys(state.elements).length == 0) ? payload.elements : deepmerge(state.elements, payload.elements),
-        
+
         elements_by_type: (state.elements_by_type == undefined || state.elements_by_type == null || Object.keys(state.elements_by_type).length == 0) ? payload.by_type : deepmerge(state.elements_by_type, payload.by_type),
 
         elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
@@ -61,5 +61,15 @@ export default createReducer(initialState, {
         message: payload.message
     }),
 
-    [OVERRIDE_MESSAGE]: (state, payload) => Object.assign({}, state, {message: payload.message})
+    [OVERRIDE_MESSAGE]: (state, payload) => Object.assign({}, state, {
+        message: payload.message
+    }),
+
+    [RECEIVE_SETTINGS]: (state, payload) =>
+        Object.assign({}, state, {
+            sources: payload.sources,
+            isFetching: false,
+            loaded: true,
+            error: false,
+        }),
 });
