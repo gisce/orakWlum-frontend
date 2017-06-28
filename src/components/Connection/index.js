@@ -89,6 +89,11 @@ export class Connection extends Component {
 
 		//listen events!
 		window.socket
+
+        //////////////
+        // ELEMENTS //
+        //////////////
+
 			.on('elements.override', (content) => {
 				console.debug('[Websocket] Elements to override received');
 				this.props.overrideElements(content, initial);
@@ -129,10 +134,22 @@ export class Connection extends Component {
                 }
 			})
 
+
+
+        //////////////////
+        // AGGREGATIONS //
+        //////////////////
+
 			.on('aggregations', (content) => {
 				console.debug('[Websocket] Aggregations received');
 				this.props.overrideAggregations(content, initial);
 			})
+
+
+
+        ////////////////////
+        // MESSAGE EVENTS //
+        ////////////////////
 
 			.on('message', (content) => {
 				console.debug('[Websocket] Message received');
@@ -145,6 +162,30 @@ export class Connection extends Component {
                     this.prepareNotification(content);;
                 }
 			})
+
+
+
+        //////////////
+        // SETTINGS //
+        //////////////
+
+        .on('sources.override', (content) => {
+            console.debug('[Websocket] Sources received');
+            this.props.overrideSources(content, initial);
+
+            if (!content.silent) {
+                if (content.clean_all)
+                    this.cleanNotifications();
+
+                this.prepareNotification(content);;
+            }
+        })
+
+
+
+        ////////////////////
+        // CONNECT EVENTS //
+        ////////////////////
 
             .on('connect', () => {
                 console.debug('Connected');
