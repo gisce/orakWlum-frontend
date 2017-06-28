@@ -118,14 +118,14 @@ export class ElementsDashboard extends Component {
             multiElementMode: false, //select
             elements_matched: [],
         };
-    }
-
-    componentWillMount() {
 
         const {aggregations, elements} = this.props;
         if (Object.keys(aggregations) == 0 || Object.keys(elements) == 0)
             this.refreshData()
+    }
 
+
+    componentDidMount() {
         //Filter elements
         this.filterElements()
     }
@@ -462,11 +462,9 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
-
-
-
         // Matched elements rendered in a <ProposalList> (with overrided onClick if needed)
-        const the_elements = (
+        const the_elements = (Object.keys(elements_matched).length > 0)?
+        (
             (multiElementMode)?
                 <ProposalList
                     title="Matched elements"
@@ -485,6 +483,8 @@ export class ElementsDashboard extends Component {
                     width={"small"}
                 />
         )
+        :
+        null;
 
 
         // Selected Elements list
