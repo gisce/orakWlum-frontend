@@ -12,8 +12,7 @@ import {
 } from '../constants/index'
 
 import {
-    socket,
-    ask_the_api
+    ask_the_api,
 } from '../utils/http_functions'
 
 import {
