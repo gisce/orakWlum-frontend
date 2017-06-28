@@ -9,6 +9,7 @@ import {
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
+    RECEIVE_SETTINGS,
 } from '../constants/index'
 
 import {
@@ -179,6 +180,31 @@ export function overrideAggregations(response, initial) {
             type: OVERRIDE_AGGREGATIONS,
             payload: {
                 aggregations: the_aggregations,
+                message: the_message,
+            },
+        };
+    }
+    return {};
+}
+
+
+
+//Reduce Sources
+export function overrideSources(response, initial) {
+    const message = (initial)?null:"Sources updated";
+
+    //Set the code, or 404
+    const the_code = (response.code? response.code : 404);
+
+    //If the return is OK
+    if (the_code == 200) {
+        const the_result = JSON.parse(response.result);
+        const the_message = response.message;
+
+        return {
+            type: RECEIVE_SETTINGS,
+            payload: {
+                aggregations: the_result,
                 message: the_message,
             },
         };
