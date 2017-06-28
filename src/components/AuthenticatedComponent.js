@@ -61,7 +61,11 @@ export function requireAuthentication(Component) {
                         });
                 }
             } else {
-                createSocket(token);
+                //Create socket if needed
+                if (!window.socket) {
+                    createSocket(token);
+                }
+
                 this.setState({
                     loaded_if_needed: true,
                 });
