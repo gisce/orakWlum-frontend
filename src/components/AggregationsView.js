@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AggregationsView extends React.Component {
     componentDidMount() {
-        if (Object.keys(props.aggregations).length == 0)
+        if (Object.keys(this.props.aggregations).length == 0)
             this.fetchData();
     }
 
@@ -36,7 +36,6 @@ export default class AggregationsView extends React.Component {
     render() {
         let Aggregations;
         const {aggregations} = this.props;
-        console.log(aggregations);
 
         if (aggregations && Object.keys(aggregations).length > 0) {
             const headers = [
@@ -56,7 +55,8 @@ export default class AggregationsView extends React.Component {
             ];
 
             //Adapt Aggregations List
-            const aggregations_adapted = this.props.aggregations.map(function( entry, index){
+            const aggregations_adapted = Object.keys(aggregations).map(function( aggregation, index){
+                const entry = aggregations[aggregation];
                 const db_fields = entry.db_fields.map(function(field, index){
                     const separator = (index==0)? "":", ";
                     return separator + field;
@@ -72,15 +72,13 @@ export default class AggregationsView extends React.Component {
                 )
             })
 
-            console.log(aggregations_adapted);
-
             Aggregations = <SmartTable header={headers} data={aggregations_adapted}/>
         }
 
         return (
             <div>
                 {
-                    (!this.props.loaded) ?
+                    (Object.keys(aggregations).length == 0) ?
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
