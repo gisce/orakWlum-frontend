@@ -9,6 +9,7 @@ import {
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
+    FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
 } from '../constants/index'
 
@@ -189,6 +190,24 @@ export function overrideAggregations(response, initial) {
 
 
 
+/**********
+  SOURCES
+**********/
+
+export function fetchSettingsRequest() {
+    return {
+        type: FETCH_SETTINGS_REQUEST,
+    };
+}
+
+export function fetchSettings(a_filter=null, silent=false, override=false) {
+    return (dispatch) => {
+        dispatch(fetchSettingsRequest());
+        ask_the_api("sources.get", a_filter, silent);
+    };
+}
+
+
 //Reduce Sources
 export function overrideSources(response, initial) {
     const message = (initial)?null:"Sources updated";
@@ -204,7 +223,7 @@ export function overrideSources(response, initial) {
         return {
             type: RECEIVE_SETTINGS,
             payload: {
-                aggregations: the_result,
+                sources: the_result,
                 message: the_message,
             },
         };
