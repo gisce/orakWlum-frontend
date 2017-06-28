@@ -24,6 +24,7 @@ import {
     create_user,
     ask_recover,
     destroySocket,
+    ask_the_api,
 } from '../utils/http_functions'
 
 import {
@@ -59,8 +60,9 @@ export function loginUserRequest() {
 }
 
 export function logout() {
-    undefine_token();
+    ask_the_api("session.logout");
     destroySocket();
+    undefine_token();
     return {
         type: LOGOUT_USER,
     };
