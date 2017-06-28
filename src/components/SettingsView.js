@@ -32,8 +32,7 @@ export default class SettingsView extends React.Component {
     }
 
     fetchData() {
-        const token = this.props.token;
-        this.props.fetchSettings(token);
+        this.props.fetchSettings();
     }
 
     updateData(data) {
