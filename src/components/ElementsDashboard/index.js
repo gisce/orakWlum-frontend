@@ -120,7 +120,8 @@ export class ElementsDashboard extends Component {
         };
 
         const {aggregations, elements} = this.props;
-        if (Object.keys(aggregations) == 0 || Object.keys(elements) == 0)
+        
+        if (Object.keys(aggregations).length == 0 || Object.keys(elements).length == 0)
             this.refreshData()
     }
 
