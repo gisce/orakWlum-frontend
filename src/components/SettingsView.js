@@ -34,16 +34,19 @@ export default class SettingsView extends React.Component {
         this.props.fetchSettings();
     }
 
-    updateData(data) {
-        const token = this.props.token;
-        this.props.updateSettings(token, data);
+    toggleStatus(data) {
+        this.props.toggleSourceSettings(data);
     }
 
     render() {
         const {sources} = this.props;
 
         const Settings = (sources && "measures" in sources && "static_data" in sources)?
-            <SettingsSources measures={sources.measures} static_data={sources.static_data}/>
+            <SettingsSources
+                measures={sources.measures}
+                static_data={sources.static_data}
+                onToggle={(data) => this.toggleStatus(data)}
+            />
             :
             null
         ;
