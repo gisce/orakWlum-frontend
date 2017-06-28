@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/orakwlum';
 
-import { dispatchNewRoute } from '../../utils/http_functions';
+import { dispatchNewRoute, force_logout } from '../../utils/http_functions';
 
 var NotificationSystem = require('react-notification-system');
 
@@ -217,10 +217,17 @@ export class Connection extends Component {
                     title: 'Disconnected',
                     message: 'Can\'t reach the server',
                     level: "error",
-                });
-
-
+                })
             })
+
+            .on('auth.logout', (content) => {
+                console.debug('Enforced logout from the API');
+
+                this.cleanNotifications();
+                this.prepareNotification(content);
+                force_logout();
+            })
+
 	}
 
     render() {
