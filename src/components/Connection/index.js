@@ -41,7 +41,7 @@ export class Connection extends Component {
             the_message.action = {
                 label: 'View it!',
                 callback: (event) => {
-                  dispatchNewRoute("/" + content.url, event);
+                  dispatchNewRoute(content.url, event);
                 }
             };
 
