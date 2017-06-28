@@ -160,7 +160,7 @@ export class ProposalList extends Component {
                     </div>
                 )
 
-                const the_graph = (tile.prediction && Object.keys(tile.prediction).length >0 ) ?
+                const the_graph = (false && tile.prediction && Object.keys(tile.prediction).length >0 ) ?
                     (
                         <ProposalGraph
                               stacked={true}
