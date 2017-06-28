@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/orakwlum';
 
-import { socket, dispatchNewRoute } from '../../utils/http_functions';
+import { dispatchNewRoute } from '../../utils/http_functions';
 
 var NotificationSystem = require('react-notification-system');
 
@@ -33,8 +33,6 @@ class Notification extends Component {
     cleanNotifications = () => {
         this.refs.internalNotificationSystem.clearNotifications();
     }
-
-
 
     render() {
       return (
@@ -110,7 +108,7 @@ export class Connection extends Component {
 		const initial=true;
 
 		//listen events!
-		socket
+		window.socket
 			.on('elements.override', (content) => {
 				console.debug('[Websocket] Elements to override received');
 				this.props.overrideElements(content, initial);
@@ -169,7 +167,7 @@ export class Connection extends Component {
 			})
 
             .on('connect', () => {
-                console.debug('Authenticated');
+                console.debug('Connected');
 
                 this.cleanNotifications();
                 this.prepareNotification({
@@ -205,9 +203,10 @@ export class Connection extends Component {
 	}
 
     render() {
-        //Detect offline mode!
-        if (!socket.connected) {
-            setTimeout(() => {
+
+        //Activate Offline mode if needed
+        setTimeout(() => {
+            if (!window.socket.connected) {
                 this.prepareNotification({
                     title: 'Offline mode',
                     message: "okW is in offline mode",
@@ -216,10 +215,10 @@ export class Connection extends Component {
                     level: "warning",
                     dismissible: false,
                 });
-            }, 1000)
-        }
+            }
+        }, 1000)
 
-        return <Notification ref="notificationSystem" status={socket.connected}/>;
+        return <Notification ref="notificationSystem" status={window.socket.connected}/>;
     }
 }
 
