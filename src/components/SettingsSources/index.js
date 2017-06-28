@@ -1,31 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as actionCreators from '../../actions/orakwlum';
-
 import { SmartTable } from 'materialized-reactions/SmartTable';
 
 const styles = {
 };
 
-function mapStateToProps(state) {
-    return {
-        settings: state.settings,
-        token: state.auth.token,
-        loaded: state.settings.loaded,
-        isFetching: state.settings.isFetching,
-        error: state.settings.error,
-        errorMessage: state.settings.data,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
 export class SettingsSources extends React.Component {
     render() {
         const {measures, static_data, onToggle} = this.props;
@@ -158,8 +137,9 @@ export class SettingsSources extends React.Component {
 }
 
 SettingsSources.propTypes = {
-    measures: PropTypes.array,
-    static_data: PropTypes.array,
+    measures: PropTypes.array.isRequired,
+    static_data: PropTypes.array.isRequired,
+    onToggle: PropTypes.func.isRequired,
     reload: PropTypes.bool,
     lite: PropTypes.bool,
 };
