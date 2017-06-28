@@ -44,6 +44,11 @@ export function ask_the_api (...args) {
     );
 }
 
+export function force_logout (){
+    destroySocket();
+    undefine_token();
+}
+
 export function dispatchNewRoute(route, event=false) {
 
     //if event is provided handle opening in a new tab/window
