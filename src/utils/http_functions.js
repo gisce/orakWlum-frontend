@@ -32,6 +32,9 @@ export function createSocket(token) {
         query: 'token=' + token,
     });
 }
+export function destroySocket() {
+    return window.socket.close()
+}
 
 //Abstract method to ask to emit something to the API
 export function ask_the_api (...args) {
