@@ -59,9 +59,9 @@ export default (
 
         <Redirect from="elements/concatenate" to="elements" />
 
-        <Route name="Element" path="elements/:elementID" component={Element} />
-        <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={Concatenator} />
-        <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={Comparator} />
+        <Route name="Element" path="elements/:elementID" component={requireAuthentication(Element)} />
+        <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={requireAuthentication(Concatenator)} />
+        <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
 
         <Route path="*" component={NotFound} />
 
