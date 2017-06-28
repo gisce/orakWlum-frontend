@@ -44,7 +44,6 @@ class App extends React.Component { // eslint-disable-line react/prefer-stateles
         return (
             <MuiThemeProvider muiTheme={orangeWedge}>
                 <section>
-                    <Connection />
                     <Header />
                     <div
                       className="container"
