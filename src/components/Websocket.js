@@ -31,17 +31,6 @@ export default class Websocket extends React.Component {
     }
 
     componentDidMount() {
-        //initialize the connection
-        const initial=true;
-
-        const {elements, aggregations} = this.props;
-
-        if (Object.keys(aggregations) == 0)
-            this.fetchAggregations(false);
-
-        if (Object.keys(elements) == 0)
-            this.overrideElements(false);
-
     }
 
     fetchAggregations(silent) {
@@ -61,49 +50,18 @@ export default class Websocket extends React.Component {
     }
 
     render() {
-        const {message, elements, aggregations, loaded} = this.props;
-
         const the_path = this.props.location.pathname;
-
-        // Adapt elements object to array of content of each element
-        let the_elements = [];
-        for ( let [key, value] of Object.entries(elements)) {
-            the_elements.push(value);
-        }
 
         return (
             <div>
-
-                {
-                    (
-                        ( aggregations != null && Object.keys(aggregations).length > 0) &&
-
-                        ( elements != null && Object.keys(aggregations).length > 0)
-                    )?
-
-                        <div>
-                            <ElementsDashboard
-                                title="Last proposals"
-                                path={the_path}
-                            />
-                        </div>
-
-                    :
-
-                        <div>
-                            <LoadingAnimation />
-                        </div>
-
-                }
-
-                {debug(Object.keys(elements).length)}
+                <ElementsDashboard
+                    title="Last proposals"
+                    path={the_path}
+                />
             </div>
         );
     }
 }
 
 Websocket.propTypes = {
-    loaded: PropTypes.bool,
-    message: PropTypes.string,
-    elements: PropTypes.object,
 };
