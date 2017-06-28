@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/settings';
+import * as actionCreators from '../actions/orakwlum';
 
 import { SettingsSources } from './SettingsSources'
 
@@ -12,12 +12,7 @@ import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
-        settings: state.settings,
-        token: state.auth.token,
-        loaded: state.settings.loaded,
-        isFetching: state.settings.isFetching,
-        error: state.settings.error,
-        errorMessage: state.settings.data,
+        sources: state.orakwlum.sources,
     };
 }
 
@@ -28,7 +23,11 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class SettingsView extends React.Component {
     componentDidMount() {
-        this.fetchData();
+        const {sources} = this.props;
+
+        if (!sources || Object.keys(sources).length == 0) {
+            this.fetchData();
+        }
     }
 
     fetchData() {
@@ -41,21 +40,18 @@ export default class SettingsView extends React.Component {
     }
 
     render() {
+        const {sources} = this.props;
 
-        const data = this.props.settings.data;
-
-        let Settings;
-        if (this.props.loaded && data) {
-            const {measures, static_data} = data;
-            Settings=<SettingsSources measures={measures} static_data={static_data}/>
-        } else {
-            Settings=null;
-        }
+        const Settings = (sources && "measures" in sources && "static_data" in sources)?
+            <SettingsSources measures={sources.measures} static_data={sources.static_data}/>
+            :
+            null
+        ;
 
         return (
             <div>
                 {
-                    (!this.props.loaded) ?
+                    (!Settings) ?
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
@@ -78,7 +74,4 @@ export default class SettingsView extends React.Component {
 
 SettingsView.propTypes = {
     fetchSettings: PropTypes.func,
-    loaded: PropTypes.bool,
-    data: PropTypes.any,
-    token: PropTypes.string,
 };
