@@ -33,6 +33,7 @@ export function createSocket(token) {
     });
 }
 export function destroySocket() {
+    ask_the_api("socket.destroy");
     return window.socket.close()
 }
 
