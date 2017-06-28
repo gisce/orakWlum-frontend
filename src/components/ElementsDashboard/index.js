@@ -51,7 +51,6 @@ function mapDispatchToProps(dispatch) {
 export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
-
         this.todayDate = new Date("2016/04/01");
         this.todayDate.setDate(1);
         this.todayDate.setHours(0);
@@ -119,10 +118,14 @@ export class ElementsDashboard extends Component {
             multiElementMode: false, //select
             elements_matched: [],
         };
-
     }
 
     componentWillMount() {
+
+        const {aggregations, elements} = this.props;
+        if (Object.keys(aggregations) == 0 || Object.keys(elements) == 0)
+            this.refreshData()
+
         //Filter elements
         this.filterElements()
     }
