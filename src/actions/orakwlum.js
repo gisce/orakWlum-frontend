@@ -11,6 +11,7 @@ import {
     FETCH_COMPARATION_ELEMENTS_REQUEST,
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
+    UPDATE_SETTINGS_REQUEST,
 } from '../constants/index'
 
 import {
@@ -230,6 +231,29 @@ export function overrideSources(response, initial) {
     }
     return {};
 }
+
+
+
+export function updateSettingsRequest() {
+    return {
+        type: UPDATE_SETTINGS_REQUEST,
+    };
+}
+
+export function updateSettings(data, silent=false) {
+    return (dispatch) => {
+        dispatch(updateSettingsRequest());
+        ask_the_api("sources.update", data, silent )
+    };
+}
+
+export function toggleSourceSettings(data, silent=false) {
+    return (dispatch) => {
+        dispatch(updateSettingsRequest());
+        ask_the_api("sources.status.toggle", data, silent )
+    };
+}
+
 
 
 
