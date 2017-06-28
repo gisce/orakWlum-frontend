@@ -28,9 +28,12 @@ export default createReducer(initialState, {
         loaded: true
     }),
     [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
-        elements: deepmerge(state.elements, payload.elements),
-        elements_by_type: deepmerge(state.elements_by_type, payload.by_type),
-        elements_by_date: deepmerge(state.elements_by_date, payload.by_date),
+        elements: (state.elements == undefined || state.elements == null || Object.keys(state.elements).length == 0) ? payload.elements : deepmerge(state.elements, payload.elements),
+        
+        elements_by_type: (state.elements_by_type == undefined || state.elements_by_type == null || Object.keys(state.elements_by_type).length == 0) ? payload.by_type : deepmerge(state.elements_by_type, payload.by_type),
+
+        elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
+
         message: payload.message,
         isFetching: false,
         loaded: true
