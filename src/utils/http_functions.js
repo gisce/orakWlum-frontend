@@ -24,7 +24,7 @@ const tokenConfig = (token) => ({
 
 //Create a socket integrating the token
 export function createSocket(token) {
-    console.debyg("[socket] Creating socket");
+    console.debug("[socket] Creating socket");
 
     window.socket = io.connect(':8000', {
         reconnection: true,
