@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import * as actionCreators from '../actions/auth';
 
-import { validate_token } from '../utils/http_functions'
+import { validate_token, createSocket } from '../utils/http_functions'
+import {Connection} from './Connection';
 
 function mapStateToProps(state) {
     return {
@@ -33,8 +34,9 @@ export function requireAuthentication(Component) {
         }
 
         checkAuth(props = this.props) {
+            const token = localStorage.getItem('token');
+
             if (!props.isAuthenticated) {
-                const token = localStorage.getItem('token');
                 if (!token) {
                     browserHistory.push('/login?next=' + props.route.path);
                 } else {
@@ -47,6 +49,8 @@ export function requireAuthentication(Component) {
                                     loaded_if_needed: true,
                                 });
 
+                                createSocket(token);
+
                             } else {
                                 browserHistory.push('/login?next=' + props.route.path);
                             }
@@ -57,6 +61,7 @@ export function requireAuthentication(Component) {
                         });
                 }
             } else {
+                createSocket(token);
                 this.setState({
                     loaded_if_needed: true,
                 });
@@ -67,7 +72,7 @@ export function requireAuthentication(Component) {
             return (
                 <div>
                     {this.props.isAuthenticated && this.state.loaded_if_needed
-                        ? <Component {...this.props} />
+                        ? <div><Connection /><Component {...this.props} /></div>
                         : null
                     }
                 </div>
