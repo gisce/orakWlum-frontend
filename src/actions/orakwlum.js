@@ -426,9 +426,9 @@ export function fetchProfile(a_filter=null, initial=true) {
     };
 }
 
-export function updateProfile(data=null, initial=true) {
+export function updateProfile(email, data=null, initial=false) {
     return (dispatch) => {
         dispatch(updateProfileRequest());
-        ask_the_api("profile.update", data, silent )
+        ask_the_api("profile.update", email, data, initial )
     };
 }
