@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/profile';
+import * as actionCreators from '../../actions/orakwlum';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -37,11 +37,14 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
-        profile: state.profile,
-        statusText: state.profile.statusText,
-        statusType: state.profile.statusType,
-        status: state.profile.status,
-        message_open: state.profile.message_open,
+        profile: state.orakwlum.profile,
+
+        /*
+        statusText: state.orakwlum.profile.statusText,
+        statusType: state.orakwlum.profile.statusType,
+        status: state.orakwlum.profile.status,
+        message_open: state.orakwlum.profile.message_open,
+        */
     };
 }
 
@@ -164,6 +167,9 @@ export class UserProfile extends Component {
 
         //Load gravatar img or default from github
         const image = "https://www.gravatar.com/avatar/"+emailHash+"?d=https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/www/public/images/user.jpg";
+
+
+        const {statusText, statusType, status} = this.props.profile;
 
         const UserProfile = () => (
 
