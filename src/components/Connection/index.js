@@ -165,6 +165,23 @@ export class Connection extends Component {
 
 
 
+        /////////////
+        // PROFILE //
+        /////////////
+
+        .on('profile.override', (content) => {
+            console.debug('[Websocket] Profile received');
+            this.props.overrideProfile(content, initial);
+
+            if (!content.silent) {
+                if (content.clean_all)
+                    this.cleanNotifications();
+
+                this.prepareNotification(content);;
+            }
+        })
+
+
         //////////////
         // SETTINGS //
         //////////////
