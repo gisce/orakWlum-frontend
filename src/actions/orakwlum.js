@@ -397,21 +397,19 @@ export function receiveUpdateProfileKO(error) {
     };
 }
 
-
 export function updateProfileRequest() {
     return {
         type: UPDATE_PROFILE_REQUEST,
     };
 }
-export function fetchProfile(a_filter=null, initial=false) {
+export function fetchProfile(a_filter=null, initial=true) {
     return (dispatch) => {
         dispatch(fetchProfileRequest());
         ask_the_api("profile.get", a_filter, initial )
     };
 }
 
-
-export function updateProfile(data=null, initial=false) {
+export function updateProfile(data=null, initial=true) {
     return (dispatch) => {
         dispatch(updateProfileRequest());
         ask_the_api("profile.update", data, silent )
