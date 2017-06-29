@@ -80,7 +80,7 @@ export default createReducer(initialState, {
 
     [RECEIVE_PROFILE]: (state, payload) =>
         Object.assign({}, state, {
-            data: payload.data,
+            profile: payload.profile,
             isFetching: false,
             loaded: true,
             error: false,
