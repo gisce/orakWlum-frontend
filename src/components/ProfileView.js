@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/profile';
+import * as actionCreators from '../actions/orakwlum';
 
 import { UserProfile } from './UserProfile';
 
@@ -12,10 +12,7 @@ import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
-        data: state.profile,
-        token: state.auth.token,
-        loaded: state.profile.loaded,
-        isFetching: state.profile.isFetching,
+        profile: state.orakwlum.profile,
         error: state.profile.error,
         errorMessage: state.profile.data,
     };
@@ -32,21 +29,23 @@ export default class ProfileView extends React.Component {
     }
 
     fetchData() {
-        const token = this.props.token;
         const userName = this.props.userName;
-        this.props.fetchProfile(token);
+        this.props.fetchProfile();
     }
 
     updateData(data) {
-        const token = this.props.token;
-        this.props.updateProfile(token, data);
+        this.props.updateProfile(data);
     }
 
     render() {
+        const {profile} = this.props;
+
+        console.log("profile",profile, Object.keys(profile).length);
+
         return (
             <div>
                 {
-                    (!this.props.loaded) ?
+                    (Object.keys(profile).length == 0) ?
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
