@@ -1,4 +1,4 @@
-import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO} from '../constants';
+import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO, FETCH_VERSION_REQUEST, RECEIVE_VERSION} from '../constants';
 import {createReducer} from '../utils/misc';
 
 //deepmerge lib
@@ -15,6 +15,7 @@ const initialState = {
     elements_by_date: {},
     profile: {},
     sources: {},
+    version: {},
 };
 
 export default createReducer(initialState, {
@@ -77,6 +78,7 @@ export default createReducer(initialState, {
 
 
 
+    //PROFILE
 
     [RECEIVE_PROFILE]: (state, payload) =>
         Object.assign({}, state, {
@@ -97,7 +99,6 @@ export default createReducer(initialState, {
             error: true,
         }),
 
-
     [UPDATE_PROFILE_OK]: (state, payload) =>
         Object.assign({}, state, {
             profile: payload.profile,
@@ -109,6 +110,25 @@ export default createReducer(initialState, {
     [UPDATE_PROFILE_REQUEST]: (state) =>
         Object.assign({}, state, {
             isUpdating: true,
-        }),
+    }),
+
+
+
+    //VERSION
+
+    [FETCH_VERSION_REQUEST]: (state, payload) =>
+        Object.assign({}, state, {
+            isFetching: true,
+            message_text: payload.message,
+    }),
+
+    [RECEIVE_VERSION]: (state, payload) =>
+        Object.assign({}, state, {
+            version: payload.version,
+            isFetching: false,
+            loaded: true,
+            message_text: payload.message,
+    }),
+
 
 });
