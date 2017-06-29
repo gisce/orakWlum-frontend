@@ -182,6 +182,24 @@ export class Connection extends Component {
         })
 
 
+
+        /////////////
+        // PROFILE //
+        /////////////
+
+        .on('version.override', (content) => {
+            console.debug('[Websocket] Version received');
+            this.props.overrideVersion(content, initial);
+
+            if (!content.silent) {
+                if (content.clean_all)
+                    this.cleanNotifications();
+
+                this.prepareNotification(content);;
+            }
+        })
+
+
         //////////////
         // SETTINGS //
         //////////////
