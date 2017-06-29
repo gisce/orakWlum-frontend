@@ -9,9 +9,17 @@ import {
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
+
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
     UPDATE_SETTINGS_REQUEST,
+
+    FETCH_PROFILE_REQUEST,
+    RECEIVE_PROFILE,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_OK,
+    UPDATE_PROFILE_KO,
+    RECEIVE_PROFILE_KO
 } from '../constants/index'
 
 import {
@@ -291,7 +299,7 @@ export function refreshElements(a_filter=null, silent=false, override=false) {
     };
 }
 
-export function fetchElement(filter=null, initial=false) {
+export function fetchElement(a_filter=null, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsRequest(initial));
         ask_the_api("element.get", a_filter);
@@ -333,5 +341,79 @@ export function runElement(a_filter=null) {
     return (dispatch) => {
         dispatch(runElementRequest());
         ask_the_api("elements.run", a_filter);
+    };
+}
+
+
+/********
+ PROFILE
+********/
+
+
+export function receiveProfile(data) {
+    return {
+        type: RECEIVE_PROFILE,
+        payload: {
+            data,
+        },
+    };
+}
+
+export function receiveProfileError(data) {
+    return {
+        type: RECEIVE_PROFILE_KO,
+        payload: {
+            data,
+        },
+    };
+}
+
+export function fetchProfileRequest() {
+    return {
+        type: FETCH_PROFILE_REQUEST,
+    };
+}
+
+
+export function receiveUpdateProfile(data) {
+    return {
+        type: UPDATE_PROFILE_OK,
+        payload: {
+            data,
+            statusText: "Changes applied correctly",
+            statusType: "info",
+        },
+    };
+}
+
+export function receiveUpdateProfileKO(error) {
+    return {
+        type: UPDATE_PROFILE_KO,
+        payload: {
+            status: (error.status === undefined) ? "403" : error.status,
+            statusText: (error.statusText === undefined) ? "The provided credentials are not correct" : error.statusText,
+            statusType: "danger",
+        },
+    };
+}
+
+
+export function updateProfileRequest() {
+    return {
+        type: UPDATE_PROFILE_REQUEST,
+    };
+}
+export function fetchProfile(a_filter=null, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchProfileRequest());
+        ask_the_api("profile.get", a_filter, initial )
+    };
+}
+
+
+export function updateProfile(data=null, initial=false) {
+    return (dispatch) => {
+        dispatch(updateProfileRequest());
+        ask_the_api("profile.update", data, silent )
     };
 }
