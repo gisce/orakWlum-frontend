@@ -350,14 +350,31 @@ export function runElement(a_filter=null) {
 ********/
 
 
-export function receiveProfile(data) {
-    return {
-        type: RECEIVE_PROFILE,
-        payload: {
-            data,
-        },
-    };
+
+
+//Reduce Profile
+export function overrideProfile(response, initial) {
+    const message = (initial)?null:"Profile updated";
+
+    //Set the code, or 404
+    const the_code = (response.code? response.code : 404);
+
+    //If the return is OK
+    if (the_code == 200) {
+        const the_result = JSON.parse(response.result);
+        const the_message = response.message;
+
+        return {
+            type: RECEIVE_PROFILE,
+            payload: {
+                profile: the_result,
+                message: the_message,
+            },
+        };
+    }
+    return {};
 }
+
 
 export function receiveProfileError(data) {
     return {
