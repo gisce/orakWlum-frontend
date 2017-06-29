@@ -13,6 +13,7 @@ const initialState = {
     elements_volatile: {},
     elements_by_date: {},
     elements_by_date: {},
+    profile: {}
 };
 
 export default createReducer(initialState, {
