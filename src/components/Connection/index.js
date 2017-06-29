@@ -30,47 +30,49 @@ export class Connection extends Component {
     }
 
     prepareNotification (content) {
-        //Initialize a new message based on the provided one
-        let the_message = {
-            ...{},
-            ...content,
-        }
-
-        //Integrate a "view it" button that redirects to the related URL (if exist)
-        if ('url' in content && content.url)
-            the_message.action = {
-                label: 'View it!',
-                callback: (event) => {
-                  dispatchNewRoute(content.url, event);
-                }
-            };
-
-        //Set notification level based on the code if not provided
-        if (!('level' in content)) {
-            switch (content.code) {
-                case 200:
-                    console.log("entro");
-                    the_message.level = "info";
-                    break;
-
-                case 1:
-                    the_message.level = "success";
-                    the_message.autoDismiss = 0;
-                    break;
-
-                case -1:
-                    the_message.level = "error";
-                    the_message.autoDismiss = 0;
-                    break;
-
-                default:
-                    the_message.level = "warning";
-                    break;
+        if (content && 'message' in content) {
+            //Initialize a new message based on the provided one
+            let the_message = {
+                ...{},
+                ...content,
             }
-        }
 
-        //Create the notification!
-        this._notificationSystem.addNotification(the_message);
+            //Integrate a "view it" button that redirects to the related URL (if exist)
+            if ('url' in content && content.url)
+                the_message.action = {
+                    label: 'View it!',
+                    callback: (event) => {
+                      dispatchNewRoute(content.url, event);
+                    }
+                };
+
+            //Set notification level based on the code if not provided
+            if (!('level' in content)) {
+                switch (content.code) {
+                    case 200:
+                        console.log("entro");
+                        the_message.level = "info";
+                        break;
+
+                    case 1:
+                        the_message.level = "success";
+                        the_message.autoDismiss = 0;
+                        break;
+
+                    case -1:
+                        the_message.level = "error";
+                        the_message.autoDismiss = 0;
+                        break;
+
+                    default:
+                        the_message.level = "warning";
+                        break;
+                }
+            }
+
+            //Create the notification!
+            this._notificationSystem.addNotification(the_message);
+        }
     }
 
     //Clean pending notifications
@@ -153,7 +155,7 @@ export class Connection extends Component {
 
 			.on('message', (content) => {
 				console.debug('[Websocket] Message received');
-				this.props.overrideMessage(content, initial);
+				//this.props.overrideMessage(content, initial);
 
                 if (!content.silent) {
                     if (content.clean_all)
@@ -161,6 +163,31 @@ export class Connection extends Component {
 
                     this.prepareNotification(content);;
                 }
+			})
+
+
+
+        ////////////////////
+        // REDIRECT EVENTS //
+        ////////////////////
+
+			.on('redirect', (content) => {
+				console.debug('[Websocket] Redirect received');
+
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
+
+                    this.prepareNotification(content);;
+                }
+
+
+                setTimeout(() => {
+                    if (content.url) {
+                        dispatchNewRoute(content.url);
+                    }
+                }, 5000)
+
 			})
 
 
