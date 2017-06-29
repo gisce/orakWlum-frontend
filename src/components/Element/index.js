@@ -103,11 +103,8 @@ const colors = {
 
 function mapStateToProps(state) {
     return {
-        token: state.auth.token,
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
-        message_text: state.proposal.message_text,
-        message_open: state.proposal.message_open,
     };
 }
 
@@ -224,7 +221,6 @@ export class Elementt extends Component {
         });
         this.animateChart = false;
 
-        const token = this.props.token;
         this.props.fetchElements(proposalID);
 
         this.setState({
@@ -274,7 +270,6 @@ export class Elementt extends Component {
             confirmation_open: false,
         });
 
-        const token = this.props.token;
         this.props.runElement(proposalID);
 
         this.dummyAsync(() =>
@@ -334,8 +329,7 @@ export class Elementt extends Component {
             message_open: true,
             confirmation_open: false,
         });
-        const token = this.props.token;
-        this.props.duplicateElement(token, proposalID);
+        this.props.duplicateElement(proposalID);
     };
 
     deleteElementQuestion = (event, proposalID) => {
