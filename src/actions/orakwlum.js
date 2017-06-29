@@ -19,7 +19,13 @@ import {
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_OK,
     UPDATE_PROFILE_KO,
-    RECEIVE_PROFILE_KO
+    RECEIVE_PROFILE_KO,
+
+    VERSION_PR,
+    FETCH_VERSION_REQUEST,
+    RECEIVE_VERSION,
+    RECEIVE_VERSION_ERROR,
+
 } from '../constants/index'
 
 import {
@@ -345,11 +351,12 @@ export function runElement(a_filter=null) {
 }
 
 
+
+
+
 /********
  PROFILE
 ********/
-
-
 
 
 //Reduce Profile
@@ -431,4 +438,54 @@ export function updateProfile(email, data=null, initial=false) {
         dispatch(updateProfileRequest());
         ask_the_api("profile.update", email, data, initial )
     };
+}
+
+
+
+
+
+
+
+/********
+ VERSION
+********/
+
+export function fetchVersionRequest(initial) {
+    const message = (initial)?null:"Fetching current version detail";
+    return {
+        type: FETCH_VERSION_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function fetchVersion( PR=VERSION_PR, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchVersionRequest(initial));
+        ask_the_api("version.get", PR, initial )
+    };
+}
+
+//Reduce Profile
+export function receiveVersion(response, initial) {
+    const message = (initial)?null:"Refreshing current version detail";
+
+    //Set the code, or 404
+    const the_code = (response.code? response.code : 404);
+
+    //If the return is OK
+    if (the_code == 200) {
+        const the_result = JSON.parse(response.result);
+        const the_message = response.message;
+
+        return {
+            type: RECEIVE_VERSION,
+            payload: {
+                version: the_result,
+                message: the_message,
+            },
+        };
+    }
+    return {};
 }
