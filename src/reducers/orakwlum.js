@@ -13,7 +13,8 @@ const initialState = {
     elements_volatile: {},
     elements_by_date: {},
     elements_by_date: {},
-    profile: {}
+    profile: {},
+    sources: {},
 };
 
 export default createReducer(initialState, {
@@ -73,6 +74,9 @@ export default createReducer(initialState, {
             loaded: true,
             error: false,
     }),
+
+
+
 
     [RECEIVE_PROFILE]: (state, payload) =>
         Object.assign({}, state, {
