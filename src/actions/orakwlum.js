@@ -9,6 +9,8 @@ import {
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
+    DUPLICATE_PROPOSAL_REQUEST,
+
 
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
@@ -325,6 +327,26 @@ export function exportElement(a_filter=null, initial=false) {
         ask_the_api("elements.export", a_filter);
     };
 }
+
+
+
+
+
+
+export function duplicateElementRequest() {
+    return {
+        type: DUPLICATE_PROPOSAL_REQUEST,
+    };
+}
+
+export function duplicateElement(element, initial) {
+    return (dispatch) => {
+        dispatch(duplicateElementRequest());
+        ask_the_api("elements.duplicate", element, initial);
+    };
+}
+
+
 
 
 
