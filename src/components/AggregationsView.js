@@ -11,8 +11,6 @@ import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
-        error: state.aggregations.error,
-        errorMessage: state.aggregations.data,
         aggregations: state.orakwlum.aggregations,
     };
 }
@@ -100,7 +98,4 @@ export default class AggregationsView extends React.Component {
 AggregationsView.propTypes = {
     aggregations: PropTypes.object,
     fetchAggregations: PropTypes.func,
-    loaded: PropTypes.bool,
-    data: PropTypes.any,
-    token: PropTypes.string,
 };
