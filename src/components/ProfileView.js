@@ -14,8 +14,6 @@ function mapStateToProps(state) {
     return {
         auth: state.auth,
         profile: state.orakwlum.profile,
-        error: state.profile.error,
-        errorMessage: state.profile.data,
     };
 }
 
@@ -69,8 +67,5 @@ export default class ProfileView extends React.Component {
 
 ProfileView.propTypes = {
     fetchProfile: PropTypes.func,
-    loaded: PropTypes.bool,
     userName: PropTypes.string,
-    data: PropTypes.any,
-    token: PropTypes.string,
 };
