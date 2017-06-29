@@ -60,8 +60,8 @@ export class UserProfile extends Component {
             profile: props.profile,
             editing: false,
             bckp_profile: JSON.parse(JSON.stringify(props.profile)),
-            groups: props.profile.data.groups,
-            bckp_groups: Object.assign([], props.profile.data.groups),
+            groups: props.profile.groups,
+            bckp_groups: Object.assign([], props.profile.groups),
         };
     }
 
@@ -94,7 +94,7 @@ export class UserProfile extends Component {
 
         // Try to update data
         if (this.props.onUpdate) {
-            this.props.onUpdate(this.props.profile.data);
+            this.props.onUpdate(this.props.profile);
         }
 
         this.activateSnack()
@@ -102,7 +102,7 @@ export class UserProfile extends Component {
 
     tmpChangeValue(e, type) {
         const value = e.target.value;
-        this.props.profile.data[type] = value;
+        this.props.profile[type] = value;
     }
 
     discard_edit_profile(e) {
@@ -157,7 +157,7 @@ export class UserProfile extends Component {
     render() {
         let editing = this.state.editing;
 
-        const profile = this.state.profile.data;
+        const profile = this.state.profile;
 
         const groups = this.state.groups;
 
