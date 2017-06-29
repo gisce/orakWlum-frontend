@@ -460,7 +460,7 @@ export function fetchVersionRequest(initial) {
     };
 }
 
-export function fetchVersion( PR=VERSION_PR, initial=false) {
+export function fetchVersion(initial=false, PR=VERSION_PR) {
     return (dispatch) => {
         dispatch(fetchVersionRequest(initial));
         ask_the_api("version.get", PR, initial )
@@ -468,7 +468,7 @@ export function fetchVersion( PR=VERSION_PR, initial=false) {
 }
 
 //Reduce Profile
-export function receiveVersion(response, initial) {
+export function overrideVersion(response, initial) {
     const message = (initial)?null:"Refreshing current version detail";
 
     //Set the code, or 404
