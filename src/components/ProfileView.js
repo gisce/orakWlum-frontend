@@ -12,6 +12,7 @@ import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
+        auth: state.auth,
         profile: state.orakwlum.profile,
         error: state.profile.error,
         errorMessage: state.profile.data,
@@ -29,8 +30,8 @@ export default class ProfileView extends React.Component {
     }
 
     fetchData() {
-        const userName = this.props.userName;
-        this.props.fetchProfile();
+        const {userName} = this.props.auth;
+        this.props.fetchProfile(userName);
     }
 
     updateData(data) {
