@@ -35,7 +35,8 @@ export default class ProfileView extends React.Component {
     }
 
     updateData(data) {
-        this.props.updateProfile(data);
+        const {userName} = this.props.auth;
+        this.props.updateProfile(userName, data);
     }
 
     render() {
