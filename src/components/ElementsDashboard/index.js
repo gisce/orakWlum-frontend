@@ -121,7 +121,7 @@ export class ElementsDashboard extends Component {
         };
 
         const {aggregations, elements} = this.props;
-        
+
         if (Object.keys(aggregations).length == 0 || Object.keys(elements).length == 0)
             this.refreshData()
     }
@@ -130,6 +130,10 @@ export class ElementsDashboard extends Component {
     componentDidMount() {
         //Filter elements
         this.filterElements()
+    }
+
+    addElement(event) {
+        dispatchNewRoute("/elements/new", event);
     }
 
     refreshData(silent = true) {
@@ -524,7 +528,7 @@ export class ElementsDashboard extends Component {
                 <ContentHeader
                     title="Elements"
                     addButton={true}
-                    addClickMethod={(event) => this.addHistorical(event)}
+                    addClickMethod={(event) => this.addElement(event)}
 
                     refreshButton={true}
                     refreshClickMethod={() => this.refreshData()}
