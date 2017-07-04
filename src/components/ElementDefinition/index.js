@@ -217,7 +217,7 @@ export class ProposalDefinition extends Component {
             isNew: true,
             days_range: [
                 this.state.date_start,
-                this.state.date_end,
+                (this.state.date_end)?this.state.date_end:this.state.date_start,
             ],
             status: {
               "color": "pending",
