@@ -8,7 +8,6 @@ import { App } from './containers/App';
 import { HomeContainer } from './containers/HomeContainer';
 import LoginView from './components/LoginView';
 import RegisterView from './components/RegisterView';
-import ProtectedView from './components/ProtectedView';
 import Analytics from './components/Analytics';
 import NotFound from './components/NotFound';
 import Elements from './components/ElementsView';
@@ -35,7 +34,7 @@ import { requireNoAuthentication } from './components/notAuthenticatedComponent'
 
 export default (
     <Route path="/" component={App}>
-        <Route path="main" component={requireAuthentication(ProtectedView)} />
+        <Redirect from="" to="elements" />
         <Route path="login" component={requireNoAuthentication(LoginView)} />
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
@@ -52,6 +51,7 @@ export default (
         <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
 
+        <Redirect from="main" to="elements" />
         <Route name="elements" path="elements" component={requireAuthentication(Websocket)} />
         <Route name="elements.type:historical" path="elements/type/historical" component={Websocket} />
         <Route name="elements.type:proposal" path="elements/type/proposal" component={Websocket} />
