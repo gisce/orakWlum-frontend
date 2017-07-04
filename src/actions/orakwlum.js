@@ -126,6 +126,17 @@ export function reduceElements(reducer_type, response, initial) {
                     [key]: value,
                 }
             }
+
+            // Add current ID in by_date_future[type] object
+            if ('days_range_future' in value && Object(value.days_range_future).length > 0) {
+                if (!(value.days_range_future[0] in by_date_future))
+                    by_date_future[value.days_range_future[0]] = {};
+
+                by_date_future[value.days_range_future[0]] = {
+                    ...by_type[value.days_range_future[0]],
+                    [key]: value,
+                }
+            }
         }
 
         const the_message = response.message;
@@ -137,6 +148,7 @@ export function reduceElements(reducer_type, response, initial) {
                 message: the_message,
                 by_type,
                 by_date,
+                by_date_future,
             },
         };
     }
