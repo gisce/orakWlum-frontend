@@ -214,6 +214,7 @@ export class ProposalDefinition extends Component {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
             sources:this.state.sourcesNames,
+            element_type: "proposal",
             isNew: true,
             days_range: [
                 this.state.date_start,
