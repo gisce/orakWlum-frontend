@@ -801,13 +801,12 @@ export class ProposalDefinition extends Component {
         const proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
-            element_type: this.state.
             sources:this.state.sourcesNames,
             element_type: this.state.element_type,
             isNew: true,
             days_range: [
                 date_start,
-                date_end,
+                (this.state.date_end)?this.state.date_end:this.state.date_start,
             ],
             status: {
               "color": "pending",
