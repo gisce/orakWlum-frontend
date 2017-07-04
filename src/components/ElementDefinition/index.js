@@ -20,9 +20,9 @@ import DatePicker from 'material-ui/DatePicker';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
-import {Proposal} from '../Proposal'
+import {Elementt} from '../Element'
 
-import * as actionCreators from '../../actions/proposal';
+import * as actionCreators from '../../actions/orakwlum';
 
 const revalidator = require('revalidator');
 
@@ -40,7 +40,7 @@ const date_limit_sup = new Date(today.getFullYear() + 6, 12, 31);
 
 const validations = {
     name: {
-        description: 'Name of the New Proposal',
+        description: 'Name of the New Element',
         type: 'string',
         minLength: 3,
         maxLength: 200,
@@ -48,25 +48,25 @@ const validations = {
         required: true,
     },
     date_start: {
-        description: 'Start Date of the New Proposal',
+        description: 'Start Date of the New Element',
         type: 'date',
         allowEmpty: false,
         required: true,
     },
     date_end: {
-        description: 'End Date of the New Proposal',
+        description: 'End Date of the New Element',
         type: 'date',
         allowEmpty: false,
         required: true,
     },
     aggregations: {
-        description: 'Aggregations of the New Proposal',
+        description: 'Aggregations of the New Element',
         type: 'array',
         allowEmpty: false,
         required: true,
     },
     sources: {
-        description: 'Sources of the New Proposal',
+        description: 'Sources of the New Element',
         type: 'array',
         allowEmpty: false,
         required: true,
@@ -186,7 +186,6 @@ export class ProposalDefinition extends Component {
         for (var i=0; i<aggregationsList.length; i++) {
             let agg = aggregationsList[i];
 
-
             aggregationsWithStatus.push(
                 {
                     name:agg.name,
@@ -194,6 +193,8 @@ export class ProposalDefinition extends Component {
                 }
             );
         }
+
+        console.log("aggregationsWithStatus", aggregationsWithStatus)
 
         const sourcesList = this.state.sources_all;
 
@@ -252,7 +253,7 @@ export class ProposalDefinition extends Component {
                         />
 
                         <p style={styles.disclamer}>
-                            * Dates are inclusive, so if you mark start:day1 and end:day2, will produce two proposals, one for each day.
+                            * Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.
                         </p>
                     </div>
                 )
@@ -267,7 +268,7 @@ export class ProposalDefinition extends Component {
                         <p>Please, <b>insert the name</b> of your {this.state.type.name} in the following field:</p>
                         <TextField
                             style={{marginTop: 0}}
-                            floatingLabelText="Proposal name"
+                            floatingLabelText="Element name"
                             value={this.state.name}
                             onChange={this.handleChangeName}
                             errorText={this.state.name_error_text}
@@ -303,7 +304,7 @@ export class ProposalDefinition extends Component {
                                 deselectOnClickaway={false}
                             >
                         {
-                            Object.entries(aggregationsWithStatus).map(function(agg, index) {
+                            aggregationsWithStatus.map(function(agg, index) {
                                 return (
                                     <TableRow key={"tableRow_"+index} selected={agg.selected}>
                                       <TableRowColumn>{agg.name}</TableRowColumn>
@@ -401,7 +402,7 @@ export class ProposalDefinition extends Component {
 
                         <br/><br/>
 
-                        <Proposal
+                        <Elementt
                             proposal={proposalSummary}
                             aggregations={this.state.aggregationsNames}
                             readOnly
