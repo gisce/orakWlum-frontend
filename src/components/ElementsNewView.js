@@ -6,7 +6,7 @@ import { debug } from '../utils/debug';
 
 import * as actionCreators from '../actions/orakwlum';
 
-import { ProposalDefinition } from './ProposalDefinition';
+import { ProposalDefinition } from './ElementDefinition';
 
 function mapStateToProps(state) {
     return {
