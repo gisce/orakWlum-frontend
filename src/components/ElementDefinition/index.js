@@ -133,6 +133,7 @@ export class ProposalDefinition extends Component {
       this.state = {
           createMethod: createMethod,
           type: types[element_type],
+          element_type,
           loading: false,
           finished: false,
           stepIndex: 0,
@@ -214,7 +215,7 @@ export class ProposalDefinition extends Component {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
             sources:this.state.sourcesNames,
-            element_type: "proposal",
+            element_type: this.state.element_type,
             isNew: true,
             days_range: [
                 this.state.date_start,
@@ -800,7 +801,9 @@ export class ProposalDefinition extends Component {
         const proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
+            element_type: this.state.
             sources:this.state.sourcesNames,
+            element_type: this.state.element_type,
             isNew: true,
             days_range: [
                 date_start,
