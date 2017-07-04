@@ -12,6 +12,7 @@ const initialState = {
     elements: {},
     elements_volatile: {},
     elements_by_date: {},
+    elements_by_date_future: {},
     elements_by_date: {},
     profile: {},
     sources: {},
@@ -26,6 +27,8 @@ export default createReducer(initialState, {
 
         elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
 
+        elements_by_date_future: (state.elements_by_date_future == undefined || state.elements_by_date_future == null || Object.keys(state.elements_by_date_future).length == 0) ? payload.by_date_future : deepmerge(state.elements_by_date_future, payload.by_date_future),
+
         message: payload.message,
         isFetching: false,
         loaded: true
@@ -37,6 +40,8 @@ export default createReducer(initialState, {
 
         elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
 
+        elements_by_date_future: (state.elements_by_date_future == undefined || state.elements_by_date_future == null || Object.keys(state.elements_by_date_future).length == 0) ? payload.by_date_future : deepmerge(state.elements_by_date_future, payload.by_date_future),
+
         message: payload.message,
         isFetching: false,
         loaded: true
@@ -46,6 +51,7 @@ export default createReducer(initialState, {
         message: payload.message,
         elements_by_type: payload.by_type,
         elements_by_date: payload.by_date,
+        elements_by_date_future: payload.by_date_future,
         isFetching: false,
         loaded: true
     }),
