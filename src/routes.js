@@ -25,6 +25,7 @@ import Comparator from './components/ProposalComparatorView';
 
 import Websocket from './components/Websocket';
 import Element from './components/ElementView';
+import ElementsNew from './components/ElementsNewView';
 import Concatenator from './components/ElementsConcatenation';
 
 import { DetermineAuth } from './components/DetermineAuth';
@@ -58,6 +59,8 @@ export default (
         <Redirect from="elements/type/all" to="elements" />
 
         <Redirect from="elements/concatenate" to="elements" />
+
+        <Route name="elements.create" path="elements/new" component={ElementsNew} />
 
         <Route name="Element" path="elements/:elementID" component={requireAuthentication(Element)} />
         <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={requireAuthentication(Concatenator)} />
