@@ -26,7 +26,7 @@ const tokenConfig = (token) => ({
 export function createSocket(token) {
     console.debug("[socket] Creating socket");
 
-    window.socket = io.connect(':8000', {
+    window.socket = io.connect( {
         reconnection: true,
         transports: ['websocket', 'polling'],
         query: 'token=' + token,
