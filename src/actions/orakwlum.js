@@ -10,7 +10,7 @@ import {
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
     DUPLICATE_PROPOSAL_REQUEST,
-
+    CREATE_PROPOSAL_REQUEST,
 
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
@@ -355,6 +355,23 @@ export function duplicateElement(element, initial) {
     return (dispatch) => {
         dispatch(duplicateElementRequest());
         ask_the_api("elements.duplicate", element, initial);
+    };
+}
+
+
+
+
+
+export function createElementlRequest() {
+    return {
+        type: CREATE_PROPOSAL_REQUEST,
+    };
+}
+
+export function createElement(proposal) {
+    return (dispatch) => {
+        dispatch(createElementlRequest());
+        ask_the_api("elements.create", proposal);
     };
 }
 
