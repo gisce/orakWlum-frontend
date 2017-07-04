@@ -45,7 +45,7 @@ export default class ProfileView extends React.Component {
         return (
             <div>
                 <div>
-                    <h1>New proposal</h1>
+                    <h1>New element</h1>
 
                     { Object.entries(aggregations).length > 0  &&  Object.entries(sources).length > 0  &&  "measures" in sources &&
                         <ProposalDefinition
