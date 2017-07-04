@@ -310,8 +310,7 @@ export class ElementsDashboard extends Component {
         const {selected_date, selected_enddate, selected_type} = this;
         const {selectedElements} = this.state;
 
-
-        console.debug("filterElements", selected_date, selected_enddate, selected_type)
+        console.debug("filteringElements", selected_date, selected_enddate, selected_type)
 
         // The elements
         let elements_matched = [];
@@ -323,12 +322,12 @@ export class ElementsDashboard extends Component {
         //Parse to lower selected_type (to match API ids)
         const selected_type_id = selected_type.toLowerCase();
 
+
         //For each candidate day
         while (current_date <= end_date) {
             const current_date_str = this.formatDateFromAPI(current_date);
             if (current_date_str in elements_by_date) {
                 const elements_for_current_date = elements_by_date[current_date_str];
-                const elements_for_future_date = elements_by_date_future[current_date_str];
 
                 //Fetch all elements for current_day
                 for ( let [id, element] of Object.entries(elements_for_current_date)) {
@@ -337,9 +336,14 @@ export class ElementsDashboard extends Component {
                         elements_matched.push(element);
                     }
                 }
+	    }
 
-                for ( let [id, element] of Object.entries(elements_for_future_date)) {
+            if (current_date_str in elements_by_date_future || current_date_str in elements_by_date_future) {
+                const elements_for_future_date = elements_by_date_future[current_date_str];
+
+		for ( let [id, element] of Object.entries(elements_for_future_date)) {
                     //Validate type
+			console.log(id, element);
                     if (selected_type_id == "all" || element.element_type == selected_type_id) {
                         if (!(id in elements_matched)) {
                             elements_matched.push(element);
