@@ -39,6 +39,7 @@ function mapStateToProps(state) {
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
         elements_by_date: state.orakwlum.elements_by_date,
+        elements_by_date_future: state.orakwlum.elements_by_date_future,
         elements_by_type: state.orakwlum.elements_by_type,
     };
 }
@@ -51,7 +52,7 @@ function mapDispatchToProps(dispatch) {
 export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
-        this.todayDate = new Date("2016/04/01");
+        this.todayDate = new Date();
         this.todayDate.setDate(1);
         this.todayDate.setHours(0);
         this.todayDate.setMinutes(0);
@@ -305,7 +306,7 @@ export class ElementsDashboard extends Component {
     }
 
     filterElements = () => {
-        const {elements, elements_by_date, elements_by_type} = this.props;
+        const {elements, elements_by_date, elements_by_date_future, elements_by_type} = this.props;
         const {selected_date, selected_enddate, selected_type} = this;
         const {selectedElements} = this.state;
 
@@ -327,12 +328,22 @@ export class ElementsDashboard extends Component {
             const current_date_str = this.formatDateFromAPI(current_date);
             if (current_date_str in elements_by_date) {
                 const elements_for_current_date = elements_by_date[current_date_str];
+                const elements_for_future_date = elements_by_date_future[current_date_str];
 
                 //Fetch all elements for current_day
                 for ( let [id, element] of Object.entries(elements_for_current_date)) {
                     //Validate type
                     if (selected_type_id == "all" || element.element_type == selected_type_id) {
                         elements_matched.push(element);
+                    }
+                }
+
+                for ( let [id, element] of Object.entries(elements_for_future_date)) {
+                    //Validate type
+                    if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                        if (!(id in elements_matched)) {
+                            elements_matched.push(element);
+                        }
                     }
                 }
             }
