@@ -84,7 +84,7 @@ export class ProposalList extends Component {
     };
 
     render() {
-        console.log("render ProposalList");
+        console.debug("render ProposalList");
         const {proposals, sameWidth, width, aggregations} = this.props;
 
         const max_width=1024;
@@ -130,13 +130,17 @@ export class ProposalList extends Component {
         )
 
         // Last Proposals (the first bug, the other ones 2 per row)
-        const lastProposals =proposals.map((tile, index) => {
+        const lastProposals = proposals.map((tile, index) => {
                 const {selected} = tile;
 
                 let result, components;
-                if ('prediction' in tile && tile.prediction != null && 'result' in tile.prediction) {
+
+                if ('prediction' in tile && tile.prediction != null && tile.prediction != undefined && 'result' in tile.prediction) {
                     const predictionAdapted = adaptProposalData(tile.prediction['result']);
-                    const current = predictionAdapted[aggregationSelected];
+
+		    //Fix bug with non-existent aggretate for current proposal, fetch the first one available
+                    const current = (aggregationSelected in predictionAdapted)?predictionAdapted[aggregationSelected] : predictionAdapted[ Object.keys(predictionAdapted)[0] ];
+
                     result = current.result;
                     components = current.components;
                 }
