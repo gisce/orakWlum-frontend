@@ -51,6 +51,7 @@ export default class ProfileView extends React.Component {
                         <ProposalDefinition
                             aggregationsList={aggregations}
                             sourcesList={sources.measures}
+                            type={"proposal"}
                         />
                     }
                 </div>
