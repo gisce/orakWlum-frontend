@@ -17,6 +17,13 @@ import {adaptProposalData} from '../../utils/graph';
 import { dispatchNewRoute} from '../../utils/http_functions';
 import {capitalize} from '../../utils/misc';
 
+const element_colors = {
+    'proposal': 'accepted',
+    'historical': 'base',
+    'comparation': 'denied',
+    'concatenation': 'pending',
+}
+
 const styles = {
   root: {
     display: 'flex',
@@ -87,6 +94,8 @@ export class ProposalList extends Component {
         console.debug("render ProposalList");
         const {proposals, sameWidth, width, aggregations} = this.props;
 
+	const with_graph = (this.props.with_graph)?this.props.with_graph:true;
+
         const max_width=1024;
         const max_height=300;
 
@@ -152,7 +161,7 @@ export class ProposalList extends Component {
                 const subtitle = <span>{pastday_str} {pastday}</span>
 
                 const element_type = {
-                    color: 'pending',
+                    color: element_colors[tile.element_type],
                     lite: tile.element_type.toUpperCase().slice(0,3),
                     full: tile.element_type.toUpperCase(),
                 }
@@ -164,7 +173,7 @@ export class ProposalList extends Component {
                     </div>
                 )
 
-                const the_graph = (false && tile.prediction && Object.keys(tile.prediction).length >0 ) ?
+                const the_graph = (with_graph && tile.prediction && Object.keys(tile.prediction).length >0 ) ?
                     (
                         <ProposalGraph
                               stacked={true}
