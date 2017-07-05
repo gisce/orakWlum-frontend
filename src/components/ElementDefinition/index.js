@@ -182,8 +182,6 @@ export class ProposalDefinition extends Component {
         const aggregationsList = this.state.aggregations_all;
 
         let aggregationsWithStatus = [];
-        console.log("aggregations with status", aggregationsList)
-
         for (var i=0; i<aggregationsList.length; i++) {
             let agg = aggregationsList[i];
 
@@ -194,8 +192,6 @@ export class ProposalDefinition extends Component {
                 }
             );
         }
-
-        console.log("aggregationsWithStatus", aggregationsWithStatus)
 
         const sourcesList = this.state.sources_all;
 
@@ -550,7 +546,6 @@ export class ProposalDefinition extends Component {
         if (selectedRows == "all") {
             //mark all as selected
             Object.entries(aggregationsAll).map(function(agg, i){
-                console.log(agg, i)
                 aggregations_list[i] =  true;
                 aggregations_selected.push(i);
             });
