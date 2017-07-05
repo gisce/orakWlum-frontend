@@ -20,11 +20,16 @@ import DatePicker from 'material-ui/DatePicker';
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
+
 import {Elementt} from '../Element'
 
 import * as actionCreators from '../../actions/orakwlum';
 
 const revalidator = require('revalidator');
+
+
 
 const styles = {
     disclamer:{
@@ -231,6 +236,17 @@ export class ProposalDefinition extends Component {
                 content: (
                     <div>
                         <p>We need some details to create a new {this.state.type.name}.</p>
+
+
+
+                        <SelectField
+                            floatingLabelText="Element type"
+                            value={this.state.element_type}
+                            onChange={this.handleChangeElementType}
+			>
+                            <MenuItem key={1} value={"proposal"} primaryText="Proposal" />
+                            <MenuItem key={2} value={"historical"} primaryText="Historical" />
+                        </SelectField>
 
                         <DatePicker
                             floatingLabelText="Start date"
@@ -455,10 +471,16 @@ export class ProposalDefinition extends Component {
 
     handleChangeName = (event, name) => {
         this.setState({
-            name: name,
+            name,
         });
 
         this.validateField({name: name}, "name", { properties: { name: validations.name} } );
+    };
+
+    handleChangeElementType = (event, index, element_type) => {
+        this.setState({
+            element_type,
+        });
     };
 
     handleChangeStartDate = (event, date_start) => {
@@ -466,11 +488,11 @@ export class ProposalDefinition extends Component {
 
         (this.state.date_end == null) &&
             this.setState({
-                date_end: date_end,
+                date_end,
             });
 
         this.setState({
-            date_start: date_start,
+            date_start,
             date_start_error_text: null,
         });
 
