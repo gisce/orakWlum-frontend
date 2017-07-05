@@ -435,7 +435,8 @@ export class Elementt extends Component {
         const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
 
-        const title = <span>{capitalize(element_type)} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
+	const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
+        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
         const subtitle = <span>Using {days[dayOfElement]} {day_string}</span>;
 
         const offset = (withPicture)?0:1;
@@ -590,14 +591,16 @@ export class Elementt extends Component {
                   )
                   :null;
 
+        const disableDetail = (element_type == "concatenation")?"disabled":"";
+        const disableExport = (element_type == "comparation")?"disabled":"";
 
         const proposalActions =
              (!readOnly && !this.comparation)?
               <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon/>} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
                 <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
-                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"}/>
-                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"}/>
+                <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
+                <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
