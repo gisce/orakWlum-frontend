@@ -347,7 +347,6 @@ export class ElementsDashboard extends Component {
 
 		for ( let [id, element] of Object.entries(elements_for_future_date)) {
                     //Validate type
-			console.log(id, element);
                     if (selected_type_id == "all" || element.element_type == selected_type_id) {
                         if (!(id in elements_matched)) {
                             elements_matched.push(element);
@@ -368,7 +367,7 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
-        console.log ("render ElementsDash")
+        console.debug ("render ElementsDash")
         const {aggregations} = this.props;
         const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
