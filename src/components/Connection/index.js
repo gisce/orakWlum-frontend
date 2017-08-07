@@ -125,14 +125,16 @@ export class Connection extends Component {
 			})
 
 			.on('elements.file', (content) => {
-				console.debug('[Websocket] Exported element received');
+                console.log(window.socket.id, content.client_id);
+                if (window.socket.id == content.client_id) {
+    				console.debug('[Websocket] Exported element received');
+                    const file_buffer = Buffer.from(content.result);
+                    const file = new Blob( [ file_buffer ]);
+                    FileSaver.saveAs(file, content.filename);
 
-                const file_buffer = Buffer.from(content.result);
-                const file = new Blob( [ file_buffer ]);
-                FileSaver.saveAs(file, content.filename);
-
-                if (!content.silent) {
-                    this.prepareNotification(content, "XLS document exported");;
+                    if (!content.silent) {
+                        this.prepareNotification(content, "XLS document exported");;
+                    }
                 }
 			})
 
