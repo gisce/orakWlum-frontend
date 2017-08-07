@@ -89,6 +89,9 @@ export class Connection extends Component {
         //initialize the connection
 		const initial=true;
 
+        window.socket._callbacks = Object.assign({})
+
+
 		//listen events!
 		window.socket
 
