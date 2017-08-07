@@ -1,59 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import * as actionCreators from '../../actions/settings';
-
 import { SmartTable } from 'materialized-reactions/SmartTable';
 
 const styles = {
 };
 
-function mapStateToProps(state) {
-    return {
-        settings: state.settings,
-        token: state.auth.token,
-        loaded: state.settings.loaded,
-        isFetching: state.settings.isFetching,
-        error: state.settings.error,
-        errorMessage: state.settings.data,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(actionCreators, dispatch);
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
 export class SettingsSources extends React.Component {
-    componentDidMount() {
-        this.props.reload &&
-            this.fetchData();
-    }
-
-    fetchData() {
-        const token = this.props.token;
-        this.props.fetchSettings(token);
-    }
-
-    updateData(data) {
-        const token = this.props.token;
-        this.props.updateSettings(token, data);
-    }
-
-    toggleStatus(data) {
-        const token = this.props.token;
-        this.props.toggleSourceSettings(token, data);
-    }
-
     render() {
-        if (this.props.loaded) {
+        const {measures, static_data, onToggle} = this.props;
 
-            const {measures, static_data} = (this.props.reload)?
-                 this.props.settings.data
-                 :
-                 this.props;
+        if (Object.keys(measures).length > 0 && Object.keys(static_data).length > 0) {
 
             //Adapt measures
             const measures_adapted = measures.map(function( entry, index){
@@ -163,14 +119,14 @@ export class SettingsSources extends React.Component {
                         header={headers}
                         data={measures_adapted}
                         appendButtons={toggle_active}
-                        onUpdate={(changed_data) => this.toggleStatus(changed_data)}
+                        onUpdate={(changed_data) => onToggle(changed_data)}
                     />
                     <SmartTable
                         title="Static Data"
                         header={headers}
                         data={static_data_adapted}
                         appendButtons={toggle_active}
-                        onUpdate={(changed_data) => this.toggleStatus(changed_data)}
+                        onUpdate={(changed_data) => onToggle(changed_data)}
                     />
                 </div>
             )
@@ -181,8 +137,9 @@ export class SettingsSources extends React.Component {
 }
 
 SettingsSources.propTypes = {
-    measures: PropTypes.array,
-    static_data: PropTypes.array,
+    measures: PropTypes.array.isRequired,
+    static_data: PropTypes.array.isRequired,
+    onToggle: PropTypes.func.isRequired,
     reload: PropTypes.bool,
     lite: PropTypes.bool,
 };

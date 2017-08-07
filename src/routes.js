@@ -1,14 +1,13 @@
 /* eslint new-cap: 0 */
 
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, Redirect } from 'react-router';
 
 /* containers */
 import { App } from './containers/App';
 import { HomeContainer } from './containers/HomeContainer';
 import LoginView from './components/LoginView';
 import RegisterView from './components/RegisterView';
-import ProtectedView from './components/ProtectedView';
 import Analytics from './components/Analytics';
 import NotFound from './components/NotFound';
 import Elements from './components/ElementsView';
@@ -26,6 +25,8 @@ import Comparator from './components/ProposalComparatorView';
 
 import Websocket from './components/Websocket';
 import Element from './components/ElementView';
+import ElementsNew from './components/ElementsNewView';
+import Concatenator from './components/ElementsConcatenation';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -34,7 +35,7 @@ import { requireNoAuthentication } from './components/notAuthenticatedComponent'
 
 export default (
     <Route path="/" component={App}>
-        <Route path="main" component={requireAuthentication(ProtectedView)} />
+        <Redirect from="" to="elements" />
         <Route path="login" component={requireNoAuthentication(LoginView)} />
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
@@ -46,15 +47,26 @@ export default (
         <Route path="historicals" component={requireAuthentication(Historicals)} />
         <Route path="historicals/new" component={requireAuthentication(HistoryNewView)} />
         <Route path="historicals/:historicalId" component={requireAuthentication(Historical)} />
-        <Route path="compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
         <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
 
-        <Route path="elements" component={Websocket} />
-        <Route path="elements/:elementID" component={Element} />
+        <Redirect from="main" to="elements" />
+        <Route name="elements" path="elements" component={requireAuthentication(Websocket)} />
+        <Route name="elements.type:historical" path="elements/type/historical" component={Websocket} />
+        <Route name="elements.type:proposal" path="elements/type/proposal" component={Websocket} />
+        <Redirect from="elements/type/all" to="elements" />
 
-        <Route path="*" component={DetermineAuth(NotFound)} />
+        <Redirect from="elements/concatenate" to="elements" />
+
+        <Route name="elements.create" path="elements/new" component={requireAuthentication(ElementsNew)} />
+
+        <Route name="Element" path="elements/:elementID" component={requireAuthentication(Element)} />
+        <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={requireAuthentication(Concatenator)} />
+        <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+
+        <Route path="*" component={NotFound} />
+
     </Route>
 );

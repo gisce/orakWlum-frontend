@@ -17,19 +17,19 @@ import { LOGOUT_USER } from '../constants/index'
 
 const appReducer = combineReducers({
     routing: routerReducer,
-    auth,
-    data,
-    proposals,
-    proposal,
-    aggregations,
-    profile,
-    about,
-    password,
-    historical,
-    historicals,
-    elements,
-    settings,
     orakwlum,
+    auth,
+    //data,
+    //proposals,
+    //proposal,
+    //aggregations,
+    //profile,
+    //about,
+    //password,
+    //historical,
+    //historicals,
+    //elements,
+    //settings,
 });
 
 const rootReducer = (state, action) => {

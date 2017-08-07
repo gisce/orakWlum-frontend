@@ -22,7 +22,6 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 const style = {
     marginTop: 50,
     paddingBottom: 50,

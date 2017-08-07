@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../../actions/profile';
+import * as actionCreators from '../../actions/orakwlum';
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -37,11 +37,14 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
-        profile: state.profile,
-        statusText: state.profile.statusText,
-        statusType: state.profile.statusType,
-        status: state.profile.status,
-        message_open: state.profile.message_open,
+        profile: state.orakwlum.profile,
+
+        /*
+        statusText: state.orakwlum.profile.statusText,
+        statusType: state.orakwlum.profile.statusType,
+        status: state.orakwlum.profile.status,
+        message_open: state.orakwlum.profile.message_open,
+        */
     };
 }
 
@@ -57,8 +60,8 @@ export class UserProfile extends Component {
             profile: props.profile,
             editing: false,
             bckp_profile: JSON.parse(JSON.stringify(props.profile)),
-            groups: props.profile.data.groups,
-            bckp_groups: Object.assign([], props.profile.data.groups),
+            groups: props.profile.groups,
+            bckp_groups: Object.assign([], props.profile.groups),
         };
     }
 
@@ -91,7 +94,7 @@ export class UserProfile extends Component {
 
         // Try to update data
         if (this.props.onUpdate) {
-            this.props.onUpdate(this.props.profile.data);
+            this.props.onUpdate(this.props.profile);
         }
 
         this.activateSnack()
@@ -99,7 +102,7 @@ export class UserProfile extends Component {
 
     tmpChangeValue(e, type) {
         const value = e.target.value;
-        this.props.profile.data[type] = value;
+        this.props.profile[type] = value;
     }
 
     discard_edit_profile(e) {
@@ -154,7 +157,7 @@ export class UserProfile extends Component {
     render() {
         let editing = this.state.editing;
 
-        const profile = this.state.profile.data;
+        const profile = this.state.profile;
 
         const groups = this.state.groups;
 
@@ -164,6 +167,9 @@ export class UserProfile extends Component {
 
         //Load gravatar img or default from github
         const image = "https://www.gravatar.com/avatar/"+emailHash+"?d=https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/www/public/images/user.jpg";
+
+
+        const {statusText, statusType, status} = this.props.profile;
 
         const UserProfile = () => (
 

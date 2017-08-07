@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as actionCreators from '../actions/elements';
+import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
 import { ProposalComparator } from './ProposalComparator';
@@ -13,12 +13,9 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 function mapStateToProps(state) {
 
     return {
-        data: state.elements,
-        allAggregations: state.elements.allAggregations,
-        comparison: state.elements.comparison,
-        token: state.auth.token,
-        loaded: state.elements.loaded,
-        isFetching: state.elements.isFetching,
+        elements: state.orakwlum.elements,
+        elements_volatile: state.orakwlum.elements_volatile,
+        aggregations: state.orakwlum.aggregations,
     };
 }
 
@@ -28,25 +25,47 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProposalComparatorView extends React.Component {
-    componentWillMount() {
+    constructor(props){
+        super(props);
+
         this.idA = this.props.params.elementA;
         this.idB = this.props.params.elementB;
+        this.idComp = "comparation_" + this.idA + "," + this.idB;
 
-        this.fetchData();
+        const {elements, elements_volatile, aggregations} = this.props;
+
+        if (Object.keys(aggregations) == 0)
+            this.fetchAggregations(true);
+
+        if (!(this.idComp in elements_volatile))
+            this.fetchComparation();
+
+        if (!(this.idA in elements))
+            this.fetchElement(this.idA)
+
+        if (!(this.idB in elements))
+            this.fetchElement(this.idB)
     }
 
-    fetchData() {
-        const token = this.props.token;
-        this.props.fetchElementsByIDS(token, [this.idA, this.idB], true);
+    fetchAggregations(initial) {
+        this.props.fetchAggregations(initial);
+    }
+
+    fetchComparation(initial=true) {
+        this.props.fetchComparation([this.idA, this.idB], initial);
+    }
+
+    fetchElement(element, silent=true) {
+        this.props.fetchElements(element, silent);
     }
 
     render() {
-        const elements = this.props.data.data;
-        const {allAggregations, comparison} = this.props;
+        const {elements, aggregations, elements_volatile} = this.props;
 
-        if (elements != null && elements.length==2 && allAggregations != null) {
-            const elementA = elements[0];
-            const elementB = elements[1];
+        if (elements != null && this.idA in elements && this.idB in elements && elements_volatile && this.idComp in elements_volatile) {
+            const elementA = elements[this.idA];
+            const elementB = elements[this.idB];
+            const comparison = elements_volatile[this.idComp];
 
             //Prepare the Aggregations for each element
             let aggregationsListA = [];
@@ -54,16 +73,16 @@ export default class ProposalComparatorView extends React.Component {
             let aggregationsListComparison = [];
 
             elementA.aggregations.map( function(agg, i){
-                if (agg in allAggregations)
-                    aggregationsListA.push( allAggregations[agg]);
+                if (agg in aggregations)
+                    aggregationsListA.push( aggregations[agg]);
             })
             elementB.aggregations.map( function(agg, i){
-                if (agg in allAggregations)
-                    aggregationsListB.push( allAggregations[agg]);
+                if (agg in aggregations)
+                    aggregationsListB.push( aggregations[agg]);
             })
             comparison.aggregations.map( function(agg, i){
-                if (agg in allAggregations)
-                    aggregationsListComparison.push( allAggregations[agg]);
+                if (agg in aggregations)
+                    aggregationsListComparison.push( aggregations[agg]);
             })
 
             //Prepare the final object for each element
@@ -89,25 +108,23 @@ export default class ProposalComparatorView extends React.Component {
 
             return (
                 <div>
-                    {this.props.loaded &&
-                        <div>
-                            <ProposalComparator
-                                title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
-                                elementA={elementA_merged}
-                                elementB={elementB_merged}
-                                comparison={comparison_merged}
-                                mode={"unique"}
-                            />
-                        </div>
-                    }
-                    {debug(this.props.data)}
+                    <div>
+                        <ProposalComparator
+                            title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
+                            elementA={elementA_merged}
+                            elementB={elementB_merged}
+                            comparison={comparison_merged}
+                            mode={"unique"}
+                        />
+                    </div>
+                    {debug(this.props)}
                 </div>
             );
         }
         return (
             <div>
                 <LoadingAnimation />
-                {debug(this.props.data.data)}
+                {debug(this.props)}
             </div>);
     }
 }
