@@ -89,6 +89,11 @@ export class Connection extends Component {
         //initialize the connection
 		const initial=true;
 
+        // Preventive clean'up of already set Listeners
+        if (window.socket.connected && Object.keys(window.socket._callbacks).length > 0 ) {
+            window.socket.removeAllListeners()
+        }
+
 		//listen events!
 		window.socket
 
@@ -125,14 +130,16 @@ export class Connection extends Component {
 			})
 
 			.on('elements.file', (content) => {
-				console.debug('[Websocket] Exported element received');
+                // Prepare the attachment just for the requester client
+                if (window.socket.id == content.client_id) {
+    				console.debug('[Websocket] Exported element received');
+                    const file_buffer = Buffer.from(content.result);
+                    const file = new Blob( [ file_buffer ]);
+                    FileSaver.saveAs(file, content.filename);
 
-                const file_buffer = Buffer.from(content.result);
-                const file = new Blob( [ file_buffer ]);
-                FileSaver.saveAs(file, content.filename);
-
-                if (!content.silent) {
-                    this.prepareNotification(content, "XLS document exported");;
+                    if (!content.silent) {
+                        this.prepareNotification(content, "XLS document exported");;
+                    }
                 }
 			})
 
