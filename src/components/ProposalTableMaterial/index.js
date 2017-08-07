@@ -75,10 +75,11 @@ export class ProposalTableMaterial extends Component {
             );
         }
 
+        //Prepare the components keys, sorted by name ASC
+        const componentsKeys=Object.keys(components).sort();
+
         //Prepare headers
-        const headers = Object.keys(components)
-            .sort() //sort by key ASC
-            .map(function(component, i) {
+        const headers = componentsKeys.map(function(component, i) {
                 const text_color = (colors[i] == "#000000")?'white':'black';
 
                 return (
@@ -110,7 +111,6 @@ export class ProposalTableMaterial extends Component {
         for (var a=0; a<Object.keys(components).length; a++)
             allTotalSum[a] = 0;
 
-        const componentsKeys=Object.keys(components);
         for (var i=0; i<data.length; i++) {
             let cells=[];
             cells.push(

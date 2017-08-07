@@ -336,7 +336,7 @@ export function fetchAggregations(a_filter=null, initial=false) {
 export function exportElement(a_filter=null, initial=false) {
     return (dispatch) => {
         dispatch(fetchElementsExportRequest(initial));
-        ask_the_api("elements.export", a_filter);
+        ask_the_api("elements.export", a_filter, window.socket.id);
     };
 }
 
