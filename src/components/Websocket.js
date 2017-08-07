@@ -31,17 +31,6 @@ export default class Websocket extends React.Component {
     }
 
     componentDidMount() {
-        //initialize the connection
-        const initial=true;
-
-        const {elements, aggregations} = this.props;
-
-        if (Object.keys(aggregations) == 0)
-            this.fetchAggregations(true);
-
-        if (Object.keys(elements) == 0)
-            this.fetchElements(true);
-
     }
 
     fetchAggregations(silent) {
@@ -54,98 +43,25 @@ export default class Websocket extends React.Component {
         this.props.fetchElements(the_filter, silent);
     }
 
-    massiveCleanUp(){
-        console.debug("massive cleaning all elements")
-        ask_the_api('all_users.elements.cleanup', "users")
-    }
-
-    massiveFetchAllElements(){
-        console.debug("massive fetch all elements")
-        ask_the_api('all_users.elements.update', "users");
-    }
-
-    fetchOneElement(){
-        console.debug("updating some elements")
-        ask_the_api('element.get');
+    overrideElements(silent) {
+        const the_filter = null;
+        const override = true;
+        this.props.fetchElements(the_filter, silent, override);
     }
 
     render() {
-        const {message, elements, aggregations, loaded} = this.props;
-
         const the_path = this.props.location.pathname;
-
-        // Adapt elements object to array of content of each element
-        let the_elements = [];
-        for ( let [key, value] of Object.entries(elements)) {
-            the_elements.push(value);
-        }
 
         return (
             <div>
-
-            {
-                {loaded} &&
-                    <p>{message}</p>
-            }
-
-                <button
-                    onClick={() => this.fetchElements()}
-                >
-                    reFetch elements
-                </button>
-
-                <button
-                    onClick={() => this.fetchOneElement()}
-                >
-                    Fetch NEW rand element
-                </button>
-
-                <button
-                    onClick={() => this.massiveFetchAllElements()}
-                >
-                    Update ALL with rand
-                </button>
-
-                <button
-                    onClick={() => this.massiveCleanUp()}
-                >
-                    Clear ALL instances
-                </button>
-
-
-                {
-                    (
-                        ( aggregations != null && Object.keys(aggregations).length > 0) &&
-
-                        ( elements != null && Object.keys(aggregations).length > 0)
-                    )?
-
-                        <div>
-                            <ElementsDashboard
-                                title="Last proposals"
-                                path={the_path}
-
-                                elements={the_elements}
-                                aggregations={aggregations}
-                            />
-                        </div>
-
-                    :
-
-                        <div>
-                            <LoadingAnimation />
-                        </div>
-
-                }
-
-                {debug(Object.keys(elements).length)}
+                <ElementsDashboard
+                    title="Last proposals"
+                    path={the_path}
+                />
             </div>
         );
     }
 }
 
 Websocket.propTypes = {
-    loaded: PropTypes.bool,
-    message: PropTypes.string,
-    elements: PropTypes.object,
 };

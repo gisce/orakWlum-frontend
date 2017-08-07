@@ -18,6 +18,10 @@ import localforage from 'localforage';
 import { persistStore } from 'redux-persist';
 import { asyncSessionStorage } from 'redux-persist/storages'
 
+import { App } from './containers/App';
+import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
+
+
 import './style.scss';
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
@@ -41,7 +45,10 @@ class AppProvider extends React.Component {
   }
 
   componentWillMount(){
-    persistStore(store, {storage: localforage}, () => {
+    persistStore(store, {
+        storage: localforage,
+        blacklist: ['routing']
+    }, () => {
       console.debug("Rehydration complete")
       this.setState({ rehydrated: true })
     })
@@ -51,7 +58,14 @@ class AppProvider extends React.Component {
 	//Show loadingAnimation until store is rehydrated
     if(!this.state.rehydrated){
 		return (
-			<div>Loading okW...</div>
+            <Provider store={store}>
+                 <App>
+                     <div>
+                         <h1>Starting orakWlum!</h1>
+                         <LoadingAnimation />
+                     </div>
+                 </App>
+            </Provider>
 		)
     }
 

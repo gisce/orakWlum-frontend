@@ -34,7 +34,7 @@ export default class Breadcrumb extends React.Component {
                 <ul className="breadcrumb">
                     {
                         path_list.map((section, index) => {
-                            if ( index != 0 ) {
+                            if ( index != 0 && section != undefined && section != "") {
 
                                 classActive="";
 

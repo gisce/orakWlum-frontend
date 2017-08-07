@@ -8,24 +8,45 @@ import { browserHistory } from 'react-router';
 const io = require('socket.io-client');
 //export const socket = io.connect('http://api.abe.okw.gisce.net', { reconnection: true, transports: ['websocket', 'polling'] });
 //export const socket = io.connect('http://api.abe.okw.gisce.net:8000', { reconnection: true, transports: ['websocket', 'polling'] });
-export const socket = io.connect(':8000', {
+/*
+export const sockett = io.connect(':8000', {
     reconnection: true,
     transports: ['websocket', 'polling'],
     query: 'token=' + "rolf28282828",
 });
-
+*/
 const tokenConfig = (token) => ({
     headers: {
         'Authorization': token, // eslint-disable-line quote-props
     },
 });
 
+
+//Create a socket integrating the token
+export function createSocket(token) {
+    console.debug("[socket] Creating socket");
+
+    window.socket = io.connect( {
+        reconnection: true,
+        transports: ['websocket', 'polling'],
+        query: 'token=' + token,
+    });
+}
+export function destroySocket() {
+    ask_the_api("socket.destroy");
+    return window.socket.close()
+}
+
 //Abstract method to ask to emit something to the API
-export function ask_the_api (channel, params=null) {
-    socket.emit(
-        channel,
-        params
+export function ask_the_api (...args) {
+    window.socket.emit(
+        ...args,
     );
+}
+
+export function force_logout (){
+    destroySocket();
+    undefine_token();
 }
 
 export function dispatchNewRoute(route, event=false) {

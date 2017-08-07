@@ -22,7 +22,9 @@ import {
     undefine_token,
     get_token,
     create_user,
-    ask_recover
+    ask_recover,
+    destroySocket,
+    ask_the_api,
 } from '../utils/http_functions'
 
 import {
@@ -58,6 +60,8 @@ export function loginUserRequest() {
 }
 
 export function logout() {
+    ask_the_api("session.logout");
+    destroySocket();
     undefine_token();
     return {
         type: LOGOUT_USER,
@@ -77,7 +81,7 @@ export function redirectToRoute(route) {
     };
 }
 
-export function loginUser(email, password, redirect = "/proposals") {
+export function loginUser(email, password, redirect = "/elements") {
     return function(dispatch) {
         dispatch(loginUserRequest());
         return get_token(email, password)
@@ -85,7 +89,8 @@ export function loginUser(email, password, redirect = "/proposals") {
             .then(response => {
                 try {
                     dispatch(loginUserSuccess(response.token));
-                    browserHistory.push(redirect);
+                    //browserHistory.push(redirect);
+                    window.location.assign(redirect)
                 } catch (e) {
                     alert(e);
                     dispatch(loginUserFailure({

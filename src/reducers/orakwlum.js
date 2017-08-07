@@ -1,20 +1,47 @@
-import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST} from '../constants';
+import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO, FETCH_VERSION_REQUEST, RECEIVE_VERSION} from '../constants';
 import {createReducer} from '../utils/misc';
+
+//deepmerge lib
+const deepmerge = require('deepmerge')
 
 const initialState = {
     isFetching: false,
     loaded: false,
     message: "",
+    aggregations: {},
     elements: {},
-    aggregations: {}
+    elements_volatile: {},
+    elements_by_date: {},
+    elements_by_date_future: {},
+    elements_by_date: {},
+    profile: {},
+    sources: {},
+    version: {},
 };
 
 export default createReducer(initialState, {
+    [RECEIVE_ELEMENTS_VOLATILE]: (state, payload) => Object.assign({}, state, {
+        elements_volatile: (state.elements_volatile == undefined || state.elements_volatile == null || Object.keys(state.elements_volatile).length == 0) ? payload.elements : deepmerge(state.elements_volatile, payload.elements),
+
+        elements_by_type: (state.elements_by_type == undefined || state.elements_by_type == null || Object.keys(state.elements_by_type).length == 0) ? payload.by_type : deepmerge(state.elements_by_type, payload.by_type),
+
+        elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
+
+        elements_by_date_future: (state.elements_by_date_future == undefined || state.elements_by_date_future == null || Object.keys(state.elements_by_date_future).length == 0) ? payload.by_date_future : deepmerge(state.elements_by_date_future, payload.by_date_future),
+
+        message: payload.message,
+        isFetching: false,
+        loaded: true
+    }),
     [RECEIVE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
-        elements: {
-            ...state.elements,
-            ...payload.elements
-        },
+        elements: (state.elements == undefined || state.elements == null || Object.keys(state.elements).length == 0) ? payload.elements : deepmerge(state.elements, payload.elements),
+
+        elements_by_type: (state.elements_by_type == undefined || state.elements_by_type == null || Object.keys(state.elements_by_type).length == 0) ? payload.by_type : deepmerge(state.elements_by_type, payload.by_type),
+
+        elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
+
+        elements_by_date_future: (state.elements_by_date_future == undefined || state.elements_by_date_future == null || Object.keys(state.elements_by_date_future).length == 0) ? payload.by_date_future : deepmerge(state.elements_by_date_future, payload.by_date_future),
+
         message: payload.message,
         isFetching: false,
         loaded: true
@@ -22,6 +49,9 @@ export default createReducer(initialState, {
     [OVERRIDE_ELEMENTS]: (state, payload) => Object.assign({}, state, {
         elements: payload.elements,
         message: payload.message,
+        elements_by_type: payload.by_type,
+        elements_by_date: payload.by_date,
+        elements_by_date_future: payload.by_date_future,
         isFetching: false,
         loaded: true
     }),
@@ -40,5 +70,71 @@ export default createReducer(initialState, {
         message: payload.message
     }),
 
-    [OVERRIDE_MESSAGE]: (state, payload) => Object.assign({}, state, {message: payload.message})
+    [OVERRIDE_MESSAGE]: (state, payload) => Object.assign({}, state, {
+        message: payload.message
+    }),
+
+    [RECEIVE_SETTINGS]: (state, payload) =>
+        Object.assign({}, state, {
+            sources: payload.sources,
+            isFetching: false,
+            loaded: true,
+            error: false,
+    }),
+
+
+
+    //PROFILE
+
+    [RECEIVE_PROFILE]: (state, payload) =>
+        Object.assign({}, state, {
+            profile: payload.profile,
+            isFetching: false,
+            loaded: true,
+            error: false,
+        }),
+    [FETCH_PROFILE_REQUEST]: (state) =>
+        Object.assign({}, state, {
+            isFetching: true,
+        }),
+    [RECEIVE_PROFILE_KO]: (state, payload) =>
+        Object.assign({}, state, {
+            isFetching: false,
+            data: payload.data,
+            loaded: false,
+            error: true,
+        }),
+
+    [UPDATE_PROFILE_OK]: (state, payload) =>
+        Object.assign({}, state, {
+            profile: payload.profile,
+            statusText: payload.statusText,
+            statusType: payload.statusType,
+            message_open: true,
+    }),
+
+    [UPDATE_PROFILE_REQUEST]: (state) =>
+        Object.assign({}, state, {
+            isUpdating: true,
+    }),
+
+
+
+    //VERSION
+
+    [FETCH_VERSION_REQUEST]: (state, payload) =>
+        Object.assign({}, state, {
+            isFetching: true,
+            message_text: payload.message,
+    }),
+
+    [RECEIVE_VERSION]: (state, payload) =>
+        Object.assign({}, state, {
+            version: payload.version,
+            isFetching: false,
+            loaded: true,
+            message_text: payload.message,
+    }),
+
+
 });

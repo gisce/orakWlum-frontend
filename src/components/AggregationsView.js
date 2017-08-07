@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actionCreators from '../actions/aggregations';
+import * as actionCreators from '../actions/orakwlum';
 
 import { SmartTable } from 'materialized-reactions/SmartTable';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
@@ -11,13 +11,7 @@ import { debug } from '../utils/debug';
 
 function mapStateToProps(state) {
     return {
-        data: state.aggregations,
-        token: state.auth.token,
-        loaded: state.aggregations.loaded,
-        isFetching: state.aggregations.isFetching,
-        error: state.aggregations.error,
-        errorMessage: state.aggregations.data,
-        aggregations: state.aggregations.aggregations_list,
+        aggregations: state.orakwlum.aggregations,
     };
 }
 
@@ -28,19 +22,20 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AggregationsView extends React.Component {
     componentDidMount() {
-        this.fetchData();
+        if (Object.keys(this.props.aggregations).length == 0)
+            this.fetchData();
     }
 
-    fetchData() {
-        const token = this.props.token;
-        this.props.fetchAggregations(token);
+    fetchData(silent = true) {
+        const the_filter = null;
+        this.props.fetchAggregations(the_filter, silent);
     }
 
     render() {
-
         let Aggregations;
+        const {aggregations} = this.props;
 
-        if (this.props.loaded && this.props.aggregations) {
+        if (aggregations && Object.keys(aggregations).length > 0) {
             const headers = [
                 {
                     title: 'Name',
@@ -58,7 +53,8 @@ export default class AggregationsView extends React.Component {
             ];
 
             //Adapt Aggregations List
-            const aggregations_adapted = this.props.aggregations.map(function( entry, index){
+            const aggregations_adapted = Object.keys(aggregations).map(function( aggregation, index){
+                const entry = aggregations[aggregation];
                 const db_fields = entry.db_fields.map(function(field, index){
                     const separator = (index==0)? "":", ";
                     return separator + field;
@@ -74,15 +70,13 @@ export default class AggregationsView extends React.Component {
                 )
             })
 
-            console.log(aggregations_adapted);
-
             Aggregations = <SmartTable header={headers} data={aggregations_adapted}/>
         }
 
         return (
             <div>
                 {
-                    (!this.props.loaded) ?
+                    (Object.keys(aggregations).length == 0) ?
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
@@ -104,7 +98,4 @@ export default class AggregationsView extends React.Component {
 AggregationsView.propTypes = {
     aggregations: PropTypes.object,
     fetchAggregations: PropTypes.func,
-    loaded: PropTypes.bool,
-    data: PropTypes.any,
-    token: PropTypes.string,
 };

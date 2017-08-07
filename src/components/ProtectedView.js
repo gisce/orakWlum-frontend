@@ -6,10 +6,7 @@ import * as actionCreators from '../actions/data';
 
 function mapStateToProps(state) {
     return {
-        data: state.data,
         token: state.auth.token,
-        loaded: state.data.loaded,
-        isFetching: state.data.isFetching,
     };
 }
 

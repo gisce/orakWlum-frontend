@@ -47,64 +47,69 @@ const colors = {
 export class ProposalTag extends Component {
     render() {
         const tag = this.props.tag;
-        const is_lite = (this.props.lite!=null)?this.props.lite:false;
-        const is_readOnly = (this.props.readOnly)?(this.props.readOnly):false;
-        const is_doubleClick = (this.props.onDoubleClick)?(this.props.onDoubleClick):false;
 
-        const is_deletable = (this.props.handleRequestDelete)?(this.props.handleRequestDelete):handleRequestDelete;
+        if (tag != undefined) {
 
-        const is_selected = (this.props.selected)?(this.props.selected):false;
+            const is_lite = (this.props.lite!=null)?this.props.lite:false;
+            const is_readOnly = (this.props.readOnly)?(this.props.readOnly):false;
+            const is_doubleClick = (this.props.onDoubleClick)?(this.props.onDoubleClick):false;
 
-        const color = (tag.color)? tag.color : (is_selected)?"accepted":"base";
-        const full = (tag.full)? tag.full : tag;
-        const lite = (tag.lite)? tag.lite : "";
+            const is_deletable = (this.props.handleRequestDelete)?(this.props.handleRequestDelete):handleRequestDelete;
 
-        let delete_method = is_deletable;
-        let click_method = handleTouchTap;
+            const is_selected = (this.props.selected)?(this.props.selected):false;
 
-        if (is_readOnly) {
-            delete_method = null;
-            click_method = null;
-        }
+            const color = (tag.color)? tag.color : (is_selected)?"accepted":"base";
+            const full = (tag.full)? tag.full : tag;
+            const lite = (tag.lite)? tag.lite : "";
 
-        if (is_doubleClick) {
-            click_method = is_doubleClick;
-        }
+            let delete_method = is_deletable;
+            let click_method = handleTouchTap;
 
-        const ProposalTag = (is_lite)?
-            () => (
-              <div>
-                  <Avatar style={styles.chip} size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
-                    {lite}
-                  </Avatar>
-              </div>
-            )
-            :
-            () => (
-              <div>
-                  <Chip
-                      backgroundColor={colors[color].soft}
-                      labelColor={colors[color].text}
-                      onRequestDelete={delete_method}
-                      onDoubleClick={click_method}
-                      style={styles.chip}
-                  >
-            {
-              (lite != "") ?
-                  <Avatar size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
-                    {lite}
-                  </Avatar>
-                  :
-                  <div></div>
+            if (is_readOnly) {
+                delete_method = null;
+                click_method = null;
             }
-                  {full}
-                  </Chip>
-              </div>
-          );
 
-        return (
-            <ProposalTag />
-        );
+            if (is_doubleClick) {
+                click_method = is_doubleClick;
+            }
+
+            const ProposalTag = (is_lite)?
+                () => (
+                  <div>
+                      <Avatar style={styles.chip} size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
+                        {lite}
+                      </Avatar>
+                  </div>
+                )
+                :
+                () => (
+                  <div>
+                      <Chip
+                          backgroundColor={colors[color].soft}
+                          labelColor={colors[color].text}
+                          onRequestDelete={delete_method}
+                          onDoubleClick={click_method}
+                          style={styles.chip}
+                      >
+                {
+                  (lite != "") ?
+                      <Avatar size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
+                        {lite}
+                      </Avatar>
+                      :
+                      <div></div>
+                }
+                      {full}
+                      </Chip>
+                  </div>
+              );
+
+            return (
+                <ProposalTag />
+            );
+        }
+        return null
     }
 }
 
