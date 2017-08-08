@@ -24,6 +24,7 @@ import Settings from './components/SettingsView';
 import Comparator from './components/ProposalComparatorView';
 
 import Websocket from './components/Websocket';
+import ElementsList from './components/ElementsList';
 import Element from './components/ElementView';
 import ElementsNew from './components/ElementsNewView';
 import Concatenator from './components/ElementsConcatenation';
@@ -53,7 +54,8 @@ export default (
         <Route path="about"   component={requireAuthentication(About)} />
 
         <Redirect from="main" to="elements" />
-        <Route name="elements" path="elements" component={requireAuthentication(Websocket)} />
+        <Route name="elements" path="elements" component={requireAuthentication(ElementsList)} />
+        <Route name="elementsOld" path="elementsOld" component={requireAuthentication(Websocket)} />
         <Route name="elements.type:historical" path="elements/type/historical" component={Websocket} />
         <Route name="elements.type:proposal" path="elements/type/proposal" component={Websocket} />
         <Redirect from="elements/type/all" to="elements" />
