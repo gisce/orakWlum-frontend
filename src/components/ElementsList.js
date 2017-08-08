@@ -24,7 +24,6 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ElementsList extends React.Component {
     constructor(props) {
@@ -59,7 +58,6 @@ export default class ElementsList extends React.Component {
                 <ElementsDashboard
                     title="Last proposals"
                     path={the_path}
-                    elements={elements}
                 />
             </div>
         );

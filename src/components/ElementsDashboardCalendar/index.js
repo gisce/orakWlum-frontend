@@ -133,6 +133,8 @@ export class ElementsDashboard extends Component {
                 this.selected_type_search = this.filter_types[0].text
         }
 
+        this.elements_matched = [];
+
         this.state = {
             selected_date: this.todayDate,
             selected_enddate: this.endingDate,
@@ -140,19 +142,12 @@ export class ElementsDashboard extends Component {
             searchText: this.selected_type_search,
             selectedElements: {},
             multiElementMode: false, //select
-            elements_matched: [],
         };
 
         const {aggregations, elements} = this.props;
 
         if (Object.keys(aggregations).length == 0 || Object.keys(elements).length == 0)
             this.refreshData()
-    }
-
-
-    componentDidMount() {
-        //Filter elements
-        this.filterElements()
     }
 
     addElement(event) {
@@ -292,12 +287,10 @@ export class ElementsDashboard extends Component {
         let currentElements = this.state.selectedElements;
         currentElements[element] = title;
 
-        let elements_matched = this.state.elements_matched;
-        elements_matched[count].selected = true
+        this.elements_matched[count].selected = true
 
         this.setState({
             selectedElements: currentElements,
-            elements_matched,
         });
 
         //currentElements[element].selected = true;
@@ -307,41 +300,37 @@ export class ElementsDashboard extends Component {
     //unSelect an element
     unselectElement = (count, element) => {
         let currentElements = this.state.selectedElements;
-        let elements_matched = this.state.elements_matched;
-        elements_matched[count].selected = false
+        this.elements_matched[count].selected = false
 
         delete currentElements[element];
 
         this.setState({
             selectedElements: currentElements,
-            elements_matched,
         });
     }
 
     //unSelect all elements
     unselectAllElements = () => {
-        let elements_matched = this.state.elements_matched;
-
         // Unselect all matched elements
-        for ( let [key, value] of Object.entries(elements_matched)) {
+        for ( let [key, value] of Object.entries(this.elements_matched)) {
             value.selected = false;
         }
 
         this.setState({
             selectedElements: [],
-            elements_matched,
         });
     }
 
+    // Filter elements based on the selected type
     filterElements = () => {
         const {elements, elements_by_date, elements_by_date_future, elements_by_type} = this.props;
-        const {selected_date, selected_enddate, selected_type} = this;
+        const {selected_type} = this;
         const {selectedElements} = this.state;
 
-        console.debug("filteringElements", selected_date, selected_enddate, selected_type)
+        console.debug("filteringElements", selected_type)
 
         // The elements
-        let elements_matched = [];
+        this.elements_matched = [];
 
         //Parse to lower selected_type (to match API ids)
         const selected_type_id = selected_type.toLowerCase();
@@ -349,14 +338,9 @@ export class ElementsDashboard extends Component {
         //Validate type
 		for ( let [id, element] of Object.entries(elements)) {
             if (selected_type_id == "all" || element.element_type == selected_type_id) {
-                elements_matched.push(element);
+                this.elements_matched.push(element);
             }
         }
-
-        //Save matched elements
-        this.setState({
-            elements_matched,
-        })
     }
 
     colorizeEvents(e) {
@@ -381,7 +365,11 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
-        const {selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
+        const {selected_type, searchText, selectedElements, multiElementMode} = this.state;
+
+        // Filter elements by current criteria with current target elements
+        this.filterElements();
+        const elements_matched = this.elements_matched;
 
         // The filters
         const the_filters = (
@@ -503,7 +491,6 @@ export class ElementsDashboard extends Component {
               )}
             />;
 
-        // The render result
         return (
             <div>
                 <ContentHeader
