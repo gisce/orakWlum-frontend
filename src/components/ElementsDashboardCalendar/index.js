@@ -31,6 +31,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 //Define the localizer for the Calendar
 BigCalendar.momentLocalizer(moment);
+moment.locale('es');
 
 const styles = {
     calendar: {
