@@ -543,26 +543,7 @@ export class ElementsDashboard extends Component {
             events.push(an_entry);
         }
 
-        console.log(events);
-
         const the_calendar =
-        (multiElementMode)?
-            <BigCalendar
-              selectable
-              events={events}
-              defaultView='month'
-              scrollToTime={new Date(1970, 1, 1, 6)}
-              defaultDate={new Date(2015, 3, 12)}
-              popup={true}
-              views={['month']}
-              onSelectEvent={event => alert(event.title)}
-              onSelectEvent={(count, element, title) => this.toggleSelectElement(count, element, title)}
-              onSelectSlot={(slotInfo) => alert(
-                `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-                `\nend: ${slotInfo.end.toLocaleString()}`
-              )}
-            />
-        :
             <BigCalendar
               selectable
               events={events}
@@ -572,14 +553,12 @@ export class ElementsDashboard extends Component {
               popup={true}
               views={['month']}
               eventPropGetter={e => this.colorizeEvents(e)}
-              onSelectEvent={event => alert(event.title)}
-              onSelectEvent={(event) => dispatchNewRoute(event.url)}
+              onSelectEvent={(multiElementMode)? (count, element, title) => this.toggleSelectElement(count, element, title) : (event) => dispatchNewRoute(event.url)}
               onSelectSlot={(slotInfo) => alert(
                 `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
                 `\nend: ${slotInfo.end.toLocaleString()}`
               )}
             />;
-
 
         // The render result
         return (
