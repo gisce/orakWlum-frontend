@@ -43,6 +43,10 @@ const styles = {
 
     row: {
         marginTop: 20,
+        verticalAlign: 'bottom !important',
+    },
+    actions: {
+        marginTop: 27,
     },
     element_style: {
         'green': { backgroundColor: green900, borderColor: '#777' },
@@ -339,45 +343,14 @@ export class ElementsDashboard extends Component {
         // The elements
         let elements_matched = [];
 
-        // Initialize dates
-        let current_date = new Date(selected_date);
-        const end_date = new Date(selected_enddate);
-
         //Parse to lower selected_type (to match API ids)
         const selected_type_id = selected_type.toLowerCase();
 
-
-        //For each candidate day
-        while (current_date <= end_date) {
-            const current_date_str = this.formatDateFromAPI(current_date);
-            if (current_date_str in elements_by_date) {
-                const elements_for_current_date = elements_by_date[current_date_str];
-
-                //Fetch all elements for current_day
-                for ( let [id, element] of Object.entries(elements_for_current_date)) {
-                    //Validate type
-                    if (selected_type_id == "all" || element.element_type == selected_type_id) {
-                        elements_matched.push(element);
-                    }
-                }
-	    }
-
-            if (current_date_str in elements_by_date_future || current_date_str in elements_by_date_future) {
-                const elements_for_future_date = elements_by_date_future[current_date_str];
-
-		for ( let [id, element] of Object.entries(elements_for_future_date)) {
-                    //Validate type
-                    if (selected_type_id == "all" || element.element_type == selected_type_id) {
-                        if (!(id in elements_matched)) {
-                            elements_matched.push(element);
-                        }
-                    }
-                }
+        //Validate type
+		for ( let [id, element] of Object.entries(elements)) {
+            if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                elements_matched.push(element);
             }
-
-            //+1 day
-            const current_date_tmp = current_date.getDate()
-            current_date.setDate(current_date_tmp + 1);
         }
 
         //Save matched elements
@@ -408,42 +381,11 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
-        const {aggregations, elements} = this.props;
-        const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
-        const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
-        const selected_enddate_string = date_to_string(selected_enddate).replace(/\//g, " / ");
+        const {selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
 
-        // The filter to apply
+        // The filters
         const the_filters = (
             <div>
-                <div className="row" style={styles.row}>
-                    <div ref="selected_date" className="col-md-12">
-                        <TextField
-                          floatingLabelText={"Initial date"}
-                          multiLine={false}
-                          fullWidth={false}
-                          rowsMax={1}
-                          value={selected_date_string}
-                          onChange={(value) => this.updateDate(value.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className="row" style={styles.row}>
-                    <div ref="selected_enddate" className="col-md-12">
-                        <DatePicker
-                            floatingLabelText={"Ending date"}
-                            container="inline"
-                            mode="landscape"
-                            autoOk={true}
-                            value={selected_enddate}
-                            onChange={this.updateEndDate}
-                            formatDate={this.formatDate}
-                        />
-                    </div>
-                </div>
-
-                <div className="row" style={styles.row}>
                     <div ref="selected_type" className="col-md-12">
                         <AutoComplete
                           floatingLabelText={"Type"}
@@ -455,11 +397,10 @@ export class ElementsDashboard extends Component {
                           searchText={searchText}
                         />
                     </div>
-                </div>
             </div>
         )
 
-        // The actions to apply
+        // The actions
         const the_actions = (
             <div>
                     <div ref="selected_type" className="col-md-4">
@@ -487,8 +428,6 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
-
-
         // Selected Elements list
         let selectedElementsList = [];
         let count=0;
@@ -503,9 +442,10 @@ export class ElementsDashboard extends Component {
             count++;
         }
 
+        // The events (parsed)
         let events = [];
         count=0;
-        for ( let [key, value] of Object.entries(elements)) {
+        for ( let [key, value] of Object.entries(elements_matched)) {
             //console.log(value);
 
             let an_entry = {
@@ -545,6 +485,7 @@ export class ElementsDashboard extends Component {
             count++;
         }
 
+        // The calendar
         const the_calendar =
             <BigCalendar
               selectable={(multiElementMode)?false:true}
@@ -575,8 +516,12 @@ export class ElementsDashboard extends Component {
                 />
 
                 <div className="row" style={styles.row}>
-                    <div ref="the_calendar" className="col-md-12">
-                            {the_actions}
+                    <div ref="the_filters" className="col-md-4">
+                        {the_filters}
+                    </div>
+
+                    <div ref="the_actions" className="col-md-8" style={styles.actions}>
+                        {the_actions}
                     </div>
                 </div>
 
