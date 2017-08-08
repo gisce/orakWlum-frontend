@@ -29,9 +29,13 @@ import { dispatchNewRoute} from '../../utils/http_functions';
 
 import * as actionCreators from '../../actions/orakwlum';
 
+import { orange300, orange900, green300, green900, red300, red900, blue300, blue900 } from 'material-ui/styles/colors'
+
+
 //Define the localizer for the Calendar
 BigCalendar.momentLocalizer(moment);
 moment.locale('es');
+
 
 const styles = {
     calendar: {
@@ -39,6 +43,12 @@ const styles = {
 
     row: {
         marginTop: 20,
+    },
+    element_style: {
+        'green': { backgroundColor: green900, borderColor: '#777' },
+        'blue': { backgroundColor: blue900, borderColor: '#777' },
+        'red': { backgroundColor: red900, borderColor: '#777' },
+        'default': { backgroundColor: orange900, borderColor: '#777' },
     }
 
 };
@@ -61,7 +71,7 @@ function mapDispatchToProps(dispatch) {
 export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
-        this.todayDate = new Date("2017-04-08");
+        this.todayDate = new Date();
         this.todayDate.setDate(1);
         this.todayDate.setHours(0);
         this.todayDate.setMinutes(0);
@@ -376,6 +386,27 @@ export class ElementsDashboard extends Component {
         })
     }
 
+    colorizeEvents(e) {
+        let color;
+
+        const element_style = styles['element_style']
+
+        switch (e.type){
+            case 'historical':
+                color = element_style['red'];
+                break;
+
+            case 'proposal':
+                color = element_style['blue'];
+                break;
+
+            default:
+                color = element_style['default']
+        }
+
+        return { style: color }
+    }
+
     render = () => {
         console.debug ("render ElementsDash")
 
@@ -384,33 +415,6 @@ export class ElementsDashboard extends Component {
         const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
         const selected_enddate_string = date_to_string(selected_enddate).replace(/\//g, " / ");
-
-        // The calendar selector
-        const the_calendarr = (
-            <Calendar
-                initialDate = {this.calendar_settings.initialDate}
-
-                locale = {this.calendar_settings.locale}
-                firstDayOfWeek = {this.calendar_settings.firstDayOfWeek}
-                DateTimeFormat = {this.calendar_settings.dateTimeFormat}
-
-                ref = "calendar"
-                open = {true}
-
-                mode = {this.calendar_settings.mode}
-                container = {this.calendar_settings.container}
-
-                style = {this.calendar_settings.style}
-
-                onTouchTapDay={this.selectDay}
-
-                okLabel={this.calendar_settings.okLabel}
-                onTouchTapOk={this.selectToday}
-
-                cancelLabel={this.calendar_settings.cancelLabel}
-                onTouchTapCancel={this.selectOneYearAgo}
-            />
-        );
 
         // The filter to apply
         const the_filters = (
@@ -504,20 +508,42 @@ export class ElementsDashboard extends Component {
 
         let events = [];
         for ( let [key, value] of Object.entries(elements)) {
-            console.log(value);
-            const start_date = value.days_range_future[0]
-            const end_date = (value.days_range_future.length == 1)? start_date : value.days_range_future[1]
+            //console.log(value);
 
-            events.push(
-                {
-                    'title': value.name,
-                    'start': moment(start_date),
-                    'end': moment(end_date),
-                    'allDay': true,
-                    'url': value.url,
-                }
-            );
+            let an_entry = {
+                'title': value.name,
+                'allDay': true,
+                'url': value.url,
+                'type': (value.historical)?"historical":"proposal"
+            }
+
+            let start_date, end_date;
+            // If that's a proposal
+            if (!value.historical) {
+                //add entry to the past
+                let past_entry = Object.assign({}, an_entry)
+                start_date = value.days_range[0]
+                end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
+                past_entry['start'] = moment(start_date),
+                past_entry['end'] = moment(end_date),
+                events.push(past_entry);
+
+                //add entry to the future!
+                start_date = value.days_range_future[0]
+                end_date = (value.days_range_future.length == 1)? start_date : value.days_range_future[1]
+
+            } else {
+                start_date = value.days_range[0]
+                end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
+            }
+
+            an_entry['start'] = moment(start_date),
+            an_entry['end'] = moment(end_date),
+
+            events.push(an_entry);
         }
+
+        console.log(events);
 
         const the_calendar =
         (multiElementMode)?
@@ -545,6 +571,7 @@ export class ElementsDashboard extends Component {
               defaultDate={this.calendar_settings.initialDate}
               popup={true}
               views={['month']}
+              eventPropGetter={e => this.colorizeEvents(e)}
               onSelectEvent={event => alert(event.title)}
               onSelectEvent={(event) => dispatchNewRoute(event.url)}
               onSelectSlot={(slotInfo) => alert(
