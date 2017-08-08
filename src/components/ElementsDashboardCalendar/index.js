@@ -491,6 +491,19 @@ export class ElementsDashboard extends Component {
               )}
             />;
 
+
+        /*
+        let the_legend = []
+        for ( let [key, value] of Object.entries(styles.element_style)) {
+            the_legend.push(
+                <div>
+                    ROLF
+                </div>
+            )
+        }
+        */
+
+
         return (
             <div>
                 <ContentHeader
