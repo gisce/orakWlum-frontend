@@ -58,7 +58,17 @@ const styles = {
         'blue': { backgroundColor: blue900, borderColor: '#777' },
         'red': { backgroundColor: red900, borderColor: '#777' },
         'default': { backgroundColor: orange900, borderColor: '#777' },
-    }
+    },
+    alignLeft: {
+        textAlign: 'left',
+    },
+    alignCenter: {
+        textAlign: 'center',
+    },
+    alignRight: {
+        textAlign: 'right',
+    },
+
 
 };
 
@@ -471,7 +481,6 @@ export class ElementsDashboard extends Component {
         }
 
         let the_legend = []
-
         const element_style = styles.element_style;
         for ( let [key, value] of Object.entries(colors_by_elements_type)) {
 
@@ -488,6 +497,7 @@ export class ElementsDashboard extends Component {
             )
         }
 
+        // Create the CustomToolbar with buttons, label and legend
         const CustomToolbar = (toolbar) => {
           const goToBack = () => {
             toolbar.date.setMonth(toolbar.date.getMonth() - 1);
@@ -522,25 +532,23 @@ export class ElementsDashboard extends Component {
 
           return (
               <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-4" style={styles['alignLeft']}>
                       <button className={'btn-back'} onClick={goToBack}>&#8249;</button>
                       <button className={'btn-yearAgo'} onClick={goToOneYearAgo}>Year ago</button>
                       <button className={'btn-current'} onClick={goToCurrent}>Today</button>
                       <button className={'btn-next'} onClick={goToNext}>&#8250;</button>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-4" style={styles['alignCenter']}>
                       <label className={'label-date'}>{label()}</label>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-4" style={styles['alignRight']}>
                       {the_legend}
                   </div>
               </div>
           );
         };
-
-
 
         // The calendar
         const the_calendar =
