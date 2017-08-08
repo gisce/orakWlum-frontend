@@ -545,7 +545,7 @@ export class ElementsDashboard extends Component {
 
         const the_calendar =
             <BigCalendar
-              selectable
+              selectable={(multiElementMode)?false:true}
               events={events}
               defaultView='month'
               scrollToTime={new Date(1970, 1, 1, 6)}
