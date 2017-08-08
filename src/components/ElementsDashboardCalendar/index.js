@@ -514,17 +514,21 @@ export class ElementsDashboard extends Component {
           };
 
           return (
-            <div className={'toolbar-container'}>
-              <label className={'label-date'}>{label()}</label>
+              <div className="row">
+                  <div className="col-md-4">
+                      <button className={'btn-back'} onClick={goToBack}>&#8249;</button>
+                      <button className={'btn-current'} onClick={goToCurrent}>today</button>
+                      <button className={'btn-next'} onClick={goToNext}>&#8250;</button>
+                  </div>
 
-              <div className={'back-next-buttons'}>
-                <button className={'btn-back'} onClick={goToBack}>&#8249;</button>
-                <button className={'btn-current'} onClick={goToCurrent}>today</button>
-                <button className={'btn-next'} onClick={goToNext}>&#8250;</button>
+                  <div className="col-md-4">
+                      <label className={'label-date'}>{label()}</label>
+                  </div>
+
+                  <div className="col-md-4">
+                      {the_legend}
+                  </div>
               </div>
-
-              {the_legend}
-            </div>
           );
         };
 
