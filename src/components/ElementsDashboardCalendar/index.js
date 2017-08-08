@@ -36,6 +36,11 @@ import { orange300, orange900, green300, green900, red300, red900, blue300, blue
 BigCalendar.momentLocalizer(moment);
 moment.locale('es');
 
+const colors_by_elements_type = {
+    "proposal": "blue",
+    "historical": "red",
+    "default": "default",
+} ;
 
 const styles = {
     calendar: {
@@ -345,21 +350,13 @@ export class ElementsDashboard extends Component {
 
     colorizeEvents(e) {
         let color;
+        const element_style = styles['element_style'];
+        const current_type = e.type;
 
-        const element_style = styles['element_style']
-
-        switch (e.type){
-            case 'historical':
-                color = element_style['red'];
-                break;
-
-            case 'proposal':
-                color = element_style['blue'];
-                break;
-
-            default:
-                color = element_style['default']
-        }
+        if (!(current_type in colors_by_elements_type))
+            color = element_style[colors_by_elements_type['default']];
+        else
+            color = element_style[colors_by_elements_type[current_type]];
 
         return { style: color }
     }
@@ -473,6 +470,66 @@ export class ElementsDashboard extends Component {
             count++;
         }
 
+        let the_legend = []
+
+        const element_style = styles.element_style;
+        for ( let [key, value] of Object.entries(colors_by_elements_type)) {
+
+            const the_style = {
+                color: "white",
+                backgroundColor: element_style[value]['backgroundColor'],
+                padding: 5,
+            }
+
+            const name = (key == "default")?"All":key;
+
+            the_legend.push(
+                    <span style={the_style}>{name}</span>
+            )
+        }
+
+        const CustomToolbar = (toolbar) => {
+          const goToBack = () => {
+            toolbar.date.setMonth(toolbar.date.getMonth() - 1);
+            toolbar.onNavigate('prev');
+          };
+
+          const goToNext = () => {
+            toolbar.date.setMonth(toolbar.date.getMonth() + 1);
+            toolbar.onNavigate('next');
+          };
+
+          const goToCurrent = () => {
+            const now = new Date();
+            toolbar.date.setMonth(now.getMonth());
+            toolbar.date.setYear(now.getFullYear());
+            toolbar.onNavigate('current');
+          };
+
+          const label = () => {
+            const date = moment(toolbar.date);
+            return (
+              <span><b>{date.format('MMMM')}</b><span> {date.format('YYYY')}</span></span>
+            );
+          };
+
+          return (
+            <div className={'toolbar-container'}>
+              <label className={'label-date'}>{label()}</label>
+
+              <div className={'back-next-buttons'}>
+                <button className={'btn-back'} onClick={goToBack}>&#8249;</button>
+                <button className={'btn-current'} onClick={goToCurrent}>today</button>
+                <button className={'btn-next'} onClick={goToNext}>&#8250;</button>
+              </div>
+
+              {the_legend}
+            </div>
+          );
+        };
+
+
+
         // The calendar
         const the_calendar =
             <BigCalendar
@@ -483,25 +540,19 @@ export class ElementsDashboard extends Component {
               defaultDate={this.calendar_settings.initialDate}
               popup={true}
               views={['month']}
+              culture={'es'}
               eventPropGetter={e => this.colorizeEvents(e)}
               onSelectEvent={(multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)}
               onSelectSlot={(slotInfo) => alert(
                 `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
                 `\nend: ${slotInfo.end.toLocaleString()}`
               )}
+
+              components={{
+                toolbar: CustomToolbar
+              }}
+
             />;
-
-
-        /*
-        let the_legend = []
-        for ( let [key, value] of Object.entries(styles.element_style)) {
-            the_legend.push(
-                <div>
-                    ROLF
-                </div>
-            )
-        }
-        */
 
 
         return (
