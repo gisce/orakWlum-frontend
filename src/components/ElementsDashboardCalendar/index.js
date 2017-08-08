@@ -246,7 +246,7 @@ export class ElementsDashboard extends Component {
 
     //Toggle selection of element
     toggleSelectElement = (count, element, title) => {
-        console.log("toggle")
+        //console.log("toggle", count, element, title);
         (element in this.state.selectedElements) ?
             this.unselectElement(count, element)
             :
@@ -408,9 +408,6 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
-        console.debug ("render ElementsDash")
-
-
         const {aggregations, elements} = this.props;
         const {selected_date, selected_enddate, selected_type, searchText, selectedElements, multiElementMode, elements_matched} = this.state;
         const selected_date_string = date_to_string(selected_date).replace(/\//g, " / ");
@@ -507,6 +504,7 @@ export class ElementsDashboard extends Component {
         }
 
         let events = [];
+        count=0;
         for ( let [key, value] of Object.entries(elements)) {
             //console.log(value);
 
@@ -514,7 +512,9 @@ export class ElementsDashboard extends Component {
                 'title': value.name,
                 'allDay': true,
                 'url': value.url,
-                'type': (value.historical)?"historical":"proposal"
+                'type': (value.historical)?"historical":"proposal",
+                count,
+                'id': value.id,
             }
 
             let start_date, end_date;
@@ -541,6 +541,8 @@ export class ElementsDashboard extends Component {
             an_entry['end'] = moment(end_date),
 
             events.push(an_entry);
+
+            count++;
         }
 
         const the_calendar =
@@ -553,7 +555,7 @@ export class ElementsDashboard extends Component {
               popup={true}
               views={['month']}
               eventPropGetter={e => this.colorizeEvents(e)}
-              onSelectEvent={(multiElementMode)? (count, element, title) => this.toggleSelectElement(count, element, title) : (event) => dispatchNewRoute(event.url)}
+              onSelectEvent={(multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)}
               onSelectSlot={(slotInfo) => alert(
                 `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
                 `\nend: ${slotInfo.end.toLocaleString()}`
