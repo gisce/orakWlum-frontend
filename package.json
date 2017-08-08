@@ -125,6 +125,7 @@
   "dependencies": {
     "binding": "^3.0.3",
     "fs": "0.0.1-security",
+    "react-big-calendar": "^0.14.4",
     "ws": "^3.0.0"
   },
   "optionalDependencies": {
