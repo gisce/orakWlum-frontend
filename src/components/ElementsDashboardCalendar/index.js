@@ -506,6 +506,13 @@ export class ElementsDashboard extends Component {
             toolbar.onNavigate('current');
           };
 
+          const goToOneYearAgo = () => {
+            const now = new Date();
+            toolbar.date.setMonth(now.getMonth());
+            toolbar.date.setYear(now.getFullYear()-1);
+            toolbar.onNavigate('current');
+          };
+
           const label = () => {
             const date = moment(toolbar.date);
             return (
@@ -517,7 +524,8 @@ export class ElementsDashboard extends Component {
               <div className="row">
                   <div className="col-md-4">
                       <button className={'btn-back'} onClick={goToBack}>&#8249;</button>
-                      <button className={'btn-current'} onClick={goToCurrent}>today</button>
+                      <button className={'btn-yearAgo'} onClick={goToOneYearAgo}>Year ago</button>
+                      <button className={'btn-current'} onClick={goToCurrent}>Today</button>
                       <button className={'btn-next'} onClick={goToNext}>&#8250;</button>
                   </div>
 
