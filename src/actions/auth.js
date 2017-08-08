@@ -144,7 +144,7 @@ export function registerUser(email, password) {
             .then(response => {
                 try {
                     dispatch(registerUserSuccess(response.token));
-                    browserHistory.push('/proposals');
+                    browserHistory.push('/elements');
                 } catch (e) {
                     dispatch(registerUserFailure({
                         response: {
