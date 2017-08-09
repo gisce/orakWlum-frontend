@@ -144,11 +144,11 @@ export class ElementsDashboard extends Component {
             this.refreshData()
     }
 
-    addElement(event) {
+    addElement = (event) => {
         dispatchNewRoute("/elements/new", event);
     }
 
-    refreshData(silent = true) {
+    refreshData = (silent = true) => {
         const the_filter = null;
         const override = false;
 
@@ -276,7 +276,22 @@ export class ElementsDashboard extends Component {
         }
     }
 
-    colorizeEvents(e) {
+    // Identify a Range of Dates and ask the user about to create a new element
+    setRangeOfDates = (range) => {
+        const start_hour = localized_time(range.start)
+        const end_hour = localized_time(range.end)
+
+        const range_string = (start_hour.isSame(end_hour))?
+            " for '" + start_hour.format("L") + "'"
+            :
+            " between '" + start_hour.format("L") + " - " + end_hour.format("L") + "'"
+        ;
+
+        const message = "Did you want to create a new Element" + range_string
+        alert(message)
+    }
+
+    colorizeEvents = (e) => {
         let color;
         const element_style = styles['element_style'];
         const current_type = e.type;
@@ -484,10 +499,7 @@ export class ElementsDashboard extends Component {
                 onSelectEvent={
                     (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)
                 }
-                onSelectSlot={(slotInfo) => alert(
-                    `selected slot: \n\nstart ${slotInfo.start.tolocalized_timeString()} ` +
-                    `\nend: ${slotInfo.end.tolocalized_timeString()}`
-                )}
+                onSelectSlot={slotInfo => this.setRangeOfDates(slotInfo)}
                 components={{
                     toolbar: CustomToolbar
                 }}
