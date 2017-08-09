@@ -29,18 +29,11 @@ import { dispatchNewRoute} from '../../utils/http_functions';
 
 import * as actionCreators from '../../actions/orakwlum';
 
-import { orange300, orange900, green300, green900, red300, red900, blue300, blue900 } from 'material-ui/styles/colors'
-
+import {colors_combo, colors_by_elements_type} from '../../constants'
 
 //Define the localizer for the Calendar
 BigCalendar.momentLocalizer(moment);
 moment.locale('es');
-
-const colors_by_elements_type = {
-    "proposal": "blue",
-    "historical": "red",
-    "default": "default",
-} ;
 
 const styles = {
     calendar: {
@@ -58,12 +51,7 @@ const styles = {
     actions: {
         marginTop: 27,
     },
-    element_style: {
-        'green': { backgroundColor: green900, borderColor: '#777' },
-        'blue': { backgroundColor: blue900, borderColor: '#777' },
-        'red': { backgroundColor: red900, borderColor: '#777' },
-        'default': { backgroundColor: orange900, borderColor: '#777' },
-    },
+    element_style: colors_combo,
     alignLeft: {
         textAlign: 'left',
     },

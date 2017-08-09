@@ -103,6 +103,26 @@ export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
 export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
 
+
+/* Colors definition */
+
+import { orange500, orange900, green500, green900, red500, red900, blue500, blue900 } from 'material-ui/styles/colors'
+
+export const colors_by_elements_type = {
+    "proposal": "orange",
+    "historical": "blue",
+    "default": "default",
+};
+
+export const colors_combo = {
+    'green': { backgroundColor: green500, borderColor: '#777' },
+    'blue': { backgroundColor: blue500, borderColor: '#777' },
+    'red': { backgroundColor: red500, borderColor: '#777' },
+    'orange': { backgroundColor: orange500, borderColor: '#777' },
+    'default': { backgroundColor: green500, borderColor: '#777' },
+};
+
+
 export const colors = [
     '#db4939',
     '#f29913',
