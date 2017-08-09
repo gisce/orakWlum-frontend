@@ -18,11 +18,12 @@
     "react",
     "reactjs",
     "redux",
+    "material-ui",
     "orakwlum",
     "okW",
     "prediction"
   ],
-  "author": "https://github.com/xavitorello, https://github.com/gisce",
+  "author": ["https://github.com/xavitorello, https://github.com/gisce"],
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.6.1",
