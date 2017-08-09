@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {debug} from './debug';
 import {version, version_pr} from './version';
 
@@ -102,6 +103,44 @@ export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 
 export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
 export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
+
+
+/* locale definition */
+const locale_override_conf = {
+    week: {
+        dow: 1,
+    },
+    longDateFormat : {
+        LT : 'HH:mm',
+        LTS : 'HH:mm:ss',
+        L : 'DD/MM/YYYY',
+        LL : 'D MMMM YYYY',
+        LLL : 'D MMMM YYYY HH:mm',
+        LLLL : 'dddd D MMMM YYYY HH:mm'
+    },
+}
+moment.locale('en', locale_override_conf);
+export const localized_time = moment;
+
+
+/* Colors definition */
+
+import { orange500, orange900, green500, green900, red500, red900, blue500, blue900 } from 'material-ui/styles/colors'
+
+export const colors_by_elements_type = {
+    "proposal": "orange",
+    "historical": "blue",
+    "default": "default",
+};
+
+export const colors_combo = {
+    'green': { backgroundColor: green500, borderColor: '#777' },
+    'blue': { backgroundColor: blue500, borderColor: '#777' },
+    'red': { backgroundColor: red500, borderColor: '#777' },
+    'orange': { backgroundColor: orange500, borderColor: '#777' },
+    'default': { backgroundColor: green500, borderColor: '#777' },
+};
+
 
 export const colors = [
     '#db4939',

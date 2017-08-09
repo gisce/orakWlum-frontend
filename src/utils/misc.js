@@ -3,8 +3,8 @@
 //import {md5} from 'blueimp-md5/js/md5';
 var md5 = require("../../node_modules/blueimp-md5/js/md5.js");
 
-export function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+export function capitalize(the_string) {
+    return the_string.charAt(0).toUpperCase() + the_string.slice(1);
 }
 
 export function createConstants(...constants) {
@@ -39,7 +39,6 @@ export function MD5(text){
 }
 
 export function date_to_string(a_date, string_format="%d/%m/%Y"){
-
     if (!a_date){
         return null;
     }
@@ -55,4 +54,14 @@ export function date_to_string(a_date, string_format="%d/%m/%Y"){
             .replace("%m", month)
             .replace("%Y", full_year)
             .replace("%y", year)
+}
+
+//Date formatter
+export const formatDate = (date) => {
+    return date_to_string(date).replace(/\//g, " / ");
+}
+
+//Date formatter
+export const formatDateFromAPI = (date) => {
+    return date_to_string(date, "%Y-%m-%d");
 }
