@@ -59,6 +59,22 @@ const styles = {
     alignRight: {
         textAlign: 'right',
     },
+    calendarNavigationButtons: {
+
+    },
+    calendarLabel: {
+
+    },
+    calendarLegend: {
+
+    },
+    calendarLegendEntry: {
+        color: "white",
+        padding: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
+        fontWeight: "bold",
+    },
 };
 
 function mapStateToProps(state) {
@@ -109,9 +125,6 @@ export class ElementsDashboard extends Component {
               {text: 'Comparation', value: 'comparation'},
         ];
 
-        this.selected_date = this.todayDate
-        this.selected_enddate = this.endingDate
-
         switch(this.props.path) {
             case "/elements/type/proposal":
                 this.selected_type = "proposal"
@@ -131,8 +144,6 @@ export class ElementsDashboard extends Component {
         this.elements_matched = [];
 
         this.state = {
-            selected_date: this.todayDate,
-            selected_enddate: this.endingDate,
             selected_type: this.selected_type,
             searchText: this.selected_type_search,
             selectedElements: {},
@@ -156,45 +167,6 @@ export class ElementsDashboard extends Component {
         this.props.fetchAggregations(the_filter, silent);
         this.props.refreshElements(the_filter, silent, override);
     }
-
-    //Save the date state and force the <Calendar> update
-    selectDay = (event ,date) => {
-        const the_date = new Date(date);
-
-        // Force update the selected date in the <Calendar>
-        this.calendar_settings.initialDate = date;
-
-        // Save it as current state
-        this.setState({
-          selected_date: the_date,
-        });
-
-        this.selected_date = the_date
-        //Force a elements refiltering
-        this.filterElements()
-    };
-
-    //Select today date
-    selectToday = (event) => {
-        this.selectDay(event, this.todayDate);
-    };
-
-    //Select one year ago!
-    selectOneYearAgo = (event) => {
-        this.selectDay(event, this.oneYearAgoDate);
-    };
-
-    //Manual date update
-    updateDate = (value) => {
-        const parsed_date = value.replace(/ /g,'').split("/");
-        const desired_date = new Date(parsed_date[1] + " " + parsed_date[0] + " " + parsed_date[2]);
-
-        this.selectDay(null, desired_date);
-
-        //Force a elements refiltering
-        this.filterElements()
-    };
-
 
     //Change the type
     updateType = (value) => {
@@ -267,7 +239,6 @@ export class ElementsDashboard extends Component {
         });
 
         //currentElements[element].selected = true;
-
     }
 
     //unSelect an element
@@ -339,45 +310,45 @@ export class ElementsDashboard extends Component {
         // The filters
         const the_filters = (
             <div>
-                    <div ref="selected_type" className="col-md-12">
-                        <AutoComplete
-                          floatingLabelText={"Type"}
-                          filter={AutoComplete.noFilter}
-                          openOnFocus={true}
-                          dataSource={this.filter_types}
-                          value={selected_type}
-                          onUpdateInput={(value) => this.updateType(value)}
-                          searchText={searchText}
-                        />
-                    </div>
+                <div ref="selected_type" className="col-md-12">
+                    <AutoComplete
+                      floatingLabelText={"Type"}
+                      filter={AutoComplete.noFilter}
+                      openOnFocus={true}
+                      dataSource={this.filter_types}
+                      value={selected_type}
+                      onUpdateInput={(value) => this.updateType(value)}
+                      searchText={searchText}
+                    />
+                </div>
             </div>
         )
 
         // The actions
         const the_actions = (
             <div>
-                    <div ref="selected_type" className="col-md-4">
-                        <RaisedButton
-                            label="Select Mode"
-                            onClick={(value) => this.toggleMultiElementSelection()}
-                            primary={multiElementMode}
-                        />
-                    </div>
-                    <div ref="selected_type" className="col-md-4">
-                        <RaisedButton
-                            label="Concatenate"
-                            onClick={(event) => this.concatenateSelectedElements()}
-                            disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
-                        />
-                    </div>
+                <div ref="selected_type" className="col-md-4">
+                    <RaisedButton
+                        label="Select Mode"
+                        onClick={(value) => this.toggleMultiElementSelection()}
+                        primary={multiElementMode}
+                    />
+                </div>
+                <div ref="selected_type" className="col-md-4">
+                    <RaisedButton
+                        label="Concatenate"
+                        onClick={(event) => this.concatenateSelectedElements()}
+                        disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
+                    />
+                </div>
 
-                    <div ref="selected_type" className="col-md-4">
-                        <RaisedButton
-                            label="Compare"
-                            onClick={(event) => this.compareSelectedElements()}
-                            disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
-                        />
-                    </div>
+                <div ref="selected_type" className="col-md-4">
+                    <RaisedButton
+                        label="Compare"
+                        onClick={(event) => this.compareSelectedElements()}
+                        disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
+                    />
+                </div>
             </div>
         )
 
@@ -438,15 +409,11 @@ export class ElementsDashboard extends Component {
             count++;
         }
 
+        // The legend
         let the_legend = []
-        const element_style = styles.element_style;
         for ( let [key, value] of Object.entries(colors_by_elements_type)) {
-
-            const the_style = {
-                color: "white",
-                backgroundColor: element_style[value]['backgroundColor'],
-                padding: 5,
-            }
+            // Define the current legend entry extending base style with tunned backgroundColor (following the colors constant definition)
+            const the_style = Object.assign({}, styles['calendarLegendEntry'], {backgroundColor: styles.element_style[value]['backgroundColor']})
 
             const name = (key == "default")?"All":key;
 
@@ -455,7 +422,7 @@ export class ElementsDashboard extends Component {
             )
         }
 
-        // Create the CustomToolbar with buttons, label and legend
+        // Our CustomToolbar with buttons, label and legend
         const CustomToolbar = (toolbar) => {
           const goToBack = () => {
             toolbar.date.setMonth(toolbar.date.getMonth() - 1);
@@ -495,19 +462,21 @@ export class ElementsDashboard extends Component {
           return (
               <div className="row">
                   <div className="col-md-4" style={styles['alignLeft']}>
-                      <button className={'btn-back'} onClick={goToBack}><strong>&#8249;</strong></button>
-                      <button className={'btn-yearAgo'} onClick={goToPrevYear}>-Year</button>
-                      <button className={'btn-current'} onClick={goToCurrent}><strong>Today</strong></button>
-                      <button className={'btn-yearMore'} onClick={goToNextYear}>+Year</button>
-                      <button className={'btn-next'} onClick={goToNext}><strong>&#8250;</strong></button>
+                      <button className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></button>
+                      <button className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}>-Year</button>
+                      <button className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>Today</strong></button>
+                      <button className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}>+Year</button>
+                      <button className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></button>
                   </div>
 
                   <div className="col-md-4" style={styles['alignCenter']}>
-                      <label className={'label-date'}>{label()}</label>
+                      <label className={'label-date'} style={styles['calendarLabel']}>{label()}</label>
                   </div>
 
                   <div className="col-md-4" style={styles['alignRight']}>
-                      {the_legend}
+                      <div style={styles['calendarLegend']}>
+                          {the_legend}
+                      </div>
                   </div>
               </div>
           );
@@ -516,25 +485,25 @@ export class ElementsDashboard extends Component {
         // The calendar
         const the_calendar =
             <BigCalendar
-              selectable={(multiElementMode)?false:true}
-              events={events}
-              defaultView='month'
-              scrollToTime={new Date(1970, 1, 1, 6)}
-              defaultDate={this.calendar_settings.initialDate}
-              popup={true}
-              views={['month']}
-              culture={'es'}
-              eventPropGetter={e => this.colorizeEvents(e)}
-              onSelectEvent={(multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)}
-              onSelectSlot={(slotInfo) => alert(
-                `selected slot: \n\nstart ${slotInfo.start.tolocalized_timeString()} ` +
-                `\nend: ${slotInfo.end.tolocalized_timeString()}`
-              )}
-
-              components={{
-                toolbar: CustomToolbar
-              }}
-
+                selectable={(multiElementMode)?false:true}
+                events={events}
+                defaultView='month'
+                scrollToTime={new Date(1970, 1, 1, 6)}
+                defaultDate={this.calendar_settings.initialDate}
+                popup={true}
+                views={['month']}
+                culture={'es'}
+                eventPropGetter={e => this.colorizeEvents(e)}
+                onSelectEvent={
+                    (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)
+                }
+                onSelectSlot={(slotInfo) => alert(
+                    `selected slot: \n\nstart ${slotInfo.start.tolocalized_timeString()} ` +
+                    `\nend: ${slotInfo.end.tolocalized_timeString()}`
+                )}
+                components={{
+                    toolbar: CustomToolbar
+                }}
             />;
 
 
@@ -581,17 +550,17 @@ export class ElementsDashboard extends Component {
 
                         <List>
                             {
-                                (selectedElementsList.length > 0) &&
-                                    (
-                                        <div>
-                                            <ListItem
-                                                key={"unSelectAllElementsListItem"}
-                                                primaryText={"Clear list"}
-                                                onClick={(event) => this.unselectAllElements()}
-                                            />
-                                            <Divider />
-                                        </div>
-                                    )
+                            (selectedElementsList.length > 0) &&
+                                (
+                                    <div>
+                                        <ListItem
+                                            key={"unSelectAllElementsListItem"}
+                                            primaryText={"Clear list"}
+                                            onClick={(event) => this.unselectAllElements()}
+                                        />
+                                        <Divider />
+                                    </div>
+                                )
                             }
                             {selectedElementsList}
                         </List>
