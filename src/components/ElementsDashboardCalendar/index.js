@@ -50,6 +50,11 @@ const styles = {
         marginTop: 20,
         verticalAlign: 'bottom !important',
     },
+    rowCalendar: {
+        marginTop: 50,
+        verticalAlign: 'bottom !important',
+        height: "60%",
+    },
     actions: {
         marginTop: 27,
     },
@@ -493,7 +498,7 @@ export class ElementsDashboard extends Component {
             const name = (key == "default")?"All":key;
 
             the_legend.push(
-                    <span style={the_style}>{name}</span>
+                    <span key={"legend_"+key} style={the_style}>{name}</span>
             )
         }
 
@@ -605,7 +610,7 @@ export class ElementsDashboard extends Component {
                 //Render selectedElements if exist
                 (!multiElementMode) ?
 
-                <div className="row" style={styles.row}>
+                <div className="row" style={styles.rowCalendar}>
                     <div ref="the_elements" className="col-md-12">
                         {the_calendar}
                     </div>
@@ -613,7 +618,7 @@ export class ElementsDashboard extends Component {
 
                 :
 
-                <div className="row" style={styles.row}>
+                <div className="row" style={styles.rowCalendar}>
                     <div ref="the_elements" className="col-md-9">
                         {the_calendar}
                     </div>
