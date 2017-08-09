@@ -21,7 +21,7 @@ import Divider from 'material-ui/Divider';
 import { ProposalList } from '../ProposalList';
 import { ContentHeader } from '../ContentHeader';
 
-import { date_to_string} from '../../utils/misc';
+import { capitalize} from '../../utils/misc';
 
 import { debug } from '../../utils/debug';
 import { dispatchNewRoute} from '../../utils/http_functions';
@@ -79,16 +79,7 @@ function mapDispatchToProps(dispatch) {
 export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
-        this.todayDate = new Date();
-        this.todayDate.setDate(1);
-        this.todayDate.setHours(0);
-        this.todayDate.setMinutes(0);
-        this.todayDate.setSeconds(0);
-
-        this.oneYearAgoDate = new Date(new Date().setFullYear(this.todayDate.getFullYear() - 1));
-
-        this.endingDate = new Date(new Date(this.todayDate).setMonth(this.todayDate.getMonth()+1));
-        this.endingDate.setDate(-1 + 1);
+        this.todayDate = localized_time().toDate();
 
         const DateTimeFormat = global.Intl.DateTimeFormat;
 
@@ -204,28 +195,6 @@ export class ElementsDashboard extends Component {
         this.filterElements()
     };
 
-    //Date formatter
-    formatDate = (date) => {
-        return date_to_string(date).replace(/\//g, " / ");
-    }
-
-    //Date formatter
-    formatDateFromAPI = (date) => {
-        return date_to_string(date, "%Y-%m-%d");
-    }
-
-    //Enddate update with lite validation
-    updateEndDate = (event, date) => {
-        if (date >= this.selected_date){
-            this.selected_enddate = date;
-
-            this.setState({
-              selected_enddate: date,
-            });
-
-            this.filterElements()
-        }
-    };
 
     //Change the type
     updateType = (value) => {
@@ -482,7 +451,7 @@ export class ElementsDashboard extends Component {
             const name = (key == "default")?"All":key;
 
             the_legend.push(
-                    <span key={"legend_"+key} style={the_style}>{name}</span>
+                    <span key={"legend_"+key} style={the_style}>{capitalize(name)}</span>
             )
         }
 

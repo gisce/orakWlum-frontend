@@ -3,8 +3,8 @@
 //import {md5} from 'blueimp-md5/js/md5';
 var md5 = require("../../node_modules/blueimp-md5/js/md5.js");
 
-export function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+export function capitalize(the_string) {
+    return the_string.charAt(0).toUpperCase() + the_string.slice(1);
 }
 
 export function createConstants(...constants) {
