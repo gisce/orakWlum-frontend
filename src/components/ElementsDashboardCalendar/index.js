@@ -95,25 +95,13 @@ function mapDispatchToProps(dispatch) {
 export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
-        this.todayDate = localized_time().toDate();
-
-        const DateTimeFormat = global.Intl.DateTimeFormat;
+        this.todayDate = localized_time();
 
         this.calendar_settings = {
-            localized_time: 'en-ES',
-
-            okLabel: 'Today',
-            cancelLabel: 'One Year Ago',
-
-            initialDate: this.todayDate,
-
-            firstDayOfWeek: 1,
-            dateTimeFormat: DateTimeFormat,
-
-            mode: "landscape",
-            container: "inline",
-
-            style: styles.calendar,
+            initialDate: this.todayDate.toDate(),
+            views: ['month'],
+            defaultView: 'month',
+            popup: true,
         };
 
         // The available filter types
@@ -170,6 +158,7 @@ export class ElementsDashboard extends Component {
 
     //Change the type
     updateType = (value) => {
+        console.log(value)
         this.setState({
             selected_type: value,
             searchText: value,
@@ -455,7 +444,7 @@ export class ElementsDashboard extends Component {
           const label = () => {
             const date = localized_time(toolbar.date);
             return (
-              <span><b>{date.format('MMMM')}</b><span> {date.format('YYYY')}</span></span>
+              <span><b>{capitalize(date.format('MMMM'))} {date.format('YYYY')}</b></span>
             );
           };
 
@@ -487,12 +476,10 @@ export class ElementsDashboard extends Component {
             <BigCalendar
                 selectable={(multiElementMode)?false:true}
                 events={events}
-                defaultView='month'
-                scrollToTime={new Date(1970, 1, 1, 6)}
+                defaultView={this.calendar_settings.defaultView}
                 defaultDate={this.calendar_settings.initialDate}
-                popup={true}
-                views={['month']}
-                culture={'es'}
+                popup={this.calendar_settings.popup}
+                views={this.calendar_settings.views}
                 eventPropGetter={e => this.colorizeEvents(e)}
                 onSelectEvent={
                     (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)
