@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import moment from 'moment';
 
 import BigCalendar from 'react-big-calendar';
 require('style!css!react-big-calendar/lib/css/react-big-calendar.css');
@@ -29,11 +28,10 @@ import { dispatchNewRoute} from '../../utils/http_functions';
 
 import * as actionCreators from '../../actions/orakwlum';
 
-import {colors_combo, colors_by_elements_type} from '../../constants'
+import { localized_time, colors_combo, colors_by_elements_type } from '../../constants'
 
 //Define the localizer for the Calendar
-BigCalendar.momentLocalizer(moment);
-moment.locale('es');
+BigCalendar.momentLocalizer(localized_time);
 
 const styles = {
     calendar: {
@@ -61,8 +59,6 @@ const styles = {
     alignRight: {
         textAlign: 'right',
     },
-
-
 };
 
 function mapStateToProps(state) {
@@ -97,7 +93,7 @@ export class ElementsDashboard extends Component {
         const DateTimeFormat = global.Intl.DateTimeFormat;
 
         this.calendar_settings = {
-            locale: 'en-ES',
+            localized_time: 'en-ES',
 
             okLabel: 'Today',
             cancelLabel: 'One Year Ago',
@@ -452,8 +448,8 @@ export class ElementsDashboard extends Component {
                 let past_entry = Object.assign({}, an_entry)
                 start_date = value.days_range[0]
                 end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
-                past_entry['start'] = moment(start_date),
-                past_entry['end'] = moment(end_date),
+                past_entry['start'] = localized_time(start_date),
+                past_entry['end'] = localized_time(end_date),
                 events.push(past_entry);
 
                 //add entry to the future!
@@ -465,8 +461,8 @@ export class ElementsDashboard extends Component {
                 end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
             }
 
-            an_entry['start'] = moment(start_date),
-            an_entry['end'] = moment(end_date),
+            an_entry['start'] = localized_time(start_date),
+            an_entry['end'] = localized_time(end_date),
 
             events.push(an_entry);
 
@@ -521,7 +517,7 @@ export class ElementsDashboard extends Component {
           const goToNextYear = () => {goToYear(+1)};
 
           const label = () => {
-            const date = moment(toolbar.date);
+            const date = localized_time(toolbar.date);
             return (
               <span><b>{date.format('MMMM')}</b><span> {date.format('YYYY')}</span></span>
             );
@@ -562,8 +558,8 @@ export class ElementsDashboard extends Component {
               eventPropGetter={e => this.colorizeEvents(e)}
               onSelectEvent={(multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)}
               onSelectSlot={(slotInfo) => alert(
-                `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-                `\nend: ${slotInfo.end.toLocaleString()}`
+                `selected slot: \n\nstart ${slotInfo.start.tolocalized_timeString()} ` +
+                `\nend: ${slotInfo.end.tolocalized_timeString()}`
               )}
 
               components={{

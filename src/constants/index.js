@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {debug} from './debug';
 import {version, version_pr} from './version';
 
@@ -102,6 +103,11 @@ export const APP_CHANGE_OFFSET = 'APP_CHANGE_OFFSET';
 
 export const NEW_NOTIFICATION = 'NEW_NOTIFICATION';
 export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
+
+
+/* locale definition */
+moment.locale('es');
+export const localized_time = moment;
 
 
 /* Colors definition */
