@@ -109,7 +109,15 @@ export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
 const locale_override_conf = {
     week: {
         dow: 1,
-    }
+    },
+    longDateFormat : {
+        LT : 'HH:mm',
+        LTS : 'HH:mm:ss',
+        L : 'DD/MM/YYYY',
+        LL : 'D MMMM YYYY',
+        LLL : 'D MMMM YYYY HH:mm',
+        LLLL : 'dddd D MMMM YYYY HH:mm'
+    },
 }
 moment.locale('en', locale_override_conf);
 export const localized_time = moment;
