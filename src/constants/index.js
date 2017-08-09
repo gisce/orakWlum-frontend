@@ -106,7 +106,12 @@ export const NOTIFICATION_DONE = 'NOTIFICATION_DONE';
 
 
 /* locale definition */
-moment.locale('es');
+const locale_override_conf = {
+    week: {
+        dow: 1,
+    }
+}
+moment.locale('en', locale_override_conf);
 export const localized_time = moment;
 
 
