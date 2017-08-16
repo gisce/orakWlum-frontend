@@ -70,7 +70,7 @@ const styles = {
 
     },
     calendarLegendEntry: {
-        color: "white",
+        color: "black",
         verticalAlign: 'middle',
 
         //padding: 5,
@@ -420,15 +420,13 @@ export class ElementsDashboard extends Component {
         let the_legend = []
         for ( let [key, value] of Object.entries(colors_by_elements_type)) {
             // Define the current legend entry extending base style with tunned backgroundColor (following the colors constant definition)
-            const the_style = Object.assign({}, styles['calendarLegendEntry'], {backgroundColor: styles.element_style[value]['backgroundColor']})
-
             const name = (key == "default")?"All":key;
 
             the_legend.push(
                 <FlatButton
-                  style={the_style}
+                  backgroundColor={styles.element_style[value]['backgroundColor']}
                   label={capitalize(name)}
-                  containerElement="label"
+                  style={styles['calendarLegendEntry']}
                 />
             )
         }
