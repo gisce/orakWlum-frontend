@@ -125,11 +125,13 @@ export const localized_time = moment;
 
 /* Colors definition */
 
-import { orange500, orange900, green500, green900, red500, red900, blue500, blue900 } from 'material-ui/styles/colors'
+import { orange500, orange900, green500, green900, red500, yellow500, red900, blue500, blue900 } from 'material-ui/styles/colors'
 
 export const colors_by_elements_type = {
     "proposal": "orange",
     "historical": "blue",
+    "concatenation": "red",
+    "comparation": "yellow",
     "default": "default",
 };
 
@@ -137,6 +139,7 @@ export const colors_combo = {
     'green': { backgroundColor: green500, borderColor: '#777' },
     'blue': { backgroundColor: blue500, borderColor: '#777' },
     'red': { backgroundColor: red500, borderColor: '#777' },
+    'yellow': { backgroundColor: yellow500, borderColor: '#777' },
     'orange': { backgroundColor: orange500, borderColor: '#777' },
     'default': { backgroundColor: green500, borderColor: '#777' },
 };
