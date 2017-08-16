@@ -420,13 +420,16 @@ export class ElementsDashboard extends Component {
         let the_legend = []
         for ( let [key, value] of Object.entries(colors_by_elements_type)) {
             // Define the current legend entry extending base style with tunned backgroundColor (following the colors constant definition)
-            const name = (key == "default")?"All":key;
+            const name = (key == "default")?"All":capitalize(key);
+            const shortname = (key == "default")?"*":name.slice(0,3);
 
             the_legend.push(
                 <RaisedButton
                   backgroundColor={styles.element_style[value]['backgroundColor']}
-                  label={capitalize(name)}
+                  label={shortname}
+                  title={name}
                   style={styles['calendarLegendEntry']}
+                  onClick={(e) => this.updateType(name)}
                 />
             )
         }
