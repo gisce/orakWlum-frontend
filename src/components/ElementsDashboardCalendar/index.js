@@ -72,7 +72,7 @@ const styles = {
     calendarLegendEntry: {
         color: "black",
         verticalAlign: 'middle',
-
+        minWidth: 50,
         //padding: 5,
         //paddingLeft: 10,
         //paddingRight: 10,
