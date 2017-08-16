@@ -19,6 +19,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+
 import { ProposalList } from '../ProposalList';
 import { ContentHeader } from '../ContentHeader';
 
@@ -61,13 +65,16 @@ const styles = {
         textAlign: 'right',
     },
     calendarNavigationButtons: {
-        minWidth: 35,
+        minWidth: 50,
+    },
+    calendarNavigation: {
     },
     calendarLabel: {
-
+      paddingLeft: 32,
+      paddingRight: 0,
+      color: "black",
     },
     calendarLegend: {
-
     },
     calendarLegendEntry: {
         color: "black",
@@ -470,6 +477,31 @@ export class ElementsDashboard extends Component {
               <span><b>{capitalize(date.format('MMMM'))} {date.format('YYYY')}</b></span>
             );
           };
+
+
+          return (
+            <Toolbar>
+                <ToolbarGroup>
+                    <div style={styles['calendarNavigation']}>
+                        <FlatButton title="Previous year" className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                        <FlatButton title="Previous month" className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                        <FlatButton title="Go to today" className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;Today&nbsp;&nbsp;&nbsp;</strong></FlatButton>
+                        <FlatButton title="Next month" className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                        <FlatButton title="Next year" className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
+                    </div>
+                </ToolbarGroup>
+
+                <ToolbarGroup>
+                    <ToolbarTitle text={label()} style={styles['calendarLabel']}/>
+                </ToolbarGroup>
+
+                <ToolbarGroup>
+                    <div style={styles['calendarLegend']}>
+                        {the_legend}
+                    </div>
+                </ToolbarGroup>
+            </Toolbar>
+          );
 
           return (
               <div className="row">
