@@ -469,7 +469,7 @@ export class ElementsDashboard extends Component {
                       <button className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}>&#8249;&#8249;</button>
                       <button className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></button>
                       <button className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>Today</strong></button>
-                      <button className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></button>
+                      <button title="Next month" className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></button>
                       <button title="+1 year" className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}>&#8250;&#8250;</button>
                   </div>
 
