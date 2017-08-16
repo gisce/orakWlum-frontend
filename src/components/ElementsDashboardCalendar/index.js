@@ -61,7 +61,7 @@ const styles = {
         textAlign: 'right',
     },
     calendarNavigationButtons: {
-
+        minWidth: 35,
     },
     calendarLabel: {
 
@@ -423,7 +423,7 @@ export class ElementsDashboard extends Component {
             const name = (key == "default")?"All":key;
 
             the_legend.push(
-                <FlatButton
+                <RaisedButton
                   backgroundColor={styles.element_style[value]['backgroundColor']}
                   label={capitalize(name)}
                   style={styles['calendarLegendEntry']}
@@ -471,11 +471,11 @@ export class ElementsDashboard extends Component {
           return (
               <div className="row">
                   <div className="col-md-4" style={styles['alignLeft']}>
-                      <button title="Previous year" className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></button>
-                      <button title="Previous month" className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></button>
-                      <button title="Go to today" className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>Today</strong></button>
-                      <button title="Next month" className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></button>
-                      <button title="Next year" className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></button>
+                      <FlatButton title="Previous year" className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                      <FlatButton title="Previous month" className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                      <FlatButton title="Go to today" className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;Today&nbsp;&nbsp;&nbsp;</strong></FlatButton>
+                      <FlatButton title="Next month" className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                      <FlatButton title="Next year" className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
                   </div>
 
                   <div className="col-md-4" style={styles['alignCenter']}>
