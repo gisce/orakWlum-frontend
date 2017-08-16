@@ -479,7 +479,7 @@ export class ElementsDashboard extends Component {
                   </div>
 
                   <div className="col-md-4" style={styles['alignCenter']}>
-                      <label className={'label-date'} style={styles['calendarLabel']}>{label()}</label>
+                      <FlatButton hoverColor={"white"} className={'label-date'} style={styles['calendarLabel']}>{label()}</FlatButton>
                   </div>
 
                   <div className="col-md-4" style={styles['alignRight']}>
