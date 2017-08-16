@@ -17,6 +17,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import FlatButton from 'material-ui/FlatButton';
 
 import { ProposalList } from '../ProposalList';
 import { ContentHeader } from '../ContentHeader';
@@ -70,9 +71,11 @@ const styles = {
     },
     calendarLegendEntry: {
         color: "white",
-        padding: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
+        verticalAlign: 'middle',
+
+        //padding: 5,
+        //paddingLeft: 10,
+        //paddingRight: 10,
         fontWeight: "bold",
     },
 };
@@ -422,7 +425,11 @@ export class ElementsDashboard extends Component {
             const name = (key == "default")?"All":key;
 
             the_legend.push(
-                    <span key={"legend_"+key} style={the_style}>{capitalize(name)}</span>
+                <FlatButton
+                  style={the_style}
+                  label={capitalize(name)}
+                  containerElement="label"
+                />
             )
         }
 
