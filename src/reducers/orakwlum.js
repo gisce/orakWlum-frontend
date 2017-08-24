@@ -17,6 +17,7 @@ const initialState = {
     profile: {},
     sources: {},
     version: {},
+    sync: {},
 };
 
 export default createReducer(initialState, {
