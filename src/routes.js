@@ -25,6 +25,7 @@ import Concatenator from './components/ElementsConcatenation';
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
 import { requireNoAuthentication } from './components/notAuthenticatedComponent';
+import { requireUnauthentication } from './components/Logout';
 
 
 export default (
@@ -33,6 +34,8 @@ export default (
         <Route path="login" component={requireNoAuthentication(LoginView)} />
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
+
+        <Route name="logout" path="logout" component={requireUnauthentication()} />
         <Route path="history" component={requireAuthentication(Analytics)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
@@ -53,6 +56,7 @@ export default (
         <Route name="Element" path="elements/:elementID" component={requireAuthentication(Element)} />
         <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={requireAuthentication(Concatenator)} />
         <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
+
 
         <Route path="*" component={NotFound} />
 
