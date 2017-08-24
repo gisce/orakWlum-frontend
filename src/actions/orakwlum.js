@@ -540,3 +540,29 @@ export function overrideVersion(response, initial) {
     }
     return {};
 }
+
+
+
+
+
+/**************
+Session synch !
+**************/
+
+export function synchronizePendingElementsRequest() {
+    const message = "(re)Processing proposal";
+
+    return {
+        type: RUN_ELEMENT_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function synchronizePendingElements(a_filter=null) {
+    return (dispatch) => {
+        dispatch(synchronizePendingElementsRequest());
+        ask_the_api("session.sync", a_filter);
+    };
+}
