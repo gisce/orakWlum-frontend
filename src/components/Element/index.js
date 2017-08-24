@@ -591,8 +591,8 @@ export class Elementt extends Component {
                   )
                   :null;
 
-        const disableDetail = (element_type == "concatenation")?"disabled":"";
-        const disableExport = (element_type == "comparation")?"disabled":"";
+        const disableDetail = (element_type == "concatenation")?true:false;
+        const disableExport = (element_type == "comparation")?true:false;
 
         const proposalActions =
              (!readOnly && !this.comparation)?

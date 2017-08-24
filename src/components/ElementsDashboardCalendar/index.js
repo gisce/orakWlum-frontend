@@ -17,6 +17,11 @@ import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import FlatButton from 'material-ui/FlatButton';
+
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import { ProposalList } from '../ProposalList';
 import { ContentHeader } from '../ContentHeader';
@@ -60,19 +65,24 @@ const styles = {
         textAlign: 'right',
     },
     calendarNavigationButtons: {
-
+        minWidth: 50,
+    },
+    calendarNavigation: {
     },
     calendarLabel: {
-
+      paddingLeft: 32,
+      paddingRight: 0,
+      color: "black",
     },
     calendarLegend: {
-
     },
     calendarLegendEntry: {
-        color: "white",
-        padding: 5,
-        paddingLeft: 10,
-        paddingRight: 10,
+        color: "black",
+        verticalAlign: 'middle',
+        minWidth: 50,
+        //padding: 5,
+        //paddingLeft: 10,
+        //paddingRight: 10,
         fontWeight: "bold",
     },
 };
@@ -417,12 +427,17 @@ export class ElementsDashboard extends Component {
         let the_legend = []
         for ( let [key, value] of Object.entries(colors_by_elements_type)) {
             // Define the current legend entry extending base style with tunned backgroundColor (following the colors constant definition)
-            const the_style = Object.assign({}, styles['calendarLegendEntry'], {backgroundColor: styles.element_style[value]['backgroundColor']})
-
-            const name = (key == "default")?"All":key;
+            const name = (key == "default")?"All":capitalize(key);
+            const shortname = (key == "default")?"*":name.slice(0,3);
 
             the_legend.push(
-                    <span key={"legend_"+key} style={the_style}>{capitalize(name)}</span>
+                <RaisedButton
+                  backgroundColor={styles.element_style[value]['backgroundColor']}
+                  label={shortname}
+                  title={name}
+                  style={styles['calendarLegendEntry']}
+                  onClick={(e) => this.updateType(name)}
+                />
             )
         }
 
@@ -463,18 +478,43 @@ export class ElementsDashboard extends Component {
             );
           };
 
+
+          return (
+            <Toolbar>
+                <ToolbarGroup>
+                    <div style={styles['calendarNavigation']}>
+                        <FlatButton title="Previous year" className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                        <FlatButton title="Previous month" className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                        <FlatButton title="Go to today" className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;Today&nbsp;&nbsp;&nbsp;</strong></FlatButton>
+                        <FlatButton title="Next month" className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                        <FlatButton title="Next year" className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
+                    </div>
+                </ToolbarGroup>
+
+                <ToolbarGroup>
+                    <ToolbarTitle text={label()} style={styles['calendarLabel']}/>
+                </ToolbarGroup>
+
+                <ToolbarGroup>
+                    <div style={styles['calendarLegend']}>
+                        {the_legend}
+                    </div>
+                </ToolbarGroup>
+            </Toolbar>
+          );
+
           return (
               <div className="row">
                   <div className="col-md-4" style={styles['alignLeft']}>
-                      <button className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></button>
-                      <button className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}>-Year</button>
-                      <button className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>Today</strong></button>
-                      <button className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}>+Year</button>
-                      <button className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></button>
+                      <FlatButton title="Previous year" className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                      <FlatButton title="Previous month" className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                      <FlatButton title="Go to today" className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;Today&nbsp;&nbsp;&nbsp;</strong></FlatButton>
+                      <FlatButton title="Next month" className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                      <FlatButton title="Next year" className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
                   </div>
 
                   <div className="col-md-4" style={styles['alignCenter']}>
-                      <label className={'label-date'} style={styles['calendarLabel']}>{label()}</label>
+                      <h4 style={styles['calendarLabel']}>{label()}</h4>
                   </div>
 
                   <div className="col-md-4" style={styles['alignRight']}>
