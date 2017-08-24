@@ -12,6 +12,9 @@ var NotificationSystem = require('react-notification-system');
 
 var FileSaver = require('../../../node_modules/file-saver/FileSaver.min.js');
 
+import { localized_time } from '../../constants'
+
+
 function mapStateToProps(state) {
     return {
     };
@@ -203,17 +206,17 @@ export class Connection extends Component {
         // PROFILE //
         /////////////
 
-        .on('profile.override', (content) => {
-            console.debug('[Websocket] Profile received');
-            this.props.overrideProfile(content, initial);
+            .on('profile.override', (content) => {
+                console.debug('[Websocket] Profile received');
+                this.props.overrideProfile(content, initial);
 
-            if (!content.silent) {
-                if (content.clean_all)
-                    this.cleanNotifications();
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
 
-                this.prepareNotification(content);;
-            }
-        })
+                    this.prepareNotification(content);;
+                }
+            })
 
 
 
@@ -221,34 +224,34 @@ export class Connection extends Component {
         // PROFILE //
         /////////////
 
-        .on('version.override', (content) => {
-            console.debug('[Websocket] Version received');
-            this.props.overrideVersion(content, initial);
+            .on('version.override', (content) => {
+                console.debug('[Websocket] Version received');
+                this.props.overrideVersion(content, initial);
 
-            if (!content.silent) {
-                if (content.clean_all)
-                    this.cleanNotifications();
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
 
-                this.prepareNotification(content);;
-            }
-        })
+                    this.prepareNotification(content);;
+                }
+            })
 
 
         //////////////
         // SETTINGS //
         //////////////
 
-        .on('sources.override', (content) => {
-            console.debug('[Websocket] Sources received');
-            this.props.overrideSources(content, initial);
+            .on('sources.override', (content) => {
+                console.debug('[Websocket] Sources received');
+                this.props.overrideSources(content, initial);
 
-            if (!content.silent) {
-                if (content.clean_all)
-                    this.cleanNotifications();
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
 
-                this.prepareNotification(content);;
-            }
-        })
+                    this.prepareNotification(content);;
+                }
+            })
 
 
 
@@ -265,6 +268,9 @@ export class Connection extends Component {
                     title: 'Connected!',
                     message: 'Connection established!',
                 });
+
+                const todayDate = localized_time();
+                this.props.synchronizePendingElements(todayDate.unix());
             })
 
             .on('disconnect', () => {
