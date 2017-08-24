@@ -17,6 +17,7 @@ import { localized_time } from '../../constants'
 
 function mapStateToProps(state) {
     return {
+        sync: state.orakwlum.sync,
     };
 }
 
@@ -30,6 +31,12 @@ export class Connection extends Component {
     constructor(props) {
         super(props)
         this._notificationSystem = null;
+
+        const {sync} = this.props;
+
+        this.state = {
+            sync,
+        }
     }
 
     prepareNotification (content) {
@@ -270,7 +277,28 @@ export class Connection extends Component {
                 });
 
                 const todayDate = localized_time();
-                this.props.synchronizePendingElements(todayDate.unix());
+
+                // Fetch the last sync stamp
+                let sync = this.state.sync;
+                const {last_sync} = sync;
+
+                // Start synchronization and set the new sync date to now
+                this.props.synchronizePendingElements(last_sync);
+                sync.last_sync = todayDate.unix();
+                this.setState({
+                    sync,
+                })
+
+                console.debug("Synch started between", last_sync, sync.last_sync)
+            })
+
+            .on('auth.logout', (content) => {
+                console.debug('Enforced logout from the API');
+                this.prepareNotification(content);
+
+                setTimeout(() => {
+                    dispatchNewRoute("/logout");
+                }, 5000)
             })
 
             .on('disconnect', () => {
@@ -293,14 +321,6 @@ export class Connection extends Component {
                     message: 'Can\'t reach the server',
                     level: "error",
                 })
-            })
-
-            .on('auth.logout', (content) => {
-                console.debug('Enforced logout from the API');
-
-                this.cleanNotifications();
-                this.prepareNotification(content);
-                force_logout();
             })
 
 	}
