@@ -244,6 +244,7 @@ export class Connection extends Component {
             })
 
 
+
         //////////////
         // SETTINGS //
         //////////////
@@ -267,7 +268,7 @@ export class Connection extends Component {
         ////////////////////
 
             .on('connect', () => {
-                console.debug('Connected');
+                console.debug('[Websocket] Connected');
 
                 this.cleanNotifications();
                 this.prepareNotification({
@@ -293,7 +294,7 @@ export class Connection extends Component {
             })
 
             .on('auth.logout', (content) => {
-                console.debug('Enforced logout from the API');
+                console.debug('[Websocket] Enforced logout from the API');
                 this.prepareNotification(content);
 
                 setTimeout(() => {
@@ -302,7 +303,7 @@ export class Connection extends Component {
             })
 
             .on('disconnect', () => {
-                console.debug('Disconnected');
+                console.debug('[Websocket] Disconnected');
 
                 this.cleanNotifications();
 
