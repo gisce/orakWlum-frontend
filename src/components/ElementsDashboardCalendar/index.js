@@ -275,7 +275,7 @@ export class ElementsDashboard extends Component {
 
     // Filter elements based on the selected type
     filterElements = () => {
-        const {elements, elements_by_date, elements_by_date_future, elements_by_type} = this.props;
+        const {elements, elements_by_date, elements_by_date_future, elements_by_type, elements_volatile} = this.props;
         const {selected_type} = this;
         const {selectedElements} = this.state;
 
@@ -291,6 +291,15 @@ export class ElementsDashboard extends Component {
 		for ( let [id, element] of Object.entries(elements)) {
             if (selected_type_id == "all" || element.element_type == selected_type_id) {
                 this.elements_matched.push(element);
+            }
+        }
+
+        if (elements_volatile) {
+            //Validate type for volatile elements
+    		for ( let [id, element] of Object.entries(elements_volatile)) {
+                if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                    this.elements_matched.push(element);
+                }
             }
         }
     }
