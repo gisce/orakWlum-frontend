@@ -136,10 +136,6 @@ export class ElementDefinition extends Component {
         const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? props.defaultValue['start_date'] : minDate;
         const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? props.defaultValue['end_date'] : null;
 
-        console.log(element_start_date, element_end_date);
-
-        //minDate.setHours(0, 0, 0, 0);
-
         this.state = {
           createMethod: createMethod,
           type: types[element_type],

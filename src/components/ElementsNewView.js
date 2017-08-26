@@ -30,7 +30,7 @@ export default class ProfileView extends React.Component {
             type: "proposal",
         }
 
-        if ('start_date' in props.params)
+        if ('day_start' in props.params)
             this.default_values['start_date'] = localized_time(props.params.day_start, "DDMMYYYY").toDate();
 
         if ('day_end' in props.params)
