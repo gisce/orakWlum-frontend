@@ -52,6 +52,7 @@ export default (
         <Redirect from="elements/concatenate" to="elements" />
 
         <Route name="elements.create" path="elements/new" component={requireAuthentication(ElementsNew)} />
+        <Route name="elements.create" path="elements/new/:day_start/:day_end" component={requireAuthentication(ElementsNew)} />
 
         <Route name="Element" path="elements/:elementID" component={requireAuthentication(Element)} />
         <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={requireAuthentication(Concatenator)} />
