@@ -237,13 +237,11 @@ export class ProposalDefinition extends Component {
                     <div>
                         <p>We need some details to create a new {this.state.type.name}.</p>
 
-
-
                         <SelectField
                             floatingLabelText="Element type"
                             value={this.state.element_type}
                             onChange={this.handleChangeElementType}
-			>
+                        >
                             <MenuItem key={1} value={"proposal"} primaryText="Proposal" />
                             <MenuItem key={2} value={"historical"} primaryText="Historical" />
                         </SelectField>

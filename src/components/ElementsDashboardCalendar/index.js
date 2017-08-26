@@ -19,6 +19,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 
+import Dialog from 'material-ui/Dialog';
+
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
@@ -146,6 +148,13 @@ export class ElementsDashboard extends Component {
             searchText: this.selected_type_search,
             selectedElements: {},
             multiElementMode: false, //select
+            creation_dialog_open: false, //create dialog status
+        };
+
+
+        this.creation_dialog = {
+            title: "Create new element?",
+            body: "Did you want to create a new Element",
         };
 
         const {aggregations, elements} = this.props;
@@ -154,7 +163,11 @@ export class ElementsDashboard extends Component {
             this.refreshData()
     }
 
-    addElement = (event) => {
+    addElement = (event, days_list=null) => {
+
+        const days_list_str = "" + (days_list == null)? "": str(days_list);
+        console.log("days_list", days_list_str);
+
         dispatchNewRoute("/elements/new", event);
     }
 
@@ -286,6 +299,13 @@ export class ElementsDashboard extends Component {
         }
     }
 
+
+    creation_dialog_close = () => {
+        this.setState({
+            creation_dialog_open: false,
+        })
+    }
+
     // Identify a Range of Dates and ask the user about to create a new element
     setRangeOfDates = (range) => {
         const start_hour = localized_time(range.start)
@@ -297,8 +317,30 @@ export class ElementsDashboard extends Component {
             " between '" + start_hour.format("L") + " - " + end_hour.format("L") + "'"
         ;
 
-        const message = "Did you want to create a new Element" + range_string
-        alert(message)
+        //rolferrr
+
+        this.creation_dialog['body'] += range_string;
+        this.creation_dialog['days_range'] = [start_hour, end_hour];
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.addElement(event, this.creation_dialog['days_range'])}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
     }
 
     colorizeEvents = (e) => {
@@ -548,6 +590,16 @@ export class ElementsDashboard extends Component {
 
         return (
             <div>
+                <Dialog
+                  title={this.creation_dialog['title']}
+                  actions={this.creation_dialog['actions']}
+                  modal={false}
+                  open={this.state.creation_dialog_open}
+                  onRequestClose={() => this.creation_dialog_close()}
+                >
+                    {this.creation_dialog['body']}
+                </Dialog>
+
                 <ContentHeader
                     title="Elements"
                     addButton={true}
