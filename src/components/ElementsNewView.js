@@ -8,6 +8,8 @@ import * as actionCreators from '../actions/orakwlum';
 
 import { ElementDefinition } from './ElementDefinition';
 
+import { localized_time } from '../constants'
+
 function mapStateToProps(state) {
     return {
         sources: state.orakwlum.sources,
@@ -21,6 +23,20 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProfileView extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.default_values = {
+            type: "proposal",
+        }
+
+        if ('start_date' in props.params)
+            this.default_values['start_date'] = localized_time(props.params.day_start, "DDMMYYYY").toDate();
+
+        if ('day_end' in props.params)
+            this.default_values['end_date'] = localized_time(props.params.day_end, "DDMMYYYY").toDate();
+
+    }
     componentWillMount() {
         const {aggregations, sources} = this.props;
 
@@ -42,10 +58,6 @@ export default class ProfileView extends React.Component {
     render() {
         const {sources, aggregations} = this.props;
 
-        const default_values = {
-            type: "proposal",
-        }
-
         return (
             <div>
                 <div>
@@ -55,7 +67,7 @@ export default class ProfileView extends React.Component {
                         <ElementDefinition
                             aggregationsList={aggregations}
                             sourcesList={sources.measures}
-                            defaultValue={default_values}
+                            defaultValue={this.default_values}
                         />
                     }
                 </div>

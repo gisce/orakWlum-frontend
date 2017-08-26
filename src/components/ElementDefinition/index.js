@@ -27,11 +27,7 @@ import {Elementt} from '../Element'
 
 import * as actionCreators from '../../actions/orakwlum';
 
-import { localized_time } from '../../constants'
-
 const revalidator = require('revalidator');
-
-
 
 const styles = {
     disclamer:{
@@ -134,12 +130,13 @@ export class ElementDefinition extends Component {
         createMethod = props.createHistoricProposal;
         }
 
-        console.log("defaults", props.defaultValue['type']);
         //const element_type = (props.type)?props.type:"proposal";
         const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
 
-        const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? localized_time(props.defaultValue['start_date']) : minDate;
-        const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? localized_time(props.defaultValue['end_date']) : null;
+        const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? props.defaultValue['start_date'] : minDate;
+        const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? props.defaultValue['end_date'] : null;
+
+        console.log(element_start_date, element_end_date);
 
         //minDate.setHours(0, 0, 0, 0);
 
