@@ -6,7 +6,7 @@ import { debug } from '../utils/debug';
 
 import * as actionCreators from '../actions/orakwlum';
 
-import { ProposalDefinition } from './ElementDefinition';
+import { ElementDefinition } from './ElementDefinition';
 
 function mapStateToProps(state) {
     return {
@@ -42,16 +42,20 @@ export default class ProfileView extends React.Component {
     render() {
         const {sources, aggregations} = this.props;
 
+        const default_values = {
+            type: "proposal",
+        }
+
         return (
             <div>
                 <div>
                     <h1>New element</h1>
 
                     { Object.entries(aggregations).length > 0  &&  Object.entries(sources).length > 0  &&  "measures" in sources &&
-                        <ProposalDefinition
+                        <ElementDefinition
                             aggregationsList={aggregations}
                             sourcesList={sources.measures}
-                            type={"proposal"}
+                            defaultValue={default_values}
                         />
                     }
                 </div>

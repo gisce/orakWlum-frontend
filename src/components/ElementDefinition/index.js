@@ -99,7 +99,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class ProposalDefinition extends Component {
+export class ElementDefinition extends Component {
     constructor(props) {
       super(props);
 
@@ -123,7 +123,12 @@ export class ProposalDefinition extends Component {
           }
       }
 
-      const element_type = (props.type)?props.type:"proposal";
+
+      console.log("defaults", props.defaultValue['type']);
+      //const element_type = (props.type)?props.type:"proposal";
+      const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
+
+
       const minDate = new Date();
 
       let createMethod = props.createElement;
@@ -855,6 +860,6 @@ export class ProposalDefinition extends Component {
     }
 }
 
-ProposalDefinition.propTypes = {
+ElementDefinition.propTypes = {
     open: PropTypes.bool,
 };
