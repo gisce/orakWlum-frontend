@@ -27,6 +27,8 @@ import {Elementt} from '../Element'
 
 import * as actionCreators from '../../actions/orakwlum';
 
+import { localized_time } from '../../constants'
+
 const revalidator = require('revalidator');
 
 
@@ -101,46 +103,47 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export class ElementDefinition extends Component {
     constructor(props) {
-      super(props);
+        super(props);
 
-      let aggregations_list=[];
-      let aggregations_list_complete=[];
+        let aggregations_list=[];
+        let aggregations_list_complete=[];
 
-      //initialize aggregations list
-      for ( let [key, aggregation] of Object.entries(props.aggregationsList)) {
+        //initialize aggregations list
+        for ( let [key, aggregation] of Object.entries(props.aggregationsList)) {
           aggregations_list.push( false );
           aggregations_list_complete.push( aggregation );
-      }
+        }
 
-      //initialize sources list
-      let sources_list=[];
-      let sources_all=[];
-      let measures = [];
-      for ( let [key, source] of Object.entries(props.sourcesList)) {
+        //initialize sources list
+        let sources_list=[];
+        let sources_all=[];
+        let measures = [];
+        for ( let [key, source] of Object.entries(props.sourcesList)) {
           if (source.active) {
               sources_all.push( source );
               sources_list.push( false );
           }
-      }
+        }
 
+        //handle default start date depending on the type
+        const minDate = new Date();
+        let createMethod = props.createElement;
 
-      console.log("defaults", props.defaultValue['type']);
-      //const element_type = (props.type)?props.type:"proposal";
-      const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
-
-
-      const minDate = new Date();
-
-      let createMethod = props.createElement;
-
-      if (element_type == "historic") {
+        if (element_type == "historic") {
         minDate.setFullYear(minDate.getFullYear() - 1);
         createMethod = props.createHistoricProposal;
-      }
+        }
 
-      //minDate.setHours(0, 0, 0, 0);
+        console.log("defaults", props.defaultValue['type']);
+        //const element_type = (props.type)?props.type:"proposal";
+        const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
 
-      this.state = {
+        const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? localized_time(props.defaultValue['start_date']) : minDate;
+        const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? localized_time(props.defaultValue['end_date']) : null;
+
+        //minDate.setHours(0, 0, 0, 0);
+
+        this.state = {
           createMethod: createMethod,
           type: types[element_type],
           element_type,
@@ -148,8 +151,8 @@ export class ElementDefinition extends Component {
           finished: false,
           stepIndex: 0,
           name: "",
-          date_start: minDate,
-          date_end: null,
+          date_start: element_start_date,
+          date_end: element_end_date,
 
           aggregations: aggregations_list,
           aggregations_all: aggregations_list_complete,
@@ -169,9 +172,9 @@ export class ElementDefinition extends Component {
           sources_error_text: null,
 
           readyToNext: false,
-      };
+        };
 
-      this.stepsLength = this.getSteps().length;
+        this.stepsLength = this.getSteps().length;
     }
 
 
