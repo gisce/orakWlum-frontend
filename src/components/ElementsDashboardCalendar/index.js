@@ -163,12 +163,8 @@ export class ElementsDashboard extends Component {
             this.refreshData()
     }
 
-    addElement = (event, days_list=null) => {
-
-        const days_list_str = "" + (days_list == null)? "": str(days_list);
-        console.log("days_list", days_list_str);
-
-        dispatchNewRoute("/elements/new", event);
+    addElement = (event, days_range="") => {
+        dispatchNewRoute("/elements/new" + "/" + days_range, event);
     }
 
     refreshData = (silent = true) => {
@@ -320,7 +316,7 @@ export class ElementsDashboard extends Component {
         //rolferrr
 
         this.creation_dialog['body'] += range_string;
-        this.creation_dialog['days_range'] = [start_hour, end_hour];
+        this.creation_dialog['days_range'] = start_hour.format("DDMMYYYY") + "/" + end_hour.format("DDMMYYYY");
 
         // The object to handle the creation dialog
         const creation_dialog_actions = [
