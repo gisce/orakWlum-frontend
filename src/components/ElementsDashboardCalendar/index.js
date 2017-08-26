@@ -287,11 +287,23 @@ export class ElementsDashboard extends Component {
         //Parse to lower selected_type (to match API ids)
         const selected_type_id = selected_type.toLowerCase();
 
-        //Validate type
-		for ( let [id, element] of Object.entries(elements)) {
-            if (selected_type_id == "all" || element.element_type == selected_type_id) {
+        //Set scope depending on the type
+        let elements_scope;
+        switch (selected_type_id) {
+            case "all":
+                elements_scope = elements;
+                break;
+
+            default:
+                if (selected_type_id in elements_by_type)
+                    elements_scope = elements_by_type[selected_type_id];
+                else
+                    elements_scope = [];
+        }
+
+        //Adapt data to needed array
+		for ( let [id, element] of Object.entries(elements_scope)) {
                 this.elements_matched.push(element);
-            }
         }
 
         if (elements_volatile) {
