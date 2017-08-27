@@ -45,8 +45,8 @@ export function ask_the_api (...args) {
 }
 
 export function force_logout (){
-    destroySocket();
     undefine_token();
+    destroySocket();
 }
 
 export function dispatchNewRoute(route, event=false) {

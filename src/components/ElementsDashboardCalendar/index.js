@@ -19,6 +19,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 
+import Dialog from 'material-ui/Dialog';
+
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
@@ -146,6 +148,13 @@ export class ElementsDashboard extends Component {
             searchText: this.selected_type_search,
             selectedElements: {},
             multiElementMode: false, //select
+            creation_dialog_open: false, //create dialog status
+        };
+
+
+        this.creation_dialog = {
+            title: "Create new element?",
+            body: "Did you want to create a new Element",
         };
 
         const {aggregations, elements} = this.props;
@@ -154,8 +163,8 @@ export class ElementsDashboard extends Component {
             this.refreshData()
     }
 
-    addElement = (event) => {
-        dispatchNewRoute("/elements/new", event);
+    addElement = (event, days_range="") => {
+        dispatchNewRoute("/elements/new" + "/" + days_range, event);
     }
 
     refreshData = (silent = true) => {
@@ -266,7 +275,7 @@ export class ElementsDashboard extends Component {
 
     // Filter elements based on the selected type
     filterElements = () => {
-        const {elements, elements_by_date, elements_by_date_future, elements_by_type} = this.props;
+        const {elements, elements_by_date, elements_by_date_future, elements_by_type, elements_volatile} = this.props;
         const {selected_type} = this;
         const {selectedElements} = this.state;
 
@@ -278,12 +287,40 @@ export class ElementsDashboard extends Component {
         //Parse to lower selected_type (to match API ids)
         const selected_type_id = selected_type.toLowerCase();
 
-        //Validate type
-		for ( let [id, element] of Object.entries(elements)) {
-            if (selected_type_id == "all" || element.element_type == selected_type_id) {
+        //Set scope depending on the type
+        let elements_scope;
+        switch (selected_type_id) {
+            case "all":
+                elements_scope = elements;
+                break;
+
+            default:
+                if (selected_type_id in elements_by_type)
+                    elements_scope = elements_by_type[selected_type_id];
+                else
+                    elements_scope = [];
+        }
+
+        //Adapt data to needed array
+		for ( let [id, element] of Object.entries(elements_scope)) {
                 this.elements_matched.push(element);
+        }
+
+        if (elements_volatile) {
+            //Validate type for volatile elements
+    		for ( let [id, element] of Object.entries(elements_volatile)) {
+                if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                    this.elements_matched.push(element);
+                }
             }
         }
+    }
+
+
+    creation_dialog_close = () => {
+        this.setState({
+            creation_dialog_open: false,
+        })
     }
 
     // Identify a Range of Dates and ask the user about to create a new element
@@ -297,8 +334,30 @@ export class ElementsDashboard extends Component {
             " between '" + start_hour.format("L") + " - " + end_hour.format("L") + "'"
         ;
 
-        const message = "Did you want to create a new Element" + range_string
-        alert(message)
+        //rolferrr
+
+        this.creation_dialog['body'] += range_string;
+        this.creation_dialog['days_range'] = start_hour.format("DDMMYYYY") + "/" + end_hour.format("DDMMYYYY");
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="Cancel"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Submit"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.addElement(event, this.creation_dialog['days_range'])}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
     }
 
     colorizeEvents = (e) => {
@@ -548,6 +607,16 @@ export class ElementsDashboard extends Component {
 
         return (
             <div>
+                <Dialog
+                  title={this.creation_dialog['title']}
+                  actions={this.creation_dialog['actions']}
+                  modal={false}
+                  open={this.state.creation_dialog_open}
+                  onRequestClose={() => this.creation_dialog_close()}
+                >
+                    {this.creation_dialog['body']}
+                </Dialog>
+
                 <ContentHeader
                     title="Elements"
                     addButton={true}
