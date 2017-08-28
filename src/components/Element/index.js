@@ -454,17 +454,13 @@ export class Elementt extends Component {
                 :
                 "" + start_date_past.format(day_format) + " - " + end_date_past.format(day_format);
 
-        const daysRange_toShow = daysRangePast;
-
         const dayOfElement = new Date(proposal.days_range[0]).getDay();
         const dayOfElementPast = (historical) ? null : new Date(proposal.days_range_past[0]).getDay();
 
-        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
-
 
 	const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
-        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
-        const subtitle = <span>Using {days[dayOfElement]} {day_string}</span>;
+        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
+        const subtitle = <span>Using {days[dayOfElement]} {daysRangePast}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
