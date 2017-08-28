@@ -426,9 +426,7 @@ export class Elementt extends Component {
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
-
         const element_type = (proposal.element_type)?proposal.element_type:"Unknown";
-
 
         //Define the start and end dates
         const start_date = localized_time(proposal.days_range[0], parse_day_format);
@@ -437,18 +435,17 @@ export class Elementt extends Component {
         const start_date_past = localized_time(proposal.days_range_past[0], parse_day_format);
         const end_date_past = (proposal.days_range_past.length > 1)? localized_time(proposal.days_range_past[0], parse_day_format) : start_date_past;
 
-
         /// Process Element dates
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
         const proposalDaysRangePast = (proposal.days_range_past)? proposal.days_range_past : proposalDaysRange;
 
-        const daysRange =
+        const daysRangeString =
             (proposalDaysRange.length == 1)?
                 "" + start_date.format(day_format)
                 :
                 "" + start_date.format(day_format) + " - " + end_date.format(day_format);
 
-        const daysRangePast =
+        const daysRangeStringPastString =
             (proposalDaysRangePast.length == 1)?
                 "" + start_date_past.format(day_format)
                 :
@@ -459,8 +456,8 @@ export class Elementt extends Component {
 
 
 	const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
-        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange}]</span>
-        const subtitle = <span>Using {days[dayOfElement]} {daysRangePast}</span>;
+        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
+        const subtitle = <span>Using {days[dayOfElement]} {daysRangeStringPastString}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
@@ -611,6 +608,7 @@ export class Elementt extends Component {
                   aggregationsList={this.props.aggregations}
                   sourcesList={this.props.sources.measures}
                   defaultValue={adaptedElement}
+                  editMode={true}
               />
           </div>
         ;
