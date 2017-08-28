@@ -109,6 +109,7 @@ function mapStateToProps(state) {
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
         sources: state.orakwlum.sources,
+        aggregations_from_state: state.orakwlum.aggregations,
     };
 }
 
@@ -429,11 +430,11 @@ export class Elementt extends Component {
         const element_type = (proposal.element_type)?proposal.element_type:"Unknown";
 
         //Define the start and end dates
-        const start_date = localized_time(proposal.days_range[0], parse_day_format);
+        const start_date = (proposal.days_range.length > 0)? localized_time(proposal.days_range[0], parse_day_format): null;
         const end_date = (proposal.days_range.length > 1)? localized_time(proposal.days_range[0], parse_day_format) : start_date;
 
-        const start_date_past = localized_time(proposal.days_range_past[0], parse_day_format);
-        const end_date_past = (proposal.days_range_past.length > 1)? localized_time(proposal.days_range_past[0], parse_day_format) : start_date_past;
+        const start_date_past = (!historical)? localized_time(proposal.days_range_past[0], parse_day_format): null;
+        const end_date_past = (!historical)? ((proposal.days_range_past.length > 1)? localized_time(proposal.days_range_past[0], parse_day_format) : start_date_past):null;
 
         /// Process Element dates
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
@@ -446,13 +447,17 @@ export class Elementt extends Component {
                 "" + start_date.format(day_format) + " - " + end_date.format(day_format);
 
         const daysRangeStringPastString =
-            (proposalDaysRangePast.length == 1)?
-                "" + start_date_past.format(day_format)
-                :
-                "" + start_date_past.format(day_format) + " - " + end_date_past.format(day_format);
+            (!historical)?
+                (
+                    (proposalDaysRangePast.length == 1)?
+                        "" + start_date_past.format(day_format)
+                        :
+                        "" + start_date_past.format(day_format) + " - " + end_date_past.format(day_format)
+                )
+                : "";
 
-        const dayOfElement = new Date(proposal.days_range[0]).getDay();
-        const dayOfElementPast = (historical) ? null : new Date(proposal.days_range_past[0]).getDay();
+        const dayOfElement = start_date.toDate().getDay();
+        const dayOfElementPast = (historical) ? null : start_date_past.toDate().getDay();
 
 
 	const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
