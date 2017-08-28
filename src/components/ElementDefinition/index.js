@@ -136,6 +136,10 @@ export class ElementDefinition extends Component {
         const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? props.defaultValue['start_date'] : minDate;
         const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? props.defaultValue['end_date'] : null;
 
+
+        //handle passed name
+        const element_name = (props.defaultValue && 'name' in props.defaultValue ) ? props.defaultValue['name'] : "";
+
         this.state = {
           createMethod: createMethod,
           type: types[element_type],
@@ -143,7 +147,7 @@ export class ElementDefinition extends Component {
           loading: false,
           finished: false,
           stepIndex: 0,
-          name: "",
+          name: element_name,
           date_start: element_start_date,
           date_end: element_end_date,
 
