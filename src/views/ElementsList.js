@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 
 //import { ElementsDashboard } from './ElementsDashboard';
-import { ElementsDashboard } from './ElementsDashboardCalendar';
+import { ElementsDashboard } from '../components/ElementsDashboardCalendar';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
