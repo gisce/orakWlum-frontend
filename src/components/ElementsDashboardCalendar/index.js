@@ -500,6 +500,7 @@ export class ElementsDashboard extends Component {
                   title={name}
                   style={styles['calendarLegendEntry']}
                   onClick={(e) => this.updateType(name)}
+                  key={"legend_button_" + shortname}
                 />
             )
         }
