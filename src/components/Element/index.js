@@ -16,7 +16,7 @@ import Toggle from 'material-ui/Toggle';
 import * as actionCreators from '../../actions/orakwlum';
 
 import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
+import { ElementGraph } from '../ElementGraph';
 import { ElementTable } from '../ElementTable';
 
 import { ElementDetail } from '../ElementDetail';
@@ -587,7 +587,7 @@ export class Elementt extends Component {
                       (proposalTable)?
                           <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
                           :
-                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
+                          <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )
                   :null;
 

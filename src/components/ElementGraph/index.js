@@ -81,7 +81,7 @@ CustomTooltip.propTypes = {
 };
 
 
-export class ProposalGraph extends Component {
+export class ElementGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -234,7 +234,7 @@ export class ProposalGraph extends Component {
     }
 }
 
-ProposalGraph.propTypes = {
+ElementGraph.propTypes = {
     data: PropTypes.array,
     components: PropTypes.object,
     stacked: PropTypes.bool,

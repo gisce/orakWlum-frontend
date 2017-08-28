@@ -8,7 +8,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import { CheckedTag } from '../CheckedTag';
 import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
+import { ElementGraph } from '../ElementGraph';
 
 import {adaptProposalData} from '../../utils/graph';
 import { dispatchNewRoute} from '../../utils/http_functions';
@@ -163,7 +163,7 @@ export class ProposalList extends Component {
 
                 const the_graph = (with_graph && tile.prediction && Object.keys(tile.prediction).length >0 ) ?
                     (
-                        <ProposalGraph
+                        <ElementGraph
                               stacked={true}
                               data={result}
                               components={components}
