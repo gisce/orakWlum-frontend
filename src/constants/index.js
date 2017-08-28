@@ -139,7 +139,7 @@ export const colors_combo = {
     'green': { backgroundColor: green500, borderColor: '#777' },
     'blue': { backgroundColor: blue500, borderColor: '#777' },
     'red': { backgroundColor: red500, borderColor: '#777' },
-    'yellow': { backgroundColor: yellow500, borderColor: '#777' },
+    'yellow': { backgroundColor: yellow500, borderColor: '#777', color: 'black' },
     'orange': { backgroundColor: orange500, borderColor: '#777' },
     'default': { backgroundColor: green500, borderColor: '#777' },
 };
