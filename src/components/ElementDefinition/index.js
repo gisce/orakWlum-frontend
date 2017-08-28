@@ -176,24 +176,25 @@ export class ElementDefinition extends Component {
             this.texts.step0.title = "Perform the desired changes:";
         }
 
-        //handle default start date depending on the type
-        const minDate = new Date();
-        let createMethod = props.createElement;
-
-        if (element_type == "historic") {
-            minDate.setFullYear(minDate.getFullYear() - 1);
-            createMethod = props.createHistoricProposal;
-        }
 
         //const element_type = (props.type)?props.type:"proposal";
         const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
+        let createMethod = props.createElement;
+
+        //handle default start date depending on the type
+        const minDate = new Date();
 
         const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? props.defaultValue['start_date'] : minDate;
         const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? props.defaultValue['end_date'] : null;
 
-
         //handle passed name
         const element_name = (props.defaultValue && 'name' in props.defaultValue ) ? props.defaultValue['name'] : "";
+
+        //toDo review it!
+        if (element_type == "historic") {
+            minDate.setFullYear(minDate.getFullYear() - 1);
+            createMethod = props.createHistoricProposal;
+        }
 
         this.state = {
           createMethod: createMethod,
