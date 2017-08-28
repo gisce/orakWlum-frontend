@@ -455,6 +455,7 @@ export class ElementsDashboard extends Component {
             }
 
             let start_date, end_date;
+
             // If that's a proposal
             if (!value.historical) {
                 //add entry to the past
@@ -466,8 +467,10 @@ export class ElementsDashboard extends Component {
                 events.push(past_entry);
 
                 //add entry to the past!
-                start_date = value.days_range_past[0]
-                end_date = (value.days_range_past.length == 1)? start_date : value.days_range_past[1]
+                start_date = value.days_range_past[0];
+                end_date = (value.days_range_past.length == 1)? start_date : value.days_range_past[1];
+
+                an_entry['title'] = '[Future] ' + an_entry['title'];
 
             } else {
                 start_date = value.days_range[0]
