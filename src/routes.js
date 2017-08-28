@@ -14,13 +14,13 @@ import Profile from './components/ProfileView';
 import About from './components/AboutView';
 import Aggregations from './components/AggregationsView';
 import Settings from './components/SettingsView';
-import Comparator from './components/ProposalComparatorView';
 
 import Websocket from './components/Websocket';
 import ElementsList from './components/ElementsList';
 import Element from './components/ElementView';
 import ElementsNew from './components/ElementsNewView';
 import Concatenator from './components/ElementsConcatenation';
+import Comparator from './components/ElementsComparationView';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
