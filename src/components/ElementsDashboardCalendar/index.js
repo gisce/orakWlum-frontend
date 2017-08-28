@@ -457,7 +457,7 @@ export class ElementsDashboard extends Component {
             let start_date, end_date;
 
             // If that's a proposal
-            if (!value.historical) {
+            if (value.element_type == "proposal") {
                 //add entry to the past
                 let past_entry = Object.assign({}, an_entry)
                 start_date = value.days_range[0]
