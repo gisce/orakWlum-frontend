@@ -16,10 +16,11 @@ import Toggle from 'material-ui/Toggle';
 import * as actionCreators from '../../actions/orakwlum';
 
 import { Tag } from '../Tag';
+
 import { ElementGraph } from '../ElementGraph';
 import { ElementTable } from '../ElementTable';
-
 import { ElementDetail } from '../ElementDetail';
+import { ElementDefinition } from '../ElementDefinition';
 
 import { Notification } from '../Notification';
 import Dialog from 'material-ui/Dialog';
@@ -597,8 +598,8 @@ export class Elementt extends Component {
         const proposalEdit =
 		  <div>
               <ElementDefinition
-                  aggregationsList={aggregations}
-                  sourcesList={sources.measures}
+                  aggregationsList={this.props.aggregations}
+                  sourcesList={this.props.sources.measures}
                   defaultValue={this.default_values}
               />
           </div>
