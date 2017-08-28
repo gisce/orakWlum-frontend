@@ -25,7 +25,7 @@ import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
-import { ProposalList } from '../ProposalList';
+import { ElementList } from '../ElementList';
 import { ContentHeader } from '../ContentHeader';
 
 import { capitalize} from '../../utils/misc';

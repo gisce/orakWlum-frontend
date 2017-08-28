@@ -47,7 +47,7 @@ const styles = {
 };
 
 
-export class ProposalList extends Component {
+export class ElementList extends Component {
     constructor(props) {
         super(props);
 
@@ -79,7 +79,7 @@ export class ProposalList extends Component {
     };
 
     render() {
-        console.debug("render ProposalList");
+        console.debug("render ElementList");
         const {proposals, sameWidth, width, aggregations} = this.props;
 
 	const with_graph = (this.props.with_graph)?this.props.with_graph:true;
@@ -209,7 +209,7 @@ export class ProposalList extends Component {
                 );
         });
 
-        const ProposalList = () => (
+        const ElementList = () => (
           <div style={styles.root}>
             <GridList
               cols={2}
@@ -226,13 +226,13 @@ export class ProposalList extends Component {
         return (
             <div>
                 <div className="row">{proposalAggregations}</div>
-                <div className="row"><ProposalList /></div>
+                <div className="row"><ElementList /></div>
             </div>
         );
     }
 }
 
-ProposalList.propTypes = {
+ElementList.propTypes = {
     sameWidth: PropTypes.bool,
     width: PropTypes.string,
     onClick: PropTypes.func,

@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 
-import { ProposalList } from '../ProposalList';
+import { ElementList } from '../ElementList';
 import { ContentHeader } from '../ContentHeader';
 
 import { date_to_string} from '../../utils/misc';
@@ -481,11 +481,11 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
-        // Matched elements rendered in a <ProposalList> (with overrided onClick if needed)
+        // Matched elements rendered in a <ElementList> (with overrided onClick if needed)
         const the_elements = (Object.keys(elements_matched).length > 0)?
         (
             (multiElementMode)?
-                <ProposalList
+                <ElementList
                     title="Matched elements"
                     proposals={elements_matched}
                     aggregations={aggregations}
@@ -494,7 +494,7 @@ export class ElementsDashboard extends Component {
                     onClick={(count, element, title) => this.toggleSelectElement(count, element, title)}
                 />
                 :
-                <ProposalList
+                <ElementList
                     title="Matched elements"
                     proposals={elements_matched}
                     aggregations={aggregations}
