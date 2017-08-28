@@ -21,11 +21,11 @@ import Element from './views/ElementView';
 import ElementsNew from './views/ElementsNewView';
 import Concatenator from './views/ElementsConcatenation';
 import Comparator from './views/ElementsComparationView';
+import Logout from './views/Logout';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
 import { requireNoAuthentication } from './components/notAuthenticatedComponent';
-import { requireUnauthentication } from './views/Logout';
 
 
 export default (
@@ -35,7 +35,7 @@ export default (
         <Route path="register" component={requireNoAuthentication(RegisterView)} />
         <Route path="home" component={requireNoAuthentication(HomeContainer)} />
 
-        <Route name="logout" path="logout" component={requireUnauthentication()} />
+        <Route path="logout"   component={requireAuthentication(Logout)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
