@@ -173,6 +173,9 @@ export class ElementDefinition extends Component {
         //handle editMode
         this.edit_mode = (props.editMode)?(props.editMode):false;
 
+        //handle ending method
+        this.ending_method = (props.endingParentMethod)? (props.endingParentMethod):null;
+
         //initialize texts
         this.texts = texts;
 
@@ -201,6 +204,7 @@ export class ElementDefinition extends Component {
             createMethod = props.updateElement;
             texts.actions.applyChanges = "Update";
         }
+
 
         this.state = {
           createMethod: createMethod,
@@ -910,9 +914,14 @@ export class ElementDefinition extends Component {
             proposalData.id = this.props.defaultValue.id;
         }
 
+        console.debug("Data to create/update", proposalData);
 
-        console.debug("data", proposalData);
+        //Ask the API the creation / edition
         this.state.createMethod(proposalData);
+
+        //Deactivate window if ending method exist
+        this.ending_method != null &&
+            this.ending_method();
     }
 
     render() {
@@ -941,4 +950,5 @@ ElementDefinition.propTypes = {
     aggregationsList: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     sourcesList: PropTypes.array,
     defaultValue: PropTypes.object,
+    endingParentMethod: PropTypes.func,
 };

@@ -614,6 +614,7 @@ export class Elementt extends Component {
                   sourcesList={this.props.sources.measures}
                   defaultValue={adaptedElement}
                   editMode={true}
+                  endingParentMethod={() => this.toggleEdit()}
               />
           </div>
         ;
