@@ -1,6 +1,6 @@
 {
   "name": "orakwlum-frontend",
-  "version": "0.11.2a",
+  "version": "0.11.3",
   "description": "Sprint #7",
   "scripts": {
     "clean": "rimraf dist",
