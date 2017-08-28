@@ -94,7 +94,7 @@ function mapStateToProps(state) {
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
         elements_by_date: state.orakwlum.elements_by_date,
-        elements_by_date_future: state.orakwlum.elements_by_date_future,
+        elements_by_date_past: state.orakwlum.elements_by_date_past,
         elements_by_type: state.orakwlum.elements_by_type,
     };
 }
@@ -275,7 +275,7 @@ export class ElementsDashboard extends Component {
 
     // Filter elements based on the selected type
     filterElements = () => {
-        const {elements, elements_by_date, elements_by_date_future, elements_by_type, elements_volatile} = this.props;
+        const {elements, elements_by_date, elements_by_date_past, elements_by_type, elements_volatile} = this.props;
         const {selected_type} = this;
         const {selectedElements} = this.state;
 
@@ -465,9 +465,9 @@ export class ElementsDashboard extends Component {
                 past_entry['end'] = localized_time(end_date),
                 events.push(past_entry);
 
-                //add entry to the future!
-                start_date = value.days_range_future[0]
-                end_date = (value.days_range_future.length == 1)? start_date : value.days_range_future[1]
+                //add entry to the past!
+                start_date = value.days_range_past[0]
+                end_date = (value.days_range_past.length == 1)? start_date : value.days_range_past[1]
 
             } else {
                 start_date = value.days_range[0]

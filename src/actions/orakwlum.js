@@ -96,7 +96,7 @@ export function reduceElements(reducer_type, response, initial) {
 
 
     let by_date = {}
-    let by_date_future = {}
+    let by_date_past = {}
     let by_type = {}
 
     //If the return is OK
@@ -127,13 +127,13 @@ export function reduceElements(reducer_type, response, initial) {
                 }
             }
 
-            // Add current ID in by_date_future[type] object
-            if ('days_range_future' in value && Object(value.days_range_future).length > 0) {
-                if (!(value.days_range_future[0] in by_date_future))
-                    by_date_future[value.days_range_future[0]] = {};
+            // Add current ID in by_date_past[type] object
+            if ('days_range_past' in value && Object(value.days_range_past).length > 0) {
+                if (!(value.days_range_past[0] in by_date_past))
+                    by_date_past[value.days_range_past[0]] = {};
 
-                by_date_future[value.days_range_future[0]] = {
-                    ...by_type[value.days_range_future[0]],
+                by_date_past[value.days_range_past[0]] = {
+                    ...by_type[value.days_range_past[0]],
                     [key]: value,
                 }
             }
@@ -148,7 +148,7 @@ export function reduceElements(reducer_type, response, initial) {
                 message: the_message,
                 by_type,
                 by_date,
-                by_date_future,
+                by_date_past,
             },
         };
     }

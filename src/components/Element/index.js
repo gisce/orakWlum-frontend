@@ -39,6 +39,8 @@ import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
 
+import { localized_time } from '../../constants'
+
 const locale = 'es';
 const dateOptions = {
     day: '2-digit',
@@ -428,9 +430,14 @@ export class Elementt extends Component {
         const element_type = (proposal.element_type)?proposal.element_type:"Unknown";
 
 
+        //Define the start and end dates
+        const start_date = localized_time(proposal.days_range[0], "YYYY-MM-DD");
+        const end_date = (proposal.days_range.length > 1)? localized_time(proposal.days_range[0], "YYYY-MM-DD") : start_date;
+
+
         /// Process Element dates
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
-        const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
+        const proposalDaysRangePast = (proposal.days_range_past)? proposal.days_range_past : proposalDaysRange;
 
         const daysRange =
             (proposalDaysRange.length == 1)?
@@ -438,16 +445,16 @@ export class Elementt extends Component {
                 :
                 "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[proposalDaysRange.length - 1]).toLocaleDateString(locale, dateOptions);
 
-        const daysRangeFuture =
-            (proposalDaysRangeFuture.length == 1)?
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions)
+        const daysRangePast =
+            (proposalDaysRangePast.length == 1)?
+                "" + new Date(proposalDaysRangePast[0]).toLocaleDateString(locale, dateOptions)
                 :
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangeFuture[proposalDaysRangeFuture.length - 1]).toLocaleDateString(locale, dateOptions);
+                "" + new Date(proposalDaysRangePast[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangePast[proposalDaysRangePast.length - 1]).toLocaleDateString(locale, dateOptions);
 
-        const daysRange_toShow = daysRangeFuture;
+        const daysRange_toShow = daysRangePast;
 
         const dayOfElement = new Date(proposal.days_range[0]).getDay();
-        const dayOfElementFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
+        const dayOfElementPast = (historical) ? null : new Date(proposal.days_range_past[0]).getDay();
 
         const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
 
@@ -594,12 +601,17 @@ export class Elementt extends Component {
             )
 
 
+        const adaptedElement = Object.assign({}, proposal, {
+            start_date: start_date.toDate(),
+            end_date: end_date.toDate(),
+        })
+
         const proposalEdit =
 		  <div>
               <ElementDefinition
                   aggregationsList={this.props.aggregations}
                   sourcesList={this.props.sources.measures}
-                  defaultValue={proposal}
+                  defaultValue={adaptedElement}
               />
           </div>
         ;
