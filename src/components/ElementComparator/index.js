@@ -20,7 +20,7 @@ const styles = {
     },
 };
 
-export class ProposalComparator extends Component {
+export class ElementComparator extends Component {
 
     constructor(props) {
         super(props);
@@ -129,7 +129,7 @@ export class ProposalComparator extends Component {
     }
 }
 
-ProposalComparator.propTypes = {
+ElementComparator.propTypes = {
     elementA: PropTypes.object.isRequired,
     elementB: PropTypes.object.isRequired,
     comparison: PropTypes.object.isRequired,
