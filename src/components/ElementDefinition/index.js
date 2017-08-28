@@ -861,7 +861,7 @@ export class ElementDefinition extends Component {
               <RaisedButton
                 label={texts.actions.applyChanges}
                 primary={true}
-                onTouchTap={(e) => this.createNewProposal(e)}
+                onTouchTap={(e) => this.endWorkflow(e)}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
               />
           :
@@ -877,15 +877,15 @@ export class ElementDefinition extends Component {
         );
     }
 
-    createNewProposal (event) {
-        console.debug("Creating new Element");
+    endWorkflow (event) {
+        console.debug("Finalizing new/edit Element workflow");
 
         //Ensure 00:00:00 of each day
         let date_start = this.state.date_start;
         date_start.setHours(0, 0, 0, 0);
 
         let date_end;
-        date_end = (this.state.date_end)?this.state.date_end:this.state.date_start;
+        date_end = (this.state.date_end)?this.state.date_end:date_start;
         date_end.setHours(0, 0, 0, 0);
 
         let proposalData = {
@@ -895,8 +895,8 @@ export class ElementDefinition extends Component {
             element_type: this.state.element_type,
             isNew: true,
             days_range: [
-                date_start,
-                (this.state.date_end)?this.state.date_end:this.state.date_start,
+                date_start.getTime(),
+                (date_end)?date_end.getTime():date_start.getTime(),
             ],
             status: {
               "color": "pending",
