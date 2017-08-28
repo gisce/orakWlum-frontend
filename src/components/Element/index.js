@@ -19,7 +19,7 @@ import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
 import { ProposalTableMaterial } from '../ProposalTableMaterial';
 
-import { ProposalDetail } from '../ProposalDetail';
+import { ElementDetail } from '../ElementDetail';
 
 import { Notification } from '../Notification';
 import Dialog from 'material-ui/Dialog';
@@ -621,7 +621,7 @@ export class Elementt extends Component {
 			  {proposalActions}
 			  <div style={styles.cardSeparator}>
 
-				  <ProposalDetail
+				  <ElementDetail
 					  data={summary}
 					  avg_info={{
                           'average': average,

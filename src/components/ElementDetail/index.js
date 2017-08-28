@@ -28,7 +28,7 @@ const styles = {
 };
 
 
-export class ProposalDetail extends Component {
+export class ElementDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -191,7 +191,7 @@ export class ProposalDetail extends Component {
     }
 }
 
-ProposalDetail.propTypes = {
+ElementDetail.propTypes = {
     data: PropTypes.object.isRequired,
     open: PropTypes.bool,
     colors: PropTypes.object,
