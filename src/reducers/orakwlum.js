@@ -28,7 +28,7 @@ export default createReducer(initialState, {
 
         elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
 
-        elements_by_date_past: (state.elements_by_date_past == undefined || state.elements_by_date_past == null || Object.keys(state.elements_by_date_past).length == 0) ? payload.by_date_past : deepmerge(state.elements_by_date_past, payload.elements_by_date_past),
+        elements_by_date_past: (state.elements_by_date_past == undefined || state.elements_by_date_past == null || Object.keys(state.elements_by_date_past).length == 0) ? payload.by_date_past : deepmerge(state.elements_by_date_past, payload.by_date_past),
 
         message: payload.message,
         isFetching: false,
