@@ -303,7 +303,7 @@ export class ElementsDashboard extends Component {
 
         //Adapt data to needed array
 		for ( let [id, element] of Object.entries(elements_scope)) {
-                this.elements_matched.push(element);
+            this.elements_matched.push(element);
         }
 
         if (elements_volatile) {
@@ -449,7 +449,7 @@ export class ElementsDashboard extends Component {
                 'title': value.name,
                 'allDay': true,
                 'url': value.url,
-                'type': (value.historical)?"historical":"proposal",
+                'type': value.element_type,
                 count,
                 'id': value.id,
             }
