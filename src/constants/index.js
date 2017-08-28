@@ -46,6 +46,7 @@ export const DUPLICATE_PROPOSAL_REQUEST = 'DUPLICATE_PROPOSAL_REQUEST';
 export const DELETE_PROPOSAL_REQUEST = 'DELETE_PROPOSAL_REQUEST';
 export const CREATE_PROPOSAL_REQUEST = 'CREATE_PROPOSAL_REQUEST';
 export const EXPORT_PROPOSAL_REQUEST = 'EXPORT_PROPOSAL_REQUEST';
+export const UPDATE_PROPOSAL_REQUEST = 'UPDATE_PROPOSAL_REQUEST';
 
 export const FETCH_ELEMENTS_REQUEST = 'FETCH_ELEMENTS_REQUEST';
 export const RECEIVE_ELEMENTS = 'RECEIVE_ELEMENTS';
@@ -122,6 +123,8 @@ const locale_override_conf = {
 moment.locale('en', locale_override_conf);
 export const localized_time = moment;
 
+export const day_format = "L";
+export const parse_day_format = "YYYY-MM-DD";
 
 /* Colors definition */
 
@@ -139,7 +142,7 @@ export const colors_combo = {
     'green': { backgroundColor: green500, borderColor: '#777' },
     'blue': { backgroundColor: blue500, borderColor: '#777' },
     'red': { backgroundColor: red500, borderColor: '#777' },
-    'yellow': { backgroundColor: yellow500, borderColor: '#777' },
+    'yellow': { backgroundColor: yellow500, borderColor: '#777', color: 'black' },
     'orange': { backgroundColor: orange500, borderColor: '#777' },
     'default': { backgroundColor: green500, borderColor: '#777' },
 };

@@ -15,37 +15,32 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-export function requireUnauthentication(Component) {
-
-    class requireUnauthentication extends React.Component {
-
-        constructor(props) {
-            super(props);
-        }
-
-        componentWillMount() {
-            this.logout();
-        }
-
-        componentWillReceiveProps(nextProps) {
-            this.logout();
-        }
-
-        logout() {
-            this.props.logoutAndRedirect();
-        }
-
-        render() {
-            return (
-                <div>
-                </div>
-            );
-        }
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Logout extends React.Component {
+    constructor(props) {
+        super(props);
     }
 
-    requireUnauthentication.propTypes = {
-        logoutAndRedirect: PropTypes.func,
-    };
+    componentWillMount() {
+        this.logout();
+    }
 
-    return connect(mapStateToProps, mapDispatchToProps)(requireUnauthentication);
+    componentWillReceiveProps(nextProps) {
+        this.logout();
+    }
+
+    logout() {
+        this.props.logoutAndRedirect();
+    }
+
+    render() {
+        return (
+            <div>
+            </div>
+        );
+    }
 }
+
+Logout.propTypes = {
+    logoutAndRedirect: PropTypes.func,
+};

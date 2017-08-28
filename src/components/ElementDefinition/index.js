@@ -96,6 +96,55 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const texts = {
+    'actions': {
+        'applyChanges': 'Create',
+    },
+    'step0': {
+        'key_title': 'Dates',
+        'title': "We need some details to create a new element.",
+        'note': "* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.",
+        'element1_floatingLabel': "Element type",
+        'element1_floatingLabel': "Element type",
+        'element1_floatingLabel': "Element name",
+        'element1_hint': "Element name",
+        'element2_floatingLabel': "Start date",
+        'element2_hint': "Start date",
+        'element3_floatingLabel': "End date",
+        'element3_hint': "End date",
+
+    },
+    'step1': {
+        'key_title': 'Name',
+        'title1': "Perfect! Now insert the desired",
+        'title1_component': "range of dates",
+        'title2_1': "Please",
+        'title2_2': "insert the name",
+        'title2_3': "of your",
+        'title2_4': "in the following field:",
+        'element1_floatingLabel': "Name",
+
+    },
+    'step2': {
+        'key_title': 'Aggregations',
+        'title1': "Great! Now",
+        'title1_component': "select the aggregations",
+        'title1_2': "to perform:",
+    },
+    'step3': {
+        'key_title': 'Sources',
+        'title1': "Finally",
+        'title1_component': "select the origins",
+        'title1_2': "to analyze:",
+    },
+    'step4': {
+        'key_title': 'Confirmation',
+        'title1': "Amazing! Just one more step is needed,",
+        'title1_component': "review all the defined data",
+        'title1_2': "and confirm it:",
+    },
+}
+
 @connect(mapStateToProps, mapDispatchToProps)
 export class ElementDefinition extends Component {
     constructor(props) {
@@ -121,20 +170,41 @@ export class ElementDefinition extends Component {
           }
         }
 
-        //handle default start date depending on the type
-        const minDate = new Date();
-        let createMethod = props.createElement;
+        //handle editMode
+        this.edit_mode = (props.editMode)?(props.editMode):false;
 
-        if (element_type == "historic") {
-        minDate.setFullYear(minDate.getFullYear() - 1);
-        createMethod = props.createHistoricProposal;
-        }
+        //handle ending method
+        this.ending_method = (props.endingParentMethod)? (props.endingParentMethod):null;
+
+        //initialize texts
+        this.texts = texts;
 
         //const element_type = (props.type)?props.type:"proposal";
         const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
+        let createMethod = props.createElement;
+
+        //handle default start date depending on the type
+        const minDate = new Date();
 
         const element_start_date = (props.defaultValue && 'start_date' in props.defaultValue ) ? props.defaultValue['start_date'] : minDate;
         const element_end_date = (props.defaultValue && 'end_date' in props.defaultValue ) ? props.defaultValue['end_date'] : null;
+
+        //handle passed name
+        const element_name = (props.defaultValue && 'name' in props.defaultValue ) ? props.defaultValue['name'] : "";
+
+        //toDo review it!
+        if (element_type == "historic") {
+            minDate.setFullYear(minDate.getFullYear() - 1);
+            createMethod = props.createHistoricProposal;
+        }
+
+        //prepare workflow for updating
+        if (this.edit_mode) {
+            this.texts.step0.title = "Perform the desired changes:";
+            createMethod = props.updateElement;
+            texts.actions.applyChanges = "Update";
+        }
+
 
         this.state = {
           createMethod: createMethod,
@@ -143,7 +213,7 @@ export class ElementDefinition extends Component {
           loading: false,
           finished: false,
           stepIndex: 0,
-          name: "",
+          name: element_name,
           date_start: element_start_date,
           date_end: element_end_date,
 
@@ -233,40 +303,45 @@ export class ElementDefinition extends Component {
         return [
             {
                 key: "0",
-                title: "Dates",
+                title: this.texts.step0.key_title,
                 content: (
                     <div>
-                        <p>We need some details to create a new {this.state.type.name}.</p>
+                        <p>{this.texts.step0.title}</p>
 
                         <SelectField
-                            floatingLabelText="Element type"
+                            floatingLabelText={this.texts.step0.element1_floatingLabel}
                             value={this.state.element_type}
                             onChange={this.handleChangeElementType}
+                            key={"element_type"}
                         >
                             <MenuItem key={1} value={"proposal"} primaryText="Proposal" />
                             <MenuItem key={2} value={"historical"} primaryText="Historical" />
                         </SelectField>
 
                         <DatePicker
-                            floatingLabelText="Start date"
-                            hintText="Start date"
+                            floatingLabelText={this.texts.step0.element2_floatingLabel}
+                            hintText={this.texts.step0.element2_hint}
                             value={this.state.date_start}
                             onChange={this.handleChangeStartDate}
                             errorText={this.state.date_start_error_text}
                             autoOk={true}
+                            key={"element_start_date"}
+                            name={"element_start_date"}
                         />
 
                         <DatePicker
-                            floatingLabelText="End date"
-                            hintText="End date"
+                            floatingLabelText={this.texts.step0.element3_floatingLabel}
+                            hintText={this.texts.step0.element2_hint}
                             value={this.state.date_end}
                             onChange={this.handleChangeEndDate}
                             errorText={this.state.date_end_error_text}
                             autoOk={true}
+                            key={"element_end_date"}
+                            name={"element_end_date"}
                         />
 
                         <p style={styles.disclamer}>
-                            * Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.
+                            {this.texts.step0.title}
                         </p>
                     </div>
                 )
@@ -274,17 +349,18 @@ export class ElementDefinition extends Component {
 
             {
                 key: "1",
-                title: "Name",
+                title: this.texts.step1.key_title,
                 content: (
                     <div>
-                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p>
-                        <p>Please, <b>insert the name</b> of your {this.state.type.name} in the following field:</p>
+                        <p>{this.texts.step1.title1} <b>{this.texts.step1.title1_component}</b>:</p>
+                        <p>{this.texts.step1.title2_1}, <b>{this.texts.step1.title2_2}</b> {this.texts.step1.title2_3} {this.state.type.name} {this.texts.step1.title2_4}</p>
                         <TextField
                             style={{marginTop: 0}}
-                            floatingLabelText="Element name"
+                            floatingLabelText={this.texts.step1.element1_floatingLabel}
                             value={this.state.name}
                             onChange={this.handleChangeName}
                             errorText={this.state.name_error_text}
+                            key={"element_name"}
                         />
                     </div>
                 )
@@ -292,10 +368,10 @@ export class ElementDefinition extends Component {
 
             {
                 key: "2",
-                title: "Aggregations",
+                title: this.texts.step2.key_title,
                 content: (
                     <div>
-                        <p>Great! Now <b>select the aggregations</b> to perform:</p>
+                        <p>{this.texts.step2.title1} <b>{this.texts.step2.title1_component}</b> {this.texts.step2.title1_2}</p>
                         <Table
                             key={"aggregations_table"}
                             fixedHeader={true}
@@ -349,10 +425,10 @@ export class ElementDefinition extends Component {
 
             {
                 key: "3",
-                title: "Sources",
+                title: this.texts.step3.key_title,
                 content: (
                     <div>
-                        <p>Finally <b>select the origins</b> to analyze:</p>
+                        <p>{this.texts.step3.title1} <b>{this.texts.step3.title1_component}</b> {this.texts.step3.title1_2}</p>
 
                             <Table
                                 key={"sources_table"}
@@ -408,10 +484,10 @@ export class ElementDefinition extends Component {
 
             {
                 key: "4",
-                title: "Confirmation",
+                title: this.texts.step4.key_title,
                 content: (
                     <div>
-                        <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
+                        <p>{this.texts.step4.title1} <b>{this.texts.step4.title1_component}</b> {this.texts.step4.title1_2}</p>
 
                         <br/><br/>
 
@@ -586,6 +662,8 @@ export class ElementDefinition extends Component {
         Object.entries(aggregationsAll).map( (agg,i) => {
             aggregations_list[i] && aggregationsNames.push(agg);
         });
+
+        console.log(aggregationsAll);
 
         this.setState({
             aggregations: aggregations_list,
@@ -785,9 +863,9 @@ export class ElementDefinition extends Component {
 
         {   (stepIndex === this.stepsLength-1)?
               <RaisedButton
-                label='Create'
+                label={texts.actions.applyChanges}
                 primary={true}
-                onTouchTap={(e) => this.createNewProposal(e)}
+                onTouchTap={(e) => this.endWorkflow(e)}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
               />
           :
@@ -803,26 +881,26 @@ export class ElementDefinition extends Component {
         );
     }
 
-    createNewProposal (event) {
-        console.debug("Creating new Element");
+    endWorkflow (event) {
+        console.debug("Finalizing new/edit Element workflow");
 
         //Ensure 00:00:00 of each day
         let date_start = this.state.date_start;
         date_start.setHours(0, 0, 0, 0);
 
         let date_end;
-        date_end = (this.state.date_end)?this.state.date_end:this.state.date_start;
+        date_end = (this.state.date_end)?this.state.date_end:date_start;
         date_end.setHours(0, 0, 0, 0);
 
-        const proposalData = {
+        let proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
             sources:this.state.sourcesNames,
             element_type: this.state.element_type,
             isNew: true,
             days_range: [
-                date_start,
-                (this.state.date_end)?this.state.date_end:this.state.date_start,
+                date_start.getTime(),
+                (date_end)?date_end.getTime():date_start.getTime(),
             ],
             status: {
               "color": "pending",
@@ -831,8 +909,19 @@ export class ElementDefinition extends Component {
             },
         }
 
-        console.debug("data", proposalData);
+        if (this.edit_mode) {
+            proposalData.isNew = false;
+            proposalData.id = this.props.defaultValue.id;
+        }
+
+        console.debug("Data to create/update", proposalData);
+
+        //Ask the API the creation / edition
         this.state.createMethod(proposalData);
+
+        //Deactivate window if ending method exist
+        this.ending_method != null &&
+            this.ending_method();
     }
 
     render() {
@@ -857,5 +946,9 @@ export class ElementDefinition extends Component {
 }
 
 ElementDefinition.propTypes = {
-    open: PropTypes.bool,
+    editMode: PropTypes.bool,
+    aggregationsList: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    sourcesList: PropTypes.array,
+    defaultValue: PropTypes.object,
+    endingParentMethod: PropTypes.func,
 };

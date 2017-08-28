@@ -94,8 +94,9 @@ function mapStateToProps(state) {
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
         elements_by_date: state.orakwlum.elements_by_date,
-        elements_by_date_future: state.orakwlum.elements_by_date_future,
+        elements_by_date_past: state.orakwlum.elements_by_date_past,
         elements_by_type: state.orakwlum.elements_by_type,
+        elements_volatile: state.orakwlum.elements_volatile,
     };
 }
 
@@ -275,7 +276,7 @@ export class ElementsDashboard extends Component {
 
     // Filter elements based on the selected type
     filterElements = () => {
-        const {elements, elements_by_date, elements_by_date_future, elements_by_type, elements_volatile} = this.props;
+        const {elements, elements_by_date, elements_by_date_past, elements_by_type, elements_volatile} = this.props;
         const {selected_type} = this;
         const {selectedElements} = this.state;
 
@@ -303,7 +304,7 @@ export class ElementsDashboard extends Component {
 
         //Adapt data to needed array
 		for ( let [id, element] of Object.entries(elements_scope)) {
-                this.elements_matched.push(element);
+            this.elements_matched.push(element);
         }
 
         if (elements_volatile) {
@@ -449,14 +450,15 @@ export class ElementsDashboard extends Component {
                 'title': value.name,
                 'allDay': true,
                 'url': value.url,
-                'type': (value.historical)?"historical":"proposal",
+                'type': value.element_type,
                 count,
                 'id': value.id,
             }
 
             let start_date, end_date;
+
             // If that's a proposal
-            if (!value.historical) {
+            if (value.element_type == "proposal") {
                 //add entry to the past
                 let past_entry = Object.assign({}, an_entry)
                 start_date = value.days_range[0]
@@ -465,9 +467,11 @@ export class ElementsDashboard extends Component {
                 past_entry['end'] = localized_time(end_date),
                 events.push(past_entry);
 
-                //add entry to the future!
-                start_date = value.days_range_future[0]
-                end_date = (value.days_range_future.length == 1)? start_date : value.days_range_future[1]
+                //add entry to the past!
+                start_date = value.days_range_past[0];
+                end_date = (value.days_range_past.length == 1)? start_date : value.days_range_past[1];
+
+                an_entry['title'] = '[Future] ' + an_entry['title'];
 
             } else {
                 start_date = value.days_range[0]
@@ -496,6 +500,7 @@ export class ElementsDashboard extends Component {
                   title={name}
                   style={styles['calendarLegendEntry']}
                   onClick={(e) => this.updateType(name)}
+                  key={"legend_button_" + shortname}
                 />
             )
         }

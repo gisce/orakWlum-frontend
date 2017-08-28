@@ -16,10 +16,11 @@ import Toggle from 'material-ui/Toggle';
 import * as actionCreators from '../../actions/orakwlum';
 
 import { Tag } from '../Tag';
+
 import { ElementGraph } from '../ElementGraph';
 import { ElementTable } from '../ElementTable';
-
 import { ElementDetail } from '../ElementDetail';
+import { ElementDefinition } from '../ElementDefinition';
 
 import { Notification } from '../Notification';
 import Dialog from 'material-ui/Dialog';
@@ -37,6 +38,8 @@ import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
+
+import { localized_time, day_format, parse_day_format } from '../../constants'
 
 const locale = 'es';
 const dateOptions = {
@@ -105,6 +108,8 @@ function mapStateToProps(state) {
     return {
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
+        sources: state.orakwlum.sources,
+        aggregations_from_state: state.orakwlum.aggregations,
     };
 }
 
@@ -134,9 +139,12 @@ export class Elementt extends Component {
 
         this.animateChart = true;
 
+        this.edit_open = false;
+
         props.aggregations[0].selected = true;
 
         if (props.comparation){
+            this.edit_open = false;
             this.detail_open = true;
             this.comparation = true;
         }
@@ -294,6 +302,18 @@ export class Elementt extends Component {
 
 
 
+    toggleEdit = () => {
+        this.edit_open = !this.edit_open;
+
+        this.animateChart = false;
+
+        this.setState({
+            edit_open: this.edit_open,
+        });
+    };
+
+
+
     duplicateElementQuestion = (event, proposalID) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
@@ -401,43 +421,48 @@ export class Elementt extends Component {
 
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-        const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
-        const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
+        const lastExecution = new Date(proposal.execution_date * 1000).toLocaleString(locale, hourOptions);
+        const creationDate = new Date(proposal.creation_date * 1000).toLocaleString(locale, hourOptions);
         const ownerText = (proposal.owner)?"by " + proposal.owner:"";
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
 
-
         const element_type = (proposal.element_type)?proposal.element_type:"Unknown";
 
+        //Define the start and end dates
+        const start_date = (proposal.days_range.length > 0)? localized_time(proposal.days_range[0], parse_day_format): null;
+        const end_date = (proposal.days_range.length > 1)? localized_time(proposal.days_range[0], parse_day_format) : start_date;
+
+        const start_date_past = (!historical)? localized_time(proposal.days_range_past[0], parse_day_format): null;
+        const end_date_past = (!historical)? ((proposal.days_range_past.length > 1)? localized_time(proposal.days_range_past[0], parse_day_format) : start_date_past):null;
 
         /// Process Element dates
         const proposalDaysRange = (proposal.days_range)? proposal.days_range : [];
-        const proposalDaysRangeFuture = (proposal.days_range_future)? proposal.days_range_future : proposalDaysRange;
+        const proposalDaysRangePast = (proposal.days_range_past)? proposal.days_range_past : proposalDaysRange;
 
-        const daysRange =
+        const daysRangeString =
             (proposalDaysRange.length == 1)?
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions)
+                "" + start_date.format(day_format)
                 :
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[proposalDaysRange.length - 1]).toLocaleDateString(locale, dateOptions);
+                "" + start_date.format(day_format) + " - " + end_date.format(day_format);
 
-        const daysRangeFuture =
-            (proposalDaysRangeFuture.length == 1)?
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions)
-                :
-                "" + new Date(proposalDaysRangeFuture[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangeFuture[proposalDaysRangeFuture.length - 1]).toLocaleDateString(locale, dateOptions);
+        const daysRangeStringPastString =
+            (!historical)?
+                (
+                    (proposalDaysRangePast.length == 1)?
+                        "" + start_date_past.format(day_format)
+                        :
+                        "" + start_date_past.format(day_format) + " - " + end_date_past.format(day_format)
+                )
+                : "";
 
-        const daysRange_toShow = daysRangeFuture;
-
-        const dayOfElement = new Date(proposal.days_range[0]).getDay();
-        const dayOfElementFuture = (historical) ? null : new Date(proposal.days_range_future[0]).getDay();
-
-        const day_string = new Date(proposal.days_range[0]).toLocaleDateString(locale, dateOptions);
+        const dayOfElement = start_date.toDate().getDay();
+        const dayOfElementPast = (historical) ? null : start_date_past.toDate().getDay();
 
 
 	const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
-        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRange_toShow}]</span>
-        const subtitle = <span>Using {days[dayOfElement]} {day_string}</span>;
+        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
+        const subtitle = <span>Using {days[dayOfElement]} {daysRangeStringPastString}</span>;
 
         const offset = (withPicture)?0:1;
         const size = (withPicture)?8:9;
@@ -454,9 +479,7 @@ export class Elementt extends Component {
         const deleteElement = this.deleteElementQuestion;
         const exportElement = this.exportElement;
 
-        const toggleDetail = this.toggleDetail;
-
-        const detail_open = this.detail_open;
+        const {detail_open, edit_open, toggleDetail, toggleEdit} = this;
 
         const DetailIcon = (detail_open == true)?CollapseIcon:ExpandIcon;
 
@@ -579,17 +602,37 @@ export class Elementt extends Component {
             )
 
 
+        const adaptedElement = Object.assign({}, proposal, {
+            start_date: start_date.toDate(),
+            end_date: end_date.toDate(),
+        })
+
+        const proposalEdit =
+		  <div>
+              <ElementDefinition
+                  aggregationsList={this.props.aggregations}
+                  sourcesList={this.props.sources.measures}
+                  defaultValue={adaptedElement}
+                  editMode={true}
+                  endingParentMethod={() => this.toggleEdit()}
+              />
+          </div>
+        ;
+
         // The Element graph!
         const proposalPicture =
-            (withPicture)?
-                (prediction && Object.keys(prediction).length > 0) &&
-                  (
-                      (proposalTable)?
-                          <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
-                          :
-                          <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
-                  )
-                  :null;
+            (!edit_open)?
+                (withPicture)?
+                    (prediction && Object.keys(prediction).length > 0) &&
+                      (
+                          (proposalTable)?
+                              <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
+                              :
+                              <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
+                      )
+                      :null
+                  :
+                  proposalEdit;
 
         const disableDetail = (element_type == "concatenation")?true:false;
         const disableExport = (element_type == "comparation")?true:false;
@@ -601,7 +644,7 @@ export class Elementt extends Component {
                 <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
-                <FlatButton label="Edit" icon={<EditIcon/>} disabled/>
+                <FlatButton label="Edit" icon={<EditIcon/>} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
@@ -614,7 +657,6 @@ export class Elementt extends Component {
             </CardActions>
             :
             null;
-
 
         const proposalDetail = (summary != null) && (detail_open == true) &&
 		  <div>
@@ -632,7 +674,6 @@ export class Elementt extends Component {
 			  </div>
           </div>
         ;
-
 
         // The resulting Element element
         const Element = () => (
