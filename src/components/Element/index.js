@@ -17,7 +17,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import { ProposalTag } from '../ProposalTag';
 import { ProposalGraph } from '../ProposalGraph';
-import { ProposalTableMaterial } from '../ProposalTableMaterial';
+import { ElementTable } from '../ElementTable';
 
 import { ElementDetail } from '../ElementDetail';
 
@@ -585,7 +585,7 @@ export class Elementt extends Component {
                 (prediction && Object.keys(prediction).length > 0) &&
                   (
                       (proposalTable)?
-                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
+                          <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
                           :
                           <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )

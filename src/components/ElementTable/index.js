@@ -40,7 +40,7 @@ const styles = {
 };
 
 
-export class ProposalTableMaterial extends Component {
+export class ElementTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -234,7 +234,7 @@ export class ProposalTableMaterial extends Component {
     }
 }
 
-ProposalTableMaterial.propTypes = {
+ElementTable.propTypes = {
     data: PropTypes.array.isRequired,
     components: PropTypes.object.isRequired,
     colors: PropTypes.object,

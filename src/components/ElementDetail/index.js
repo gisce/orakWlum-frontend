@@ -9,7 +9,7 @@ import InvoicesIcon from 'material-ui/svg-icons/editor/format-list-numbered';
 import {orange400} from 'material-ui/styles/colors';
 
 import { Indicator } from '../Indicator';
-import { ProposalTableMaterial } from '../ProposalTableMaterial';
+import { ElementTable } from '../ElementTable';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -149,7 +149,7 @@ export class ElementDetail extends Component {
 
         //Current aggregation average
         const avg_table = (avg_info) &&
-            <ProposalTableMaterial
+            <ElementTable
                 stacked={true}
                 data={avg_info.average}
                 components={avg_info.components}
