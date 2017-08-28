@@ -96,6 +96,7 @@ function mapStateToProps(state) {
         elements_by_date: state.orakwlum.elements_by_date,
         elements_by_date_past: state.orakwlum.elements_by_date_past,
         elements_by_type: state.orakwlum.elements_by_type,
+        elements_volatile: state.orakwlum.elements_volatile,
     };
 }
 
