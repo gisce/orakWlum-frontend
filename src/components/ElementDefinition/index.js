@@ -96,6 +96,50 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const texts = {
+    'step0': {
+        'key_title': 'Dates',
+        'title': "We need some details to create a new element.",
+        'note': "* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.",
+        'element1_floatingLabel': "Element type",
+        'element1_floatingLabel': "Element type",
+    },
+    'step1': {
+        'key_title': 'Name',
+        'title1': "Perfect! Now insert the desired",
+        'title1_component': "range of dates",
+        'title2_1': "Please",
+        'title2_2': "insert the name",
+        'title2_3': "of your",
+        'title2_4': "in the following field:",
+        'element1_floatingLabel': "Element name",
+        'element1_hint': "Element name",
+        'element2_floatingLabel': "Start date",
+        'element2_hint': "Start date",
+        'element3_floatingLabel': "End date",
+        'element3_hint': "End date",
+
+    },
+    'step2': {
+        'key_title': 'Aggregations',
+        'title1': "Great! Now",
+        'title1_component': "select the aggregations",
+        'title1_2': "to perform:",
+    },
+    'step3': {
+        'key_title': 'Sources',
+        'title1': "Finally",
+        'title1_component': "select the origins",
+        'title1_2': "to analyze:",
+    },
+    'step4': {
+        'key_title': 'Confirmation',
+        'title1': "Amazing! Just one more step is needed,",
+        'title1_component': "review all the defined data",
+        'title1_2': "and confirm it:",
+    },
+}
+
 @connect(mapStateToProps, mapDispatchToProps)
 export class ElementDefinition extends Component {
     constructor(props) {
@@ -119,6 +163,15 @@ export class ElementDefinition extends Component {
               sources_all.push( source );
               sources_list.push( false );
           }
+        }
+
+        //handle editMode
+        this.edit_mode = (props.editMode)?(props.editMode):false;
+
+        //load texts
+        this.texts = texts;
+        if (this.edit_mode) {
+            this.texts.step0.title = "Perform the desired changes:";
         }
 
         //handle default start date depending on the type
@@ -237,13 +290,13 @@ export class ElementDefinition extends Component {
         return [
             {
                 key: "0",
-                title: "Dates",
+                title: this.texts.step0.key_title,
                 content: (
                     <div>
-                        <p>We need some details to create a new {this.state.type.name}.</p>
+                        <p>{this.texts.step0.title}</p>
 
                         <SelectField
-                            floatingLabelText="Element type"
+                            floatingLabelText={this.texts.step0.element1_floatingLabel}
                             value={this.state.element_type}
                             onChange={this.handleChangeElementType}
                         >
@@ -252,8 +305,8 @@ export class ElementDefinition extends Component {
                         </SelectField>
 
                         <DatePicker
-                            floatingLabelText="Start date"
-                            hintText="Start date"
+                            floatingLabelText={this.texts.step0.element2_floatingLabel}
+                            hintText={this.texts.step0.element2_hint}
                             value={this.state.date_start}
                             onChange={this.handleChangeStartDate}
                             errorText={this.state.date_start_error_text}
@@ -261,8 +314,8 @@ export class ElementDefinition extends Component {
                         />
 
                         <DatePicker
-                            floatingLabelText="End date"
-                            hintText="End date"
+                            floatingLabelText={this.texts.step0.element3_floatingLabel}
+                            hintText={this.texts.step0.element2_hint}
                             value={this.state.date_end}
                             onChange={this.handleChangeEndDate}
                             errorText={this.state.date_end_error_text}
@@ -270,7 +323,7 @@ export class ElementDefinition extends Component {
                         />
 
                         <p style={styles.disclamer}>
-                            * Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.
+                            {this.texts.step0.title}
                         </p>
                     </div>
                 )
@@ -278,14 +331,14 @@ export class ElementDefinition extends Component {
 
             {
                 key: "1",
-                title: "Name",
+                title: this.texts.step1.key_title,
                 content: (
                     <div>
-                        <p>Perfect! Now insert the desired <b>range of dates</b>:</p>
-                        <p>Please, <b>insert the name</b> of your {this.state.type.name} in the following field:</p>
+                        <p>{this.texts.step1.title1} <b>{this.texts.step1.title1_component}</b>:</p>
+                        <p>{this.texts.step1.title2_1}, <b>{this.texts.step1.title2_2}</b> {this.texts.step1.title2_3} {this.state.type.name} {this.texts.step1.title2_4}</p>
                         <TextField
                             style={{marginTop: 0}}
-                            floatingLabelText="Element name"
+                            floatingLabelText={this.texts.step1.element1_floatingLabel}
                             value={this.state.name}
                             onChange={this.handleChangeName}
                             errorText={this.state.name_error_text}
@@ -296,10 +349,10 @@ export class ElementDefinition extends Component {
 
             {
                 key: "2",
-                title: "Aggregations",
+                title: this.texts.step2.key_title,
                 content: (
                     <div>
-                        <p>Great! Now <b>select the aggregations</b> to perform:</p>
+                        <p>{this.texts.step2.title1} <b>{this.texts.step2.title1_component}</b> {this.texts.step2.title1_2}</p>
                         <Table
                             key={"aggregations_table"}
                             fixedHeader={true}
@@ -353,10 +406,10 @@ export class ElementDefinition extends Component {
 
             {
                 key: "3",
-                title: "Sources",
+                title: this.texts.step3.key_title,
                 content: (
                     <div>
-                        <p>Finally <b>select the origins</b> to analyze:</p>
+                        <p>{this.texts.step3.title1} <b>{this.texts.step3.title1_component}</b> {this.texts.step3.title1_2}</p>
 
                             <Table
                                 key={"sources_table"}
@@ -412,10 +465,10 @@ export class ElementDefinition extends Component {
 
             {
                 key: "4",
-                title: "Confirmation",
+                title: this.texts.step4.key_title,
                 content: (
                     <div>
-                        <p>Amazing! Just one more step is needed, <b>review all the defined data</b> and confirm it:</p>
+                        <p>{this.texts.step4.title1} <b>{this.texts.step4.title1_component}</b> {this.texts.step4.title1_2}</p>
 
                         <br/><br/>
 
