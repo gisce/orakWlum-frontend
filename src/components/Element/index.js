@@ -107,7 +107,6 @@ function mapStateToProps(state) {
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
         sources: state.orakwlum.sources,
-        aggregations: state.orakwlum.aggregations,
     };
 }
 
@@ -600,7 +599,7 @@ export class Elementt extends Component {
               <ElementDefinition
                   aggregationsList={this.props.aggregations}
                   sourcesList={this.props.sources.measures}
-                  defaultValue={this.default_values}
+                  defaultValue={proposal}
               />
           </div>
         ;
