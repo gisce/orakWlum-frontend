@@ -196,6 +196,9 @@ export class ElementDefinition extends Component {
             createMethod = props.createHistoricProposal;
         }
 
+        if (this.edit_mode)
+            createMethod = props.updateElement;
+
         this.state = {
           createMethod: createMethod,
           type: types[element_type],

@@ -368,10 +368,10 @@ export function createElementlRequest() {
     };
 }
 
-export function createElement(proposal) {
+export function createElement(element) {
     return (dispatch) => {
         dispatch(createElementlRequest());
-        ask_the_api("elements.create", proposal);
+        ask_the_api("elements.create", element);
     };
 }
 
@@ -402,6 +402,20 @@ export function runElement(a_filter=null) {
 }
 
 
+
+
+export function updateElementlRequest() {
+    return {
+        type: CREATE_PROPOSAL_REQUEST,
+    };
+}
+
+export function updateElement(element) {
+    return (dispatch) => {
+        dispatch(updateElementlRequest());
+        ask_the_api("elements.update", element);
+    };
+}
 
 
 
