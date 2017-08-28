@@ -122,7 +122,7 @@ const locale_override_conf = {
 moment.locale('en', locale_override_conf);
 export const localized_time = moment;
 
-export const day_format = "DD/MM/YYYY";
+export const day_format = "L";
 export const parse_day_format = "YYYY-MM-DD";
 
 /* Colors definition */
