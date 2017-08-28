@@ -103,6 +103,13 @@ const texts = {
         'note': "* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.",
         'element1_floatingLabel': "Element type",
         'element1_floatingLabel': "Element type",
+        'element1_floatingLabel': "Element name",
+        'element1_hint': "Element name",
+        'element2_floatingLabel': "Start date",
+        'element2_hint': "Start date",
+        'element3_floatingLabel': "End date",
+        'element3_hint': "End date",
+
     },
     'step1': {
         'key_title': 'Name',
@@ -112,12 +119,7 @@ const texts = {
         'title2_2': "insert the name",
         'title2_3': "of your",
         'title2_4': "in the following field:",
-        'element1_floatingLabel': "Element name",
-        'element1_hint': "Element name",
-        'element2_floatingLabel': "Start date",
-        'element2_hint': "Start date",
-        'element3_floatingLabel': "End date",
-        'element3_hint': "End date",
+        'element1_floatingLabel': "Name",
 
     },
     'step2': {
@@ -649,6 +651,8 @@ export class ElementDefinition extends Component {
         Object.entries(aggregationsAll).map( (agg,i) => {
             aggregations_list[i] && aggregationsNames.push(agg);
         });
+
+        console.log(aggregationsAll);
 
         this.setState({
             aggregations: aggregations_list,
