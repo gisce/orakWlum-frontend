@@ -15,7 +15,7 @@ import About from './views/AboutView';
 import Aggregations from './views/AggregationsView';
 import Settings from './views/SettingsView';
 
-import Websocket from './views/Websocket';
+import ElementsListOld from './views/ElementsListOld';
 import ElementsList from './views/ElementsList';
 import Element from './views/ElementView';
 import ElementsNew from './views/ElementsNewView';
@@ -44,9 +44,9 @@ export default (
 
         <Redirect from="main" to="elements" />
         <Route name="elements" path="elements" component={requireAuthentication(ElementsList)} />
-        <Route name="elementsOld" path="elementsOld" component={requireAuthentication(Websocket)} />
-        <Route name="elements.type:historical" path="elements/type/historical" component={Websocket} />
-        <Route name="elements.type:proposal" path="elements/type/proposal" component={Websocket} />
+        <Route name="elementsOld" path="elementsOld" component={requireAuthentication(ElementsListOld)} />
+        <Route name="elements.type:historical" path="elements/type/historical" component={ElementsList} />
+        <Route name="elements.type:proposal" path="elements/type/proposal" component={ElementsList} />
         <Redirect from="elements/type/all" to="elements" />
 
         <Redirect from="elements/concatenate" to="elements" />
