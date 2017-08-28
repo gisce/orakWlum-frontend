@@ -299,6 +299,7 @@ export class ElementDefinition extends Component {
                             floatingLabelText={this.texts.step0.element1_floatingLabel}
                             value={this.state.element_type}
                             onChange={this.handleChangeElementType}
+                            key={"element_type"}
                         >
                             <MenuItem key={1} value={"proposal"} primaryText="Proposal" />
                             <MenuItem key={2} value={"historical"} primaryText="Historical" />
@@ -311,6 +312,8 @@ export class ElementDefinition extends Component {
                             onChange={this.handleChangeStartDate}
                             errorText={this.state.date_start_error_text}
                             autoOk={true}
+                            key={"element_start_date"}
+                            name={"element_start_date"}
                         />
 
                         <DatePicker
@@ -320,6 +323,8 @@ export class ElementDefinition extends Component {
                             onChange={this.handleChangeEndDate}
                             errorText={this.state.date_end_error_text}
                             autoOk={true}
+                            key={"element_end_date"}
+                            name={"element_end_date"}
                         />
 
                         <p style={styles.disclamer}>
@@ -342,6 +347,7 @@ export class ElementDefinition extends Component {
                             value={this.state.name}
                             onChange={this.handleChangeName}
                             errorText={this.state.name_error_text}
+                            key={"element_name"}
                         />
                     </div>
                 )
