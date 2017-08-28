@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 
-import { ElementsDashboard } from './ElementsDashboard';
+import { ElementsDashboard } from '../components/ElementsDashboard';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
