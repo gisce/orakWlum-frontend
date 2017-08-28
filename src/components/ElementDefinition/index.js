@@ -881,7 +881,7 @@ export class ElementDefinition extends Component {
         date_end = (this.state.date_end)?this.state.date_end:this.state.date_start;
         date_end.setHours(0, 0, 0, 0);
 
-        const proposalData = {
+        let proposalData = {
             name:this.state.name,
             aggregations:this.state.aggregationsNames,
             sources:this.state.sourcesNames,
@@ -898,8 +898,14 @@ export class ElementDefinition extends Component {
             },
         }
 
+        if (this.edit_mode) {
+            proposalData.isNew = false;
+            proposalData.id = this.props.defaultValue.id;
+        }
+
+
         console.debug("data", proposalData);
-        this.state.createMethod(proposalData);
+        //this.state.createMethod(proposalData);
     }
 
     render() {
