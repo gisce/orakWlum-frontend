@@ -97,6 +97,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 const texts = {
+    'actions': {
+        'applyChanges': 'Create',
+    },
     'step0': {
         'key_title': 'Dates',
         'title': "We need some details to create a new element.",
@@ -170,12 +173,8 @@ export class ElementDefinition extends Component {
         //handle editMode
         this.edit_mode = (props.editMode)?(props.editMode):false;
 
-        //load texts
+        //initialize texts
         this.texts = texts;
-        if (this.edit_mode) {
-            this.texts.step0.title = "Perform the desired changes:";
-        }
-
 
         //const element_type = (props.type)?props.type:"proposal";
         const element_type = (props.defaultValue && 'type' in props.defaultValue ) ? props.defaultValue['type'] : "proposal";
@@ -196,8 +195,12 @@ export class ElementDefinition extends Component {
             createMethod = props.createHistoricProposal;
         }
 
-        if (this.edit_mode)
+        //prepare workflow for updating
+        if (this.edit_mode) {
+            this.texts.step0.title = "Perform the desired changes:";
             createMethod = props.updateElement;
+            texts.actions.applyChanges = "Update";
+        }
 
         this.state = {
           createMethod: createMethod,
@@ -856,7 +859,7 @@ export class ElementDefinition extends Component {
 
         {   (stepIndex === this.stepsLength-1)?
               <RaisedButton
-                label='Create'
+                label={texts.actions.applyChanges}
                 primary={true}
                 onTouchTap={(e) => this.createNewProposal(e)}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
@@ -909,7 +912,7 @@ export class ElementDefinition extends Component {
 
 
         console.debug("data", proposalData);
-        //this.state.createMethod(proposalData);
+        this.state.createMethod(proposalData);
     }
 
     render() {
