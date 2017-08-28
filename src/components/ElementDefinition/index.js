@@ -858,4 +858,7 @@ export class ElementDefinition extends Component {
 
 ElementDefinition.propTypes = {
     open: PropTypes.bool,
+    aggregationsList: PropTypes.object,
+    sourcesList: PropTypes.array,
+    defaultValue: PropTypes.object,
 };
