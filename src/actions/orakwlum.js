@@ -9,8 +9,10 @@ import {
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
+
     DUPLICATE_PROPOSAL_REQUEST,
     CREATE_PROPOSAL_REQUEST,
+    UPDATE_PROPOSAL_REQUEST,
 
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
@@ -406,7 +408,7 @@ export function runElement(a_filter=null) {
 
 export function updateElementlRequest() {
     return {
-        type: CREATE_PROPOSAL_REQUEST,
+        type: UPDATE_PROPOSAL_REQUEST,
     };
 }
 
