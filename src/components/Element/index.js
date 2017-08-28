@@ -421,8 +421,8 @@ export class Elementt extends Component {
 
         const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-        const lastExecution = new Date(proposal.execution_date).toLocaleString(locale, hourOptions);
-        const creationDate = new Date(proposal.creation_date).toLocaleString(locale, hourOptions);
+        const lastExecution = new Date(proposal.execution_date * 1000).toLocaleString(locale, hourOptions);
+        const creationDate = new Date(proposal.creation_date * 1000).toLocaleString(locale, hourOptions);
         const ownerText = (proposal.owner)?"by " + proposal.owner:"";
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
