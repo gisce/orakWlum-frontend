@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import { CheckedTag } from '../CheckedTag';
-import { ProposalTag } from '../ProposalTag';
+import { Tag } from '../Tag';
 import { ElementGraph } from '../ElementGraph';
 
 import {adaptProposalData} from '../../utils/graph';
@@ -113,7 +113,7 @@ export class ElementList extends Component {
                     Object.keys(aggregations).map( function(agg, i) {
                         return (
                             <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
-                                 <ProposalTag
+                                 <Tag
                                      key={"aggregationTag_"+i}
                                      tag={aggregations[agg].lite}
                                      selected={aggregations[agg].selected}
@@ -157,7 +157,7 @@ export class ElementList extends Component {
                 const proposalTag = (
                     <div style={styles.wrapper}>
                         {(selected)? <CheckedTag/> : null}
-                        <ProposalTag tag={element_type} lite={true} />
+                        <Tag tag={element_type} lite={true} />
                     </div>
                 )
 

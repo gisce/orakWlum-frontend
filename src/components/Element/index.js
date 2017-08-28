@@ -15,7 +15,7 @@ import Toggle from 'material-ui/Toggle';
 
 import * as actionCreators from '../../actions/orakwlum';
 
-import { ProposalTag } from '../ProposalTag';
+import { Tag } from '../Tag';
 import { ElementGraph } from '../ElementGraph';
 import { ElementTable } from '../ElementTable';
 
@@ -496,7 +496,7 @@ export class Elementt extends Component {
         const proposalStatus = (
             proposal.status &&
             <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
-                <ProposalTag tag={proposal.status} />
+                <Tag tag={proposal.status} />
             </div>
         )
 
@@ -513,7 +513,7 @@ export class Elementt extends Component {
                     aggregations.map( function(agg, i) {
                         return (
                             <div key={"aggregationDivTag_"+i} onClick={(e) => changeElementAggregation(e, agg)}>
-                                 <ProposalTag
+                                 <Tag
                                      key={"aggregationTag_"+i}
                                      tag={agg.lite}
                                      selected={agg.selected}
