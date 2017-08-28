@@ -921,7 +921,7 @@ export class ElementDefinition extends Component {
 
 ElementDefinition.propTypes = {
     editMode: PropTypes.bool,
-    aggregationsList: PropTypes.object,
+    aggregationsList: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     sourcesList: PropTypes.array,
     defaultValue: PropTypes.object,
 };
