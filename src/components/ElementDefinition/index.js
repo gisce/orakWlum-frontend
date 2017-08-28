@@ -126,8 +126,8 @@ export class ElementDefinition extends Component {
         let createMethod = props.createElement;
 
         if (element_type == "historic") {
-        minDate.setFullYear(minDate.getFullYear() - 1);
-        createMethod = props.createHistoricProposal;
+            minDate.setFullYear(minDate.getFullYear() - 1);
+            createMethod = props.createHistoricProposal;
         }
 
         //const element_type = (props.type)?props.type:"proposal";
