@@ -134,9 +134,12 @@ export class Elementt extends Component {
 
         this.animateChart = true;
 
+        this.edit_open = false;
+
         props.aggregations[0].selected = true;
 
         if (props.comparation){
+            this.edit_open = false;
             this.detail_open = true;
             this.comparation = true;
         }
@@ -289,6 +292,18 @@ export class Elementt extends Component {
 
         this.setState({
             detail_open: this.detail_open,
+        });
+    };
+
+
+
+    toggleEdit = () => {
+        this.edit_open = !this.edit_open;
+
+        this.animateChart = false;
+
+        this.setState({
+            edit_open: this.edit_open,
         });
     };
 
@@ -454,9 +469,7 @@ export class Elementt extends Component {
         const deleteElement = this.deleteElementQuestion;
         const exportElement = this.exportElement;
 
-        const toggleDetail = this.toggleDetail;
-
-        const detail_open = this.detail_open;
+        const {detail_open, edit_open, toggleDetail, toggleEdit} = this;
 
         const DetailIcon = (detail_open == true)?CollapseIcon:ExpandIcon;
 
@@ -579,17 +592,26 @@ export class Elementt extends Component {
             )
 
 
+        const proposalEdit =
+		  <div>
+              DAFAQ
+          </div>
+        ;
+
         // The Element graph!
         const proposalPicture =
-            (withPicture)?
-                (prediction && Object.keys(prediction).length > 0) &&
-                  (
-                      (proposalTable)?
-                          <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
-                          :
-                          <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
-                  )
-                  :null;
+            (!edit_open)?
+                (withPicture)?
+                    (prediction && Object.keys(prediction).length > 0) &&
+                      (
+                          (proposalTable)?
+                              <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
+                              :
+                              <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
+                      )
+                      :null
+                  :
+                  proposalEdit;
 
         const disableDetail = (element_type == "concatenation")?true:false;
         const disableExport = (element_type == "comparation")?true:false;
@@ -615,7 +637,6 @@ export class Elementt extends Component {
             :
             null;
 
-
         const proposalDetail = (summary != null) && (detail_open == true) &&
 		  <div>
 			  {proposalActions}
@@ -632,7 +653,6 @@ export class Elementt extends Component {
 			  </div>
           </div>
         ;
-
 
         // The resulting Element element
         const Element = () => (
