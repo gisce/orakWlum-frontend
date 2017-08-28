@@ -105,6 +105,8 @@ function mapStateToProps(state) {
     return {
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
+        sources: state.orakwlum.sources,
+        aggregations: state.orakwlum.aggregations,
     };
 }
 
@@ -594,7 +596,11 @@ export class Elementt extends Component {
 
         const proposalEdit =
 		  <div>
-              DAFAQ
+              <ElementDefinition
+                  aggregationsList={aggregations}
+                  sourcesList={sources.measures}
+                  defaultValue={this.default_values}
+              />
           </div>
         ;
 
