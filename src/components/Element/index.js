@@ -39,7 +39,7 @@ import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
 
-import { localized_time } from '../../constants'
+import { localized_time, day_format, parse_day_format } from '../../constants'
 
 const locale = 'es';
 const dateOptions = {
@@ -431,8 +431,11 @@ export class Elementt extends Component {
 
 
         //Define the start and end dates
-        const start_date = localized_time(proposal.days_range[0], "YYYY-MM-DD");
-        const end_date = (proposal.days_range.length > 1)? localized_time(proposal.days_range[0], "YYYY-MM-DD") : start_date;
+        const start_date = localized_time(proposal.days_range[0], parse_day_format);
+        const end_date = (proposal.days_range.length > 1)? localized_time(proposal.days_range[0], parse_day_format) : start_date;
+
+        const start_date_past = localized_time(proposal.days_range_past[0], parse_day_format);
+        const end_date_past = (proposal.days_range_past.length > 1)? localized_time(proposal.days_range_past[0], parse_day_format) : start_date_past;
 
 
         /// Process Element dates
@@ -441,15 +444,15 @@ export class Elementt extends Component {
 
         const daysRange =
             (proposalDaysRange.length == 1)?
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions)
+                "" + start_date.format(day_format)
                 :
-                "" + new Date(proposalDaysRange[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRange[proposalDaysRange.length - 1]).toLocaleDateString(locale, dateOptions);
+                "" + start_date.format(day_format) + " - " + end_date.format(day_format);
 
         const daysRangePast =
             (proposalDaysRangePast.length == 1)?
-                "" + new Date(proposalDaysRangePast[0]).toLocaleDateString(locale, dateOptions)
+                "" + start_date_past.format(day_format)
                 :
-                "" + new Date(proposalDaysRangePast[0]).toLocaleDateString(locale, dateOptions) + " - " + new Date(proposalDaysRangePast[proposalDaysRangePast.length - 1]).toLocaleDateString(locale, dateOptions);
+                "" + start_date_past.format(day_format) + " - " + end_date_past.format(day_format);
 
         const daysRange_toShow = daysRangePast;
 
