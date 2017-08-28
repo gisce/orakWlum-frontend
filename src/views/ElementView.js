@@ -6,12 +6,12 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
-import { Elementt } from './Element';
+import { Elementt } from '../components/Element';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {
     return {
-        elements: state.orakwlum.elements_volatile,
+        elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
     };
 }
@@ -21,25 +21,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ElementsConcatenationView extends React.Component {
+export default class ElementView extends React.Component {
     constructor(props) {
         super(props);
 
-        //Save the comma-separated string as ID
-        this.elementID = this.props.params.elementsList;
-        this.fake_elementID = "concatenation_" + this.elementID;
-
-        //Prepare the list of IDs
-        const elementsList = this.elementID.split(",")
-
+        const elementID = this.props.params.elementID;
         const {aggregations, elements} = this.props;
 
         //Review if the element has been downloaded
-        //if (!(this.elementID in elements)) -> ask it ever!
-        if (!(this.fake_elementID in elements))
-            this.fetchConcatenate(elementsList, true);
+        if (!(elementID in elements))
+            this.fetchElements(elementID, true);
 
-        //Review if all aggregations has been downloaded
         if (Object.keys(aggregations) == 0)
             this.fetchAggregations(true);
 	}
@@ -51,24 +43,25 @@ export default class ElementsConcatenationView extends React.Component {
         this.props.fetchAggregations(initial);
     }
 
-    fetchConcatenate(elements_ids, initial) {
-        this.props.fetchConcatenate(elements_ids, initial);
+    fetchElements(element_id, initial) {
+        this.props.fetchElements(element_id, initial);
     }
 
     //Fetch all needed data
     fetchData() {
-        const element_id = this.props.params.elementsList;
+        const element_id = this.props.params.elementID;
         this.fetchAggregations(false);
         this.fetchElements(element_id, false);
     }
 
     render() {
+        const elementID = this.props.params.elementID;
         const {aggregations, elements} = this.props;
 
-        const element = elements[this.fake_elementID];
+        const element = elements[elementID];
 
         // Render Element if data is reached
-        if (element != undefined && element.id == this.fake_elementID && aggregations != undefined && Object.keys(aggregations) != 0) {
+        if (element != undefined && element.id == elementID && aggregations != undefined && Object.keys(aggregations) != 0) {
             let aggregationsList = [];
             element.aggregations.map( function(agg, i){
                 if (agg in aggregations)
@@ -99,7 +92,7 @@ export default class ElementsConcatenationView extends React.Component {
     }
 }
 
-ElementsConcatenationView.propTypes = {
+ElementView.propTypes = {
     elements: PropTypes.object,
     aggregations: PropTypes.array,
 };

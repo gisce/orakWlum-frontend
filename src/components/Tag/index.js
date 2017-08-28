@@ -44,7 +44,7 @@ const colors = {
     },
 };
 
-export class ProposalTag extends Component {
+export class Tag extends Component {
     render() {
         const tag = this.props.tag;
 
@@ -74,7 +74,7 @@ export class ProposalTag extends Component {
                 click_method = is_doubleClick;
             }
 
-            const ProposalTag = (is_lite)?
+            const Tag = (is_lite)?
                 () => (
                   <div>
                       <Avatar style={styles.chip} size={32} color={colors[color].soft} backgroundColor={colors[color].hard}>
@@ -106,12 +106,12 @@ export class ProposalTag extends Component {
               );
 
             return (
-                <ProposalTag />
+                <Tag />
             );
         }
         return null
     }
 }
 
-ProposalTag.propTypes = {
+Tag.propTypes = {
 };

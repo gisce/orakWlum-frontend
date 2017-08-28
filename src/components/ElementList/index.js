@@ -7,8 +7,8 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import { CheckedTag } from '../CheckedTag';
-import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
+import { Tag } from '../Tag';
+import { ElementGraph } from '../ElementGraph';
 
 import {adaptProposalData} from '../../utils/graph';
 import { dispatchNewRoute} from '../../utils/http_functions';
@@ -47,7 +47,7 @@ const styles = {
 };
 
 
-export class ProposalList extends Component {
+export class ElementList extends Component {
     constructor(props) {
         super(props);
 
@@ -79,7 +79,7 @@ export class ProposalList extends Component {
     };
 
     render() {
-        console.debug("render ProposalList");
+        console.debug("render ElementList");
         const {proposals, sameWidth, width, aggregations} = this.props;
 
 	const with_graph = (this.props.with_graph)?this.props.with_graph:true;
@@ -113,7 +113,7 @@ export class ProposalList extends Component {
                     Object.keys(aggregations).map( function(agg, i) {
                         return (
                             <div key={"aggregationDivTag_"+i} onClick={(e) => changeProposalAggregation(e, agg)}>
-                                 <ProposalTag
+                                 <Tag
                                      key={"aggregationTag_"+i}
                                      tag={aggregations[agg].lite}
                                      selected={aggregations[agg].selected}
@@ -157,13 +157,13 @@ export class ProposalList extends Component {
                 const proposalTag = (
                     <div style={styles.wrapper}>
                         {(selected)? <CheckedTag/> : null}
-                        <ProposalTag tag={element_type} lite={true} />
+                        <Tag tag={element_type} lite={true} />
                     </div>
                 )
 
                 const the_graph = (with_graph && tile.prediction && Object.keys(tile.prediction).length >0 ) ?
                     (
-                        <ProposalGraph
+                        <ElementGraph
                               stacked={true}
                               data={result}
                               components={components}
@@ -209,7 +209,7 @@ export class ProposalList extends Component {
                 );
         });
 
-        const ProposalList = () => (
+        const ElementList = () => (
           <div style={styles.root}>
             <GridList
               cols={2}
@@ -226,13 +226,13 @@ export class ProposalList extends Component {
         return (
             <div>
                 <div className="row">{proposalAggregations}</div>
-                <div className="row"><ProposalList /></div>
+                <div className="row"><ElementList /></div>
             </div>
         );
     }
 }
 
-ProposalList.propTypes = {
+ElementList.propTypes = {
     sameWidth: PropTypes.bool,
     width: PropTypes.string,
     onClick: PropTypes.func,

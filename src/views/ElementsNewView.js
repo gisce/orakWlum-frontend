@@ -6,7 +6,7 @@ import { debug } from '../utils/debug';
 
 import * as actionCreators from '../actions/orakwlum';
 
-import { ElementDefinition } from './ElementDefinition';
+import { ElementDefinition } from '../components/ElementDefinition';
 
 import { localized_time } from '../constants'
 

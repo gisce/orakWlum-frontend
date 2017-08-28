@@ -6,26 +6,26 @@ import { Route, Redirect } from 'react-router';
 /* containers */
 import { App } from './containers/App';
 import { HomeContainer } from './containers/HomeContainer';
-import LoginView from './components/LoginView';
-import RegisterView from './components/RegisterView';
-import Analytics from './components/Analytics';
-import NotFound from './components/NotFound';
-import Profile from './components/ProfileView';
-import About from './components/AboutView';
-import Aggregations from './components/AggregationsView';
-import Settings from './components/SettingsView';
-import Comparator from './components/ProposalComparatorView';
+import LoginView from './views/LoginView';
+import RegisterView from './views/RegisterView';
+import Analytics from './views/Analytics';
+import NotFound from './views/NotFound';
+import Profile from './views/ProfileView';
+import About from './views/AboutView';
+import Aggregations from './views/AggregationsView';
+import Settings from './views/SettingsView';
 
-import Websocket from './components/Websocket';
-import ElementsList from './components/ElementsList';
-import Element from './components/ElementView';
-import ElementsNew from './components/ElementsNewView';
-import Concatenator from './components/ElementsConcatenation';
+import Websocket from './views/Websocket';
+import ElementsList from './views/ElementsList';
+import Element from './views/ElementView';
+import ElementsNew from './views/ElementsNewView';
+import Concatenator from './views/ElementsConcatenation';
+import Comparator from './views/ElementsComparationView';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
 import { requireNoAuthentication } from './components/notAuthenticatedComponent';
-import { requireUnauthentication } from './components/Logout';
+import { requireUnauthentication } from './views/Logout';
 
 
 export default (
@@ -57,7 +57,6 @@ export default (
         <Route name="Element" path="elements/:elementID" component={requireAuthentication(Element)} />
         <Route name="ElementsConcatenation" path="elements/concatenate/:elementsList" component={requireAuthentication(Concatenator)} />
         <Route name="ElementsComparator" path="elements/compare/:elementA/:elementB" component={requireAuthentication(Comparator)} />
-
 
         <Route path="*" component={NotFound} />
 

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
-import { ProposalComparator } from './ProposalComparator';
+import { ElementComparator } from '../components/ElementComparator';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ProposalComparatorView extends React.Component {
+export default class ElementsComparationView extends React.Component {
     constructor(props){
         super(props);
 
@@ -109,7 +109,7 @@ export default class ProposalComparatorView extends React.Component {
             return (
                 <div>
                     <div>
-                        <ProposalComparator
+                        <ElementComparator
                             title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
                             elementA={elementA_merged}
                             elementB={elementB_merged}
@@ -129,7 +129,7 @@ export default class ProposalComparatorView extends React.Component {
     }
 }
 
-ProposalComparatorView.propTypes = {
+ElementsComparationView.propTypes = {
     loaded: PropTypes.bool,
     data: PropTypes.any,
     token: PropTypes.string,

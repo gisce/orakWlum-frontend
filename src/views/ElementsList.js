@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 
-import { ElementsDashboard } from './ElementsDashboard';
+//import { ElementsDashboard } from './ElementsDashboard';
+import { ElementsDashboard } from '../components/ElementsDashboardCalendar';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
@@ -23,9 +24,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Websocket extends React.Component {
+export default class ElementsList extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -51,6 +51,7 @@ export default class Websocket extends React.Component {
 
     render() {
         const the_path = this.props.location.pathname;
+        const {elements} = this.props;
 
         return (
             <div>
@@ -63,5 +64,5 @@ export default class Websocket extends React.Component {
     }
 }
 
-Websocket.propTypes = {
+ElementsList.propTypes = {
 };

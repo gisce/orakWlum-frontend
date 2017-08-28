@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 
-import { UserProfile } from './UserProfile';
+import { UserProfile } from '../components/UserProfile';
 
 import { debug } from '../utils/debug';
 
-import { Notification } from './Notification';
+import { Notification } from '../components/Notification';
 
-import { PRDetail } from './PRDetail';
+import { PRDetail } from '../components/PRDetail';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 

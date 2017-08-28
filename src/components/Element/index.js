@@ -15,11 +15,11 @@ import Toggle from 'material-ui/Toggle';
 
 import * as actionCreators from '../../actions/orakwlum';
 
-import { ProposalTag } from '../ProposalTag';
-import { ProposalGraph } from '../ProposalGraph';
-import { ProposalTableMaterial } from '../ProposalTableMaterial';
+import { Tag } from '../Tag';
+import { ElementGraph } from '../ElementGraph';
+import { ElementTable } from '../ElementTable';
 
-import { ProposalDetail } from '../ProposalDetail';
+import { ElementDetail } from '../ElementDetail';
 
 import { Notification } from '../Notification';
 import Dialog from 'material-ui/Dialog';
@@ -496,7 +496,7 @@ export class Elementt extends Component {
         const proposalStatus = (
             proposal.status &&
             <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
-                <ProposalTag tag={proposal.status} />
+                <Tag tag={proposal.status} />
             </div>
         )
 
@@ -513,7 +513,7 @@ export class Elementt extends Component {
                     aggregations.map( function(agg, i) {
                         return (
                             <div key={"aggregationDivTag_"+i} onClick={(e) => changeElementAggregation(e, agg)}>
-                                 <ProposalTag
+                                 <Tag
                                      key={"aggregationTag_"+i}
                                      tag={agg.lite}
                                      selected={agg.selected}
@@ -585,9 +585,9 @@ export class Elementt extends Component {
                 (prediction && Object.keys(prediction).length > 0) &&
                   (
                       (proposalTable)?
-                          <ProposalTableMaterial stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
+                          <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
                           :
-                          <ProposalGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
+                          <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
                   )
                   :null;
 
@@ -621,7 +621,7 @@ export class Elementt extends Component {
 			  {proposalActions}
 			  <div style={styles.cardSeparator}>
 
-				  <ProposalDetail
+				  <ElementDetail
 					  data={summary}
 					  avg_info={{
                           'average': average,
