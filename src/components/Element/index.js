@@ -142,11 +142,13 @@ export class Elementt extends Component {
         this.animateChart = true;
 
         this.edit_open = false;
+        this.tune_open = false;
 
         props.aggregations[0].selected = true;
 
         if (props.comparation){
             this.edit_open = false;
+            this.tune_open = false;
             this.detail_open = true;
             this.comparation = true;
         }
@@ -311,6 +313,19 @@ export class Elementt extends Component {
 
         this.setState({
             edit_open: this.edit_open,
+        });
+    };
+
+
+
+
+    toggleTune = () => {
+        this.tune_open = !this.tune_open;
+
+        this.animateChart = false;
+
+        this.setState({
+            tune_open: this.tune_open,
         });
     };
 
@@ -481,7 +496,7 @@ export class Elementt extends Component {
         const deleteElement = this.deleteElementQuestion;
         const exportElement = this.exportElement;
 
-        const {detail_open, edit_open, toggleDetail, toggleEdit} = this;
+        const {detail_open, edit_open, tune_open, toggleDetail, toggleEdit, toggleTune} = this;
 
         const DetailIcon = (detail_open == true)?CollapseIcon:ExpandIcon;
 
@@ -622,7 +637,7 @@ export class Elementt extends Component {
         ;
 
         // The Element graph!
-        const proposalPicture =
+        const proposalPicturee =
             (!edit_open)?
                 (withPicture)?
                     (prediction && Object.keys(prediction).length > 0) &&
@@ -636,6 +651,21 @@ export class Elementt extends Component {
                   :
                   proposalEdit;
 
+
+        let proposalPicture;
+        if (edit_open) {
+            proposalPicture = proposalEdit;
+        }
+        else if (tune_open) {
+            proposalPicture = proposalEdit;
+        } else {
+            if (withPicture && prediction && Object.keys(prediction).length > 0)
+                proposalPicture = (proposalTable)?
+                    <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
+                    :
+                    <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
+        }
+
         const disableDetail = (element_type == "concatenation")?true:false;
         const disableExport = (element_type == "comparation")?true:false;
 
@@ -646,7 +676,7 @@ export class Elementt extends Component {
                 <FlatButton label="Process" icon={<RunIcon/>} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
-                <FlatButton label="Tune" icon={<TuneIcon/>} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
+                <FlatButton label="Tune" icon={<TuneIcon/>} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
