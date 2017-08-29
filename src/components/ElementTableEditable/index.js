@@ -22,6 +22,8 @@ export class ElementTableEditable extends Component {
 
     rowGetter = rowNumber => this.rows[rowNumber];
 
+    update = (fromRow, toRow, updated) => console.log(fromRow, toRow, updated);
+
     render() {
 
         return <ReactDataGrid
@@ -30,7 +32,7 @@ export class ElementTableEditable extends Component {
           rowsCount={this.rows.length}
           enableCellSelect={true}
           minHeight={500}
-          onGridRowsUpdated={this.handleGridRowsUpdated}
+          onGridRowsUpdated={this.update}
         />;
 
     }

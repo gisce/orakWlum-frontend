@@ -501,17 +501,17 @@ export class Elementt extends Component {
         const DetailIcon = (detail_open == true)?CollapseIcon:ExpandIcon;
 
         const actionsButtons = [
-          <FlatButton
-            label="Cancel"
-            primary={true}
-            onTouchTap={this.handleCloseConfirmation}
-          />,
-          <FlatButton
-            label="Submit"
-            primary={true}
-            keyboardFocused={true}
-            onTouchTap={this.handleCloseConfirmation}
-          />,
+            <FlatButton
+              label="Cancel"
+              primary={true}
+              onTouchTap={this.handleCloseConfirmation}
+            />,
+            <FlatButton
+              label="Submit"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleCloseConfirmation}
+            />,
         ];
 
 
