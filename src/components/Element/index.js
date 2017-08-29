@@ -636,6 +636,8 @@ export class Elementt extends Component {
         ;
 
 
+/*
+    SmartTable adaption!
         const proposalTuneHeaders = Object.keys(components).map(function( component, index){
             return {
                 title: component,
@@ -648,12 +650,29 @@ export class Elementt extends Component {
                   return data[hour][component];
             });
         });
+  */
+
+
+        const proposalTuneHeaders = Object.keys(components).map(function( component, index){
+            return {
+                key: component,
+                name: component,
+                editable: true,
+            }
+        });
+
+        const proposalTuneData = Object.keys(data).map(function( hour, index){
+            return Object.keys(components).map(function( component, indexComp){
+                  return data[hour][component];
+            });
+        });
+
 
         const proposalTune =
 		      <div>
               <ElementTableEditable
                   header={proposalTuneHeaders}
-                  data={proposalTuneData}
+                  data={data}
                   endingParentMethod={() => this.toggleEdit()}
               />
           </div>
