@@ -531,7 +531,6 @@ export class Elementt extends Component {
             summary = (prediction.summary != undefined)?prediction.summary:null;
         }
 
-
         // The Element status!
         const proposalStatus = (
             proposal.status &&
@@ -625,7 +624,7 @@ export class Elementt extends Component {
         })
 
         const proposalEdit =
-		  <div>
+		      <div>
               <ElementDefinition
                   aggregationsList={this.props.aggregations}
                   sourcesList={this.props.sources.measures}
@@ -636,28 +635,36 @@ export class Elementt extends Component {
           </div>
         ;
 
-        // The Element graph!
-        const proposalPicturee =
-            (!edit_open)?
-                (withPicture)?
-                    (prediction && Object.keys(prediction).length > 0) &&
-                      (
-                          (proposalTable)?
-                              <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
-                              :
-                              <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
-                      )
-                      :null
-                  :
-                  proposalEdit;
 
+        const proposalTuneHeaders = Object.keys(components).map(function( component, index){
+            return {
+                title: component,
+                width: null,
+            }
+        });
+
+        const proposalTuneData = Object.keys(data).map(function( hour, index){
+            return Object.keys(components).map(function( component, indexComp){
+                  return data[hour][component];
+            });
+        });
+
+        const proposalTune =
+		      <div>
+              <ElementTableEditable
+                  header={proposalTuneHeaders}
+                  data={proposalTuneData}
+                  endingParentMethod={() => this.toggleEdit()}
+              />
+          </div>
+        ;
 
         let proposalPicture;
         if (edit_open) {
             proposalPicture = proposalEdit;
         }
         else if (tune_open) {
-            proposalPicture = proposalEdit;
+            proposalPicture = proposalTune;
         } else {
             if (withPicture && prediction && Object.keys(prediction).length > 0)
                 proposalPicture = (proposalTable)?
@@ -692,19 +699,19 @@ export class Elementt extends Component {
             null;
 
         const proposalDetail = (summary != null) && (detail_open == true) &&
-		  <div>
-			  {proposalActions}
-			  <div style={styles.cardSeparator}>
+    		  <div>
+    			  {proposalActions}
+    			  <div style={styles.cardSeparator}>
 
-				  <ElementDetail
-					  data={summary}
-					  avg_info={{
-                          'average': average,
-						  'data': data,
-						  'components': components,
-					  }}
-				  />
-			  </div>
+    				  <ElementDetail
+    					  data={summary}
+    					  avg_info={{
+                  'average': average,
+    						  'data': data,
+    						  'components': components,
+    					  }}
+    				  />
+    			  </div>
           </div>
         ;
 
