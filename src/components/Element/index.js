@@ -623,19 +623,6 @@ export class Elementt extends Component {
             end_date: end_date.toDate(),
         })
 
-        const proposalEdit =
-		      <div>
-              <ElementDefinition
-                  aggregationsList={this.props.aggregations}
-                  sourcesList={this.props.sources.measures}
-                  defaultValue={adaptedElement}
-                  editMode={true}
-                  endingParentMethod={() => this.toggleEdit()}
-              />
-          </div>
-        ;
-
-
 /*
     SmartTable adaption!
         const proposalTuneHeaders = Object.keys(components).map(function( component, index){
@@ -653,37 +640,55 @@ export class Elementt extends Component {
   */
 
 
-        const proposalTuneHeaders = Object.keys(components).map(function( component, index){
-            return {
-                key: component,
-                name: component,
-                editable: true,
-            }
-        });
-
-        const proposalTuneData = Object.keys(data).map(function( hour, index){
-            return Object.keys(components).map(function( component, indexComp){
-                  return data[hour][component];
-            });
-        });
-
-
-        const proposalTune =
-		      <div>
-              <ElementTableEditable
-                  header={proposalTuneHeaders}
-                  data={data}
-                  endingParentMethod={() => this.toggleEdit()}
-              />
-          </div>
-        ;
-
         let proposalPicture;
+
+        // Handle EDIT
         if (edit_open) {
+            const proposalEdit =
+    		      <div>
+                  <ElementDefinition
+                      aggregationsList={this.props.aggregations}
+                      sourcesList={this.props.sources.measures}
+                      defaultValue={adaptedElement}
+                      editMode={true}
+                      endingParentMethod={() => this.toggleEdit()}
+                  />
+              </div>
+            ;
+
             proposalPicture = proposalEdit;
         }
+
+        // Handle TUNE
         else if (tune_open) {
-            proposalPicture = proposalTune;
+              const proposalTuneHeaders = Object.keys(components).map(function( component, index){
+                  return {
+                      key: component,
+                      name: component,
+                      editable: true,
+                  }
+              });
+
+              const proposalTuneData = Object.keys(data).map(function( hour, index){
+                  return Object.keys(components).map(function( component, indexComp){
+                        return data[hour][component];
+                  });
+              });
+
+              const proposalTune =
+                <div>
+                    <ElementTableEditable
+                        header={proposalTuneHeaders}
+                        data={data}
+                        endingParentMethod={() => this.toggleEdit()}
+                    />
+                </div>
+              ;
+
+              proposalPicture = proposalTune;
+
+
+        // Handle PICTURE
         } else {
             if (withPicture && prediction && Object.keys(prediction).length > 0)
                 proposalPicture = (proposalTable)?
