@@ -37,19 +37,39 @@ export class ElementTableEditable extends Component {
 
     rowGetter = rowNumber => this.rows[rowNumber];
 
-    update = (fromRow, toRow, updated) => console.log(fromRow, toRow, updated);
+    handleUpdate = (changes) => {
+        console.log(fromRow, toRow, updated);
+
+        const { fromRow, toRow, updated } = changes;
+        const updated_field = Object.keys(updated)[0]
+
+        let difference={}
+        for (let i = fromRow; i <= toRow; i++) {
+          //let rowToUpdate = this.rows[i];
+          //let updatedRow = React.addons.update(rowToUpdate, {$merge: updated});
+
+          difference[i] = updated[updated_field] - this.rows[i][updated_field]
+
+          // merge with the change
+          this.rows[i] = {...this.rows[i], ...updated};
+        }
+        console.log(this.rows[fromRow], difference);
+
+        this.props.parentDataHandler(this.rows, difference);
+    }
 
     render() {
-
-        return <ReactDataGrid
-          columns={this.columns}
-          rowGetter={this.rowGetter}
-          rowsCount={this.rows.length}
-          enableCellSelect={true}
-          minHeight={500}
-          onGridRowsUpdated={this.update}
-          onGridSort={this.handleGridSort}
-        />;
+        return (
+            <ReactDataGrid
+              columns={this.columns}
+              rowGetter={this.rowGetter}
+              rowsCount={this.rows.length}
+              enableCellSelect={true}
+              minHeight={500}
+              onGridRowsUpdated={this.handleUpdate}
+              onGridSort={this.handleGridSort}
+            />
+        );
 
     }
 }
@@ -59,4 +79,5 @@ ElementTableEditable.propTypes = {
     data: PropTypes.array.isRequired,
     title: PropTypes.string,
     appendButtons: PropTypes.array,
+    parentDataHandler: PropTypes.func,
 };
