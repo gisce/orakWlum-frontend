@@ -37,6 +37,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
 import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import TuneIcon from 'material-ui/svg-icons/editor/border-all';
+import SaveIcon from 'material-ui/svg-icons/content/save';
 
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
@@ -752,6 +753,7 @@ export class Elementt extends Component {
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
                 <FlatButton label="Tune" icon={<TuneIcon/>} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
+                <FlatButton label="Save" icon={<SaveIcon/>} onClick={(e) => toggleTune(e)} title={"Apply tunned changes!"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>

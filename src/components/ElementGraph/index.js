@@ -164,7 +164,8 @@ export class ElementGraph extends Component {
               const bars = Object.keys(components)
               .sort() //sort by key ASC
               .map(function(component, i) {
-                  return <Bar
+                  return  (
+                        <Bar
                             unit={unit}
                             isAnimationActive={isAnimated}
                             key={"area"+i}
@@ -174,6 +175,7 @@ export class ElementGraph extends Component {
                             stroke={colors[i]}
                             fill={colors[i]}
                           />
+                  )
               });
 
               const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} />;
