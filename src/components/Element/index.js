@@ -746,12 +746,22 @@ export class Elementt extends Component {
             const the_components = this.components;
 
             const proposalTuneHeaders = Object.keys(the_components[aggregationSelected]).map(function(component, index) {
-                return {
-                    key: component,
-                    name: the_components[aggregationSelected][component].title,
-                    editable: true,
-                    resizable: true
-                }
+
+                if (component == "tuned")
+                    return {
+                        key: component,
+                        name: the_components[aggregationSelected][component].title,
+                        editable: true,
+                        resizable: true,
+                        editable: false,
+                    }
+                else
+                    return {
+                        key: component,
+                        name: the_components[aggregationSelected][component].title,
+                        editable: true,
+                        resizable: true,
+                    }
             });
 
             const hour_column = {
