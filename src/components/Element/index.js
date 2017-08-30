@@ -671,16 +671,10 @@ export class Elementt extends Component {
                   }
               });
 
-              const proposalTuneData = Object.keys(data).map(function( hour, index){
-                  return Object.keys(components).map(function( component, indexComp){
-                        return data[hour][component];
-                  });
-              });
-
               const proposalTune =
                 <div>
                     <ElementTableEditable
-                        header={proposalTuneHeaders}
+                        header={[ {key: 'name', name: 'Hour', editable: false}, ...proposalTuneHeaders]}
                         data={data}
                         endingParentMethod={() => this.toggleEdit()}
                     />
