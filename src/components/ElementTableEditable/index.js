@@ -16,8 +16,21 @@ const styles = {
 export class ElementTableEditable extends Component {
     constructor(props) {
         super(props)
+        this.originalRows = props.data;
         this.rows = props.data;
         this.columns = props.header;
+    }
+
+    handleGridSort = (sortColumn, sortDirection) => {
+      const comparer = (a, b) => {
+        if (sortDirection === 'ASC') {
+          return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
+        } else if (sortDirection === 'DESC') {
+          return (a[sortColumn] < b[sortColumn]) ? 1 : -1;
+        }
+      };
+
+      this.rows = sortDirection === 'NONE' ? this.rows.originalRows.slice(0) : this.rows.sort(comparer);
     }
 
     rowGetter = rowNumber => this.rows[rowNumber];
@@ -33,6 +46,7 @@ export class ElementTableEditable extends Component {
           enableCellSelect={true}
           minHeight={500}
           onGridRowsUpdated={this.update}
+          onGridSort={this.handleGridSort}
         />;
 
     }
