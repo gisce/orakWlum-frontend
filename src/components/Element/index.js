@@ -129,6 +129,8 @@ export class Elementt extends Component {
             open: false,
         }
 
+        this.id = props.proposal.id;
+
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
@@ -195,8 +197,8 @@ export class Elementt extends Component {
         });
     };
 
-    applyTunedChanges = (changes, difference) => {
-        console.log("PARENT", difference)
+    applyTunedChanges = (updated_field, difference) => {
+        console.log("PARENT", updated_field)
 
         console.log(this.data[this.state.aggregationSelected]);
 
@@ -207,15 +209,22 @@ export class Elementt extends Component {
             for ( let [agg_key, an_agg] of Object.entries(this.props.aggregations)) {
                 const current_agg_id = an_agg.id;
 
-                //Add the modification value to the modifications object
-                this.modifications[current_agg_id][hour_position] = hour_difference
-
                 //Update the total for this hour
                 this.data[current_agg_id][hour_position]["total"] = parseInt(this.data[current_agg_id][hour_position]["total"]) + parseInt(hour_difference)
 
                 //Update the tuned amount just for the others aggregations
                 if (current_agg_id != this.state.aggregationSelected) {
                     this.data[current_agg_id][hour_position]["tuned"] = parseInt(this.data[current_agg_id][hour_position]["tuned"]) + parseInt(hour_difference)
+
+                    //Add the modification value to the modifications object
+                    this.modifications[current_agg_id][hour_position] = {
+                        "tuned": hour_difference,
+                    }
+                } else {
+                    //Add the modification to the altered field
+                    this.modifications[current_agg_id][hour_position] = {
+                        [updated_field]: hour_difference,
+                    }
                 }
             }
         }
@@ -380,6 +389,11 @@ export class Elementt extends Component {
     };
 
 
+
+
+    saveTuned = () => {
+        this.props.saveTunedValues(this.id, this.modifications)
+    };
 
 
     toggleTune = () => {
@@ -764,7 +778,7 @@ export class Elementt extends Component {
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
                 <FlatButton label="Tune" icon={<TuneIcon/>} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
-                <FlatButton label="Save" icon={<SaveIcon/>} onClick={(e) => saveTuned(e)} title={"Apply tunned changes!"}/>
+                <FlatButton label="Save" icon={<SaveIcon/>} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
