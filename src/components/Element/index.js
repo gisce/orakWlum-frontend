@@ -112,6 +112,7 @@ function mapStateToProps(state) {
         userName: state.auth.userName,
         isAuthenticated: state.auth.isAuthenticated,
         sources: state.orakwlum.sources,
+        modifications: state.orakwlum.modifications,
         aggregations_from_state: state.orakwlum.aggregations,
     };
 }
@@ -159,7 +160,6 @@ export class Elementt extends Component {
 
 
         // Prepare data sets
-        console.log("CONSTRUEIXO ELEMENT");
         const { prediction } = props.proposal;
         const { aggregations } = props;
 
@@ -167,7 +167,9 @@ export class Elementt extends Component {
         this.data = {}
         this.average = {}
         this.components = {}
-        this.modifications = {}
+
+        //Initialize modifications with existant values or {}
+        this.modifications = (this.id in props.modifications)? props.modifications[this.id] : {};
 
         if (prediction && Object.keys(prediction).length > 0) {
 
@@ -177,13 +179,24 @@ export class Elementt extends Component {
                 //The Prediction of current aggregation
                 const predictionAdapted=adaptProposalData(prediction['result']);
                 const current = predictionAdapted[current_agg_id];
+                const currentModifications = this.modifications[current_agg_id];
+
+                //Initialize modifications for current aggregation just if empty
+                if (!(current_agg_id in this.modifications))
+                    this.modifications[current_agg_id] = {};
 
                 this.data[current_agg_id] = current.result;
+
+                //Merge the base prediction for this hour with the existing modifications
+                for ( let [hour_key, an_hour] of Object.entries(this.data[current_agg_id])) {
+                    this.data[current_agg_id][hour_key] = {
+                        ...an_hour,
+                        ...currentModifications[hour_key],
+                    }
+                }
+
                 this.average[current_agg_id] = current.average;
                 this.components[current_agg_id] = current.components;
-
-                //Initialize modifications for current aggregation
-                this.modifications[current_agg_id] = {};
             };
 
             this.summary = (prediction.summary != undefined)?prediction.summary:null;
@@ -198,10 +211,6 @@ export class Elementt extends Component {
     };
 
     applyTunedChanges = (updated_field, difference) => {
-        console.log("PARENT", updated_field)
-
-        console.log(this.data[this.state.aggregationSelected]);
-
         // For each difference
         for ( let [hour_position, hour_difference] of Object.entries(difference)) {
 
@@ -230,10 +239,6 @@ export class Elementt extends Component {
                 }
             }
         }
-
-        console.log(this.modifications)
-
-        //this.changed_data = changes;
     }
 
     toogleElementRender = (event, status) => {
