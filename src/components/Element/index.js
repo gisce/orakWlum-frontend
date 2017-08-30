@@ -440,6 +440,8 @@ export class Elementt extends Component {
 
         const lastExecution = new Date(proposal.execution_date * 1000).toLocaleString(locale, hourOptions);
         const creationDate = new Date(proposal.creation_date * 1000).toLocaleString(locale, hourOptions);
+        const updateDate = new Date(proposal.update_date * 1000).toLocaleString(locale, hourOptions);
+
         const ownerText = (proposal.owner)?"by " + proposal.owner:"";
 
         const withPicture = (proposal.isNew)?!proposal.isNew:true;
@@ -759,11 +761,17 @@ export class Elementt extends Component {
                   </div>
 
               <CardText>
-          {       proposal.creation_date &&
+          {
+              proposal.creation_date &&
                   <p><span>Element was created on {creationDate} {ownerText}</span></p>
           }
-          {       proposal.execution_date &&
+          {
+              proposal.execution_date &&
                   <p><span>Last execution was done at {lastExecution}</span></p>
+          }
+          {
+              proposal.update_date &&
+                  <p><span>Last update was done at {updateDate}</span></p>
           }
               </CardText>
 
