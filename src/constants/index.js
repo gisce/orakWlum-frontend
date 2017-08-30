@@ -125,6 +125,7 @@ export const localized_time = moment;
 
 export const day_format = "L";
 export const parse_day_format = "YYYY-MM-DD";
+export const hour_unique_format = "HH";
 
 /* Colors definition */
 
