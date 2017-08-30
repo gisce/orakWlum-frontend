@@ -124,6 +124,7 @@ moment.locale('en', locale_override_conf);
 export const localized_time = moment;
 
 export const day_format = "L";
+export const day_month_format = "DD/MM";
 export const parse_day_format = "YYYY-MM-DD";
 export const hour_unique_format = "HH";
 
