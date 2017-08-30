@@ -165,6 +165,7 @@ export class Elementt extends Component {
         this.data = {}
         this.average = {}
         this.components = {}
+        this.modifications = {}
 
         if (prediction && Object.keys(prediction).length > 0) {
 
@@ -178,10 +179,14 @@ export class Elementt extends Component {
                 this.data[current_agg_id] = current.result;
                 this.average[current_agg_id] = current.average;
                 this.components[current_agg_id] = current.components;
+
+                //Initialize modifications for current aggregation
+                this.modifications[current_agg_id] = {};
             };
 
             this.summary = (prediction.summary != undefined)?prediction.summary:null;
         }
+
     }
 
     dummyAsync = (cb) => {
@@ -202,9 +207,15 @@ export class Elementt extends Component {
             for ( let [agg_key, an_agg] of Object.entries(this.props.aggregations)) {
                 const current_agg_id = an_agg.id;
 
+                //Add the modification value to the modifications object
+                this.modifications[current_agg_id][hour_position] = hour_difference
+
+                //Update the total for this hour
+                this.data[current_agg_id][hour_position]["total"] = parseInt(this.data[current_agg_id][hour_position]["total"]) + parseInt(hour_difference)
+
+                //Update the tuned amount just for the others aggregations
                 if (current_agg_id != this.state.aggregationSelected) {
                     this.data[current_agg_id][hour_position]["tuned"] = parseInt(this.data[current_agg_id][hour_position]["tuned"]) + parseInt(hour_difference)
-                    this.data[current_agg_id][hour_position]["total"] = parseInt(this.data[current_agg_id][hour_position]["total"]) + parseInt(hour_difference)
                 }
             }
         }
@@ -753,7 +764,7 @@ export class Elementt extends Component {
                 <FlatButton label="Detail" icon={<DetailIcon/>} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Edit" icon={<EditIcon/>} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
                 <FlatButton label="Tune" icon={<TuneIcon/>} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
-                <FlatButton label="Save" icon={<SaveIcon/>} onClick={(e) => toggleTune(e)} title={"Apply tunned changes!"}/>
+                <FlatButton label="Save" icon={<SaveIcon/>} onClick={(e) => saveTuned(e)} title={"Apply tunned changes!"}/>
                 <FlatButton label="Export" icon={<ExportIcon/>} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon/>} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon/>} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
