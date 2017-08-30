@@ -676,7 +676,7 @@ export class Elementt extends Component {
                   key: 'day_string',
                   name: 'Hour',
                   editable: false,
-                  width: 50,
+                  width: 75,
                   resizable: true,
                   sortable: false,
               };
