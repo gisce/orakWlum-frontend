@@ -38,6 +38,7 @@ import ExportIcon from 'material-ui/svg-icons/file/file-download';
 import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import TuneIcon from 'material-ui/svg-icons/editor/border-all';
 import SaveIcon from 'material-ui/svg-icons/content/save';
+import ResetIcon from 'material-ui/svg-icons/action/restore';
 
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
@@ -157,8 +158,6 @@ export class Elementt extends Component {
             this.comparation = true;
         }
 
-
-
         // Prepare data sets
         const { prediction } = props.proposal;
         const { aggregations } = props;
@@ -171,6 +170,11 @@ export class Elementt extends Component {
         //Initialize modifications with existant values or {}
         this.modifications = (this.id in props.modifications)? props.modifications[this.id] : {};
 
+        this.prepareData(prediction, aggregations)
+
+    }
+
+    prepareData = (prediction, aggregations) => {
         if (prediction && Object.keys(prediction).length > 0) {
 
             for ( let [key, an_agg] of Object.entries(aggregations)) {
@@ -201,7 +205,6 @@ export class Elementt extends Component {
 
             this.summary = (prediction.summary != undefined)?prediction.summary:null;
         }
-
     }
 
     dummyAsync = (cb) => {
@@ -398,6 +401,12 @@ export class Elementt extends Component {
     };
 
 
+
+
+    resetModifications = () => {
+        console.log("reset modifications");
+        this.modifications = {}
+    };
 
 
     saveTuned = () => {
@@ -756,6 +765,8 @@ export class Elementt extends Component {
 
               const proposalTune =
                 <div>
+                    <FlatButton label="Reset" icon={<ResetIcon/>} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
+
                     <ElementTableEditable
                         header={[ hour_column, ...proposalTuneHeaders]}
                         data={this.data[aggregationSelected]}
