@@ -79,6 +79,11 @@ export function adaptProposalData(prediction) {
                 //Initialize tuned parameter of each hour
                 result[current_aggregation]['result'][i]['tuned'] = 0;
             });
+
+            //Add Tuned component
+            result[current_aggregation]['components']['tuned'] = {
+                'title': 'Tuned',
+            };
     });
 
     return result;
