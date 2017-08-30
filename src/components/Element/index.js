@@ -248,13 +248,15 @@ export class Elementt extends Component {
                     //Add the modification value to the modifications object
                     this.modifications[current_agg_id][hour_position] = {
                         ...this.modifications[current_agg_id][hour_position],
-                        "tuned": this.data[current_agg_id][hour_position]["tuned"]
+                        "tuned": this.data[current_agg_id][hour_position]["tuned"], //save modification as "tuned"
+                        ["total"]: this.data[current_agg_id][hour_position]["total"], //save updated "totals"
                     }
                 } else {
                     //Add the modification to the altered field
                     this.modifications[current_agg_id][hour_position] = {
                         ...this.modifications[current_agg_id][hour_position],
-                        [updated_field]: hour_difference
+                        [updated_field]: hour_difference, //save modification as updated_field
+                        ["total"]: this.data[current_agg_id][hour_position]["total"], //save updated totals
                     }
                 }
             }
