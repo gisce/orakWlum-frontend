@@ -55,7 +55,7 @@ export class ElementTableEditable extends Component {
         }
         console.log(this.rows[fromRow], difference);
 
-        this.props.parentDataHandler(this.rows, difference);
+        this.props.parentDataHandler(updated_field, difference);
     }
 
     render() {
