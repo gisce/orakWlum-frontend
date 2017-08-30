@@ -395,7 +395,6 @@ export class Elementt extends Component {
 
     toggleEdit = () => {
         this.edit_open = !this.edit_open;
-        this.detail_open = false;
         this.tune_open = false;
 
         this.animateChart = false;
@@ -410,7 +409,6 @@ export class Elementt extends Component {
 
     toggleTune = () => {
         this.tune_open = !this.tune_open;
-        this.detail_open = false;
         this.edit_open = false;
 
         this.animateChart = false;
