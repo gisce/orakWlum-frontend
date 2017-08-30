@@ -25,6 +25,8 @@ import {
     UPDATE_PROFILE_KO,
     RECEIVE_PROFILE_KO,
 
+    UPDATE_TUNED_VALUES,
+
     VERSION_PR,
     FETCH_VERSION_REQUEST,
     RECEIVE_VERSION,
@@ -416,6 +418,29 @@ export function updateElement(element) {
     return (dispatch) => {
         dispatch(updateElementlRequest());
         ask_the_api("elements.update", element);
+    };
+}
+
+
+
+
+export function saveTunedValuesReducer(id, modifications) {
+    const modifications_to_update = {
+        [id]: modifications,
+    }
+    
+    return {
+        type: UPDATE_TUNED_VALUES,
+        payload: {
+            modifications: modifications_to_update
+        },
+    };
+}
+
+export function saveTunedValues(id, modifications) {
+    return (dispatch) => {
+        dispatch(saveTunedValuesReducer(id, modifications));
+        console.log(id, modifications)
     };
 }
 

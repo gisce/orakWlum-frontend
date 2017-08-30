@@ -1,9 +1,12 @@
-function convertTimestampToString(timestamp){
-    const the_hour = new Date(timestamp);
+import { localized_time, day_month_format, hour_unique_format } from '../constants'
 
-    return "" +
-        ("0" + the_hour.getHours()).slice(-2) 
-    ;
+
+function convertTimestampToString(timestamp){
+    return localized_time(timestamp).format(hour_unique_format);
+}
+
+function prepareDayAndHourString(timestamp) {
+    return localized_time(timestamp).format(day_month_format + " " + hour_unique_format);
 }
 
 export function adaptProposalData(prediction) {
@@ -43,15 +46,16 @@ export function adaptProposalData(prediction) {
                 // initialize result hour with an empty dict
                 if (!tmp_result[hour])
                     tmp_result[hour]={total: 0, name: hour};
+
                 tmp_result[hour][title] = amount;
-                tmp_result[hour]["total"] += amount;
+                tmp_result[hour]["total"] = parseInt(tmp_result[hour]["total"]) + parseInt(amount);
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
                     tmp_average[hour]={total: 0, name: hour};
-                tmp_average[hour][title] = avg;
-                tmp_average[hour]["total"] += avg;
 
+                tmp_average[hour][title] = avg;
+                tmp_average[hour]["total"] = parseInt(tmp_average[hour]["total"]) + parseInt(avg);
 
                 result[current_aggregation]['components'][title] = {
                     'title': title,
@@ -67,7 +71,19 @@ export function adaptProposalData(prediction) {
                 const hour_string = convertTimestampToString(parseInt(tmp_entry));
                 result[current_aggregation]['result'][i]['name'] = hour_string;
                 result[current_aggregation]['average'][i]['name'] = hour_string;
+
+                const day_string = prepareDayAndHourString(parseInt(tmp_entry));
+                result[current_aggregation]['result'][i]['day_string'] = day_string;
+                result[current_aggregation]['average'][i]['day_string'] = day_string;
+
+                //Initialize tuned parameter of each hour
+                result[current_aggregation]['result'][i]['tuned'] = 0;
             });
+
+            //Add Tuned component
+            result[current_aggregation]['components']['tuned'] = {
+                'title': 'Tuned',
+            };
     });
 
     return result;

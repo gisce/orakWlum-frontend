@@ -48,6 +48,8 @@ export const CREATE_PROPOSAL_REQUEST = 'CREATE_PROPOSAL_REQUEST';
 export const EXPORT_PROPOSAL_REQUEST = 'EXPORT_PROPOSAL_REQUEST';
 export const UPDATE_PROPOSAL_REQUEST = 'UPDATE_PROPOSAL_REQUEST';
 
+export const UPDATE_TUNED_VALUES = 'UPDATE_TUNED_VALUES';
+
 export const FETCH_ELEMENTS_REQUEST = 'FETCH_ELEMENTS_REQUEST';
 export const RECEIVE_ELEMENTS = 'RECEIVE_ELEMENTS';
 export const OVERRIDE_ELEMENTS = 'OVERRIDE_ELEMENTS';
@@ -124,7 +126,9 @@ moment.locale('en', locale_override_conf);
 export const localized_time = moment;
 
 export const day_format = "L";
+export const day_month_format = "DD/MM";
 export const parse_day_format = "YYYY-MM-DD";
+export const hour_unique_format = "HH";
 
 /* Colors definition */
 

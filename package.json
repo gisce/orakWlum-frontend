@@ -23,7 +23,9 @@
     "okW",
     "prediction"
   ],
-  "author": ["https://github.com/xavitorello, https://github.com/gisce"],
+  "author": [
+    "https://github.com/xavitorello, https://github.com/gisce"
+  ],
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.6.1",
@@ -128,6 +130,7 @@
     "fs": "0.0.1-security",
     "moment": "^2.18.1",
     "react-big-calendar": "^0.14.4",
+    "react-data-grid": "^2.0.58",
     "ws": "^3.0.0"
   },
   "optionalDependencies": {
