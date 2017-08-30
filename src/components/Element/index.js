@@ -767,11 +767,11 @@ export class Elementt extends Component {
           }
           {
               proposal.execution_date &&
-                  <p><span>Last execution was done at {lastExecution}</span></p>
+                  <p><span>Last execution was performed at {lastExecution}</span></p>
           }
           {
               proposal.update_date &&
-                  <p><span>Last update was done at {updateDate}</span></p>
+                  <p><span>Last update was applied at {updateDate}</span></p>
           }
               </CardText>
 
