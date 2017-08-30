@@ -671,10 +671,17 @@ export class Elementt extends Component {
                   }
               });
 
+              const hour_column = {
+                  key: 'name',
+                  name: 'Hour',
+                  editable: false,
+                  width: 50,
+              };
+
               const proposalTune =
                 <div>
                     <ElementTableEditable
-                        header={[ {key: 'name', name: 'Hour', editable: false}, ...proposalTuneHeaders]}
+                        header={[ hour_column, ...proposalTuneHeaders]}
                         data={data}
                         endingParentMethod={() => this.toggleEdit()}
                     />
