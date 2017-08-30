@@ -48,14 +48,14 @@ export function adaptProposalData(prediction) {
                     tmp_result[hour]={total: 0, name: hour};
 
                 tmp_result[hour][title] = amount;
-                tmp_result[hour]["total"] += amount;
+                tmp_result[hour]["total"] = parseInt(tmp_result[hour]["total"]) + parseInt(amount);
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
                     tmp_average[hour]={total: 0, name: hour};
 
                 tmp_average[hour][title] = avg;
-                tmp_average[hour]["total"] += avg;
+                tmp_average[hour]["total"] = parseInt(tmp_average[hour]["total"]) + parseInt(avg);
 
                 result[current_aggregation]['components'][title] = {
                     'title': title,

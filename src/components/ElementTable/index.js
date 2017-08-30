@@ -136,10 +136,10 @@ export class ElementTable extends Component {
                 );
 
                 //the total for this hour
-                totalSum += value;
+                totalSum = parseInt(totalSum) + parseInt(value);
 
                 //the total of this aggr component
-                allTotalSum[j] += value;
+                allTotalSum[j] = parseInt(allTotalSum[j]) + parseInt(value);
             })
 
             if (totals) {

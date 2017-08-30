@@ -199,10 +199,12 @@ export class Elementt extends Component {
 
             // Apply it for all available aggregations in computed data
             for ( let [agg_key, an_agg] of Object.entries(this.props.aggregations)) {
-                //if (currentAgg) -> skip
                 const current_agg_id = an_agg.id;
-                this.data[current_agg_id][hour_position]["tuned"] += hour_difference
-                this.data[current_agg_id][hour_position]["total"] += hour_difference
+
+                if (current_agg_id != this.state.aggregationSelected) {
+                    this.data[current_agg_id][hour_position]["tuned"] = parseInt(this.data[current_agg_id][hour_position]["tuned"]) + parseInt(hour_difference)
+                    this.data[current_agg_id][hour_position]["total"] = parseInt(this.data[current_agg_id][hour_position]["total"]) + parseInt(hour_difference)
+                }
             }
         }
 
