@@ -699,10 +699,12 @@ export class Elementt extends Component {
 
         // Handle TUNE
         else if (tune_open) {
-              const proposalTuneHeaders = Object.keys(this.components[aggregationSelected]).map(function( component, index){
+              const the_components = this.components;
+
+              const proposalTuneHeaders = Object.keys(the_components[aggregationSelected]).map(function( component, index){
                   return {
                       key: component,
-                      name: component,
+                      name: the_components[aggregationSelected][component].title,
                       editable: true,
                       resizable: true,
                   }

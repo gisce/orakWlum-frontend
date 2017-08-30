@@ -117,7 +117,8 @@ export class ElementGraph extends Component {
 
             if (isAreaChart) {
               const areas = Object.keys(components).sort().map(function(component, i) {
-                  return <Area
+                  return
+                        <Area
                             unit={unit}
                             isAnimationActive={isAnimated}
                             key={"area"+i}
