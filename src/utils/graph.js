@@ -1,9 +1,12 @@
-function convertTimestampToString(timestamp){
-    const the_hour = new Date(timestamp);
+import { localized_time, day_format, hour_unique_format } from '../constants'
 
-    return "" +
-        ("0" + the_hour.getHours()).slice(-2) 
-    ;
+
+function convertTimestampToString(timestamp){
+    return localized_time(timestamp).format(hour_unique_format);
+}
+
+function prepareDayAndHourString(timestamp) {
+    return localized_time(timestamp).format(day_format + " " + hour_unique_format);
 }
 
 export function adaptProposalData(prediction) {
@@ -67,6 +70,12 @@ export function adaptProposalData(prediction) {
                 const hour_string = convertTimestampToString(parseInt(tmp_entry));
                 result[current_aggregation]['result'][i]['name'] = hour_string;
                 result[current_aggregation]['average'][i]['name'] = hour_string;
+
+
+                const day_string = prepareDayAndHourString(parseInt(tmp_entry));
+                result[current_aggregation]['result'][i]['day_string'] = day_string;
+                result[current_aggregation]['average'][i]['day_string'] = day_string;
+
             });
     });
 
