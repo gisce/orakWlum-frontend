@@ -759,6 +759,7 @@ export class Elementt extends Component {
             };
 
             const proposalTune = <div>
+                <FlatButton label="View" icon={< ResetIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
                 <FlatButton label="Reset" icon={< ResetIcon />} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
 
                 <ElementTableEditable
