@@ -219,7 +219,7 @@ export class Elementt extends Component {
                     //Add the modification value to the modifications object
                     this.modifications[current_agg_id][hour_position] = {
                         ...this.modifications[current_agg_id][hour_position],
-                        "tuned": hour_difference,
+                        "tuned": this.data[current_agg_id][hour_position]["tuned"],
                     }
                 } else {
                     //Add the modification to the altered field
