@@ -1,4 +1,4 @@
-import { localized_time, day_format, hour_unique_format } from '../constants'
+import { localized_time, day_month_format, hour_unique_format } from '../constants'
 
 
 function convertTimestampToString(timestamp){
@@ -6,7 +6,7 @@ function convertTimestampToString(timestamp){
 }
 
 function prepareDayAndHourString(timestamp) {
-    return localized_time(timestamp).format(day_format + " " + hour_unique_format);
+    return localized_time(timestamp).format(day_month_format + " " + hour_unique_format);
 }
 
 export function adaptProposalData(prediction) {
