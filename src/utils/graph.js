@@ -46,15 +46,16 @@ export function adaptProposalData(prediction) {
                 // initialize result hour with an empty dict
                 if (!tmp_result[hour])
                     tmp_result[hour]={total: 0, name: hour};
+
                 tmp_result[hour][title] = amount;
                 tmp_result[hour]["total"] += amount;
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
                     tmp_average[hour]={total: 0, name: hour};
+
                 tmp_average[hour][title] = avg;
                 tmp_average[hour]["total"] += avg;
-
 
                 result[current_aggregation]['components'][title] = {
                     'title': title,
@@ -71,11 +72,12 @@ export function adaptProposalData(prediction) {
                 result[current_aggregation]['result'][i]['name'] = hour_string;
                 result[current_aggregation]['average'][i]['name'] = hour_string;
 
-
                 const day_string = prepareDayAndHourString(parseInt(tmp_entry));
                 result[current_aggregation]['result'][i]['day_string'] = day_string;
                 result[current_aggregation]['average'][i]['day_string'] = day_string;
 
+                //Initialize tuned parameter of each hour
+                result[current_aggregation]['result'][i]['tuned'] = 0;
             });
     });
 
