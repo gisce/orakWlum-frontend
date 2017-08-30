@@ -673,11 +673,12 @@ export class Elementt extends Component {
               });
 
               const hour_column = {
-                  key: 'name',
+                  key: 'day_string',
                   name: 'Hour',
                   editable: false,
                   width: 50,
                   resizable: true,
+                  sortable: true
               };
 
               const proposalTune =
