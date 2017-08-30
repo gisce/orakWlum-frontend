@@ -152,6 +152,35 @@ export class Elementt extends Component {
             this.detail_open = true;
             this.comparation = true;
         }
+
+
+
+        // Prepare data sets
+        console.log("CONSTRUEIXO ELEMENT");
+        const { prediction } = props.proposal;
+        const { aggregations } = props;
+
+        // Adapted data by aggregationId
+        this.data = {}
+        this.average = {}
+        this.components = {}
+
+        if (prediction && Object.keys(prediction).length > 0) {
+
+            for ( let [key, an_agg] of Object.entries(aggregations)) {
+                const current_agg_id = an_agg.id;
+
+                //The Prediction of current aggregation
+                const predictionAdapted=adaptProposalData(prediction['result']);
+                const current = predictionAdapted[current_agg_id];
+
+                this.data[current_agg_id] = current.result;
+                this.average[current_agg_id] = current.average;
+                this.components[current_agg_id] = current.components;
+            };
+
+            this.summary = (prediction.summary != undefined)?prediction.summary:null;
+        }
     }
 
     dummyAsync = (cb) => {
@@ -159,6 +188,25 @@ export class Elementt extends Component {
             this.asyncTimer = setTimeout(cb, 2000);
         });
     };
+
+    applyTunedChanges = (changes, difference) => {
+        console.log("PARENT", difference)
+
+        console.log(this.data[this.state.aggregationSelected]);
+
+        // For each difference
+        for ( let [hour_position, hour_difference] of Object.entries(difference)) {
+
+            // Apply it for all available aggregations in computed data
+            for ( let [agg_key, an_agg] of Object.entries(this.props.aggregations)) {
+                //if (currentAgg) -> skip
+                const current_agg_id = an_agg.id;
+                this.data[current_agg_id][hour_position]["Tuned"] += hour_difference
+            }
+        }
+
+        //this.changed_data = changes;
+    }
 
     toogleElementRender = (event, status) => {
         this.setState({
@@ -479,7 +527,7 @@ export class Elementt extends Component {
         const dayOfElementPast = (historical) ? null : start_date_past.toDate().getDay();
 
 
-	const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
+        const title_type = (element_type == "concatenation" || element_type == "comparation")?"":capitalize(element_type);
         const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
         const subtitle = <span>Using {days[dayOfElement]} {daysRangeStringPastString}</span>;
 
@@ -517,21 +565,6 @@ export class Elementt extends Component {
         ];
 
 
-        let data=null;
-        let average=null;
-        let components=null;
-        let summary = null;
-
-        if (prediction && Object.keys(prediction).length > 0) {
-            //The Prediction
-            const predictionAdapted=adaptProposalData(prediction['result']);
-            const current = predictionAdapted[aggregationSelected];
-
-            data = current.result;
-            average = current.average;
-            components = current.components;
-            summary = (prediction.summary != undefined)?prediction.summary:null;
-        }
 
         // The Element status!
         const proposalStatus = (
@@ -663,7 +696,7 @@ export class Elementt extends Component {
 
         // Handle TUNE
         else if (tune_open) {
-              const proposalTuneHeaders = Object.keys(components).map(function( component, index){
+              const proposalTuneHeaders = Object.keys(this.components[aggregationSelected]).map(function( component, index){
                   return {
                       key: component,
                       name: component,
@@ -685,8 +718,8 @@ export class Elementt extends Component {
                 <div>
                     <ElementTableEditable
                         header={[ hour_column, ...proposalTuneHeaders]}
-                        data={data}
-                        endingParentMethod={() => this.toggleEdit()}
+                        data={this.data[aggregationSelected]}
+                        parentDataHandler={(changes, difference) => this.applyTunedChanges(changes, difference)}
                     />
                 </div>
               ;
@@ -698,9 +731,9 @@ export class Elementt extends Component {
         } else {
             if (withPicture && prediction && Object.keys(prediction).length > 0)
                 proposalPicture = (proposalTable)?
-                    <ElementTable stacked={true} data={data} components={components} height={500} unit={"kWh"}/>
+                    <ElementTable stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} unit={"kWh"}/>
                     :
-                    <ElementGraph stacked={true} data={data} components={components} height={500} animated={this.animateChart} unit={"kWh"}/>
+                    <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"}/>
         }
 
         const disableDetail = (element_type == "concatenation")?true:false;
@@ -728,17 +761,17 @@ export class Elementt extends Component {
             :
             null;
 
-        const proposalDetail = (summary != null) && (detail_open == true) &&
+        const proposalDetail = (this.summary != null) && (detail_open == true) &&
     		  <div>
     			  {proposalActions}
     			  <div style={styles.cardSeparator}>
 
     				  <ElementDetail
-    					  data={summary}
+    					  data={this.summary}
     					  avg_info={{
-                  'average': average,
-    						  'data': data,
-    						  'components': components,
+                              'average': this.average[aggregationSelected],
+    						  'data': this.data[aggregationSelected],
+    						  'components': this.components[aggregationSelected],
     					  }}
     				  />
     			  </div>
