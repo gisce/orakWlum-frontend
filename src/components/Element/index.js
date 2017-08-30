@@ -668,6 +668,7 @@ export class Elementt extends Component {
                       key: component,
                       name: component,
                       editable: true,
+                      resizable: true,
                   }
               });
 
@@ -676,6 +677,7 @@ export class Elementt extends Component {
                   name: 'Hour',
                   editable: false,
                   width: 50,
+                  resizable: true,
               };
 
               const proposalTune =
