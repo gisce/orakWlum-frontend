@@ -158,10 +158,6 @@ export class Elementt extends Component {
             this.comparation = true;
         }
 
-        // Prepare data sets
-        const { prediction } = props.proposal;
-        const { aggregations } = props;
-
         // Adapted data by aggregationId
         this.data = {}
         this.average = {}
@@ -170,8 +166,8 @@ export class Elementt extends Component {
         //Initialize modifications with existant values or {}
         this.modifications = (this.id in props.modifications)? props.modifications[this.id] : {};
 
-        this.prepareData(prediction, aggregations)
-
+        //Initialize dataset
+        this.prepareData(props.proposal.prediction, props.aggregations)
     }
 
     prepareData = (prediction, aggregations) => {
@@ -183,16 +179,18 @@ export class Elementt extends Component {
                 //The Prediction of current aggregation
                 const predictionAdapted=adaptProposalData(prediction['result']);
                 const current = predictionAdapted[current_agg_id];
-                const currentModifications = this.modifications[current_agg_id];
 
                 //Initialize modifications for current aggregation just if empty
                 if (!(current_agg_id in this.modifications))
                     this.modifications[current_agg_id] = {};
 
+                const currentModifications = this.modifications[current_agg_id];
+
                 this.data[current_agg_id] = current.result;
 
                 //Merge the base prediction for this hour with the existing modifications
                 for ( let [hour_key, an_hour] of Object.entries(this.data[current_agg_id])) {
+
                     this.data[current_agg_id][hour_key] = {
                         ...an_hour,
                         ...currentModifications[hour_key],
@@ -406,6 +404,7 @@ export class Elementt extends Component {
     resetModifications = () => {
         console.log("reset modifications");
         this.modifications = {}
+        this.prepareData(this.state.proposal.prediction, this.state.aggregations)
     };
 
 
