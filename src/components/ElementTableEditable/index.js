@@ -22,6 +22,8 @@ export class ElementTableEditable extends Component {
     }
 
     handleGridSort = (sortColumn, sortDirection) => {
+        console.log(sortDirection);
+
       const comparer = (a, b) => {
         if (sortDirection === 'ASC') {
           return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
@@ -30,7 +32,7 @@ export class ElementTableEditable extends Component {
         }
       };
 
-      this.rows = sortDirection === 'NONE' ? this.rows.originalRows.slice(0) : this.rows.sort(comparer);
+      this.rows = sortDirection === 'NONE' ? this.originalRows.slice(0) : this.rows.sort(comparer);
     }
 
     rowGetter = rowNumber => this.rows[rowNumber];

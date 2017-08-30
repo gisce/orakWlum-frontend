@@ -678,7 +678,7 @@ export class Elementt extends Component {
                   editable: false,
                   width: 50,
                   resizable: true,
-                  sortable: true
+                  sortable: false,
               };
 
               const proposalTune =
