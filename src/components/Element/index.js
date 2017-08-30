@@ -399,12 +399,16 @@ export class Elementt extends Component {
     };
 
 
-
-
     resetModifications = () => {
-        console.log("reset modifications");
+        //Free modifications
         this.modifications = {}
+
+        //Prepare data structures with empty modifications
         this.prepareData(this.state.proposal.prediction, this.state.aggregations)
+
+        //Re-render!
+        this.setState({
+        })
     };
 
 
