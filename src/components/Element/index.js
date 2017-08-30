@@ -53,6 +53,7 @@ import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import TuneIcon from 'material-ui/svg-icons/editor/border-all';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import ResetIcon from 'material-ui/svg-icons/action/restore';
+import ViewIcon from 'material-ui/svg-icons/action/pageview';
 
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
@@ -759,7 +760,7 @@ export class Elementt extends Component {
             };
 
             const proposalTune = <div>
-                <FlatButton label="View" icon={< ResetIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
+                <FlatButton label="View" icon={< ViewIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
                 <FlatButton label="Reset" icon={< ResetIcon />} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
 
                 <ElementTableEditable
