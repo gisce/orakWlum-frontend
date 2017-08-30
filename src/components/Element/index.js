@@ -201,7 +201,8 @@ export class Elementt extends Component {
             for ( let [agg_key, an_agg] of Object.entries(this.props.aggregations)) {
                 //if (currentAgg) -> skip
                 const current_agg_id = an_agg.id;
-                this.data[current_agg_id][hour_position]["Tuned"] += hour_difference
+                this.data[current_agg_id][hour_position]["tuned"] += hour_difference
+                this.data[current_agg_id][hour_position]["total"] += hour_difference
             }
         }
 
