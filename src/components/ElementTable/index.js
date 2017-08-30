@@ -89,7 +89,7 @@ export class ElementTable extends Component {
                         stroke={colors[i]}
                         fill={colors[i]}
                     >
-                        <b>{component}</b>
+                        <b>{components[component].title}</b>
                     </TableRowColumn>
                 )
         });
