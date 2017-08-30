@@ -386,7 +386,6 @@ export class Elementt extends Component {
 
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
-
         this.animateChart = false;
 
         this.setState({detail_open: this.detail_open});
@@ -394,10 +393,25 @@ export class Elementt extends Component {
 
     toggleEdit = () => {
         this.edit_open = !this.edit_open;
+        this.detail_open = false;
 
         this.animateChart = false;
 
         this.setState({edit_open: this.edit_open});
+    };
+
+
+    saveTuned = () => {
+        this.props.saveTunedValues(this.id, this.modifications)
+    };
+
+    toggleTune = () => {
+        this.tune_open = !this.tune_open;
+        this.detail_open = false;
+
+        this.animateChart = false;
+
+        this.setState({tune_open: this.tune_open});
     };
 
     resetModifications = () => {
@@ -409,18 +423,6 @@ export class Elementt extends Component {
 
         //Re-render!
         this.setState({})
-    };
-
-    saveTuned = () => {
-        this.props.saveTunedValues(this.id, this.modifications)
-    };
-
-    toggleTune = () => {
-        this.tune_open = !this.tune_open;
-
-        this.animateChart = false;
-
-        this.setState({tune_open: this.tune_open});
     };
 
     duplicateElementQuestion = (event, proposalID) => {
