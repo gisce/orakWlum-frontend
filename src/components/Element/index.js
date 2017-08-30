@@ -387,6 +387,7 @@ export class Elementt extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
         this.animateChart = false;
+        this.tune_open = false;
 
         this.setState({detail_open: this.detail_open});
     };
@@ -394,6 +395,7 @@ export class Elementt extends Component {
     toggleEdit = () => {
         this.edit_open = !this.edit_open;
         this.detail_open = false;
+        this.tune_open = false;
 
         this.animateChart = false;
 
