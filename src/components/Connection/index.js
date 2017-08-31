@@ -43,7 +43,7 @@ export class Connection extends Component {
         if (content && 'message' in content) {
             //Initialize a new message based on the provided one
             let the_message = {
-                ...{},
+                ...{autoDismiss: 10},
                 ...content,
             }
 
