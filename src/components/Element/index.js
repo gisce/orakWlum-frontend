@@ -431,12 +431,12 @@ export class Elementt extends Component {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
-        const actionsButtons = [ < FlatButton label = "Cancel" primary = {
+        const actionsButtons = [ <FlatButton label = "Cancel" primary = {
                 true
             }
             onTouchTap = {
                 this.handleCloseConfirmation
-            } />, < FlatButton label = "Submit" primary = {
+            } />, <FlatButton label = "Submit" primary = {
                 true
             }
             keyboardFocused = {
@@ -640,12 +640,16 @@ export class Elementt extends Component {
             ? CollapseIcon
             : ExpandIcon;
 
-        const actionsButtons = [ < FlatButton label = "Cancel" primary = {
+        const NotesIcon = (detail_open == true)
+            ? CollapseIcon
+            : ExpandIcon;
+
+        const actionsButtons = [ <FlatButton label = "Cancel" primary = {
                 true
             }
             onTouchTap = {
                 this.handleCloseConfirmation
-            } />, < FlatButton label = "Submit" primary = {
+            } />, <FlatButton label = "Submit" primary = {
                 true
             }
             keyboardFocused = {
@@ -774,8 +778,8 @@ export class Elementt extends Component {
             };
 
             const proposalTune = <div>
-                <FlatButton label="View" icon={< ViewIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
-                <FlatButton label="Reset" icon={< ResetIcon />} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
+                <FlatButton label="View" icon={<ViewIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
+                <FlatButton label="Reset" icon={<ResetIcon />} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
 
                 <ElementTableEditable
                     header={[
@@ -806,18 +810,19 @@ export class Elementt extends Component {
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
-                <FlatButton label="Refresh" icon={< RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Process" icon={< RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
-                <FlatButton label="Detail" icon={< DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
-                <FlatButton label="Edit" icon={< EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
-                <FlatButton label="Tune" icon={< TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
-                <FlatButton label="Save" icon={< SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
-                <FlatButton label="Export" icon={< ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
-                <FlatButton label="Duplicate" icon={< DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
-                <FlatButton label="Delete" icon={< DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
+                <FlatButton label="Refresh" icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
+                <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle notes view"}/>
+                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
+                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
+                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
+                <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
+                <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
                 {(proposal.related_id)
-                    ? <FlatButton label="Historical" icon={< ElementIcon />} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
+                    ? <FlatButton label="Historical" icon={<ElementIcon />} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
                     : <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
                 }
                 </CardActions>
