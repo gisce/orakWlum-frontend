@@ -15,6 +15,7 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
+import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import {
     orange300,
@@ -106,6 +107,9 @@ const styles = {
     notes: {
         field: {
             marginLeft: 20,
+        },
+        creator: {
+            marginTop: -30,
         }
     },
 };
@@ -866,7 +870,38 @@ export class Elementt extends Component {
 
 
         let the_notes = [];
-        let first_iteration = true;
+
+        //The Add note form
+        the_notes.push(
+            <div zDepth={0}>
+                <Card key={"card_creator"}>
+                    <CardHeader
+                      title={"Create a new note"}
+                      showExpandableButton={true}
+                    />
+
+                    <CardText expandable={true}>
+                        <TextField
+                            style={styles.notes.creator}
+                            hintText="Insert your message..."
+                            floatingLabelText="Message"
+                            multiLine={true}
+                            rows={5}
+                            fullWidth={true}
+                        />
+                    </CardText>
+
+                    <CardActions
+                        style={styles.notes.creator}
+                        expandable={true}
+                    >
+                      <FlatButton label="Reset" />
+                      <FlatButton label="Add" />
+                    </CardActions>
+                </Card>
+            </div>
+        )
+
         if (true || notes != null) {
             for (let [key, a_note]of Object.entries({
                 a: {user: "Xavi", role:"Admin", title: "Titol", content: "Content asdadasdfasda"},
@@ -875,7 +910,7 @@ export class Elementt extends Component {
 
                 the_notes.push(
                     <div zDepth={0}>
-                        <Card>
+                        <Card key={"card_" + key}>
                             <CardHeader
                               title={a_note.user}
                               subtitle={a_note.role}
@@ -894,8 +929,6 @@ export class Elementt extends Component {
                         </Card>
                     </div>
                 )
-
-                first_iteration = false;
             };
         }
 
