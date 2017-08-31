@@ -43,7 +43,7 @@ export class Connection extends Component {
         if (content && 'message' in content) {
             //Initialize a new message based on the provided one
             let the_message = {
-                ...{},
+                ...{autoDismiss: 10},
                 ...content,
             }
 
@@ -148,11 +148,26 @@ export class Connection extends Component {
                     FileSaver.saveAs(file, content.filename);
 
                     if (!content.silent) {
-                        this.prepareNotification(content, "XLS document exported");;
+                        this.prepareNotification(content, "XLS document exported");
                     }
                 }
 			})
 
+
+
+
+        ///////////////////
+        // MODIFICATIONS //
+        ///////////////////
+
+			.on('modifications.extend', (content) => {
+				console.debug('[Websocket] Modifications to extend received');
+				this.props.reduceModifications(content);
+
+                if (!content.silent) {
+                    this.prepareNotification(content, "Modifications updated");
+                }
+			})
 
 
         //////////////////
