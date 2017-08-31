@@ -428,7 +428,7 @@ export function saveTunedValuesReducer(id, modifications) {
     const modifications_to_update = {
         [id]: modifications,
     }
-    
+
     return {
         type: UPDATE_TUNED_VALUES,
         payload: {
@@ -439,8 +439,12 @@ export function saveTunedValuesReducer(id, modifications) {
 
 export function saveTunedValues(id, modifications) {
     return (dispatch) => {
+        console.debug("Saving modifications", id, modifications)
+        //Save locally
         dispatch(saveTunedValuesReducer(id, modifications));
-        console.log(id, modifications)
+        
+        //Save at API
+        ask_the_api("elements.modifications.update", {id: id, modifications: modifications});
     };
 }
 
