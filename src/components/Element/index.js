@@ -197,6 +197,9 @@ export class Elementt extends Component {
 
         //Initialize dataset
         this.prepareData(props.proposal.prediction, props.aggregations)
+
+        //New note
+        this.new_note = {}
     }
 
     prepareData = (prediction, aggregations) => {
@@ -533,6 +536,21 @@ export class Elementt extends Component {
         this.message = message
         this.text = text
         this.open_confirmation = true;
+    }
+
+
+    resetNewNote = () => {
+        this.new_note = {}
+    }
+
+    addNewNote = () => {
+        this.new_note.author = "Xavi"
+        console.log("Adding", this.new_note)
+    }
+
+    updateNewNote = (event) => {
+        this.new_note.content = event.target.value;
+        console.log("Adding", this.new_note)
     }
 
     render() {
@@ -888,6 +906,7 @@ export class Elementt extends Component {
                             multiLine={true}
                             rows={5}
                             fullWidth={true}
+                            onChange={this.updateNewNote}
                         />
                     </CardText>
 
@@ -895,8 +914,9 @@ export class Elementt extends Component {
                         style={styles.notes.creator}
                         expandable={true}
                     >
-                      <FlatButton label="Reset" />
-                      <FlatButton label="Add" />
+
+                      <FlatButton label="Reset" title={"Reset new note content"} onClick={(e) => this.resetNewNote()}/>
+                      <FlatButton label="Add" title={"Add new note"} onClick={(e) => this.addNewNote()}/>
                     </CardActions>
                 </Card>
             </div>
