@@ -917,16 +917,18 @@ export class Elementt extends Component {
 
         if (true || notes != null) {
             for (let [key, a_note]of Object.entries({
-                a: {user: "Xavi", role:"Admin", title: "Titol", content: "Content asdadasdfasda"},
-                b: {user: "Xavi", role:"Admin", title: "TitolB", content: "Content asdadasdfasda"
+                a: {user: "Xavi", when:1504176351, title: "Titol", content: "Content asdadasdfasda"},
+                b: {user: "Xavi", when:1504126351, title: "TitolB", content: "Content asdadasdfasda"
             } })) {
+
+                const note_date = localized_time(a_note.when * 1000).format("L LT")
 
                 the_notes.push(
                     <div key={"card_div_" + key}>
                         <Card key={"card_" + key}>
                             <CardHeader
                               title={a_note.user}
-                              subtitle={a_note.role}
+                              subtitle={note_date}
                               avatar="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
                               showExpandableButton={true}
                             />
