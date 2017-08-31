@@ -880,16 +880,14 @@ export class Elementt extends Component {
                               title={a_note.user}
                               subtitle={a_note.role}
                               avatar="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
+                              showExpandableButton={true}
                             />
-
-                            <div className="row">
-                            </div>
 
                             <CardText>
                                 {a_note.content}
                             </CardText>
 
-                            <CardActions>
+                            <CardActions expandable={true}>
                               <FlatButton label="Mark as readed" />
                               <FlatButton label="Delete" />
                             </CardActions>
