@@ -148,11 +148,26 @@ export class Connection extends Component {
                     FileSaver.saveAs(file, content.filename);
 
                     if (!content.silent) {
-                        this.prepareNotification(content, "XLS document exported");;
+                        this.prepareNotification(content, "XLS document exported");
                     }
                 }
 			})
 
+
+
+
+        ///////////////////
+        // MODIFICATIONS //
+        ///////////////////
+
+			.on('modifications.extend', (content) => {
+				console.debug('[Websocket] Modifications to extend received');
+				this.props.reduceModifications(content);
+
+                if (!content.silent) {
+                    this.prepareNotification(content, "Modifications updated");
+                }
+			})
 
 
         //////////////////
