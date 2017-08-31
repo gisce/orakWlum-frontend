@@ -795,7 +795,7 @@ export class Elementt extends Component {
                 proposalPicture = (proposalTable)
                     ? <ElementTable stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} unit={"kWh"}/>
                     : <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"}/>
-            }
+        }
 
         const disableDetail = (element_type == "concatenation")
             ? true

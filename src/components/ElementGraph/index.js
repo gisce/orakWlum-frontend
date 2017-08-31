@@ -178,7 +178,7 @@ export class ElementGraph extends Component {
                   )
               });
 
-              const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} />;
+              const line = <Line type='monotone' dataKey='total' stroke='#000000' unit={unit} isAnimationActive={isAnimated} />;
 
               //avoid showing legend if there are too many elements to show
               const legend = (howManyComponents < 55) ?
