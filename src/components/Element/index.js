@@ -199,7 +199,7 @@ export class Elementt extends Component {
         this.prepareData(props.proposal.prediction, props.aggregations)
 
         //New note
-        this.new_note = {}
+        this.new_note = {content: ""}
     }
 
     prepareData = (prediction, aggregations) => {
@@ -538,11 +538,6 @@ export class Elementt extends Component {
         this.open_confirmation = true;
     }
 
-
-    resetNewNote = () => {
-        this.new_note = {}
-    }
-
     addNewNote = () => {
         this.new_note.author = "Xavi"
         console.log("Adding", this.new_note)
@@ -550,7 +545,6 @@ export class Elementt extends Component {
 
     updateNewNote = (event) => {
         this.new_note.content = event.target.value;
-        console.log("Adding", this.new_note)
     }
 
     render() {
@@ -891,7 +885,7 @@ export class Elementt extends Component {
 
         //The Add note form
         the_notes.push(
-            <div zDepth={0}>
+            <div key={"card_creator_div"}>
                 <Card key={"card_creator"}>
                     <CardHeader
                       title={"Create a new note"}
@@ -915,7 +909,6 @@ export class Elementt extends Component {
                         expandable={true}
                     >
 
-                      <FlatButton label="Reset" title={"Reset new note content"} onClick={(e) => this.resetNewNote()}/>
                       <FlatButton label="Add" title={"Add new note"} onClick={(e) => this.addNewNote()}/>
                     </CardActions>
                 </Card>
@@ -929,7 +922,7 @@ export class Elementt extends Component {
             } })) {
 
                 the_notes.push(
-                    <div zDepth={0}>
+                    <div key={"card_div_" + key}>
                         <Card key={"card_" + key}>
                             <CardHeader
                               title={a_note.user}
