@@ -163,10 +163,13 @@ export class Elementt extends Component {
 
         this.edit_open = false;
         this.tune_open = false;
+        this.detail_open = false;
+        this.notes_open = false;
 
         props.aggregations[0].selected = true;
 
         if (props.comparation) {
+            this.notes_open = false;
             this.edit_open = false;
             this.tune_open = false;
             this.detail_open = true;
@@ -387,10 +390,17 @@ export class Elementt extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
         this.animateChart = false;
-        this.tune_open = false;
         this.edit_open = false;
 
         this.setState({detail_open: this.detail_open});
+    };
+
+    toggleNotes = () => {
+        this.notes_open = !this.notes_open;
+        this.animateChart = false;
+        this.edit_open = false;
+
+        this.setState({notes_open: this.notes_open});
     };
 
     toggleEdit = () => {
@@ -629,18 +639,20 @@ export class Elementt extends Component {
 
         const {
             detail_open,
+            notes_open,
             edit_open,
             tune_open,
             toggleDetail,
             toggleEdit,
-            toggleTune
+            toggleTune,
+            toggleNotes,
         } = this;
 
         const DetailIcon = (detail_open == true)
             ? CollapseIcon
             : ExpandIcon;
 
-        const NotesIcon = (detail_open == true)
+        const NotesIcon = (notes_open == true)
             ? CollapseIcon
             : ExpandIcon;
 
@@ -813,7 +825,7 @@ export class Elementt extends Component {
                 <FlatButton label="Refresh" icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
                 <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
                 <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
-                <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle notes view"}/>
+                <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
                 <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
                 <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
                 <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
