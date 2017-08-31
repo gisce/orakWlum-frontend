@@ -13,7 +13,7 @@ import {
     CardText
 } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-
+import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {
@@ -102,7 +102,12 @@ const styles = {
     cardSeparator: {
         marginTop: 50,
         marginBottom: 20
-    }
+    },
+    notes: {
+        field: {
+            marginLeft: 20,
+        }
+    },
 };
 
 const colors = {
@@ -193,8 +198,7 @@ export class Elementt extends Component {
     prepareData = (prediction, aggregations) => {
         if (prediction && Object.keys(prediction).length > 0) {
 
-            for (let [key,
-                an_agg]of Object.entries(aggregations)) {
+            for (let [key, an_agg]of Object.entries(aggregations)) {
                 const current_agg_id = an_agg.id;
 
                 //The Prediction of current aggregation
@@ -531,7 +535,10 @@ export class Elementt extends Component {
         const readOnly = (this.props.readOnly)
             ? this.props.readOnly
             : false;
+
         const proposal = this.props.proposal;
+
+        const {notes} = proposal;
 
         const proposalTable = this.state.proposalTable;
 
@@ -840,19 +847,67 @@ export class Elementt extends Component {
                 </CardActions>
             : null;
 
-        const proposalDetail = (this.summary != null) && (detail_open == true) && <div>
-            {proposalActions}
-            <div style={styles.cardSeparator}>
-                <ElementDetail
-                    data={this.summary}
-                    avg_info={{
-                        'average': this.average[aggregationSelected],
-                        'data': this.data[aggregationSelected],
-                        'components': this.components[aggregationSelected]
-                    }}
-                />
+        const proposalDetail = (this.summary != null) && (detail_open == true) &&
+            <div>
+                {proposalActions}
+                <div style={styles.cardSeparator}>
+                    <ElementDetail
+                        data={this.summary}
+                        avg_info={{
+                            'average': this.average[aggregationSelected],
+                            'data': this.data[aggregationSelected],
+                            'components': this.components[aggregationSelected]
+                        }}
+                    />
+                </div>
+            </div>;
+
+
+
+
+        let the_notes = [];
+        let first_iteration = true;
+        if (true || notes != null) {
+            for (let [key, a_note]of Object.entries({
+                a: {user: "Xavi", role:"Admin", title: "Titol", content: "Content asdadasdfasda"},
+                b: {user: "Xavi", role:"Admin", title: "TitolB", content: "Content asdadasdfasda"
+            } })) {
+
+                the_notes.push(
+                    <div zDepth={0}>
+                        <Card>
+                            <CardHeader
+                              title={a_note.user}
+                              subtitle={a_note.role}
+                              avatar="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
+                            />
+
+                            <div className="row">
+                            </div>
+
+                            <CardText>
+                                {a_note.content}
+                            </CardText>
+
+                            <CardActions>
+                              <FlatButton label="Mark as readed" />
+                              <FlatButton label="Delete" />
+                            </CardActions>
+                        </Card>
+                    </div>
+                )
+
+                first_iteration = false;
+            };
+        }
+
+        const proposalNotes = (notes_open == true) &&
+            <div>
+                {proposalActions}
+                <div>
+                    {the_notes}
+                </div>
             </div>
-        </div>;
 
         // The resulting Element element
         const Element = () => (
@@ -896,6 +951,8 @@ export class Elementt extends Component {
                 <br/> {proposalPicture}
 
                 <br/> {proposalDetail}
+
+                <br/> {proposalNotes}
 
                 {proposalActions}
 
