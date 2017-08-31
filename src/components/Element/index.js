@@ -198,7 +198,8 @@ export class Elementt extends Component {
         //Initialize dataset
         this.prepareData(props.proposal.prediction, props.aggregations)
 
-        //New note
+        //Notes and new note initialization
+        this.notes = (props.proposal.notes)? props.proposal.notes : [];
         this.new_note = {content: ""}
     }
 
@@ -541,6 +542,10 @@ export class Elementt extends Component {
     addNewNote = () => {
         this.new_note.author = "Xavi"
         console.log("Adding", this.new_note)
+
+        this.notes.push(this.new_note);
+
+        this.props.updateElement({id: this.id, notes: this.notes})
     }
 
     updateNewNote = (event) => {
@@ -916,18 +921,15 @@ export class Elementt extends Component {
         )
 
         if (true || notes != null) {
-            for (let [key, a_note]of Object.entries({
-                a: {user: "Xavi", when:1504176351, title: "Titol", content: "Content asdadasdfasda"},
-                b: {user: "Xavi", when:1504126351, title: "TitolB", content: "Content asdadasdfasda"
-            } })) {
+            for (let [key, a_note]of Object.entries(this.notes)) {
 
-                const note_date = localized_time(a_note.when * 1000).format("L LT")
+                const note_date = localized_time(a_note.creation_date).format("L LT")
 
                 the_notes.push(
                     <div key={"card_div_" + key}>
                         <Card key={"card_" + key}>
                             <CardHeader
-                              title={a_note.user}
+                              title={a_note.author}
                               subtitle={note_date}
                               avatar="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
                               showExpandableButton={true}
