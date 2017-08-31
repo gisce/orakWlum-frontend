@@ -437,14 +437,25 @@ export function saveTunedValuesReducer(id, modifications) {
     };
 }
 
+export function reduceModifications(response) {
+    if (!response.error){
+        const the_result = JSON.parse(response.result);
+        const the_id = the_result.element_id;
+
+
+        return saveTunedValuesReducer(the_id, the_result);
+    }
+    return {};
+}
+
 export function saveTunedValues(id, modifications) {
     return (dispatch) => {
         console.debug("Saving modifications", id, modifications)
         //Save locally
         dispatch(saveTunedValuesReducer(id, modifications));
-        
+
         //Save at API
-        ask_the_api("elements.modifications.update", {id: id, modifications: modifications});
+        ask_the_api("modifications.update", {"element_id": id, modifications: modifications});
     };
 }
 
