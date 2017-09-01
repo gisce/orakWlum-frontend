@@ -421,9 +421,6 @@ export function updateElement(element) {
     };
 }
 
-
-
-
 export function saveTunedValuesReducer(id, modifications) {
     const modifications_to_update = {
         [id]: modifications,
@@ -438,7 +435,8 @@ export function saveTunedValuesReducer(id, modifications) {
 }
 
 export function reduceModifications(response) {
-    if (!response.error){
+    console.debug("Reducing modifications", response);
+    if (response.code == 200){
         const the_result = JSON.parse(response.result);
         const the_id = the_result.element_id;
 
