@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     return {
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
+        modifications: state.orakwlum.modifications,
     };
 }
 
@@ -85,7 +86,7 @@ export default class ElementView extends React.Component {
             return (
                 <div>
                     <LoadingAnimation />
-                    {debug(this.props)}
+                    {debug(this.state)}
                 </div>
             );
         }
