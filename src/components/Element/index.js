@@ -192,7 +192,7 @@ export class Elementt extends Component {
 
         //Initialize modifications with existant values or {}
         this.modifications = (this.id in props.modifications)
-            ? props.modifications[this.id]
+            ? props.modifications[this.id].modifications
             : {};
 
         //Initialize dataset
