@@ -85,7 +85,7 @@ export default class ElementView extends React.Component {
             return (
                 <div>
                     <LoadingAnimation />
-                    {debug(element)}
+                    {debug(this.props)}
                 </div>
             );
         }
