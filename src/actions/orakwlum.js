@@ -505,7 +505,13 @@ export function overrideProfile(response, initial) {
             },
         };
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_PROFILE,
+            response: response,
+        },
+    };
 }
 
 
@@ -613,7 +619,6 @@ export function overrideVersion(response, initial) {
             },
         };
     }
-    return {};
 }
 
 
