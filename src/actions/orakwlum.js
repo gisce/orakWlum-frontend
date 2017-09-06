@@ -26,7 +26,8 @@ import {
     RECEIVE_PROFILE_KO,
 
     UPDATE_TUNED_VALUES,
-    UPDATE_TUNED_VALUES_ERROR,
+    
+    API_ERROR,
 
     VERSION_PR,
     FETCH_VERSION_REQUEST,
@@ -157,6 +158,7 @@ export function reduceElements(reducer_type, response, initial) {
             },
         };
     }
+
     return {
         type: API_ERROR,
         payload: {
