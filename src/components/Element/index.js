@@ -541,9 +541,10 @@ export class Elementt extends Component {
 
     addNewNote = () => {
         this.new_note.author = "Xavi"
+        this.new_note.creation_date = localized_time().unix()
         console.log("Adding", this.new_note)
 
-        this.notes.push(this.new_note);
+        this.notes = [this.new_note, ...this.notes];
 
         this.props.updateElement({id: this.id, notes: this.notes})
     }
