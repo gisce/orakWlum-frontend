@@ -269,7 +269,7 @@ export function overrideSources(response, initial) {
             },
         };
     }
-    
+
     return {
         type: API_ERROR,
         payload: {
@@ -448,11 +448,6 @@ export function saveTunedValuesReducer(id, modifications) {
         },
     };
 }
-export function saveTunedValuesReducerError() {
-    return {
-        type: UPDATE_TUNED_VALUES_ERROR,
-    };
-}
 
 export function reduceModifications(response) {
     console.debug("Reducing modifications", response);
@@ -463,7 +458,13 @@ export function reduceModifications(response) {
 
         return saveTunedValuesReducer(the_id, the_result);
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: UPDATE_TUNED_VALUES,
+            response: response,
+        },
+    };
 }
 
 export function saveTunedValues(id, modifications) {
