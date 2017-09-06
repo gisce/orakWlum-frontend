@@ -26,6 +26,7 @@ import {
     RECEIVE_PROFILE_KO,
 
     UPDATE_TUNED_VALUES,
+    UPDATE_TUNED_VALUES_ERROR,
 
     VERSION_PR,
     FETCH_VERSION_REQUEST,
@@ -431,6 +432,11 @@ export function saveTunedValuesReducer(id, modifications) {
         payload: {
             modifications: modifications_to_update
         },
+    };
+}
+export function saveTunedValuesReducerError() {
+    return {
+        type: UPDATE_TUNED_VALUES_ERROR,
     };
 }
 
