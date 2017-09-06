@@ -157,7 +157,13 @@ export function reduceElements(reducer_type, response, initial) {
             },
         };
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: reducer_type,
+            response: response,
+        },
+    };
 }
 
 //Override all elements
