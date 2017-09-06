@@ -26,7 +26,7 @@ import {
     RECEIVE_PROFILE_KO,
 
     UPDATE_TUNED_VALUES,
-    
+
     API_ERROR,
 
     VERSION_PR,
@@ -200,6 +200,15 @@ export function overrideMessage(response, initial) {
             },
         };
     }
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: OVERRIDE_MESSAGE,
+            response: response,
+        },
+    };
+
 }
 
 
@@ -628,9 +637,9 @@ export function overrideVersion(response, initial) {
         };
     }
     return {
-        type: RECEIVE_VERSION,
+        type: API_ERROR,
         payload: {
-            expected: RECEIVE_PROFILE,
+            expected: RECEIVE_VERSION,
             response: response,
         },
     };
