@@ -269,7 +269,14 @@ export function overrideSources(response, initial) {
             },
         };
     }
-    return {};
+    
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_SETTINGS,
+            response: response,
+        },
+    };
 }
 
 
