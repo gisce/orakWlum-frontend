@@ -42,6 +42,7 @@ module.exports = {
                 publicPath: '/dist/sw.js',
                 events: true,
                 navigateFallbackURL: '/',
+            },
         }),
     ],
 };
