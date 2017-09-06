@@ -926,7 +926,7 @@ export class Elementt extends Component {
         if (true || notes != null) {
             for (let [key, a_note]of Object.entries(this.notes)) {
 
-                const note_date = localized_time(a_note.creation_date*1000).format("L LT")
+                const note_date = localized_time(a_note.creation_date * 1000).format("L LT")
 
                 the_notes.push(
                     <div key={"card_div_" + key}>
