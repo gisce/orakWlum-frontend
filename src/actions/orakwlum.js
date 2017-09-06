@@ -219,7 +219,14 @@ export function overrideAggregations(response, initial) {
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: OVERRIDE_AGGREGATIONS,
+            response: response,
+        },
+    };
 }
 
 
