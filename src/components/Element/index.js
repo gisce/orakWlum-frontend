@@ -542,12 +542,14 @@ export class Elementt extends Component {
     addNewNote = () => {
         this.new_note.author = "Xavi"
         this.new_note.creation_date = localized_time().unix()
-        console.log("Adding", this.new_note)
 
-        this.notes = [this.new_note, ...this.notes];
+        //Create a new tmp note element with a new memspace
+        const the_new_note = Object.assign({}, this.new_note);
+        console.debug("Adding new note", the_new_note);
 
-        this.props.updateElement({id: this.id, notes: this.notes})
-    }
+        this.notes = [the_new_note, ...this.notes];
+
+        this.props.updateElement({id: this.id, notes: this.notes})    }
 
     updateNewNote = (event) => {
         this.new_note.content = event.target.value;
@@ -924,7 +926,7 @@ export class Elementt extends Component {
         if (true || notes != null) {
             for (let [key, a_note]of Object.entries(this.notes)) {
 
-                const note_date = localized_time(a_note.creation_date).format("L LT")
+                const note_date = localized_time(a_note.creation_date*1000).format("L LT")
 
                 the_notes.push(
                     <div key={"card_div_" + key}>
