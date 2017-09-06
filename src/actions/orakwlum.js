@@ -619,6 +619,13 @@ export function overrideVersion(response, initial) {
             },
         };
     }
+    return {
+        type: RECEIVE_VERSION,
+        payload: {
+            expected: RECEIVE_PROFILE,
+            response: response,
+        },
+    };
 }
 
 
