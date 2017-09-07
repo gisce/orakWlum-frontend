@@ -1,4 +1,4 @@
-import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO, FETCH_VERSION_REQUEST, RECEIVE_VERSION} from '../constants';
+import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO, FETCH_VERSION_REQUEST, RECEIVE_VERSION, UPDATE_TUNED_VALUES} from '../constants';
 import {createReducer} from '../utils/misc';
 
 //deepmerge lib
@@ -9,14 +9,16 @@ const initialState = {
     loaded: false,
     message: "",
     aggregations: {},
+    modifications: {},
     elements: {},
     elements_volatile: {},
     elements_by_date: {},
-    elements_by_date_future: {},
+    elements_by_date_past: {},
     elements_by_date: {},
     profile: {},
     sources: {},
     version: {},
+    sync: {},
 };
 
 export default createReducer(initialState, {
@@ -27,7 +29,7 @@ export default createReducer(initialState, {
 
         elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
 
-        elements_by_date_future: (state.elements_by_date_future == undefined || state.elements_by_date_future == null || Object.keys(state.elements_by_date_future).length == 0) ? payload.by_date_future : deepmerge(state.elements_by_date_future, payload.by_date_future),
+        elements_by_date_past: (state.elements_by_date_past == undefined || state.elements_by_date_past == null || Object.keys(state.elements_by_date_past).length == 0) ? payload.by_date_past : deepmerge(state.elements_by_date_past, payload.by_date_past),
 
         message: payload.message,
         isFetching: false,
@@ -40,7 +42,7 @@ export default createReducer(initialState, {
 
         elements_by_date: (state.elements_by_date == undefined || state.elements_by_date == null || Object.keys(state.elements_by_date).length == 0) ? payload.by_date : deepmerge(state.elements_by_date, payload.by_date),
 
-        elements_by_date_future: (state.elements_by_date_future == undefined || state.elements_by_date_future == null || Object.keys(state.elements_by_date_future).length == 0) ? payload.by_date_future : deepmerge(state.elements_by_date_future, payload.by_date_future),
+        elements_by_date_past: (state.elements_by_date_past == undefined || state.elements_by_date_past == null || Object.keys(state.elements_by_date_past).length == 0) ? payload.by_date_past : deepmerge(state.elements_by_date_past, payload.by_date_past),
 
         message: payload.message,
         isFetching: false,
@@ -51,10 +53,21 @@ export default createReducer(initialState, {
         message: payload.message,
         elements_by_type: payload.by_type,
         elements_by_date: payload.by_date,
-        elements_by_date_future: payload.by_date_future,
+        elements_by_date_past: payload.by_date_past,
         isFetching: false,
         loaded: true
     }),
+
+
+
+    [UPDATE_TUNED_VALUES]: (state, payload) => Object.assign({}, state, {
+        modifications: {...state.modifications, ...payload.modifications}
+    }),
+
+
+
+
+
     [OVERRIDE_AGGREGATIONS]: (state, payload) => Object.assign({}, state, {
         aggregations: payload.aggregations,
         message: payload.message,

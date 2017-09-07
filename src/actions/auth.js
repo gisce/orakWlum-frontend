@@ -136,7 +136,7 @@ export function registerUserFailure(error) {
     };
 }
 
-export function registerUser(email, password) {
+export function registerUser(email, password, redirect = "/elements") {
     return function(dispatch) {
         dispatch(registerUserRequest());
         return create_user(email, password)
@@ -144,7 +144,7 @@ export function registerUser(email, password) {
             .then(response => {
                 try {
                     dispatch(registerUserSuccess(response.token));
-                    browserHistory.push('/proposals');
+                    window.location.assign(redirect)
                 } catch (e) {
                     dispatch(registerUserFailure({
                         response: {

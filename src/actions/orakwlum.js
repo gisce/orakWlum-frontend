@@ -9,8 +9,10 @@ import {
     RECEIVE_ELEMENTS_VOLATILE,
     FETCH_EXPORT_ELEMENTS_REQUEST,
     FETCH_COMPARATION_ELEMENTS_REQUEST,
+
     DUPLICATE_PROPOSAL_REQUEST,
     CREATE_PROPOSAL_REQUEST,
+    UPDATE_PROPOSAL_REQUEST,
 
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
@@ -22,6 +24,10 @@ import {
     UPDATE_PROFILE_OK,
     UPDATE_PROFILE_KO,
     RECEIVE_PROFILE_KO,
+
+    UPDATE_TUNED_VALUES,
+
+    API_ERROR,
 
     VERSION_PR,
     FETCH_VERSION_REQUEST,
@@ -96,7 +102,7 @@ export function reduceElements(reducer_type, response, initial) {
 
 
     let by_date = {}
-    let by_date_future = {}
+    let by_date_past = {}
     let by_type = {}
 
     //If the return is OK
@@ -127,13 +133,13 @@ export function reduceElements(reducer_type, response, initial) {
                 }
             }
 
-            // Add current ID in by_date_future[type] object
-            if ('days_range_future' in value && Object(value.days_range_future).length > 0) {
-                if (!(value.days_range_future[0] in by_date_future))
-                    by_date_future[value.days_range_future[0]] = {};
+            // Add current ID in by_date_past[type] object
+            if ('days_range_past' in value && Object(value.days_range_past).length > 0) {
+                if (!(value.days_range_past[0] in by_date_past))
+                    by_date_past[value.days_range_past[0]] = {};
 
-                by_date_future[value.days_range_future[0]] = {
-                    ...by_type[value.days_range_future[0]],
+                by_date_past[value.days_range_past[0]] = {
+                    ...by_type[value.days_range_past[0]],
                     [key]: value,
                 }
             }
@@ -148,11 +154,18 @@ export function reduceElements(reducer_type, response, initial) {
                 message: the_message,
                 by_type,
                 by_date,
-                by_date_future,
+                by_date_past,
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: reducer_type,
+            response: response,
+        },
+    };
 }
 
 //Override all elements
@@ -187,6 +200,15 @@ export function overrideMessage(response, initial) {
             },
         };
     }
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: OVERRIDE_MESSAGE,
+            response: response,
+        },
+    };
+
 }
 
 
@@ -214,7 +236,14 @@ export function overrideAggregations(response, initial) {
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: OVERRIDE_AGGREGATIONS,
+            response: response,
+        },
+    };
 }
 
 
@@ -257,7 +286,14 @@ export function overrideSources(response, initial) {
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_SETTINGS,
+            response: response,
+        },
+    };
 }
 
 
@@ -368,10 +404,10 @@ export function createElementlRequest() {
     };
 }
 
-export function createElement(proposal) {
+export function createElement(element) {
     return (dispatch) => {
         dispatch(createElementlRequest());
-        ask_the_api("elements.create", proposal);
+        ask_the_api("elements.create", element);
     };
 }
 
@@ -404,6 +440,62 @@ export function runElement(a_filter=null) {
 
 
 
+export function updateElementlRequest() {
+    return {
+        type: UPDATE_PROPOSAL_REQUEST,
+    };
+}
+
+export function updateElement(element) {
+    return (dispatch) => {
+        dispatch(updateElementlRequest());
+        ask_the_api("elements.update", element);
+    };
+}
+
+export function saveTunedValuesReducer(id, modifications) {
+    const modifications_to_update = {
+        [id]: modifications,
+    }
+
+    return {
+        type: UPDATE_TUNED_VALUES,
+        payload: {
+            modifications: modifications_to_update
+        },
+    };
+}
+
+export function reduceModifications(response) {
+    console.debug("Reducing modifications", response);
+    if (response.code == 200){
+        const the_result = JSON.parse(response.result);
+        const the_id = the_result.element_id;
+
+
+        return saveTunedValuesReducer(the_id, the_result);
+    }
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: UPDATE_TUNED_VALUES,
+            response: response,
+        },
+    };
+}
+
+export function saveTunedValues(id, modifications) {
+    return (dispatch) => {
+        console.debug("Saving modifications", id, modifications)
+        //Save locally
+        dispatch(saveTunedValuesReducer(id, modifications));
+
+        //Save at API
+        ask_the_api("modifications.update", {"element_id": id, modifications: modifications});
+    };
+}
+
+
 
 /********
  PROFILE
@@ -430,7 +522,13 @@ export function overrideProfile(response, initial) {
             },
         };
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_PROFILE,
+            response: response,
+        },
+    };
 }
 
 
@@ -538,5 +636,37 @@ export function overrideVersion(response, initial) {
             },
         };
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_VERSION,
+            response: response,
+        },
+    };
+}
+
+
+
+
+
+/**************
+Session synch !
+**************/
+
+export function synchronizePendingElementsRequest() {
+    const message = "(re)Processing proposal";
+
+    return {
+        type: RUN_ELEMENT_REQUEST,
+        payload: {
+            message,
+        },
+    };
+}
+
+export function synchronizePendingElements(a_filter=null) {
+    return (dispatch) => {
+        dispatch(synchronizePendingElementsRequest());
+        ask_the_api("session.sync", a_filter);
+    };
 }

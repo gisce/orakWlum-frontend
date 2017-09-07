@@ -12,8 +12,12 @@ var NotificationSystem = require('react-notification-system');
 
 var FileSaver = require('../../../node_modules/file-saver/FileSaver.min.js');
 
+import { localized_time } from '../../constants'
+
+
 function mapStateToProps(state) {
     return {
+        sync: state.orakwlum.sync,
     };
 }
 
@@ -27,13 +31,19 @@ export class Connection extends Component {
     constructor(props) {
         super(props)
         this._notificationSystem = null;
+
+        const {sync} = this.props;
+
+        this.state = {
+            sync,
+        }
     }
 
     prepareNotification (content) {
         if (content && 'message' in content) {
             //Initialize a new message based on the provided one
             let the_message = {
-                ...{},
+                ...{autoDismiss: 10},
                 ...content,
             }
 
@@ -138,11 +148,26 @@ export class Connection extends Component {
                     FileSaver.saveAs(file, content.filename);
 
                     if (!content.silent) {
-                        this.prepareNotification(content, "XLS document exported");;
+                        this.prepareNotification(content, "XLS document exported");
                     }
                 }
 			})
 
+
+
+
+        ///////////////////
+        // MODIFICATIONS //
+        ///////////////////
+
+			.on('modifications.extend', (content) => {
+				console.debug('[Websocket] Modifications to extend received');
+				this.props.reduceModifications(content);
+
+                if (!content.silent) {
+                    this.prepareNotification(content, "Modifications updated");
+                }
+			})
 
 
         //////////////////
@@ -203,17 +228,17 @@ export class Connection extends Component {
         // PROFILE //
         /////////////
 
-        .on('profile.override', (content) => {
-            console.debug('[Websocket] Profile received');
-            this.props.overrideProfile(content, initial);
+            .on('profile.override', (content) => {
+                console.debug('[Websocket] Profile received');
+                this.props.overrideProfile(content, initial);
 
-            if (!content.silent) {
-                if (content.clean_all)
-                    this.cleanNotifications();
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
 
-                this.prepareNotification(content);;
-            }
-        })
+                    this.prepareNotification(content);;
+                }
+            })
 
 
 
@@ -221,34 +246,35 @@ export class Connection extends Component {
         // PROFILE //
         /////////////
 
-        .on('version.override', (content) => {
-            console.debug('[Websocket] Version received');
-            this.props.overrideVersion(content, initial);
+            .on('version.override', (content) => {
+                console.debug('[Websocket] Version received');
+                this.props.overrideVersion(content, initial);
 
-            if (!content.silent) {
-                if (content.clean_all)
-                    this.cleanNotifications();
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
 
-                this.prepareNotification(content);;
-            }
-        })
+                    this.prepareNotification(content);;
+                }
+            })
+
 
 
         //////////////
         // SETTINGS //
         //////////////
 
-        .on('sources.override', (content) => {
-            console.debug('[Websocket] Sources received');
-            this.props.overrideSources(content, initial);
+            .on('sources.override', (content) => {
+                console.debug('[Websocket] Sources received');
+                this.props.overrideSources(content, initial);
 
-            if (!content.silent) {
-                if (content.clean_all)
-                    this.cleanNotifications();
+                if (!content.silent) {
+                    if (content.clean_all)
+                        this.cleanNotifications();
 
-                this.prepareNotification(content);;
-            }
-        })
+                    this.prepareNotification(content);;
+                }
+            })
 
 
 
@@ -257,7 +283,7 @@ export class Connection extends Component {
         ////////////////////
 
             .on('connect', () => {
-                console.debug('Connected');
+                console.debug('[Websocket] Connected');
 
                 this.cleanNotifications();
                 this.prepareNotification({
@@ -265,10 +291,34 @@ export class Connection extends Component {
                     title: 'Connected!',
                     message: 'Connection established!',
                 });
+
+                const todayDate = localized_time();
+
+                // Fetch the last sync stamp
+                let sync = this.state.sync;
+                const {last_sync} = sync;
+
+                // Start synchronization and set the new sync date to now
+                this.props.synchronizePendingElements(last_sync);
+                sync.last_sync = todayDate.unix();
+                this.setState({
+                    sync,
+                })
+
+                console.debug("Synch started between", last_sync, sync.last_sync)
+            })
+
+            .on('auth.logout', (content) => {
+                console.debug('[Websocket] Enforced logout from the API');
+                this.prepareNotification(content);
+
+                setTimeout(() => {
+                    dispatchNewRoute("/logout");
+                }, 5000)
             })
 
             .on('disconnect', () => {
-                console.debug('Disconnected');
+                console.debug('[Websocket] Disconnected');
 
                 this.cleanNotifications();
 
@@ -287,14 +337,6 @@ export class Connection extends Component {
                     message: 'Can\'t reach the server',
                     level: "error",
                 })
-            })
-
-            .on('auth.logout', (content) => {
-                console.debug('Enforced logout from the API');
-
-                this.cleanNotifications();
-                this.prepareNotification(content);
-                force_logout();
             })
 
 	}

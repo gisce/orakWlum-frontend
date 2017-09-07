@@ -1,7 +1,7 @@
 {
   "name": "orakwlum-frontend",
-  "version": "0.10.0",
-  "description": "Sprint #6",
+  "version": "0.11.17",
+  "description": "Sprint #7",
   "scripts": {
     "clean": "rimraf dist",
     "build": "webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js",
@@ -12,17 +12,20 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/gisce/orakWlum-frontend.git"
   },
   "keywords": [
     "react",
     "reactjs",
     "redux",
+    "material-ui",
     "orakwlum",
     "okW",
     "prediction"
   ],
-  "author": "https://github.com/xavitorello, https://github.com/gisce",
+  "author": [
+    "https://github.com/xavitorello, https://github.com/gisce"
+  ],
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.6.1",
@@ -125,6 +128,9 @@
   "dependencies": {
     "binding": "^3.0.3",
     "fs": "0.0.1-security",
+    "moment": "^2.18.1",
+    "react-big-calendar": "^0.14.4",
+    "react-data-grid": "^2.0.58",
     "ws": "^3.0.0"
   },
   "optionalDependencies": {

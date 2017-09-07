@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 
-import { ProposalList } from '../ProposalList';
+import { ElementList } from '../ElementList';
 import { ContentHeader } from '../ContentHeader';
 
 import { date_to_string} from '../../utils/misc';
@@ -39,7 +39,7 @@ function mapStateToProps(state) {
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
         elements_by_date: state.orakwlum.elements_by_date,
-        elements_by_date_future: state.orakwlum.elements_by_date_future,
+        elements_by_date_past: state.orakwlum.elements_by_date_past,
         elements_by_type: state.orakwlum.elements_by_type,
     };
 }
@@ -310,7 +310,7 @@ export class ElementsDashboard extends Component {
     }
 
     filterElements = () => {
-        const {elements, elements_by_date, elements_by_date_future, elements_by_type} = this.props;
+        const {elements, elements_by_date, elements_by_date_past, elements_by_type} = this.props;
         const {selected_date, selected_enddate, selected_type} = this;
         const {selectedElements} = this.state;
 
@@ -342,10 +342,10 @@ export class ElementsDashboard extends Component {
                 }
 	    }
 
-            if (current_date_str in elements_by_date_future || current_date_str in elements_by_date_future) {
-                const elements_for_future_date = elements_by_date_future[current_date_str];
+            if (current_date_str in elements_by_date_past || current_date_str in elements_by_date_past) {
+                const elements_for_past_date = elements_by_date_past[current_date_str];
 
-		for ( let [id, element] of Object.entries(elements_for_future_date)) {
+		for ( let [id, element] of Object.entries(elements_for_past_date)) {
                     //Validate type
                     if (selected_type_id == "all" || element.element_type == selected_type_id) {
                         if (!(id in elements_matched)) {
@@ -481,11 +481,11 @@ export class ElementsDashboard extends Component {
             </div>
         )
 
-        // Matched elements rendered in a <ProposalList> (with overrided onClick if needed)
+        // Matched elements rendered in a <ElementList> (with overrided onClick if needed)
         const the_elements = (Object.keys(elements_matched).length > 0)?
         (
             (multiElementMode)?
-                <ProposalList
+                <ElementList
                     title="Matched elements"
                     proposals={elements_matched}
                     aggregations={aggregations}
@@ -494,7 +494,7 @@ export class ElementsDashboard extends Component {
                     onClick={(count, element, title) => this.toggleSelectElement(count, element, title)}
                 />
                 :
-                <ProposalList
+                <ElementList
                     title="Matched elements"
                     proposals={elements_matched}
                     aggregations={aggregations}

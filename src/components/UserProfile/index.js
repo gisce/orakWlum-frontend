@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
 
-import { ProposalTag } from '../ProposalTag';
+import { Tag } from '../Tag';
 import { PasswordChanger } from '../PasswordChanger';
 
 //Icons
@@ -254,7 +254,7 @@ export class UserProfile extends Component {
                           <div style={styles.wrapper}>
                           {
                               groups.map((group, index) => (
-                                  <ProposalTag
+                                  <Tag
                                       key={"group_" + index}
                                       tag={group}
                                       readOnly onDoubleClick={(e) => this.edit_profile(e)}
@@ -346,7 +346,7 @@ export class UserProfile extends Component {
                           <div style={styles.wrapper}>
                           {
                               groups.map((group, index) => (
-                                  <ProposalTag
+                                  <Tag
                                       key={"group_" + index}
                                       tag={group}
                                       handleRequestDelete={(e) => this.delete_tag(e, index)}

@@ -143,6 +143,12 @@ export class Header extends Component {
                                     onClick={(event) => this.dispatchRoute(event, '/elements')}
                                 />
 
+                                <MenuItem
+                                    leftIcon={<DashboardIcon/>}
+                                    primaryText={"Elements (old)"}
+                                    onClick={(event) => this.dispatchRoute(event, '/elementsOld')}
+                                />
+
                                 <Divider />
 
                                 <MenuItem
