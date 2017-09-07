@@ -1,6 +1,6 @@
 # orakWlum Frontend
 
-[![Version](https://img.shields.io/badge/version-0.11.3-green.svg)]()
+[![Version](https://img.shields.io/badge/version-0.11.17-green.svg)]()
 [![Status](https://img.shields.io/badge/status-dev-yellow.svg)]()
 [![Node](https://img.shields.io/badge/npm-3.10.3-blue.svg)]()
 
