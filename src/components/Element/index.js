@@ -13,8 +13,9 @@ import {
     CardText
 } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-
+import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
+import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
 import {
     orange300,
@@ -102,7 +103,15 @@ const styles = {
     cardSeparator: {
         marginTop: 50,
         marginBottom: 20
-    }
+    },
+    notes: {
+        field: {
+            marginLeft: 20,
+        },
+        creator: {
+            marginTop: -30,
+        }
+    },
 };
 
 const colors = {
@@ -163,10 +172,13 @@ export class Elementt extends Component {
 
         this.edit_open = false;
         this.tune_open = false;
+        this.detail_open = false;
+        this.notes_open = false;
 
         props.aggregations[0].selected = true;
 
         if (props.comparation) {
+            this.notes_open = false;
             this.edit_open = false;
             this.tune_open = false;
             this.detail_open = true;
@@ -180,18 +192,21 @@ export class Elementt extends Component {
 
         //Initialize modifications with existant values or {}
         this.modifications = (this.id in props.modifications)
-            ? props.modifications[this.id]
+            ? props.modifications[this.id].modifications
             : {};
 
         //Initialize dataset
         this.prepareData(props.proposal.prediction, props.aggregations)
+
+        //Notes and new note initialization
+        this.notes = (props.proposal.notes)? props.proposal.notes : [];
+        this.new_note = {content: ""}
     }
 
     prepareData = (prediction, aggregations) => {
         if (prediction && Object.keys(prediction).length > 0) {
 
-            for (let [key,
-                an_agg]of Object.entries(aggregations)) {
+            for (let [key, an_agg]of Object.entries(aggregations)) {
                 const current_agg_id = an_agg.id;
 
                 //The Prediction of current aggregation
@@ -387,10 +402,17 @@ export class Elementt extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
         this.animateChart = false;
-        this.tune_open = false;
         this.edit_open = false;
 
         this.setState({detail_open: this.detail_open});
+    };
+
+    toggleNotes = () => {
+        this.notes_open = !this.notes_open;
+        this.animateChart = false;
+        this.edit_open = false;
+
+        this.setState({notes_open: this.notes_open});
     };
 
     toggleEdit = () => {
@@ -431,12 +453,12 @@ export class Elementt extends Component {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
-        const actionsButtons = [ < FlatButton label = "Cancel" primary = {
+        const actionsButtons = [ <FlatButton label = "Cancel" primary = {
                 true
             }
             onTouchTap = {
                 this.handleCloseConfirmation
-            } />, < FlatButton label = "Submit" primary = {
+            } />, <FlatButton label = "Submit" primary = {
                 true
             }
             keyboardFocused = {
@@ -517,11 +539,30 @@ export class Elementt extends Component {
         this.open_confirmation = true;
     }
 
+    addNewNote = () => {
+        this.new_note.author = "Xavi"
+        this.new_note.creation_date = localized_time().unix()
+
+        //Create a new tmp note element with a new memspace
+        const the_new_note = Object.assign({}, this.new_note);
+        console.debug("Adding new note", the_new_note);
+
+        this.notes = [the_new_note, ...this.notes];
+
+        this.props.updateElement({id: this.id, notes: this.notes})    }
+
+    updateNewNote = (event) => {
+        this.new_note.content = event.target.value;
+    }
+
     render() {
         const readOnly = (this.props.readOnly)
             ? this.props.readOnly
             : false;
+
         const proposal = this.props.proposal;
+
+        const {notes} = proposal;
 
         const proposalTable = this.state.proposalTable;
 
@@ -629,23 +670,29 @@ export class Elementt extends Component {
 
         const {
             detail_open,
+            notes_open,
             edit_open,
             tune_open,
             toggleDetail,
             toggleEdit,
-            toggleTune
+            toggleTune,
+            toggleNotes,
         } = this;
 
         const DetailIcon = (detail_open == true)
             ? CollapseIcon
             : ExpandIcon;
 
-        const actionsButtons = [ < FlatButton label = "Cancel" primary = {
+        const NotesIcon = (notes_open == true)
+            ? CollapseIcon
+            : ExpandIcon;
+
+        const actionsButtons = [ <FlatButton label = "Cancel" primary = {
                 true
             }
             onTouchTap = {
                 this.handleCloseConfirmation
-            } />, < FlatButton label = "Submit" primary = {
+            } />, <FlatButton label = "Submit" primary = {
                 true
             }
             keyboardFocused = {
@@ -774,8 +821,8 @@ export class Elementt extends Component {
             };
 
             const proposalTune = <div>
-                <FlatButton label="View" icon={< ViewIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
-                <FlatButton label="Reset" icon={< ResetIcon />} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
+                <FlatButton label="View" icon={<ViewIcon />} onClick={this.toggleTune} title={"See current modifications"}/>
+                <FlatButton label="Reset" icon={<ResetIcon />} onClick={this.resetModifications} title={"Reset modifications to initial state"}/>
 
                 <ElementTableEditable
                     header={[
@@ -795,7 +842,7 @@ export class Elementt extends Component {
                 proposalPicture = (proposalTable)
                     ? <ElementTable stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} unit={"kWh"}/>
                     : <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"}/>
-            }
+        }
 
         const disableDetail = (element_type == "concatenation")
             ? true
@@ -806,36 +853,112 @@ export class Elementt extends Component {
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
-                <FlatButton label="Refresh" icon={< RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Process" icon={< RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
-                <FlatButton label="Detail" icon={< DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
-                <FlatButton label="Edit" icon={< EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
-                <FlatButton label="Tune" icon={< TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
-                <FlatButton label="Save" icon={< SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
-                <FlatButton label="Export" icon={< ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
-                <FlatButton label="Duplicate" icon={< DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
-                <FlatButton label="Delete" icon={< DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
+                <FlatButton label="Refresh" icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
+                <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
+                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
+                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
+                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
+                <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
+                <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
                 {(proposal.related_id)
-                    ? <FlatButton label="Historical" icon={< ElementIcon />} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
+                    ? <FlatButton label="Historical" icon={<ElementIcon />} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
                     : <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
                 }
                 </CardActions>
             : null;
 
-        const proposalDetail = (this.summary != null) && (detail_open == true) && <div>
-            {proposalActions}
-            <div style={styles.cardSeparator}>
-                <ElementDetail
-                    data={this.summary}
-                    avg_info={{
-                        'average': this.average[aggregationSelected],
-                        'data': this.data[aggregationSelected],
-                        'components': this.components[aggregationSelected]
-                    }}
-                />
+        const proposalDetail = (this.summary != null) && (detail_open == true) &&
+            <div>
+                {proposalActions}
+                <div style={styles.cardSeparator}>
+                    <ElementDetail
+                        data={this.summary}
+                        avg_info={{
+                            'average': this.average[aggregationSelected],
+                            'data': this.data[aggregationSelected],
+                            'components': this.components[aggregationSelected]
+                        }}
+                    />
+                </div>
+            </div>;
+
+
+
+
+        let the_notes = [];
+
+        //The Add note form
+        the_notes.push(
+            <div key={"card_creator_div"}>
+                <Card key={"card_creator"}>
+                    <CardHeader
+                      title={"Create a new note"}
+                      showExpandableButton={true}
+                    />
+
+                    <CardText expandable={true}>
+                        <TextField
+                            style={styles.notes.creator}
+                            hintText="Insert your message..."
+                            floatingLabelText="Message"
+                            multiLine={true}
+                            rows={5}
+                            fullWidth={true}
+                            onChange={this.updateNewNote}
+                        />
+                    </CardText>
+
+                    <CardActions
+                        style={styles.notes.creator}
+                        expandable={true}
+                    >
+
+                      <FlatButton label="Add" title={"Add new note"} onClick={(e) => this.addNewNote()}/>
+                    </CardActions>
+                </Card>
             </div>
-        </div>;
+        )
+
+        if (true || notes != null) {
+            for (let [key, a_note]of Object.entries(this.notes)) {
+
+                const note_date = localized_time(a_note.creation_date * 1000).format("L LT")
+
+                the_notes.push(
+                    <div key={"card_div_" + key}>
+                        <Card key={"card_" + key}>
+                            <CardHeader
+                              title={a_note.author}
+                              subtitle={note_date}
+                              avatar="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
+                              showExpandableButton={true}
+                            />
+
+                            <CardText>
+                                {a_note.content}
+                            </CardText>
+
+                            <CardActions expandable={true}>
+                              <FlatButton label="Mark as readed" />
+                              <FlatButton label="Delete" />
+                            </CardActions>
+                        </Card>
+                    </div>
+                )
+            };
+        }
+
+        const proposalNotes = (notes_open == true) &&
+            <div>
+                {proposalActions}
+                <div>
+                    {the_notes}
+                </div>
+            </div>
 
         // The resulting Element element
         const Element = () => (
@@ -879,6 +1002,8 @@ export class Elementt extends Component {
                 <br/> {proposalPicture}
 
                 <br/> {proposalDetail}
+
+                <br/> {proposalNotes}
 
                 {proposalActions}
 

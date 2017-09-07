@@ -16,6 +16,8 @@ export function debug(what) {
 
     const activate_debug = matched || DEBUG;
 
+    activate_debug && console.debug(what);
+
     return (
         activate_debug &&
         <div>

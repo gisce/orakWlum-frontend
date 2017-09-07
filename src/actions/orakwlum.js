@@ -27,6 +27,8 @@ import {
 
     UPDATE_TUNED_VALUES,
 
+    API_ERROR,
+
     VERSION_PR,
     FETCH_VERSION_REQUEST,
     RECEIVE_VERSION,
@@ -156,7 +158,14 @@ export function reduceElements(reducer_type, response, initial) {
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: reducer_type,
+            response: response,
+        },
+    };
 }
 
 //Override all elements
@@ -191,6 +200,15 @@ export function overrideMessage(response, initial) {
             },
         };
     }
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: OVERRIDE_MESSAGE,
+            response: response,
+        },
+    };
+
 }
 
 
@@ -218,7 +236,14 @@ export function overrideAggregations(response, initial) {
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: OVERRIDE_AGGREGATIONS,
+            response: response,
+        },
+    };
 }
 
 
@@ -261,7 +286,14 @@ export function overrideSources(response, initial) {
             },
         };
     }
-    return {};
+
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_SETTINGS,
+            response: response,
+        },
+    };
 }
 
 
@@ -421,9 +453,6 @@ export function updateElement(element) {
     };
 }
 
-
-
-
 export function saveTunedValuesReducer(id, modifications) {
     const modifications_to_update = {
         [id]: modifications,
@@ -438,14 +467,21 @@ export function saveTunedValuesReducer(id, modifications) {
 }
 
 export function reduceModifications(response) {
-    if (!response.error){
+    console.debug("Reducing modifications", response);
+    if (response.code == 200){
         const the_result = JSON.parse(response.result);
         const the_id = the_result.element_id;
 
 
         return saveTunedValuesReducer(the_id, the_result);
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: UPDATE_TUNED_VALUES,
+            response: response,
+        },
+    };
 }
 
 export function saveTunedValues(id, modifications) {
@@ -486,7 +522,13 @@ export function overrideProfile(response, initial) {
             },
         };
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_PROFILE,
+            response: response,
+        },
+    };
 }
 
 
@@ -594,7 +636,13 @@ export function overrideVersion(response, initial) {
             },
         };
     }
-    return {};
+    return {
+        type: API_ERROR,
+        payload: {
+            expected: RECEIVE_VERSION,
+            response: response,
+        },
+    };
 }
 
 
