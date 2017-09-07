@@ -39,7 +39,7 @@ module.exports = {
             autoUpdate: 1000 * 60 * 60 * 1, //1h
             ServiceWorker:{
                 entry: 'sw.js',
-                publicPath: '/dist/sw.js',
+                //publicPath: '/dist/sw.js',
                 events: true,
                 navigateFallbackURL: '/',
             },
