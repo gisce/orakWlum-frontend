@@ -9,7 +9,7 @@ module.exports = {
     entry: ['bootstrap-loader/extractStyles'],
 
     output: {
-        publicPath: 'www/dist/',
+        publicPath: '/dist/',
     },
 
     module: {
