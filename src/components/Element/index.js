@@ -221,11 +221,10 @@ export class Elementt extends Component {
 
                 this.data[current_agg_id] = current.result;
 
-                //Merge the base prediction for this hour with the existing modifications
-                for (let [hour_key, an_hour] of Object.entries(this.data[current_agg_id])) {
-                    console.log(currentModifications[hour_key]);
+                //Merge the modifications
+                for (let [hour_key, an_hour] of Object.entries(currentModifications)) {
                     this.data[current_agg_id][hour_key] = {
-                        ...an_hour,
+                        ...this.data[current_agg_id][hour_key],
                         ...currentModifications[hour_key]
                     }
                 }
@@ -246,7 +245,7 @@ export class Elementt extends Component {
         });
     };
 
-    applyTunedChanges = (updated_field, difference) => {
+    applyTunedChanges = (updated_field, difference, total) => {
         // For each difference
         for (let [hour_position, hour_difference]of Object.entries(difference)) {
 
@@ -271,7 +270,7 @@ export class Elementt extends Component {
                     //Add the modification to the altered field
                     this.modifications[current_agg_id][hour_position] = {
                         ...this.modifications[current_agg_id][hour_position],
-                        [updated_field]: hour_difference, //save modification as updated_field
+                        [updated_field]: parseInt(total), //save modification as updated_field
                         ["total"]: this.data[current_agg_id][hour_position]["total"], //save updated totals
                     }
                 }
@@ -832,7 +831,7 @@ export class Elementt extends Component {
                         ...proposalTuneHeaders
                         ]}
                     data={this.data[aggregationSelected]}
-                    parentDataHandler={(changes, difference) => this.applyTunedChanges(changes, difference)}
+                    parentDataHandler={(changes, difference, total) => this.applyTunedChanges(changes, difference, total)}
                 />
             </div>;
 
