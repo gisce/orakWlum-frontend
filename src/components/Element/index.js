@@ -196,7 +196,7 @@ export class Elementt extends Component {
             : {};
 
         //Initialize dataset
-        this.prepareData(props.proposal.prediction, props.aggregations)
+        //this.prepareData(props.proposal.prediction, props.aggregations)
 
         //Notes and new note initialization
         this.notes = (props.proposal.notes)? props.proposal.notes : [];
@@ -223,7 +223,7 @@ export class Elementt extends Component {
 
                 //Merge the base prediction for this hour with the existing modifications
                 for (let [hour_key, an_hour] of Object.entries(this.data[current_agg_id])) {
-
+                    console.log(currentModifications[hour_key]);
                     this.data[current_agg_id][hour_key] = {
                         ...an_hour,
                         ...currentModifications[hour_key]
@@ -346,7 +346,7 @@ export class Elementt extends Component {
         this.setState({confirmation_open: false});
         this.animateChart = false;
 
-        this.props.fetchElements(proposalID);
+        this.props.fetchElementsDetail(proposalID);
 
         this.setState({message_open: true});
 
@@ -561,6 +561,8 @@ export class Elementt extends Component {
             : false;
 
         const proposal = this.props.proposal;
+        this.prepareData(this.props.proposal.prediction, this.props.aggregations)
+
 
         const {notes} = proposal;
 
