@@ -347,6 +347,14 @@ export function fetchElements(a_filter=null, initial=false, override=false) {
     };
 }
 
+export function fetchElementsDetail(a_filter=null, initial=false, override=false) {
+    const response = (override)? "elements.override" : "elements.extend";
+    return (dispatch) => {
+        dispatch(fetchElementsRequest(initial));
+        ask_the_api("elements.get.detail", a_filter, initial, response);
+    };
+}
+
 export function refreshElements(a_filter=null, silent=false, override=false) {
     const response = (override)? "elements.override" : "elements.extend";
     return (dispatch) => {
