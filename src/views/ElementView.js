@@ -44,7 +44,7 @@ export default class ElementView extends React.Component {
     }
 
     fetchElements(element_id, initial) {
-        this.props.fetchElements(element_id, initial);
+        this.props.fetchElementsDetail(element_id, initial);
     }
 
     //Fetch all needed data
