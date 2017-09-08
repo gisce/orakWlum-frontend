@@ -94,7 +94,6 @@ export class ElementGraph extends Component {
         const data = this.props.data;
         const components = this.props.components;
 
-        const howManyComponents = Object.keys(components).length;
 
         const stacked = (this.props.stacked)?"1":null;
 
@@ -107,6 +106,8 @@ export class ElementGraph extends Component {
         const isAnimated = (this.props.animated)?this.props.animated:false;
 
         if (data && components) {
+            const howManyComponents = Object.keys(components).length;
+
             /* Aggregations selector
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
