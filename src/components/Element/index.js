@@ -160,6 +160,7 @@ export class Elementt extends Component {
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
+            withLosses: false,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
             message_text: props.message_text,
@@ -280,6 +281,12 @@ export class Elementt extends Component {
 
     toogleElementRender = (event, status) => {
         this.setState({proposalTable: status, message_open: false});
+        this.animateChart = false;
+    };
+
+    // Handle if a Element must be rendered with Losses or just measures
+    toogleElementTotals = (event, status) => {
+        this.setState({withLosses: status, message_open: false});
         this.animateChart = false;
     };
 
@@ -566,6 +573,7 @@ export class Elementt extends Component {
         const {notes} = proposal;
 
         const proposalTable = this.state.proposalTable;
+        const withLosses = this.state.withLosses;
 
         const historical = (proposal.historical == false)
             ? false
@@ -752,6 +760,36 @@ export class Elementt extends Component {
                 </div>
 }
         </div>)
+
+        const LossesHelp = "Render an Element with their related losses or just their measures"
+
+        // The Element graph toogle! //to switch between table and chart
+        const withLossesToggle = <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
+            {(withLosses)
+                ? <div id="togglePicture" className="row" style={styles.aggregationsCenter}>
+                        <div className="col-xs-2" style={styles.labelToggle}>
+                            Measures
+                        </div>
+                        <div id="toogleElement" className="col-xs-3">
+                            <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
+                        </div>
+                        <div className="col-xs-2" style={styles.toggle}>
+                            <b>Totals</b>
+                        </div>
+                    </div>
+                : <div id="togglePicture" className="row" style={styles.aggregationsCenter}>
+                    <div className="col-xs-2" style={styles.labelToggle}>
+                        <b>Measures</b>
+                    </div>
+                    <div id="toogleElement" className="col-xs-3">
+                        <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
+                    </div>
+                    <div className="col-xs-2" style={styles.toggle}>
+                        Totals
+                    </div>
+                </div>
+}
+        </div>
 
         const adaptedElement = Object.assign({}, proposal, {
             start_date: start_date.toDate(),
@@ -982,6 +1020,7 @@ export class Elementt extends Component {
                     {proposalAggregations}
 
                     {proposalPictureToggle}
+                    {withLossesToggle}
                 </div>
 
                 <CardText>
