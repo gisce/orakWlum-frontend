@@ -160,7 +160,7 @@ export class Elementt extends Component {
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
-            withLosses: false,
+            withLosses: true,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
             message_text: props.message_text,
@@ -920,8 +920,9 @@ export class Elementt extends Component {
                         avg_info={{
                             'average': this.average[aggregationSelected],
                             'data': this.data[aggregationSelected],
-                            'components': this.components[aggregationSelected]
+                            'components': this.components[aggregationSelected],
                         }}
+                        withLosses={withLosses}
                     />
                 </div>
             </div>;
