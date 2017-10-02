@@ -37,9 +37,6 @@ export class ElementDetail extends Component {
 
     render() {
         const {withLosses, data, avg_info} = this.props;
-        const expectedEnergy = (withLosses)? "energy_total" : "energy";
-        const expectedAvg = (withLosses)? "average_total" : "average";
-
         const digitsToRound = 2;
 
         //open it by default
@@ -47,9 +44,13 @@ export class ElementDetail extends Component {
 
         const total_cups = data.cups;
         const energy_total = data.energy_total;
+        const energy_total_with_losses = data.energy_total;
         const total_invoices = data.invoices;
         const origins_data = data.origins;
         const tariffs_data = data.tariffs;
+
+        const expectedEnergy = (withLosses)? "energy_total" : "energy";
+        const expectedTotal = (withLosses)? energy_total : energy_total_with_losses;
 
         //Prepare CUPS count
         const num_cups = (total_cups) &&
@@ -96,7 +97,7 @@ export class ElementDetail extends Component {
                         title={component_name}
                         value={component_value + " kWh"}
                         subvalue={"#" + component_subvalue}
-                        total={energy_total}
+                        total={expectedTotal}
                         percentage={true}
                         small={true}
                     />
@@ -121,10 +122,12 @@ export class ElementDetail extends Component {
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;
-                const component_value =  parseFloat(entry[expectedEnergy]).toFixed(digitsToRound);
+                const component_value =  (parseFloat(entry[expectedEnergy]));
 
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
+
+                console.log(expectedTotal);
 
                 //const color = colors[original_position];  //use API order field
                 const color = colors[i];
@@ -135,7 +138,7 @@ export class ElementDetail extends Component {
                         title={ (component_name!="")?component_name:"Empty"}
                         value={component_value + " kWh"}
                         subvalue={"#" + component_subvalue}
-                        total={energy_total}
+                        total={expectedTotal}
                         percentage={true}
                         small={true}
                         color={color}
