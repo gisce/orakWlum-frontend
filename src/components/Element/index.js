@@ -205,13 +205,15 @@ export class Elementt extends Component {
     }
 
     prepareData = (prediction, aggregations) => {
+        const {withLosses} = this.state;
+
         if (prediction && Object.keys(prediction).length > 0) {
 
             for (let [key, an_agg]of Object.entries(aggregations)) {
                 const current_agg_id = an_agg.id;
 
                 //The Prediction of current aggregation
-                const predictionAdapted = adaptProposalData(prediction['result']);
+                const predictionAdapted = adaptProposalData(prediction['result'], withLosses);
                 const current = predictionAdapted[current_agg_id];
 
                 //Initialize modifications for current aggregation just if empty
@@ -572,8 +574,7 @@ export class Elementt extends Component {
 
         const {notes} = proposal;
 
-        const proposalTable = this.state.proposalTable;
-        const withLosses = this.state.withLosses;
+        const {proposalTable, withLosses} = this.state;
 
         const historical = (proposal.historical == false)
             ? false
@@ -766,22 +767,22 @@ export class Elementt extends Component {
         // The Element graph toogle! //to switch between table and chart
         const withLossesToggle = <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
             {(withLosses)
-                ? <div id="togglePicture" className="row" style={styles.aggregationsCenter}>
+                ? <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
                         <div className="col-xs-2" style={styles.labelToggle}>
                             Measures
                         </div>
-                        <div id="toogleElement" className="col-xs-3">
+                        <div id="toogleTotals" className="col-xs-3">
                             <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
                         </div>
                         <div className="col-xs-2" style={styles.toggle}>
                             <b>Totals</b>
                         </div>
                     </div>
-                : <div id="togglePicture" className="row" style={styles.aggregationsCenter}>
+                : <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
                     <div className="col-xs-2" style={styles.labelToggle}>
                         <b>Measures</b>
                     </div>
-                    <div id="toogleElement" className="col-xs-3">
+                    <div id="toogleTotals" className="col-xs-3">
                         <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
                     </div>
                     <div className="col-xs-2" style={styles.toggle}>

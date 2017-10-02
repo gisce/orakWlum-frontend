@@ -9,10 +9,15 @@ function prepareDayAndHourString(timestamp) {
     return localized_time(timestamp).format(day_month_format + " " + hour_unique_format);
 }
 
-export function adaptProposalData(prediction) {
+export function adaptProposalData(prediction, withLosses=false) {
     let result={};
 
+    // Define expected Amount an AVG depending on the withLosses flag
+    const expectedAmount = (withLosses)? "total" : "amount";
+    const expectedAvg = (withLosses)? "average_total" : "average";
+
     const proposalData = prediction;
+    const digitsToRound = 2;
 
     Object.keys(proposalData).map( function(current_aggregation, j) {
             const aggregation = proposalData[current_aggregation];
@@ -38,8 +43,8 @@ export function adaptProposalData(prediction) {
             const the_sum = aggregation['result'];
             the_sum.map( function(entry, i) {
                 const hour=entry['hour'];
-                const amount=entry['amount'];
-                const avg=entry['average'].toFixed(4);
+                const amount=entry[expectedAmount].toFixed(digitsToRound);
+                const avg=entry[expectedAvg].toFixed(digitsToRound);
 
                 const title=entry['title'];
 
@@ -48,14 +53,14 @@ export function adaptProposalData(prediction) {
                     tmp_result[hour]={total: 0, name: hour};
 
                 tmp_result[hour][title] = amount;
-                tmp_result[hour]["total"] = parseInt(tmp_result[hour]["total"]) + parseInt(amount);
+                tmp_result[hour]["total"] = (parseInt(tmp_result[hour]["total"]) + parseInt(amount)).toFixed(digitsToRound);
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
                     tmp_average[hour]={total: 0, name: hour};
 
                 tmp_average[hour][title] = avg;
-                tmp_average[hour]["total"] = parseInt(tmp_average[hour]["total"]) + parseInt(avg);
+                tmp_average[hour]["total"] = (parseInt(tmp_average[hour]["total"]) + parseInt(avg)).toFixed(digitsToRound);
 
                 result[current_aggregation]['components'][title] = {
                     'title': title,
