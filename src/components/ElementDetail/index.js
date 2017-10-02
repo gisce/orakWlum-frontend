@@ -36,8 +36,11 @@ export class ElementDetail extends Component {
     }
 
     render() {
-        const data = this.props.data;
-        const avg_info = this.props.avg_info;
+        const {withLosses, data, avg_info} = this.props;
+        const expectedEnergy = (withLosses)? "energy_total" : "energy";
+        const expectedAvg = (withLosses)? "average_total" : "average";
+
+        const digitsToRound = 2;
 
         //open it by default
         const open = (this.props.open)?this.props.open:true;
@@ -71,7 +74,6 @@ export class ElementDetail extends Component {
                 />
             );
 
-
         //handle invoice types
         const invoice_types = (origins_data) &&
             Object.keys(origins_data).sort(
@@ -82,7 +84,7 @@ export class ElementDetail extends Component {
                 const entry = origins_data[origin];
 
                 const component_name = origin;
-                const component_value =  entry['energy'];
+                const component_value =  parseFloat(entry[expectedEnergy]).toFixed(digitsToRound);
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
@@ -119,7 +121,8 @@ export class ElementDetail extends Component {
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;
-                const component_value =  entry['energy'];
+                const component_value =  parseFloat(entry[expectedEnergy]).toFixed(digitsToRound);
+
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
@@ -194,6 +197,7 @@ export class ElementDetail extends Component {
 ElementDetail.propTypes = {
     data: PropTypes.object.isRequired,
     open: PropTypes.bool,
+    withLosses: PropTypes.bool,
     colors: PropTypes.object,
     avg_info: PropTypes.object,
 };
