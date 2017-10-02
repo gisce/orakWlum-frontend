@@ -44,7 +44,7 @@ export class ElementDetail extends Component {
 
         const total_cups = data.cups;
         const energy_total = data.energy_total;
-        const energy_total_with_losses = data.energy_total;
+        const energy_total_with_losses = data.energy_with_losses_total;
         const total_invoices = data.invoices;
         const origins_data = data.origins;
         const tariffs_data = data.tariffs;
