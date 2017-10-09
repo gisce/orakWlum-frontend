@@ -93,7 +93,7 @@ export class ElementGraph extends Component {
     render() {
         const data = this.props.data;
         const components = this.props.components;
-        const scale = (this.props.scale)?"dataMax + " + String(this.props.scale) : "auto";
+        const scale = (this.props.scale)?parseFloat(this.props.scale) : "auto";
 
         console.log("MAX", scale);
 

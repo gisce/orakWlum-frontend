@@ -245,10 +245,7 @@ export class Elementt extends Component {
             const max_total = ("max_total" in this.summary)?this.summary["max_total"]:26988;
             const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:31241.9;
 
-            const max_beautiful = Math.ceil((max_total_with_losses)/1000)*1000;
-
-            this.scale = (withLosses)? (max_beautiful - max_total_with_losses).toFixed(1): max_beautiful - max_total;
-            console.log("scale",this.scale);
+            this.scale = Math.max(Math.ceil(max_total / 100)*100, Math.ceil(max_total_with_losses/100)*100 );
         }
     }
 
