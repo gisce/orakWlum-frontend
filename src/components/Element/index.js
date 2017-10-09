@@ -781,24 +781,22 @@ export class Elementt extends Component {
             {(withLosses)
                 ? <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
                         <div className="col-xs-2" style={styles.labelToggle}>
-                            Measures
                         </div>
                         <div id="toogleTotals" className="col-xs-3">
                             <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
                         </div>
                         <div className="col-xs-2" style={styles.toggle}>
-                            <b>Totals</b>
+                            <b>Losses</b>
                         </div>
                     </div>
                 : <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
                     <div className="col-xs-2" style={styles.labelToggle}>
-                        <b>Measures</b>
                     </div>
                     <div id="toogleTotals" className="col-xs-3">
                         <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
                     </div>
                     <div className="col-xs-2" style={styles.toggle}>
-                        Totals
+                        Losses
                     </div>
                 </div>
 }
