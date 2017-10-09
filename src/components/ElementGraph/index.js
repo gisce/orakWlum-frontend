@@ -95,8 +95,6 @@ export class ElementGraph extends Component {
         const components = this.props.components;
         const scale = (this.props.scale)?parseFloat(this.props.scale) : "auto";
 
-        console.log("MAX", scale);
-
         const stacked = (this.props.stacked)?"1":null;
 
         const height = (this.props.height)?this.props.height:500;

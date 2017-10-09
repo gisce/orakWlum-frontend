@@ -245,9 +245,13 @@ export class Elementt extends Component {
             const max_total = ("max_total" in this.summary)?this.summary["max_total"]:26988;
             const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:31241.9;
 
+            //Fetch the max to define the scale and the order of magnitude
             const max_of_pair = Math.max(max_total, max_total_with_losses);
-            let scalator_const = Math.pow(10, Math.floor(Math.log(max_of_pair) / Math.LN10 + 0.000000001))/10;
-            this.scale = Math.ceil(max_of_pair / scalator_const) * scalator_const;
+            //Calc the order of magnitude using log and pow
+            const order_of_magnitude = Math.pow(10, Math.floor(Math.log(max_of_pair) / Math.LN10 + 0.000000001))/10;
+
+            //Round UP the scale to the next beautiful number based on current order of magnitude
+            this.scale = Math.ceil(max_of_pair / order_of_magnitude) * order_of_magnitude;
         }
     }
 
