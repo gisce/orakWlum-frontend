@@ -239,6 +239,12 @@ export class Elementt extends Component {
             this.summary = (prediction.summary != undefined)
                 ? prediction.summary
                 : null;
+
+            //Identify the scale
+            this.scale = 0
+            const max_total = ("max_total" in this.summary)?this.summary["max_total"]:0;
+            const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:0;
+            this.scale = Math.max(max_total, max_total_with_losses);
         }
     }
 
@@ -571,7 +577,6 @@ export class Elementt extends Component {
         const proposal = this.props.proposal;
         this.prepareData(this.props.proposal.prediction, this.props.aggregations)
 
-
         const {notes} = proposal;
 
         const {proposalTable, withLosses} = this.state;
@@ -881,7 +886,7 @@ export class Elementt extends Component {
             if (withPicture && prediction && Object.keys(prediction).length > 0)
                 proposalPicture = (proposalTable)
                     ? <ElementTable stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} unit={"kWh"}/>
-                    : <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"}/>
+                    : <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"} scale={this.scale}/>
         }
 
         const disableDetail = (element_type == "concatenation")
