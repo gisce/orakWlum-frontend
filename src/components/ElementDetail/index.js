@@ -50,7 +50,7 @@ export class ElementDetail extends Component {
         const tariffs_data = data.tariffs;
 
         const expectedEnergy = (withLosses)? "energy_total" : "energy";
-        const expectedTotal = (withLosses)? energy_total : energy_total_with_losses;
+        const expectedTotal = (withLosses)? energy_total_with_losses : energy_total;
 
         //Prepare CUPS count
         const num_cups = (total_cups) &&
@@ -85,7 +85,7 @@ export class ElementDetail extends Component {
                 const entry = origins_data[origin];
 
                 const component_name = origin;
-                const component_value =  parseFloat(entry[expectedEnergy]).toFixed(digitsToRound);
+                const component_value =  Math.round(parseFloat(entry[expectedEnergy]));
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
@@ -122,7 +122,7 @@ export class ElementDetail extends Component {
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;
-                const component_value =  (parseFloat(entry[expectedEnergy]));
+                const component_value =  Math.round(parseFloat(entry[expectedEnergy]));
 
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
