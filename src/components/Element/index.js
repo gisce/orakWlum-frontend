@@ -245,8 +245,8 @@ export class Elementt extends Component {
             const max_total = ("max_total" in this.summary)?this.summary["max_total"]:26988;
             const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:31241.9;
 
-            let scalator_const = 1000;
             const max_of_pair = Math.max(max_total, max_total_with_losses);
+            let scalator_const = Math.pow(10, Math.floor(Math.log(max_of_pair) / Math.LN10));
             this.scale = Math.ceil(max_of_pair / scalator_const) * scalator_const;
         }
     }
