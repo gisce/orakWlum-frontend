@@ -242,8 +242,8 @@ export class Elementt extends Component {
 
             //Identify the scale
             this.scale = 0
-            const max_total = ("max_total" in this.summary)?this.summary["max_total"]:26988;
-            const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:31241.9;
+            const max_total = ("max_total" in this.summary)?this.summary["max_total"]:0;
+            const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:0;
 
             //Fetch the max to define the scale and the order of magnitude
             const max_of_pair = Math.max(max_total, max_total_with_losses);
