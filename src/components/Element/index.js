@@ -777,7 +777,7 @@ export class Elementt extends Component {
         const LossesHelp = "Render an Element with their related losses or just their measures"
 
         // The Element graph toogle! //to switch between table and chart
-        const withLossesToggle = <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
+        const withLossesToggle = (withPicture) && <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
             {(withLosses)
                 ? <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
                         <div className="col-xs-2" style={styles.labelToggle}>
