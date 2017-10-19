@@ -385,6 +385,14 @@ export function exportElement(a_filter=null, initial=false) {
 }
 
 
+export function exportElementDetail(a_filter=null, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchElementsExportRequest(initial));
+        ask_the_api("elements.export_detail", a_filter, window.socket.id);
+    };
+}
+
+
 
 
 
