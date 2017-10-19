@@ -29,9 +29,8 @@ export default class ElementView extends React.Component {
         const elementID = this.props.params.elementID;
         const {aggregations, elements} = this.props;
 
-        //Review if the element has been downloaded
-        if (!(elementID in elements))
-            this.fetchElements(elementID, true);
+        //Download element at every detail view, to ensure latest available version
+        this.fetchElements(elementID, true);
 
         if (Object.keys(aggregations) == 0)
             this.fetchAggregations(true);
@@ -45,7 +44,7 @@ export default class ElementView extends React.Component {
     }
 
     fetchElements(element_id, initial) {
-        this.props.fetchElements(element_id, initial);
+        this.props.fetchElementsDetail(element_id, initial);
     }
 
     //Fetch all needed data

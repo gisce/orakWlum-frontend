@@ -36,17 +36,21 @@ export class ElementDetail extends Component {
     }
 
     render() {
-        const data = this.props.data;
-        const avg_info = this.props.avg_info;
+        const {withLosses, data, avg_info} = this.props;
+        const digitsToRound = 2;
 
         //open it by default
         const open = (this.props.open)?this.props.open:true;
 
         const total_cups = data.cups;
         const energy_total = data.energy_total;
+        const energy_total_with_losses = data.energy_with_losses_total;
         const total_invoices = data.invoices;
         const origins_data = data.origins;
         const tariffs_data = data.tariffs;
+
+        const expectedEnergy = (withLosses)? "energy_total" : "energy";
+        const expectedTotal = (withLosses)? energy_total_with_losses : energy_total;
 
         //Prepare CUPS count
         const num_cups = (total_cups) &&
@@ -71,7 +75,6 @@ export class ElementDetail extends Component {
                 />
             );
 
-
         //handle invoice types
         const invoice_types = (origins_data) &&
             Object.keys(origins_data).sort(
@@ -82,7 +85,7 @@ export class ElementDetail extends Component {
                 const entry = origins_data[origin];
 
                 const component_name = origin;
-                const component_value =  entry['energy'];
+                const component_value =  Math.round(parseFloat(entry[expectedEnergy]));
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
@@ -94,7 +97,7 @@ export class ElementDetail extends Component {
                         title={component_name}
                         value={component_value + " kWh"}
                         subvalue={"#" + component_subvalue}
-                        total={energy_total}
+                        total={expectedTotal}
                         percentage={true}
                         small={true}
                     />
@@ -119,9 +122,12 @@ export class ElementDetail extends Component {
                 const entry = tariffs_data[tariff];
 
                 const component_name = tariff;
-                const component_value =  entry['energy'];
+                const component_value =  Math.round(parseFloat(entry[expectedEnergy]));
+
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
+
+                console.log(expectedTotal);
 
                 //const color = colors[original_position];  //use API order field
                 const color = colors[i];
@@ -132,7 +138,7 @@ export class ElementDetail extends Component {
                         title={ (component_name!="")?component_name:"Empty"}
                         value={component_value + " kWh"}
                         subvalue={"#" + component_subvalue}
-                        total={energy_total}
+                        total={expectedTotal}
                         percentage={true}
                         small={true}
                         color={color}
@@ -194,6 +200,7 @@ export class ElementDetail extends Component {
 ElementDetail.propTypes = {
     data: PropTypes.object.isRequired,
     open: PropTypes.bool,
+    withLosses: PropTypes.bool,
     colors: PropTypes.object,
     avg_info: PropTypes.object,
 };

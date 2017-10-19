@@ -93,8 +93,7 @@ export class ElementGraph extends Component {
     render() {
         const data = this.props.data;
         const components = this.props.components;
-
-        const howManyComponents = Object.keys(components).length;
+        const scale = (this.props.scale)?parseFloat(this.props.scale) : "auto";
 
         const stacked = (this.props.stacked)?"1":null;
 
@@ -107,6 +106,8 @@ export class ElementGraph extends Component {
         const isAnimated = (this.props.animated)?this.props.animated:false;
 
         if (data && components) {
+            const howManyComponents = Object.keys(components).length;
+
             /* Aggregations selector
             const areas = prediction.map(function(day, i) {
                 return <Area key={"area"+i} type='monotone' dataKey={day.day} stackId={stacked} stroke={colors[i]} fill={colors[i]} />
@@ -189,7 +190,7 @@ export class ElementGraph extends Component {
               const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
               const xaxisLite = <XAxis dataKey="name"/>;
 
-              const yaxis = <YAxis label={unit}/>;
+              const yaxis = (scale != null)? <YAxis label={unit} type={"number"} domain={[0, scale]}/> : <YAxis label={unit}/>;
               const yaxisLite = <YAxis/>;
 
               const grid = <CartesianGrid strokeDasharray="3 3"/>;

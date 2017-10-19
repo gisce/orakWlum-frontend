@@ -178,7 +178,6 @@ export class ElementsDashboard extends Component {
 
     //Change the type
     updateType = (value) => {
-        console.log(value)
         this.setState({
             selected_type: value,
             searchText: value,
@@ -444,7 +443,6 @@ export class ElementsDashboard extends Component {
         let events = [];
         count=0;
         for ( let [key, value] of Object.entries(elements_matched)) {
-            //console.log(value);
 
             let an_entry = {
                 'title': value.name,
@@ -589,6 +587,8 @@ export class ElementsDashboard extends Component {
               </div>
           );
         };
+
+
 
         // The calendar
         const the_calendar =
