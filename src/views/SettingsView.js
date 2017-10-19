@@ -25,9 +25,9 @@ export default class SettingsView extends React.Component {
     componentDidMount() {
         const {sources} = this.props;
 
-        if (!sources || Object.keys(sources).length == 0) {
+        //if (!sources || Object.keys(sources).length == 0) {
             this.fetchData();
-        }
+        //}
     }
 
     fetchData() {

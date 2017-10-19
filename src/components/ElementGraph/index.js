@@ -93,7 +93,7 @@ export class ElementGraph extends Component {
     render() {
         const data = this.props.data;
         const components = this.props.components;
-
+        const scale = (this.props.scale)?parseFloat(this.props.scale) : "auto";
 
         const stacked = (this.props.stacked)?"1":null;
 
@@ -190,7 +190,7 @@ export class ElementGraph extends Component {
               const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
               const xaxisLite = <XAxis dataKey="name"/>;
 
-              const yaxis = <YAxis label={unit}/>;
+              const yaxis = (scale != null)? <YAxis label={unit} type={"number"} domain={[0, scale]}/> : <YAxis label={unit}/>;
               const yaxisLite = <YAxis/>;
 
               const grid = <CartesianGrid strokeDasharray="3 3"/>;

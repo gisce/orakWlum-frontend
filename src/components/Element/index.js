@@ -160,6 +160,7 @@ export class Elementt extends Component {
         this.state = {
             proposal: props.proposal,
             proposalTable: false,
+            withLosses: true,
             aggregations: props.aggregations,
             aggregationSelected: props.aggregations[0].id,
             message_text: props.message_text,
@@ -204,13 +205,15 @@ export class Elementt extends Component {
     }
 
     prepareData = (prediction, aggregations) => {
+        const {withLosses} = this.state;
+
         if (prediction && Object.keys(prediction).length > 0) {
 
             for (let [key, an_agg]of Object.entries(aggregations)) {
                 const current_agg_id = an_agg.id;
 
                 //The Prediction of current aggregation
-                const predictionAdapted = adaptProposalData(prediction['result']);
+                const predictionAdapted = adaptProposalData(prediction['result'], withLosses);
                 const current = predictionAdapted[current_agg_id];
 
                 //Initialize modifications for current aggregation just if empty
@@ -236,6 +239,19 @@ export class Elementt extends Component {
             this.summary = (prediction.summary != undefined)
                 ? prediction.summary
                 : null;
+
+            //Identify the scale
+            this.scale = 0
+            const max_total = ("max_total" in this.summary)?this.summary["max_total"]:0;
+            const max_total_with_losses = ("max_total_with_losses" in this.summary)?this.summary["max_total_with_losses"]:0;
+
+            //Fetch the max to define the scale and the order of magnitude
+            const max_of_pair = Math.max(max_total, max_total_with_losses);
+            //Calc the order of magnitude using log and pow
+            const order_of_magnitude = Math.pow(10, Math.floor(Math.log(max_of_pair) / Math.LN10 + 0.000000001))/10;
+
+            //Round UP the scale to the next beautiful number based on current order of magnitude
+            this.scale = Math.ceil(max_of_pair / order_of_magnitude) * order_of_magnitude;
         }
     }
 
@@ -280,6 +296,12 @@ export class Elementt extends Component {
 
     toogleElementRender = (event, status) => {
         this.setState({proposalTable: status, message_open: false});
+        this.animateChart = false;
+    };
+
+    // Handle if a Element must be rendered with Losses or just measures
+    toogleElementTotals = (event, status) => {
+        this.setState({withLosses: status, message_open: false});
         this.animateChart = false;
     };
 
@@ -562,10 +584,9 @@ export class Elementt extends Component {
         const proposal = this.props.proposal;
         this.prepareData(this.props.proposal.prediction, this.props.aggregations)
 
-
         const {notes} = proposal;
 
-        const proposalTable = this.state.proposalTable;
+        const {proposalTable, withLosses} = this.state;
 
         const historical = (proposal.historical == false)
             ? false
@@ -753,6 +774,34 @@ export class Elementt extends Component {
 }
         </div>)
 
+        const LossesHelp = "Render an Element with their related losses or just their measures"
+
+        // The Element graph toogle! //to switch between table and chart
+        const withLossesToggle = (withPicture) && <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
+            {(withLosses)
+                ? <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
+                        <div className="col-xs-2" style={styles.labelToggle}>
+                        </div>
+                        <div id="toogleTotals" className="col-xs-3">
+                            <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
+                        </div>
+                        <div className="col-xs-2" style={styles.toggle}>
+                            <b>Losses</b>
+                        </div>
+                    </div>
+                : <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
+                    <div className="col-xs-2" style={styles.labelToggle}>
+                    </div>
+                    <div id="toogleTotals" className="col-xs-3">
+                        <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
+                    </div>
+                    <div className="col-xs-2" style={styles.toggle}>
+                        Losses
+                    </div>
+                </div>
+}
+        </div>
+
         const adaptedElement = Object.assign({}, proposal, {
             start_date: start_date.toDate(),
             end_date: end_date.toDate()
@@ -842,7 +891,7 @@ export class Elementt extends Component {
             if (withPicture && prediction && Object.keys(prediction).length > 0)
                 proposalPicture = (proposalTable)
                     ? <ElementTable stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} unit={"kWh"}/>
-                    : <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"}/>
+                    : <ElementGraph stacked={true} data={this.data[aggregationSelected]} components={this.components[aggregationSelected]} height={500} animated={this.animateChart} unit={"kWh"} scale={this.scale}/>
         }
 
         const disableDetail = (element_type == "concatenation")
@@ -881,8 +930,9 @@ export class Elementt extends Component {
                         avg_info={{
                             'average': this.average[aggregationSelected],
                             'data': this.data[aggregationSelected],
-                            'components': this.components[aggregationSelected]
+                            'components': this.components[aggregationSelected],
                         }}
+                        withLosses={withLosses}
                     />
                 </div>
             </div>;
@@ -982,6 +1032,7 @@ export class Elementt extends Component {
                     {proposalAggregations}
 
                     {proposalPictureToggle}
+                    {withLossesToggle}
                 </div>
 
                 <CardText>
