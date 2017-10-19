@@ -142,7 +142,7 @@ export class Connection extends Component {
 			.on('elements.file', (content) => {
                 // Prepare the attachment just for the requester client
                 if (window.socket.id == content.client_id) {
-    				console.debug('[Websocket] Exported element received');
+    				        console.debug('[Websocket] Exported element received');
                     const file_buffer = Buffer.from(content.result);
                     const file = new Blob( [ file_buffer ]);
                     FileSaver.saveAs(file, content.filename);
