@@ -553,6 +553,15 @@ export class Elementt extends Component {
         this.props.exportElement(proposalID);
     };
 
+
+    exportElementDetail = (event, proposalID) => {
+        event.preventDefault();
+
+        this.setState({animateChart: false, message_text: "Exporting current proposal", confirmation_open: false});
+
+        this.props.exportElementDetail(proposalID);
+    };
+
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
@@ -689,6 +698,7 @@ export class Elementt extends Component {
         const duplicateElement = this.duplicateElementQuestion;
         const deleteElement = this.deleteElementQuestion;
         const exportElement = this.exportElement;
+        const exportElementDetail = this.exportElementDetail;
 
         const {
             detail_open,
@@ -910,7 +920,8 @@ export class Elementt extends Component {
                 <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
                 <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
                 <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
-                <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to a XLS file"} disabled={disableExport}/>
+                <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
+                <FlatButton label="Detail" icon={<ExportIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to an XLS file"} disabled={disableExport}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
