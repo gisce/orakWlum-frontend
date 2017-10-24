@@ -124,28 +124,27 @@ export class ElementTable extends Component {
                 </TableRowColumn>
             );
 
-            let totalSum = 0;
+            let totalSum = Number(0);
 
             componentsKeys.map(function (comp, j) {
-                let value = (data[i][comp])?data[i][comp]:0;
+                let value = Number( (data[i][comp])?data[i][comp]:0 ) ;
                 cells.push(
                     <TableRowColumn
                         key={"Column"+i+j}
                         style={styles.alignCenter}
                     >
-                        {value}
+                        {roundUp(value, precision)}
                     </TableRowColumn>
                 );
 
                 //the total for this hour
-                totalSum = roundUp(Number(totalSum) + Number(value), precision);
+                totalSum = totalSum + value;
 
                 //the total of this aggr component
-                allTotalSum[j] = roundUp(Number(allTotalSum[j]) + Number(value), precision);
+                allTotalSum[j] = allTotalSum[j] + value;
             })
 
             if (totals) {
-
                 // Push the total for this row
                 cells.push(
                     <TableRowColumn
