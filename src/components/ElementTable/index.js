@@ -151,7 +151,7 @@ export class ElementTable extends Component {
                         key={"Column"+i+"TOTAL"}
                         style={ Object.assign({},styles.selectedElement, {textOverflow:styles.alignCenter.textOverflow})}
                     >
-                        <b>{totalSum}</b>
+                        <b>{roundUp(totalSum, precision)}</b>
                     </TableRowColumn>
                 )
             }
@@ -200,7 +200,7 @@ export class ElementTable extends Component {
                         key={"tableRowTotalHeader"}
                         style={styles.alignCenter}
                     >
-                        <b>{totalSum}</b>
+                        <b>{roundUp(totalSum, precision)}</b>
                     </TableRowColumn>
                 </TableRow>
             );
