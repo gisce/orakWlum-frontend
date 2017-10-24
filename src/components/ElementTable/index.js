@@ -175,7 +175,7 @@ export class ElementTable extends Component {
                         key={"tableRowTotal"+z}
                         style={styles.alignCenter}
                     >
-                        {component}
+                        {roundUp(component, precision)}
                     </TableRowColumn>
                 );
                 totalSum += component;
