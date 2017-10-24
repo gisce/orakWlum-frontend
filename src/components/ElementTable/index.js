@@ -7,6 +7,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
 import {adaptProposalData} from '../../utils/graph';
+import {roundUp} from '../../utils/misc';
 import {colors} from '../../constants';
 
 const styles = {
@@ -103,6 +104,7 @@ export class ElementTable extends Component {
             </TableRowColumn>
         );
 
+        const precision = 2;
         //Prepare rows and cells
         let rows=[];
 
@@ -136,10 +138,10 @@ export class ElementTable extends Component {
                 );
 
                 //the total for this hour
-                totalSum = parseInt(totalSum) + parseInt(value);
+                totalSum = roundUp(Number(totalSum) + Number(value), precision);
 
                 //the total of this aggr component
-                allTotalSum[j] = parseInt(allTotalSum[j]) + parseInt(value);
+                allTotalSum[j] = roundUp(Number(allTotalSum[j]) + Number(value), precision);
             })
 
             if (totals) {

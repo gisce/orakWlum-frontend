@@ -54,7 +54,6 @@ export function adaptProposalData(prediction, withLosses=false) {
 
                 const title=entry['title'];
 
-
                 if (current_aggregation == "000") {
                     console.log(entry['amount']);
                     sum_total_rolf += entry['amount']
@@ -65,14 +64,14 @@ export function adaptProposalData(prediction, withLosses=false) {
                     tmp_result[hour]={total: 0, name: hour};
 
                 tmp_result[hour][title] = amount;
-                tmp_result[hour]["total"] = roundUp(parseInt(tmp_result[hour]["total"]) + parseInt(amount), digitsToRound);
+                tmp_result[hour]["total"] = roundUp(Number(tmp_result[hour]["total"]) + Number(amount), digitsToRound);
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
                     tmp_average[hour]={total: 0, name: hour};
 
                 tmp_average[hour][title] = avg;
-                tmp_average[hour]["total"] = roundUp(parseInt(tmp_average[hour]["total"]) + parseInt(avg), digitsToRound);
+                tmp_average[hour]["total"] = roundUp(Number(tmp_average[hour]["total"]) + Number(avg), digitsToRound);
 
                 result[current_aggregation]['components'][title] = {
                     'title': title,
