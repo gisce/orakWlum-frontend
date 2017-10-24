@@ -120,7 +120,7 @@
     "materialized-reactions": "latest",
     "offline-plugin": "latest",
     "socket.io-client": "latest",
-    "redux-persist": "latest",
+    "redux-persist": "^4",
     "react-notification-system": "latest",
     "localforage": "^1.5.0",
     "deepmerge": "^1.5.2"
