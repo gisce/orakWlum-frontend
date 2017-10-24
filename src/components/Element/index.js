@@ -270,11 +270,11 @@ export class Elementt extends Component {
                 const current_agg_id = an_agg.id;
 
                 //Update the total for this hour
-                this.data[current_agg_id][hour_position]["total"] = parseInt(this.data[current_agg_id][hour_position]["total"]) + parseInt(hour_difference)
+                this.data[current_agg_id][hour_position]["total"] = Number(this.data[current_agg_id][hour_position]["total"]) + Number(hour_difference)
 
                 //Update the tuned amount just for the others aggregations
                 if (current_agg_id != this.state.aggregationSelected) {
-                    this.data[current_agg_id][hour_position]["tuned"] = parseInt(this.data[current_agg_id][hour_position]["tuned"]) + parseInt(hour_difference)
+                    this.data[current_agg_id][hour_position]["tuned"] = Number(this.data[current_agg_id][hour_position]["tuned"]) + Number(hour_difference)
 
                     //Add the modification value to the modifications object
                     this.modifications[current_agg_id][hour_position] = {
@@ -286,7 +286,7 @@ export class Elementt extends Component {
                     //Add the modification to the altered field
                     this.modifications[current_agg_id][hour_position] = {
                         ...this.modifications[current_agg_id][hour_position],
-                        [updated_field]: parseInt(total), //save modification as updated_field
+                        [updated_field]: Number(total), //save modification as updated_field
                         ["total"]: this.data[current_agg_id][hour_position]["total"], //save updated totals
                     }
                 }

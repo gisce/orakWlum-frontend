@@ -65,3 +65,10 @@ export const formatDate = (date) => {
 export const formatDateFromAPI = (date) => {
     return date_to_string(date, "%Y-%m-%d");
 }
+
+//RoundUP with fixed decimals
+export const roundUp = (num, dec) => {
+  const precision = Math.abs(parseInt(dec)) || 0;
+  let multiplier = Math.pow(10, precision);
+  return Number(Math.ceil(num * multiplier) / multiplier).toFixed(precision);
+}

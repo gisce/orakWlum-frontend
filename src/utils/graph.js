@@ -1,5 +1,5 @@
 import { localized_time, day_month_format, hour_unique_format } from '../constants'
-
+import {roundUp} from '../utils/misc'
 
 function convertTimestampToString(timestamp){
     return localized_time(timestamp).format(hour_unique_format);
@@ -20,6 +20,7 @@ export function adaptProposalData(prediction, withLosses=false) {
     const digitsToRound = 2;
 
     Object.keys(proposalData).map( function(current_aggregation, j) {
+
             const aggregation = proposalData[current_aggregation];
 
             //initialize result for each aggregation
@@ -35,37 +36,51 @@ export function adaptProposalData(prediction, withLosses=false) {
 
             //set current aggregation ID and fields
 
-
             result[current_aggregation]['aggregation']=aggregation['aggregation']['fields'];
             result[current_aggregation]['aggregationID']=aggregation['aggregation']['id'];
+
+
+            console.log("\n\n\n");
+            console.log("\n\n\n");
+            let sum_total_rolf = 0;
 
             //Adapt the SUM
             const the_sum = aggregation['result'];
             the_sum.map( function(entry, i) {
+
                 const hour=entry['hour'];
-                const amount=entry[expectedAmount].toFixed(digitsToRound);
-                const avg=entry[expectedAvg].toFixed(digitsToRound);
+                const amount=roundUp(entry[expectedAmount], digitsToRound);
+                const avg=roundUp(entry[expectedAvg], digitsToRound);
 
                 const title=entry['title'];
+
+                if (current_aggregation == "000") {
+                    console.log(entry['amount']);
+                    sum_total_rolf += entry['amount']
+                }
 
                 // initialize result hour with an empty dict
                 if (!tmp_result[hour])
                     tmp_result[hour]={total: 0, name: hour};
 
                 tmp_result[hour][title] = amount;
-                tmp_result[hour]["total"] = (parseInt(tmp_result[hour]["total"]) + parseInt(amount)).toFixed(digitsToRound);
+                tmp_result[hour]["total"] = roundUp(Number(tmp_result[hour]["total"]) + Number(amount), digitsToRound);
 
                 // initialize average hour with an empty dict
                 if (!tmp_average[hour])
                     tmp_average[hour]={total: 0, name: hour};
 
                 tmp_average[hour][title] = avg;
-                tmp_average[hour]["total"] = (parseInt(tmp_average[hour]["total"]) + parseInt(avg)).toFixed(digitsToRound);
+                tmp_average[hour]["total"] = roundUp(Number(tmp_average[hour]["total"]) + Number(avg), digitsToRound);
 
                 result[current_aggregation]['components'][title] = {
                     'title': title,
                 };
             });
+
+            if (current_aggregation == "000") {
+              console.log("TROTAL!!!", sum_total_rolf);
+            }
 
             //Adapt the tmp_result dict to an ordered list (based on the timestamp, incremental)
             Object.keys(tmp_result).sort().map( function( tmp_entry, i) {

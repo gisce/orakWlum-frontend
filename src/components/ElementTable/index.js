@@ -7,6 +7,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
 import {adaptProposalData} from '../../utils/graph';
+import {roundUp} from '../../utils/misc';
 import {colors} from '../../constants';
 
 const styles = {
@@ -103,6 +104,7 @@ export class ElementTable extends Component {
             </TableRowColumn>
         );
 
+        const precision = 2;
         //Prepare rows and cells
         let rows=[];
 
@@ -122,35 +124,34 @@ export class ElementTable extends Component {
                 </TableRowColumn>
             );
 
-            let totalSum = 0;
+            let totalSum = Number(0);
 
             componentsKeys.map(function (comp, j) {
-                let value = (data[i][comp])?data[i][comp]:0;
+                let value = Number( (data[i][comp])?data[i][comp]:0 ) ;
                 cells.push(
                     <TableRowColumn
                         key={"Column"+i+j}
                         style={styles.alignCenter}
                     >
-                        {value}
+                        {roundUp(value, precision)}
                     </TableRowColumn>
                 );
 
                 //the total for this hour
-                totalSum = parseInt(totalSum) + parseInt(value);
+                totalSum = totalSum + value;
 
                 //the total of this aggr component
-                allTotalSum[j] = parseInt(allTotalSum[j]) + parseInt(value);
+                allTotalSum[j] = allTotalSum[j] + value;
             })
 
             if (totals) {
-
                 // Push the total for this row
                 cells.push(
                     <TableRowColumn
                         key={"Column"+i+"TOTAL"}
                         style={ Object.assign({},styles.selectedElement, {textOverflow:styles.alignCenter.textOverflow})}
                     >
-                        <b>{totalSum}</b>
+                        <b>{roundUp(totalSum, precision)}</b>
                     </TableRowColumn>
                 )
             }
@@ -174,7 +175,7 @@ export class ElementTable extends Component {
                         key={"tableRowTotal"+z}
                         style={styles.alignCenter}
                     >
-                        {component}
+                        {roundUp(component, precision)}
                     </TableRowColumn>
                 );
                 totalSum += component;
@@ -199,7 +200,7 @@ export class ElementTable extends Component {
                         key={"tableRowTotalHeader"}
                         style={styles.alignCenter}
                     >
-                        <b>{totalSum}</b>
+                        <b>{roundUp(totalSum, precision)}</b>
                     </TableRowColumn>
                 </TableRow>
             );
