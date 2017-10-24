@@ -70,5 +70,5 @@ export const formatDateFromAPI = (date) => {
 export const roundUp = (num, dec) => {
   const precision = Math.abs(parseInt(dec)) || 0;
   let multiplier = Math.pow(10, precision);
-  return Number(Math.round(num * multiplier) / multiplier);
+  return Number(Math.ceil(num * multiplier) / multiplier).toFixed(precision);
 }
