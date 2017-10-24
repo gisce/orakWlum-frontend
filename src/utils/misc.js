@@ -67,9 +67,8 @@ export const formatDateFromAPI = (date) => {
 }
 
 //RoundUP with fixed decimals
-export const roundUp = (num,dec) => {
-    dec= dec || 0;
-    let  s=String(num);
-    if(num%1)s= s.replace(/5$/, '6');
-    return Number((+s).toFixed(dec));
+export const roundUp = (num, dec) => {
+  const precision = Math.abs(parseInt(dec)) || 0;
+  let multiplier = Math.pow(10, precision);
+  return Number(Math.round(num * multiplier) / multiplier);
 }
