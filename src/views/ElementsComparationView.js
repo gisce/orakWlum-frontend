@@ -37,8 +37,7 @@ export default class ElementsComparationView extends React.Component {
         if (Object.keys(aggregations) == 0)
             this.fetchAggregations(true);
 
-        if (!(this.idComp in elements_volatile))
-            this.fetchComparation();
+        this.fetchComparation();
 
         if (!(this.idA in elements))
             this.fetchElement(this.idA)
