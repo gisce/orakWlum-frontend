@@ -37,13 +37,12 @@ export default class ElementsComparationView extends React.Component {
         if (Object.keys(aggregations) == 0)
             this.fetchAggregations(true);
 
+        //Fetch Comparation
         this.fetchComparation();
 
-        if (!(this.idA in elements))
-            this.fetchElement(this.idA)
-
-        if (!(this.idB in elements))
-            this.fetchElement(this.idB)
+        //Fetch both elements
+        this.fetchElement(this.idA)
+        this.fetchElement(this.idB)
     }
 
     fetchAggregations(initial) {
