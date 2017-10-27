@@ -50,6 +50,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
+import ExportDetailIcon from 'material-ui/svg-icons/file/cloud-download';
 import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import TuneIcon from 'material-ui/svg-icons/editor/border-all';
 import SaveIcon from 'material-ui/svg-icons/content/save';
@@ -921,7 +922,7 @@ export class Elementt extends Component {
                 <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
                 <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
-                <FlatButton label="Detail" icon={<ExportIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to an XLS file"} disabled={disableExport}/>
+                <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExport}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
