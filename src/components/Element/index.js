@@ -911,6 +911,9 @@ export class Elementt extends Component {
         const disableExport = (element_type == "comparation")
             ? true
             : false;
+        const disableExportDetail = (element_type == "comparation" || element_type == "concatenation" )
+            ? true
+            : false;
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
@@ -922,7 +925,7 @@ export class Elementt extends Component {
                 <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
                 <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
-                <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExport}/>
+                <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
