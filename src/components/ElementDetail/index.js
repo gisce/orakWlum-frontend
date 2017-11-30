@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import CupsIcon from 'material-ui/svg-icons/communication/contacts';
 import InvoicesIcon from 'material-ui/svg-icons/editor/format-list-numbered';
+import LossIcon from 'material-ui/svg-icons/av/shuffle';
 
 import {orange400} from 'material-ui/styles/colors';
 
@@ -43,6 +44,7 @@ export class ElementDetail extends Component {
         const open = (this.props.open)?this.props.open:true;
 
         const total_cups = data.cups;
+        const loss_versions_list = data.loss_versions;
         const energy_total = data.energy_total;
         const energy_total_with_losses = data.energy_with_losses_total;
         const total_invoices = data.invoices;
@@ -74,6 +76,17 @@ export class ElementDetail extends Component {
                     subvalueInfo="Count of CUPS"
                 />
             );
+
+          //Prepare Loss versions
+          const loss_versions = (loss_versions_list) &&
+              (
+                  <Indicator
+                      title="Loss Version"
+                      value={loss_versions_list}
+                      icon={<LossIcon style={styles.icon}/>}
+                  />
+              );
+
 
         //handle invoice types
         const invoice_types = (origins_data) &&
@@ -170,6 +183,8 @@ export class ElementDetail extends Component {
                     {num_cups}
 
                     {num_invoices}
+
+                    {loss_versions}
                     <br/>
                     <br/>
 
