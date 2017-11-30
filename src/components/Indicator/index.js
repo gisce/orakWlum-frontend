@@ -167,6 +167,7 @@ export class Indicator extends Component {
 Indicator.propTypes = {
     title: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.string,
         PropTypes.number,
     ]).isRequired,
