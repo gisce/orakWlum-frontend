@@ -140,8 +140,6 @@ export class ElementDetail extends Component {
                 const component_subvalue =  entry['count'];
                 const original_position =  entry['order'];
 
-                console.log(expectedTotal);
-
                 //const color = colors[original_position];  //use API order field
                 const color = colors[i];
 

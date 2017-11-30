@@ -40,8 +40,6 @@ export function adaptProposalData(prediction, withLosses=false) {
             result[current_aggregation]['aggregationID']=aggregation['aggregation']['id'];
 
 
-            console.log("\n\n\n");
-            console.log("\n\n\n");
             let sum_total_rolf = 0;
 
             //Adapt the SUM
@@ -55,7 +53,6 @@ export function adaptProposalData(prediction, withLosses=false) {
                 const title=entry['title'];
 
                 if (current_aggregation == "000") {
-                    console.log(entry['amount']);
                     sum_total_rolf += entry['amount']
                 }
 
@@ -77,10 +74,6 @@ export function adaptProposalData(prediction, withLosses=false) {
                     'title': title,
                 };
             });
-
-            if (current_aggregation == "000") {
-              console.log("TROTAL!!!", sum_total_rolf);
-            }
 
             //Adapt the tmp_result dict to an ordered list (based on the timestamp, incremental)
             Object.keys(tmp_result).sort().map( function( tmp_entry, i) {
