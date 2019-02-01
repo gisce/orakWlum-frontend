@@ -118,7 +118,7 @@
     "raven-for-redux": "latest",
     "prop-types": "^15.5.10",
     "materialized-reactions": "latest",
-    "offline-plugin": "latest",
+    "offline-plugin": "^4.9.0",
     "socket.io-client": "latest",
     "redux-persist": "^4",
     "react-notification-system": "latest",
