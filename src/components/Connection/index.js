@@ -10,7 +10,8 @@ import { dispatchNewRoute, force_logout } from '../../utils/http_functions';
 
 var NotificationSystem = require('react-notification-system');
 
-var FileSaver = require('../../../node_modules/file-saver/FileSaver.min.js');
+import saveAs from 'file-saver';
+
 
 import { localized_time } from '../../constants'
 
@@ -145,7 +146,7 @@ export class Connection extends Component {
     				        console.debug('[Websocket] Exported element received');
                     const file_buffer = Buffer.from(content.result);
                     const file = new Blob( [ file_buffer ]);
-                    FileSaver.saveAs(file, content.filename);
+                    saveAs(file, content.filename);
 
                     if (!content.silent) {
                         this.prepareNotification(content, "XLS document exported");
