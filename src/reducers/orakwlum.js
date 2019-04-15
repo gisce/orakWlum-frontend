@@ -1,10 +1,11 @@
-import {RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO, FETCH_VERSION_REQUEST, RECEIVE_VERSION, UPDATE_TUNED_VALUES} from '../constants';
+import {localized_time, UPDATE_CALENDAR_DATE, RECEIVE_ELEMENTS, FETCH_ELEMENTS_REQUEST, OVERRIDE_ELEMENTS, OVERRIDE_MESSAGE, OVERRIDE_AGGREGATIONS, FETCH_AGGREGATIONS_REQUEST, RECEIVE_ELEMENTS_VOLATILE, RECEIVE_SETTINGS, UPDATE_SETTINGS_REQUEST, RECEIVE_PROFILE, FETCH_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_OK, UPDATE_PROFILE_KO, RECEIVE_PROFILE_KO, FETCH_VERSION_REQUEST, RECEIVE_VERSION, UPDATE_TUNED_VALUES} from '../constants';
 import {createReducer} from '../utils/misc';
 
 //deepmerge lib
 const deepmerge = require('deepmerge')
 
 const initialState = {
+    calendar_date: localized_time().toDate(),
     isFetching: false,
     loaded: false,
     message: "",
@@ -22,6 +23,11 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
+    
+    [UPDATE_CALENDAR_DATE]: (state, payload) => Object.assign({}, state, {
+        calendar_date: payload.calendar_date,
+    }),
+
     [RECEIVE_ELEMENTS_VOLATILE]: (state, payload) => Object.assign({}, state, {
         elements_volatile: (state.elements_volatile == undefined || state.elements_volatile == null || Object.keys(state.elements_volatile).length == 0) ? payload.elements : deepmerge(state.elements_volatile, payload.elements),
 
