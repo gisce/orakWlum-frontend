@@ -34,6 +34,7 @@ import {
     RECEIVE_VERSION,
     RECEIVE_VERSION_ERROR,
 
+    UPDATE_CALENDAR_DATE,
 } from '../constants/index'
 
 import {
@@ -213,9 +214,15 @@ export function overrideMessage(response, initial) {
 
 
 
-
-
-
+export function update_calendar_date(newDate) {
+    console.log("SETTING DATE", newDate)
+    return {
+        type: UPDATE_CALENDAR_DATE,
+        payload: {
+            calendar_date: newDate,
+        },
+    };
+}
 //Handle how to reduce aggregations
 export function overrideAggregations(response, initial) {
     const message = (initial)?null:"Aggregations list updated";
