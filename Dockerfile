@@ -8,7 +8,7 @@ COPY . /opt/orakWlum-frontend
 WORKDIR /opt/orakWlum-frontend
 
 # Install node dependencies
-RUN cd /opt/orakWlum-frontend && npm install
+RUN cd /opt/orakWlum-frontend && yarn install
 
 # Build page
 RUN chmod +x /opt/orakWlum-frontend/utils/build.sh
