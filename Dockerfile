@@ -8,7 +8,7 @@ COPY . /opt/orakWlum-frontend
 WORKDIR /opt/orakWlum-frontend
 
 # Install node dependencies
-RUN cd /opt/orakWlum-frontend && npm install
+RUN cd /opt/orakWlum-frontend && yarn install
 
 # Build page
 RUN chmod +x /opt/orakWlum-frontend/utils/build.sh
@@ -25,7 +25,10 @@ RUN ln -s /opt/orakWlum-frontend /opt/oraKWlum-frontend
 RUN chmod -R +r /var/www
 
 # Install nginx
-RUN apt-get update
+RUN echo "deb [check-valid-until=no] http://cdn-fastly.deb.debian.org/debian jessie main" > /etc/apt/sources.list.d/jessie.list
+RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+RUN apt-get -o Acquire::Check-Valid-Until=false update
 RUN apt-get -y install nginx
 
 # Expose HTTP listeners

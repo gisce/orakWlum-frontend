@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run build:production
+yarn run build:production
