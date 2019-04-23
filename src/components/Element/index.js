@@ -542,8 +542,7 @@ export class Elementt extends Component {
     deleteElement = (proposalID) => {
         this.animateChart = false;
         this.setState({message_open: true, confirmation_open: false});
-        const token = this.props.token;
-        this.props.deleteElement(token, proposalID);
+        this.props.deleteElement(proposalID);
     };
 
     exportElement = (event, proposalID) => {

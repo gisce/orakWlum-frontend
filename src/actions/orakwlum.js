@@ -17,6 +17,7 @@ import {
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
     UPDATE_SETTINGS_REQUEST,
+    DELETE_PROPOSAL_REQUEST,
 
     FETCH_PROFILE_REQUEST,
     RECEIVE_PROFILE,
@@ -515,6 +516,19 @@ export function saveTunedValues(id, modifications) {
 
         //Save at API
         ask_the_api("modifications.update", {"element_id": id, modifications: modifications});
+    };
+}
+
+export function deleteElementRequest() {
+    return {
+        type: DELETE_PROPOSAL_REQUEST,
+    };
+}
+
+export function deleteElement(element) {
+    return (dispatch) => {
+        dispatch(deleteElementRequest());
+        ask_the_api("elements.delete", element);
     };
 }
 
