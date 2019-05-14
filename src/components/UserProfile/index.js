@@ -166,7 +166,7 @@ export class UserProfile extends Component {
         const emailHash = MD5(profile.email);
 
         //Load gravatar img or default from github
-        const image = "https://www.gravatar.com/avatar/"+emailHash+"?d=https://raw.githubusercontent.com/gisce/oraKWlum-frontend/master/www/public/images/user.jpg";
+        const image = "https://www.gravatar.com/avatar/"+emailHash+"?d=https://raw.githubusercontent.com/gisce/orakWlum-frontend/master/www/public/images/user.jpg";
 
 
         const {statusText, statusType, status} = this.props.profile;
