@@ -41,7 +41,7 @@ RUN cp /opt/orakWlum-frontend/conf/nginx.conf /etc/nginx/nginx.conf
 #ADD certs /opt/certs
 
 # Set okW vhost config file
-RUN cp /opt/orakWlum-frontend/conf/production.conf /etc/nginx/sites-enabled/default
+RUN cp /opt/orakWlum-frontend/conf/production_nossl.conf /etc/nginx/sites-enabled/default
 
 # Create default logs directories
 RUN mkdir -p /var/log/orakwlum/
