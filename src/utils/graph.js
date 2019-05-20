@@ -42,37 +42,42 @@ export function adaptProposalData(prediction, withLosses=false) {
 
             let sum_total_rolf = 0;
 
+            let total_hours = 0;
+
             //Adapt the SUM
             const the_sum = aggregation['result'];
             the_sum.map( function(entry, i) {
 
-                const hour=entry['hour'];
-                const amount=roundUp(entry[expectedAmount], digitsToRound);
-                const avg=roundUp(entry[expectedAvg], digitsToRound);
+                if (total_hours < 24) {
+                    const hour=entry['hour'];
+                    const amount=roundUp(entry[expectedAmount], digitsToRound);
+                    const avg=roundUp(entry[expectedAvg], digitsToRound);
 
-                const title=entry['title'];
+                    const title=entry['title'];
 
-                if (current_aggregation == "000") {
-                    sum_total_rolf += entry['amount']
+                    if (current_aggregation == "000") {
+                        sum_total_rolf += entry['amount']
+                    }
+
+                    // initialize result hour with an empty dict
+                    if (!tmp_result[hour])
+                        tmp_result[hour]={total: 0, name: hour};
+
+                    tmp_result[hour][title] = amount;
+                    tmp_result[hour]["total"] = roundUp(Number(tmp_result[hour]["total"]) + Number(amount), digitsToRound);
+
+                    // initialize average hour with an empty dict
+                    if (!tmp_average[hour])
+                        tmp_average[hour]={total: 0, name: hour};
+
+                    tmp_average[hour][title] = avg;
+                    tmp_average[hour]["total"] = roundUp(Number(tmp_average[hour]["total"]) + Number(avg), digitsToRound);
+
+                    result[current_aggregation]['components'][title] = {
+                        'title': title,
+                    };
+                    total_hours = total_hours + 1;
                 }
-
-                // initialize result hour with an empty dict
-                if (!tmp_result[hour])
-                    tmp_result[hour]={total: 0, name: hour};
-
-                tmp_result[hour][title] = amount;
-                tmp_result[hour]["total"] = roundUp(Number(tmp_result[hour]["total"]) + Number(amount), digitsToRound);
-
-                // initialize average hour with an empty dict
-                if (!tmp_average[hour])
-                    tmp_average[hour]={total: 0, name: hour};
-
-                tmp_average[hour][title] = avg;
-                tmp_average[hour]["total"] = roundUp(Number(tmp_average[hour]["total"]) + Number(avg), digitsToRound);
-
-                result[current_aggregation]['components'][title] = {
-                    'title': title,
-                };
             });
 
             //Adapt the tmp_result dict to an ordered list (based on the timestamp, incremental)
