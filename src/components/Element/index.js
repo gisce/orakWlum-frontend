@@ -50,6 +50,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
+import ExportDetailIcon from 'material-ui/svg-icons/file/cloud-download';
 import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import TuneIcon from 'material-ui/svg-icons/editor/border-all';
 import SaveIcon from 'material-ui/svg-icons/content/save';
@@ -354,7 +355,7 @@ export class Elementt extends Component {
         this.confirmation.text =
             <div>
                 <p>The Element will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p>
-                <p>Are you sure about to
+                <p>Are you sure about to&nbsp;
                 <b>refresh this Element</b>?</p>
             </div>;
 
@@ -397,7 +398,7 @@ export class Elementt extends Component {
         this.confirmation.text =
             <div>
                 <p>The Element will be reprocessed using the last data on DB. It can take a few seconds...</p>
-                <p>Are you sure about to
+                <p>Are you sure about to&nbsp;
                 <b>reprocess this Element</b>?</p>
             </div>;
 
@@ -493,7 +494,7 @@ export class Elementt extends Component {
         this.confirmation.title = "Duplicate current Element";
         this.confirmation.text = <div>
             <p>The Element will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Element once it's cloned.</p>
-            <p>Are you sure about to
+            <p>Are you sure about to&nbsp;
                 <b>duplicate this Element</b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
@@ -529,7 +530,7 @@ export class Elementt extends Component {
         this.confirmation.title = "Delete current Element";
         this.confirmation.text = <div>
             <p>The Element will be deleted. This process can't be undone...</p>
-            <p>Are you sure about to
+            <p>Are you sure about to&nbsp;
                 <b>delete this Element</b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
@@ -541,8 +542,7 @@ export class Elementt extends Component {
     deleteElement = (proposalID) => {
         this.animateChart = false;
         this.setState({message_open: true, confirmation_open: false});
-        const token = this.props.token;
-        this.props.deleteElement(token, proposalID);
+        this.props.deleteElement(proposalID);
     };
 
     exportElement = (event, proposalID) => {
@@ -676,7 +676,7 @@ export class Elementt extends Component {
 
         const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
 
-        const subtitle = <span>Using {days[dayOfElement]}
+        const subtitle = <span>Using {days[dayOfElement]}&nbsp;
             {daysRangeStringPastString}</span>;
 
         const offset = (withPicture)
@@ -910,6 +910,9 @@ export class Elementt extends Component {
         const disableExport = (element_type == "comparation")
             ? true
             : false;
+        const disableExportDetail = (element_type == "comparation" || element_type == "concatenation" )
+            ? true
+            : false;
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
@@ -921,7 +924,7 @@ export class Elementt extends Component {
                 <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
                 <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
-                <FlatButton label="Detail" icon={<ExportIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to an XLS file"} disabled={disableExport}/>
+                <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
                 <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
 
@@ -1049,7 +1052,7 @@ export class Elementt extends Component {
                 <CardText>
                     {proposal.creation_date && <p>
                         <span>Element was created on {creationDate}
-                            {ownerText}</span>
+                            </span>
                     </p>
 }
                     {proposal.execution_date && <p>

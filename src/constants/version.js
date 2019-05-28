@@ -1,2 +1,2 @@
-export const version = "0.11.2a";
-export const version_pr = "233";
+export const version = "0.13.6a";
+export const version_pr = "296";

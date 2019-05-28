@@ -91,6 +91,7 @@ const styles = {
 
 function mapStateToProps(state) {
     return {
+        calendar_date: state.orakwlum.calendar_date,
         elements: state.orakwlum.elements,
         aggregations: state.orakwlum.aggregations,
         elements_by_date: state.orakwlum.elements_by_date,
@@ -108,10 +109,11 @@ function mapDispatchToProps(dispatch) {
 export class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
-        this.todayDate = localized_time();
+        this.todayDate = (typeof props.calendar_date  === "string") ?
+                new Date(props.calendar_date): props.calendar_date;
 
         this.calendar_settings = {
-            initialDate: this.todayDate.toDate(),
+            initialDate: this.todayDate,
             views: ['month'],
             defaultView: 'month',
             popup: true,
@@ -508,11 +510,13 @@ export class ElementsDashboard extends Component {
           const goToBack = () => {
             toolbar.date.setMonth(toolbar.date.getMonth() - 1);
             toolbar.onNavigate('prev');
+            this.props.update_calendar_date(toolbar.date);
           };
 
           const goToNext = () => {
             toolbar.date.setMonth(toolbar.date.getMonth() + 1);
             toolbar.onNavigate('next');
+            this.props.update_calendar_date(toolbar.date);
           };
 
           const goToCurrent = () => {
@@ -520,6 +524,7 @@ export class ElementsDashboard extends Component {
             toolbar.date.setMonth(now.getMonth());
             toolbar.date.setYear(now.getFullYear());
             toolbar.onNavigate('current');
+            this.props.update_calendar_date(toolbar.date);
           };
 
           const goToYear = (howManyYears) => {
@@ -528,6 +533,7 @@ export class ElementsDashboard extends Component {
 
             toolbar.date.setYear(resultingYear);
             toolbar.onNavigate('current');
+            this.props.update_calendar_date(toolbar.date);
           };
 
           const goToPrevYear = () => {goToYear(-1)};
@@ -596,7 +602,7 @@ export class ElementsDashboard extends Component {
                 selectable={(multiElementMode)?false:true}
                 events={events}
                 defaultView={this.calendar_settings.defaultView}
-                defaultDate={this.calendar_settings.initialDate}
+                defaultDate={this.todayDate}
                 popup={this.calendar_settings.popup}
                 views={this.calendar_settings.views}
                 eventPropGetter={e => this.colorizeEvents(e)}

@@ -17,6 +17,7 @@ import {
     FETCH_SETTINGS_REQUEST,
     RECEIVE_SETTINGS,
     UPDATE_SETTINGS_REQUEST,
+    DELETE_PROPOSAL_REQUEST,
 
     FETCH_PROFILE_REQUEST,
     RECEIVE_PROFILE,
@@ -34,6 +35,7 @@ import {
     RECEIVE_VERSION,
     RECEIVE_VERSION_ERROR,
 
+    UPDATE_CALENDAR_DATE,
 } from '../constants/index'
 
 import {
@@ -213,9 +215,15 @@ export function overrideMessage(response, initial) {
 
 
 
-
-
-
+export function update_calendar_date(newDate) {
+    console.log("SETTING DATE", newDate)
+    return {
+        type: UPDATE_CALENDAR_DATE,
+        payload: {
+            calendar_date: newDate,
+        },
+    };
+}
 //Handle how to reduce aggregations
 export function overrideAggregations(response, initial) {
     const message = (initial)?null:"Aggregations list updated";
@@ -508,6 +516,19 @@ export function saveTunedValues(id, modifications) {
 
         //Save at API
         ask_the_api("modifications.update", {"element_id": id, modifications: modifications});
+    };
+}
+
+export function deleteElementRequest() {
+    return {
+        type: DELETE_PROPOSAL_REQUEST,
+    };
+}
+
+export function deleteElement(element) {
+    return (dispatch) => {
+        dispatch(deleteElementRequest());
+        ask_the_api("elements.delete", element);
     };
 }
 
