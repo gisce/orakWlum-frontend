@@ -89,6 +89,7 @@ const types = {
 
 function mapStateToProps(state) {
     return {
+        creating: state.orakwlum.creating
     };
 }
 
@@ -235,6 +236,7 @@ export class ElementDefinition extends Component {
           sources_error_text: null,
 
           readyToNext: false,
+          creating: false
         };
 
         this.stepsLength = this.getSteps().length;
@@ -866,7 +868,7 @@ export class ElementDefinition extends Component {
                 label={texts.actions.applyChanges}
                 primary={true}
                 onTouchTap={(e) => this.endWorkflow(e)}
-                disabled={!readyToNext && stepIndex !== this.stepsLength-1}
+                disabled={(!readyToNext && stepIndex !== this.stepsLength-1) || this.props.creating}
               />
           :
               <RaisedButton

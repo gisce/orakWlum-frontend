@@ -12,6 +12,7 @@ import {
 
     DUPLICATE_PROPOSAL_REQUEST,
     CREATE_PROPOSAL_REQUEST,
+    CREATE_PROPOSAL_DONE,
     UPDATE_PROPOSAL_REQUEST,
 
     FETCH_SETTINGS_REQUEST,
@@ -428,10 +429,19 @@ export function createElementlRequest() {
     };
 }
 
+export function createElementDone() {
+    return {
+        type: CREATE_PROPOSAL_DONE
+    };
+}
+
 export function createElement(element) {
     return (dispatch) => {
         dispatch(createElementlRequest());
         ask_the_api("elements.create", element);
+        setTimeout(() => {
+            dispatch(createElementDone());
+        }, 5000)
     };
 }
 
