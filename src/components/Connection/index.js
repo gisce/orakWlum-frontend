@@ -122,6 +122,10 @@ export class Connection extends Component {
 
 			})
 
+			.on('elements.buy', (content) => {
+			    this.props.refreshElements(content.element_id);
+			})
+
 			.on('elements.extend', (content) => {
 				console.debug('[Websocket] Elements to extend received');
 				this.props.extendElements(content, initial);
