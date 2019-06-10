@@ -552,7 +552,7 @@ export function buyElementRequest() {
 export function buyElement(element) {
     return (dispatch) => {
         dispatch(buyElementRequest());
-        ask_the_api("elements.buy", element);
+        ask_the_api("elements.buy", element, "elements.buy");
     };
 }
 
