@@ -19,6 +19,7 @@ import {
     RECEIVE_SETTINGS,
     UPDATE_SETTINGS_REQUEST,
     DELETE_PROPOSAL_REQUEST,
+    BUY_PROPOSAL_REQUEST,
 
     FETCH_PROFILE_REQUEST,
     RECEIVE_PROFILE,
@@ -539,6 +540,19 @@ export function deleteElement(element) {
     return (dispatch) => {
         dispatch(deleteElementRequest());
         ask_the_api("elements.delete", element);
+    };
+}
+
+export function buyElementRequest() {
+    return {
+        type: BUY_PROPOSAL_REQUEST,
+    };
+}
+
+export function buyElement(element) {
+    return (dispatch) => {
+        dispatch(buyElementRequest());
+        ask_the_api("elements.buy", element);
     };
 }
 

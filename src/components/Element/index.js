@@ -56,6 +56,7 @@ import TuneIcon from 'material-ui/svg-icons/editor/border-all';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import ResetIcon from 'material-ui/svg-icons/action/restore';
 import ViewIcon from 'material-ui/svg-icons/action/pageview';
+import BuyIcon from 'material-ui/svg-icons/action/work';
 
 import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
@@ -545,6 +546,43 @@ export class Elementt extends Component {
         this.props.deleteElement(proposalID);
     };
 
+    buyElementQuestion = (event, proposalID) => {
+        event.preventDefault();
+        this.confirmation.confirmation_open = true;
+
+        const actionsButtons = [
+            <FlatButton
+                label = "Cancel"
+                primary = {true}
+                onTouchTap = {this.handleCloseConfirmation}
+            />
+            ,
+            <FlatButton label = "Submit"
+                primary = {true}
+                keyboardFocused = {true}
+                onTouchTap = {() => this.buyElement(proposalID)}
+            />
+        ];
+
+        this.confirmation.title = "Buy current Element";
+        this.confirmation.text = <div>
+            <p>The Element will be bought. This process can't be undone...</p>
+            <p>Bought elements can't be processed, edited, tunned or saved.</p>
+            <p>Are you sure about to&nbsp;
+                <b>buy this Element</b>?</p>
+        </div>;
+        this.confirmation.actionsButtons = actionsButtons;
+
+        this.animateChart = false;
+        this.setState({message_open: false, confirmation_open: true});
+    };
+
+    buyElement = (proposalID) => {
+        this.animateChart = false;
+        this.setState({message_open: true, confirmation_open: false});
+        this.props.buyElement(proposalID);
+    };
+
     exportElement = (event, proposalID) => {
         event.preventDefault();
 
@@ -697,6 +735,7 @@ export class Elementt extends Component {
         const reRunElement = this.reRunElementQuestion;
         const duplicateElement = this.duplicateElementQuestion;
         const deleteElement = this.deleteElementQuestion;
+        const buyElement = this.buyElementQuestion;
         const exportElement = this.exportElement;
         const exportElementDetail = this.exportElementDetail;
 
@@ -913,16 +952,19 @@ export class Elementt extends Component {
         const disableExportDetail = (element_type == "comparation" || element_type == "concatenation" )
             ? true
             : false;
+        const boughtProposal = (proposal.status["lite"] == "BUY")
+            ? true
+            : false;
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"}/>
+                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"} disabled={boughtProposal}/>
                 <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
-                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"}/>
-                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"}/>
-                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"}/>
+                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal}/>
+                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal}/>
+                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"} disabled={boughtProposal}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
                 <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
@@ -932,6 +974,8 @@ export class Elementt extends Component {
                     ? <FlatButton label="Historical" icon={<ElementIcon />} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
                     : <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
                 }
+
+                <FlatButton label="Buy" icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal}/>
                 </CardActions>
             : null;
 
