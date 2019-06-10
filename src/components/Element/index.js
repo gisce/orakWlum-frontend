@@ -566,7 +566,7 @@ export class Elementt extends Component {
 
         this.confirmation.title = "Buy current Element";
         this.confirmation.text = <div>
-            <p>The Element will be bought. This process can't be undone...</p>
+            <p>The Element will change its status to "bought". This process can't be undone.</p>
             <p>Bought elements can't be processed, edited, tunned or saved.</p>
             <p>Are you sure about to&nbsp;
                 <b>buy this Element</b>?</p>
