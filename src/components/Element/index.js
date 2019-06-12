@@ -952,7 +952,7 @@ export class Elementt extends Component {
         const disableExportDetail = (element_type == "comparation" || element_type == "concatenation" )
             ? true
             : false;
-        const boughtProposal = (proposal.status["lite"] != "OK")
+        const boughtProposal = (proposal.status["lite"] == "BUY")
             ? true
             : false;
 
