@@ -510,7 +510,7 @@ export class Elementt extends Component {
         this.props.duplicateElement(proposalID);
     };
 
-    deleteElementQuestion = (event, proposalID) => {
+    deleteElementQuestion = (event, proposalID, historical) => {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
@@ -524,7 +524,7 @@ export class Elementt extends Component {
             <FlatButton label = "Submit"
                 primary = {true}
                 keyboardFocused = {true}
-                onTouchTap = {() => this.deleteElement(proposalID)}
+                onTouchTap = {() => this.deleteElement(proposalID, historical)}
             />
         ];
 
@@ -540,10 +540,10 @@ export class Elementt extends Component {
         this.setState({message_open: false, confirmation_open: true});
     };
 
-    deleteElement = (proposalID) => {
+    deleteElement = (proposalID, historical) => {
         this.animateChart = false;
         this.setState({message_open: true, confirmation_open: false});
-        this.props.deleteElement(proposalID);
+        this.props.deleteElement(proposalID, historical);
     };
 
     buyElementQuestion = (event, proposalID) => {
@@ -962,20 +962,14 @@ export class Elementt extends Component {
                 <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"} disabled={boughtProposal}/>
                 <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
-                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal}/>
-                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal}/>
-                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"} disabled={boughtProposal}/>
+                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal || historical}/>
+                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal  || historical}/>
+                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"} disabled={boughtProposal  || historical}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
                 <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
-                <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id)} title={"Delete current proposal"}/>
-
-                {(proposal.related_id)
-                    ? <FlatButton label="Historical" icon={<ElementIcon />} href={"/historicals/" + proposal.related_id} title={"Switch to related historical"}/>
-                    : <FlatButton disabled label="Historical" title={"Switch to related historical"}/>
-                }
-
-                <FlatButton label="Buy" icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal}/>
+                <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={"Delete current proposal"}/>
+                <FlatButton label="Buy" icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal || historical}/>
                 </CardActions>
             : null;
 
