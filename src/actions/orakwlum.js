@@ -536,10 +536,10 @@ export function deleteElementRequest() {
     };
 }
 
-export function deleteElement(element) {
+export function deleteElement(element, historical) {
     return (dispatch) => {
         dispatch(deleteElementRequest());
-        ask_the_api("elements.delete", element);
+        ask_the_api("elements.delete", element, historical);
     };
 }
 
