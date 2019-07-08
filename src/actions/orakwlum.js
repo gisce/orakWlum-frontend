@@ -540,6 +540,9 @@ export function deleteElement(element, historical) {
     return (dispatch) => {
         dispatch(deleteElementRequest());
         ask_the_api("elements.delete", element, historical);
+        setTimeout(() => {
+            dispatch(refreshElements());
+        }, 5000)
     };
 }
 
