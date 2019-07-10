@@ -145,6 +145,12 @@ export const colors_by_elements_type = {
     "historical": "blue",
     "concatenation": "red",
     "comparation": "yellow",
+    "proposalOK": "orange_ok",
+    "proposalWIP": "orange_wip",
+    "proposalKO": "orange_err",
+    "proposalERR": "orange_err",
+    "proposalBUY": "orange_buy",
+    "proposalRUN": "orange_wip",
     "default": "default",
 };
 
@@ -154,6 +160,10 @@ export const colors_combo = {
     'red': { backgroundColor: red500, borderColor: '#777' },
     'yellow': { backgroundColor: yellow500, borderColor: '#777', color: 'black' },
     'orange': { backgroundColor: orange500, borderColor: '#777' },
+    'orange_ok': { backgroundColor: orange500, borderColor: '#777', border: '2px solid #4caf50' },
+    'orange_wip': { backgroundColor: orange500, borderColor: '#777', border: '2px solid #ffb74d' },
+    'orange_err': { backgroundColor: orange500, borderColor: '#777', border: '2px solid #f44336' },
+    'orange_buy': { backgroundColor: orange500, borderColor: '#777', border: '2px solid #2196f3' },
     'default': { backgroundColor: green500, borderColor: '#777' },
 };
 

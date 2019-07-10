@@ -51,7 +51,7 @@ const styles = {
     rowCalendar: {
         marginTop: 50,
         verticalAlign: 'bottom !important',
-        height: "60%",
+        height: "65%",
     },
     actions: {
         marginTop: 27,
@@ -365,7 +365,11 @@ export class ElementsDashboard extends Component {
     colorizeEvents = (e) => {
         let color;
         const element_style = styles['element_style'];
-        const current_type = e.type;
+        let current_type = e.type;
+
+        if (current_type == 'proposal') {
+            current_type = current_type + e.status['lite'];
+        }
 
         if (!(current_type in colors_by_elements_type))
             color = element_style[colors_by_elements_type['default']];
@@ -453,6 +457,7 @@ export class ElementsDashboard extends Component {
                 'type': value.element_type,
                 count,
                 'id': value.id,
+                'status': value.status,
             }
 
             let start_date, end_date;
