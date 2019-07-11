@@ -450,9 +450,13 @@ export class ElementsDashboard extends Component {
         let events = [];
         count=0;
         for ( let [key, value] of Object.entries(elements_matched)) {
+            let name = value.name;
+            if (name.length>30) {
+                name = name.substring(0,30)+"...";
+            }
 
             let an_entry = {
-                'title': value.name,
+                'title': name,
                 'allDay': true,
                 'url': value.url,
                 'type': value.element_type,
