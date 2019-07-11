@@ -452,7 +452,7 @@ export class ElementsDashboard extends Component {
         for ( let [key, value] of Object.entries(elements_matched)) {
             let name = value.name;
             if (name.length>30) {
-                name = name.substring(0,30)+"...";
+                name = name.substring(0,27)+"...";
             }
 
             let an_entry = {
