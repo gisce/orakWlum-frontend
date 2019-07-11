@@ -457,6 +457,7 @@ export class ElementsDashboard extends Component {
 
             let an_entry = {
                 'title': name,
+                'toolTip': value.name,
                 'allDay': true,
                 'url': value.url,
                 'type': value.element_type,
@@ -614,6 +615,7 @@ export class ElementsDashboard extends Component {
                 defaultView={this.calendar_settings.defaultView}
                 defaultDate={this.todayDate}
                 popup={this.calendar_settings.popup}
+                tooltipAccessor={function(e){return e.toolTip;}}
                 views={this.calendar_settings.views}
                 eventPropGetter={e => this.colorizeEvents(e)}
                 onSelectEvent={
