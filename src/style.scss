@@ -1,3 +1,59 @@
 :global(body) {
   position: relative;
 }
+
+/* Proposal status icon in calendar */
+
+.proposalOK {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #4caf50;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.proposalKO {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #f44336;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.proposalWIP {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #ffb74d;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.proposalRUN {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #ffb74d;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.proposalERR {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #f44336;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.proposalBUY {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #2196f3;
+    padding: 0px 1px 1px 1px;
+  }
+}

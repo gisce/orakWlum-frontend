@@ -365,14 +365,19 @@ export class ElementsDashboard extends Component {
     colorizeEvents = (e) => {
         let color;
         const element_style = styles['element_style'];
-        const current_type = e.type;
+        let current_type = e.type;
+        let class_name = "";
+
+        if (current_type == 'proposal') {
+            class_name = current_type + e.status['lite'];
+        }
 
         if (!(current_type in colors_by_elements_type))
             color = element_style[colors_by_elements_type['default']];
         else
             color = element_style[colors_by_elements_type[current_type]];
 
-        return { style: color }
+        return { style: color, className: class_name }
     }
 
     render = () => {
@@ -453,6 +458,7 @@ export class ElementsDashboard extends Component {
                 'type': value.element_type,
                 count,
                 'id': value.id,
+                'status': value.status,
             }
 
             let start_date, end_date;
