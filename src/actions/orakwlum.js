@@ -417,6 +417,9 @@ export function duplicateElement(element, initial) {
     return (dispatch) => {
         dispatch(duplicateElementRequest());
         ask_the_api("elements.duplicate", element, initial);
+        setTimeout(() => {
+            dispatch(fetchElements());
+        }, 5000)
     };
 }
 
@@ -541,7 +544,7 @@ export function deleteElement(element, historical) {
         dispatch(deleteElementRequest());
         ask_the_api("elements.delete", element, historical);
         setTimeout(() => {
-            dispatch(refreshElements());
+            dispatch(fetchElements());
         }, 5000)
     };
 }

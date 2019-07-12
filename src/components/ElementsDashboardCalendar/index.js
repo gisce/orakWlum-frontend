@@ -170,7 +170,7 @@ export class ElementsDashboard extends Component {
         dispatchNewRoute("/elements/new" + "/" + days_range, event);
     }
 
-    refreshData = (silent = true) => {
+    refreshData = (silent = false) => {
         const the_filter = null;
         const override = false;
 
