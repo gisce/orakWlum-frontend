@@ -463,13 +463,15 @@ export class ElementsDashboard extends Component {
                 'type': value.element_type,
                 count,
                 'id': value.id,
-                'status': value.status,
+                'status': 0,
             }
 
             let start_date, end_date;
 
             // If that's a proposal
             if (value.element_type == "proposal") {
+                //set status to proposals
+                an_entry.status = value.status;
                 //add entry to the past
                 let past_entry = Object.assign({}, an_entry)
                 start_date = value.days_range[0]
