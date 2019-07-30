@@ -451,8 +451,8 @@ export class ElementsDashboard extends Component {
         count=0;
         for ( let [key, value] of Object.entries(elements_matched)) {
             let name = value.name;
-            if (name.length>30) {
-                name = name.substring(0,27)+"...";
+            if (name.length>25) {
+                name = name.substring(0,22)+"...";
             }
 
             let an_entry = {
