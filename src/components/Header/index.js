@@ -105,7 +105,7 @@ export class Header extends Component {
                 >
 
                     <AppBar
-                      title="oraKWlum"
+                      title="orakWlum"
                       onClick={() => this.setState({open: false})}
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
