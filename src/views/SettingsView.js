@@ -41,10 +41,11 @@ export default class SettingsView extends React.Component {
     render() {
         const {sources} = this.props;
 
-        const Settings = (sources && "measures" in sources && "static_data" in sources)?
+        const Settings = (sources && "measures" in sources && "static_data" in sources && "losses" in sources)?
             <SettingsSources
                 measures={sources.measures}
                 static_data={sources.static_data}
+                losses={sources.losses}
                 onToggle={(data) => this.toggleStatus(data)}
             />
             :
@@ -63,7 +64,7 @@ export default class SettingsView extends React.Component {
                             </div>
                     :
                         <div>
-                            <h1>Settings</h1>
+                            <h1>Sources</h1>
 
                             {Settings}
                         </div>

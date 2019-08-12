@@ -98,7 +98,7 @@ export default class ProfileView extends React.Component {
 
         return (
             <div>
-                <h1>About oraKWlum</h1>
+                <h1>About orakWlum</h1>
                 {the_version}
             </div>
         )
