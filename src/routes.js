@@ -38,8 +38,8 @@ export default (
         <Route path="logout"   component={requireAuthentication(Logout)} />
         <Route path="history" component={requireAuthentication(Analytics)} />
         <Route path="aggregations" component={requireAuthentication(Aggregations)} />
+        <Route path="sources"   component={requireAuthentication(Settings)} />
         <Route path="profile"   component={requireAuthentication(Profile)} />
-        <Route path="settings"   component={requireAuthentication(Settings)} />
         <Route path="about"   component={requireAuthentication(About)} />
 
         <Redirect from="main" to="elements" />

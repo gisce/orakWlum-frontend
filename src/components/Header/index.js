@@ -105,7 +105,7 @@ export class Header extends Component {
                 >
 
                     <AppBar
-                      title="okW"
+                      title="oraKWlum"
                       onClick={() => this.setState({open: false})}
                       iconElementLeft={<IconButton><LogoutIcon /></IconButton>}
                     />
@@ -143,11 +143,11 @@ export class Header extends Component {
                                     onClick={(event) => this.dispatchRoute(event, '/elements')}
                                 />
 
-                                <MenuItem
+                                {/*<MenuItem
                                     leftIcon={<DashboardIcon/>}
                                     primaryText={"Elements (old)"}
                                     onClick={(event) => this.dispatchRoute(event, '/elementsOld')}
-                                />
+                                />*/}
 
                                 <Divider />
 
@@ -162,7 +162,7 @@ export class Header extends Component {
                                     primaryText="Historicals"
                                 />
                                 <MenuItem
-                                    onClick={(event) => this.dispatchRoute(event,'/buys')}
+//                                    onClick={(event) => this.dispatchRoute(event,'/buys')}
                                     leftIcon={<EuroIcon/>}
                                     primaryText="Buys"
                                     disabled
@@ -179,14 +179,14 @@ export class Header extends Component {
                                 <Divider />
 
                                 <MenuItem
+                                    onClick={(event) => this.dispatchRoute(event,'/sources')}
+                                    leftIcon={<SettingsIcon/>}
+                                    primaryText="Sources"
+                                />
+                                <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/profile')}
                                     leftIcon={<ProfileIcon/>}
                                     primaryText="Profile"
-                                />
-                                <MenuItem
-                                    onClick={(event) => this.dispatchRoute(event,'/settings')}
-                                    leftIcon={<SettingsIcon/>}
-                                    primaryText="Settings"
                                 />
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/about')}
@@ -208,7 +208,7 @@ export class Header extends Component {
                 <AppBar
                   title="orakWlum"
                   onLeftIconButtonTouchTap={() => this.openNav()}
-                  iconElementRight={<FlatButton label="Proposals" onClick={(event) => this.dispatchRoute(event,'/proposals')}/>}
+//                  iconElementRight={<FlatButton label="Proposals" onClick={(event) => this.dispatchRoute(event,'/proposals')}/>}
                 />
 
             <Breadcrumb path={this.props.path}/>
