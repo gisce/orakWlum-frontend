@@ -959,17 +959,17 @@ export class Elementt extends Component {
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
                 <FlatButton label="Refresh" icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"} disabled={boughtProposal}/>
+                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"} disabled={boughtProposal || disableExportDetail}/>
                 <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
                 <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
-                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal || historical}/>
-                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal  || historical}/>
-                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"} disabled={boughtProposal  || historical}/>
+                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal || historical || disableExportDetail}/>
+                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal  || historical || disableExportDetail}/>
+                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"} disabled={boughtProposal  || historical || disableExportDetail}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
                 <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
-                <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"}/>
+                <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"} disabled={disableExportDetail}/>
                 <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={"Delete current proposal"}/>
-                <FlatButton label="Buy" icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal || historical}/>
+                <FlatButton label="Buy" icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal || historical || disableExportDetail}/>
                 </CardActions>
             : null;
 
