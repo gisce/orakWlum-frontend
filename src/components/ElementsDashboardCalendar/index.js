@@ -240,13 +240,41 @@ export class ElementsDashboard extends Component {
     }
 
     //Dispatch elements buy
-    buySelectedElements = () => {
-        const {selectedElements} = this.state;
+    buyElementsQuestion = () => {
+        this.creation_dialog['body'] =  <div>
+                                        <p>The selected proposals will change their status to "bought". This process can't be undone.</p>
+                                        <p>Bought proposals can't be processed, edited, tuned or saved.</p>
+                                        <p>Are you sure about to <b>buy those Proposals</b>?</p>
+                                        </div>;
+        this.creation_dialog['title'] = "Buy selected Proposals";
 
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="No"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Yes"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.buySelectedElements()}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
+    }
+
+    buySelectedElements = () => {
+        this.creation_dialog_close()
+        const {selectedElements} = this.state;
         if (Object.keys(selectedElements).length >= 1){
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if (value['type'] == 'proposal' && value['status']['lite'] == 'OK'){
-                    //TODO: Warning dialog
                     this.props.buyElementFromCalendar(key);
                 }
             }
@@ -259,13 +287,42 @@ export class ElementsDashboard extends Component {
     }
 
     //Dispatch elements reprocess
+    reprocessElementsQuestion = () => {
+        this.creation_dialog['body'] =  <div>
+                                        <p>The selected Elements will be reprocessed. This process can take a while...</p>
+                                        <p>Concatenations, Comparations and Bought proposals can't be reprocessed.</p>
+                                        <p>Are you sure about to&nbsp; <b>reprocess those Elements</b>?</p>
+                                        </div>;
+        this.creation_dialog['title'] = "Reprocess selected Elements";
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="No"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Yes"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.reprocessSelectedElements()}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
+    }
+
     reprocessSelectedElements = () => {
+        this.creation_dialog_close()
         const {selectedElements} = this.state;
 
         if (Object.keys(selectedElements).length >= 1){
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if ((value['type'] == 'proposal' && value['status']['lite'] != 'BUY') || value['type'] == 'historical'){
-                    //TODO: Warning dialog
                     this.props.runElementFromCalendar(key);
                 }
             }
@@ -278,13 +335,42 @@ export class ElementsDashboard extends Component {
     }
 
     //Dispatch elements delete
+    deleteElementsQuestion = () => {
+        this.creation_dialog['body'] =  <div>
+                                        <p>The selected Elements will be deleted. This process can't be undone.</p>
+                                        <p>Concatenations, Comparations and running Elements will not be affected.</p>
+                                        <p>Are you sure about to <b>delete those Elements</b>?</p>
+                                        </div>;
+        this.creation_dialog['title'] = "Delete selected Elements";
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="No"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Yes"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.deleteSelectedElements()}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
+    }
+
     deleteSelectedElements = () => {
+        this.creation_dialog_close()
         const {selectedElements} = this.state;
 
         if (Object.keys(selectedElements).length >= 1){
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if ((value['type'] == 'proposal' && value['status']['lite'] != 'RUN') || value['type'] == 'historical'){
-                    //TODO: Warning dialog
                     this.props.deleteElementFromCalendar(key);
                 }
             }
@@ -764,7 +850,7 @@ export class ElementsDashboard extends Component {
                                     icon={<BuyIcon/>}
                                     label="Buy"
                                     title={"Buy current proposal"}
-                                    onClick={(event) => this.buySelectedElements()}
+                                    onClick={(event) => this.buyElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
                             </div>
@@ -775,7 +861,7 @@ export class ElementsDashboard extends Component {
                                     icon={<RunIcon/>}
                                     label="Process"
                                     title={"Reprocess current proposal"}
-                                    onClick={(event) => this.reprocessSelectedElements()}
+                                    onClick={(event) => this.reprocessElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
                             </div>
@@ -786,7 +872,7 @@ export class ElementsDashboard extends Component {
                                     icon={<DeleteIcon/>}
                                     label="Delete"
                                     title={"Delete current proposal"}
-                                    onClick={(event) => this.deleteSelectedElements()}
+                                    onClick={(event) => this.deleteElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
                             </div>
