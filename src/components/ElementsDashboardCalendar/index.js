@@ -237,6 +237,35 @@ export class ElementsDashboard extends Component {
         dispatchNewRoute(location);
     }
 
+    //Dispatch elements delete
+    deleteSelectedElements = () => {
+        const {selectedElements} = this.state;
+
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                this.props.deleteElement(key);
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+        }
+    }
+
+    //Dispatch elements reprocess
+    reprocessSelectedElements = () => {
+        const {selectedElements} = this.state;
+
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                this.props.runElement(key);
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+            setTimeout(() => {
+                this.refreshData();
+            }, 3000)
+        }
+    }
+
     //Select an element
     selectElement = (count, element, title) => {
         let currentElements = this.state.selectedElements;
@@ -697,6 +726,26 @@ export class ElementsDashboard extends Component {
                             }
                             {selectedElementsList}
                         </List>
+
+                        <div className="row" style={styles.row}>
+                            <div ref="selected_type" className="col-md-4">
+                                <RaisedButton
+                                    label="Reprocess"
+                                    onClick={(event) => this.reprocessSelectedElements()}
+                                    disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="row" style={styles.row}>
+                            <div ref="selected_type" className="col-md-4">
+                                <RaisedButton
+                                    label="Delete"
+                                    onClick={(event) => this.deleteSelectedElements()}
+                                    disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
