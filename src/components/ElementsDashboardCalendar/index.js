@@ -11,6 +11,8 @@ import Calendar from 'material-ui/DatePicker/Calendar';
 import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 import {List, ListItem} from 'material-ui/List';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
+import BuyIcon from 'material-ui/svg-icons/action/work';
 import DatePicker from 'material-ui/DatePicker';
 
 import AutoComplete from 'material-ui/AutoComplete';
@@ -199,12 +201,12 @@ export class ElementsDashboard extends Component {
     }
 
     //Toggle selection of element
-    toggleSelectElement = (count, element, title) => {
+    toggleSelectElement = (count, element, title, type, status) => {
         //console.log("toggle", count, element, title);
         (element in this.state.selectedElements) ?
             this.unselectElement(count, element)
             :
-            this.selectElement(count, element, title)
+            this.selectElement(count, element, title, type, status)
     }
 
     //Dispatch two elements comparation
@@ -237,10 +239,154 @@ export class ElementsDashboard extends Component {
         dispatchNewRoute(location);
     }
 
+    //Dispatch elements buy
+    buyElementsQuestion = () => {
+        this.creation_dialog['body'] =  <div>
+                                        <p>The selected proposals will change their status to "bought". This process can't be undone.</p>
+                                        <p>Bought proposals can't be processed, edited, tuned or saved.</p>
+                                        <p>Are you sure about to <b>buy those Proposals</b>?</p>
+                                        </div>;
+        this.creation_dialog['title'] = "Buy selected Proposals";
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="No"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Yes"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.buySelectedElements()}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
+    }
+
+    buySelectedElements = () => {
+        this.creation_dialog_close()
+        const {selectedElements} = this.state;
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                if (value['type'] == 'proposal' && value['status']['lite'] == 'OK'){
+                    this.props.buyElementFromCalendar(key);
+                }
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+            setTimeout(() => {
+                this.refreshData();
+            }, 3000)
+        }
+    }
+
+    //Dispatch elements reprocess
+    reprocessElementsQuestion = () => {
+        this.creation_dialog['body'] =  <div>
+                                        <p>The selected Elements will be reprocessed. This process can take a while...</p>
+                                        <p>Concatenations, Comparations and Bought proposals can't be reprocessed.</p>
+                                        <p>Are you sure about to&nbsp; <b>reprocess those Elements</b>?</p>
+                                        </div>;
+        this.creation_dialog['title'] = "Reprocess selected Elements";
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="No"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Yes"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.reprocessSelectedElements()}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
+    }
+
+    reprocessSelectedElements = () => {
+        this.creation_dialog_close()
+        const {selectedElements} = this.state;
+
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                if ((value['type'] == 'proposal' && value['status']['lite'] != 'BUY') || value['type'] == 'historical'){
+                    this.props.runElementFromCalendar(key);
+                }
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+            setTimeout(() => {
+                this.refreshData();
+            }, 3000)
+        }
+    }
+
+    //Dispatch elements delete
+    deleteElementsQuestion = () => {
+        this.creation_dialog['body'] =  <div>
+                                        <p>The selected Elements will be deleted. This process can't be undone.</p>
+                                        <p>Concatenations, Comparations and running Elements will not be affected.</p>
+                                        <p>Are you sure about to <b>delete those Elements</b>?</p>
+                                        </div>;
+        this.creation_dialog['title'] = "Delete selected Elements";
+
+        // The object to handle the creation dialog
+        const creation_dialog_actions = [
+          <FlatButton
+            label="No"
+            primary={true}
+            onClick={() => this.creation_dialog_close()}
+          />,
+          <FlatButton
+            label="Yes"
+            primary={true}
+            keyboardFocused={true}
+            onClick={(event) => this.deleteSelectedElements()}
+          />,
+        ];
+        this.creation_dialog['actions'] = creation_dialog_actions;
+
+        this.setState({
+            creation_dialog_open: true,
+        });
+    }
+
+    deleteSelectedElements = () => {
+        this.creation_dialog_close()
+        const {selectedElements} = this.state;
+
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                if ((value['type'] == 'proposal' && value['status']['lite'] != 'RUN') || value['type'] == 'historical'){
+                    this.props.deleteElementFromCalendar(key);
+                }
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+        }
+    }
+
     //Select an element
-    selectElement = (count, element, title) => {
+    selectElement = (count, element, title, type, status) => {
         let currentElements = this.state.selectedElements;
-        currentElements[element] = title;
+        currentElements[element] = {};
+        currentElements[element]['count'] = count
+        currentElements[element]['title'] = title
+        currentElements[element]['type'] = type
+        currentElements[element]['status'] = status
 
         this.elements_matched[count].selected = true
 
@@ -439,8 +585,8 @@ export class ElementsDashboard extends Component {
             selectedElementsList.push(
                 <ListItem
                     key={key}
-                    primaryText={value}
-                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(count, key)}/>}
+                    primaryText={value['title']}
+                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(value['count'], key)}/>}
                 />
             );
             count++;
@@ -461,7 +607,7 @@ export class ElementsDashboard extends Component {
                 'allDay': true,
                 'url': value.url,
                 'type': value.element_type,
-                count,
+                'count': count,
                 'id': value.id,
                 'status': 0,
             }
@@ -621,7 +767,7 @@ export class ElementsDashboard extends Component {
                 views={this.calendar_settings.views}
                 eventPropGetter={e => this.colorizeEvents(e)}
                 onSelectEvent={
-                    (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)
+                    (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title, element.type, element.status) : (event) => dispatchNewRoute(event.url)
                 }
                 onSelectSlot={slotInfo => this.setRangeOfDates(slotInfo)}
                 components={{
@@ -697,6 +843,40 @@ export class ElementsDashboard extends Component {
                             }
                             {selectedElementsList}
                         </List>
+
+                        <div className="row" style={styles.row}>
+                            <div ref="selected_type">
+                                <RaisedButton
+                                    icon={<BuyIcon/>}
+                                    label="Buy"
+                                    title={"Buy current proposal"}
+                                    onClick={(event) => this.buyElementsQuestion()}
+                                    disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
+                                />
+                            </div>
+                        </div>
+                        <div className="row" style={styles.row}>
+                            <div ref="selected_type">
+                                <RaisedButton
+                                    icon={<RunIcon/>}
+                                    label="Process"
+                                    title={"Reprocess current proposal"}
+                                    onClick={(event) => this.reprocessElementsQuestion()}
+                                    disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
+                                />
+                            </div>
+                        </div>
+                        <div className="row" style={styles.row}>
+                            <div ref="selected_type">
+                                <RaisedButton
+                                    icon={<DeleteIcon/>}
+                                    label="Delete"
+                                    title={"Delete current proposal"}
+                                    onClick={(event) => this.deleteElementsQuestion()}
+                                    disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
