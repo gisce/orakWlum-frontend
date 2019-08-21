@@ -775,19 +775,19 @@ export class Elementt extends Component {
         ];
 
         // The Element status!
-        const proposalStatus = (proposal.status && <div className={"col-md-2 col-lg-2"} style={styles.wrapper}>
+        const proposalStatus = (proposal.status && <div className={"col-md-2 col-lg-2"} style={styles.wrapper} title={"Element status"}>
             <Tag tag={proposal.status}/>
         </div>)
 
         // The Element Aggregations List
-        const aggregationsStyle = (withPicture)
+        const aggregationsStyle = (withPicture )
             ? styles.aggregations
             : styles.aggregationsRight;
 
         const proposalAggregations = (aggregations && <div id="aggregationsList" className={"col-md-offset-" + (offset) + " col-md-" + size + " col-lg-offset-" + (offset) + " col-lg-" + size} style={aggregationsStyle}>
             {aggregations.map(function(agg, i) {
                 return (
-                    <div key={"aggregationDivTag_" + i} onClick={(e) => changeElementAggregation(e, agg)}>
+                    <div key={"aggregationDivTag_" + i} onClick={(e) => changeElementAggregation(e, agg)} title={"Select aggregation view"}>
                         <Tag key={"aggregationTag_" + i} tag={agg.lite} selected={agg.selected} readOnly/>
                     </div>
                 );
@@ -814,7 +814,7 @@ export class Elementt extends Component {
                         <b>Chart</b>
                     </div>
                     <div id="toogleElement" className="col-xs-3">
-                        <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable}/>
+                        <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable} title={"Toggle view mode"}/>
                     </div>
                     <div className="col-xs-2" style={styles.toggle}>
                         Table
@@ -964,7 +964,7 @@ export class Elementt extends Component {
                 <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
                 <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal || historical || disableExportDetail}/>
                 <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal  || historical || disableExportDetail}/>
-                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Apply tunned changes!"} disabled={boughtProposal  || historical || disableExportDetail}/>
+                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Save tuned changes"} disabled={boughtProposal  || historical || disableExportDetail}/>
                 <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
                 <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
                 <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"} disabled={disableExportDetail}/>
