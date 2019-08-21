@@ -11,6 +11,8 @@ import Calendar from 'material-ui/DatePicker/Calendar';
 import {dateTimeFormat} from 'material-ui/DatePicker/dateUtils';
 import {List, ListItem} from 'material-ui/List';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
+import BuyIcon from 'material-ui/svg-icons/action/work';
 import DatePicker from 'material-ui/DatePicker';
 
 import AutoComplete from 'material-ui/AutoComplete';
@@ -757,29 +759,33 @@ export class ElementsDashboard extends Component {
                         </List>
 
                         <div className="row" style={styles.row}>
-                            <div ref="selected_type" className="col-md-4">
+                            <div ref="selected_type">
                                 <RaisedButton
+                                    icon={<BuyIcon/>}
                                     label="Buy"
+                                    title={"Buy current proposal"}
                                     onClick={(event) => this.buySelectedElements()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
                             </div>
                         </div>
-
                         <div className="row" style={styles.row}>
-                            <div ref="selected_type" className="col-md-4">
+                            <div ref="selected_type">
                                 <RaisedButton
-                                    label="Reprocess"
+                                    icon={<RunIcon/>}
+                                    label="Process"
+                                    title={"Reprocess current proposal"}
                                     onClick={(event) => this.reprocessSelectedElements()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
                             </div>
                         </div>
-
                         <div className="row" style={styles.row}>
-                            <div ref="selected_type" className="col-md-4">
+                            <div ref="selected_type">
                                 <RaisedButton
+                                    icon={<DeleteIcon/>}
                                     label="Delete"
+                                    title={"Delete current proposal"}
                                     onClick={(event) => this.deleteSelectedElements()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
