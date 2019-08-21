@@ -556,6 +556,7 @@ export class ElementsDashboard extends Component {
                 <div ref="selected_type" className="col-md-4">
                     <RaisedButton
                         label="Select Mode"
+                        title={"Toggle multiple selection mode"}
                         onClick={(value) => this.toggleMultiElementSelection()}
                         primary={multiElementMode}
                     />
@@ -563,6 +564,7 @@ export class ElementsDashboard extends Component {
                 <div ref="selected_type" className="col-md-4">
                     <RaisedButton
                         label="Concatenate"
+                        title={"Create a concatenation from a selection of elements"}
                         onClick={(event) => this.concatenateSelectedElements()}
                         disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
                     />
@@ -571,6 +573,7 @@ export class ElementsDashboard extends Component {
                 <div ref="selected_type" className="col-md-4">
                     <RaisedButton
                         label="Compare"
+                        title={"Create a comparison between two elements"}
                         onClick={(event) => this.compareSelectedElements()}
                         disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
                     />
@@ -849,7 +852,7 @@ export class ElementsDashboard extends Component {
                                 <RaisedButton
                                     icon={<BuyIcon/>}
                                     label="Buy"
-                                    title={"Buy current proposal"}
+                                    title={"Buy selected proposals"}
                                     onClick={(event) => this.buyElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
@@ -860,7 +863,7 @@ export class ElementsDashboard extends Component {
                                 <RaisedButton
                                     icon={<RunIcon/>}
                                     label="Process"
-                                    title={"Reprocess current proposal"}
+                                    title={"Reprocess selected elements"}
                                     onClick={(event) => this.reprocessElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
@@ -871,7 +874,7 @@ export class ElementsDashboard extends Component {
                                 <RaisedButton
                                     icon={<DeleteIcon/>}
                                     label="Delete"
-                                    title={"Delete current proposal"}
+                                    title={"Delete selected elements"}
                                     onClick={(event) => this.deleteElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />

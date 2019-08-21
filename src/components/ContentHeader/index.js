@@ -33,7 +33,7 @@ export class ContentHeader extends Component {
         // The Refresh Button
         const refreshButton = (
             (withRefresh)?
-                <FloatingActionButton style={styles.buttonAdd} onClick={() => refreshClickMethod()}>
+                <FloatingActionButton style={styles.buttonAdd} title={"Refresh"} onClick={() => refreshClickMethod()}>
                       <Refresh />
                 </FloatingActionButton>
             :
@@ -43,7 +43,7 @@ export class ContentHeader extends Component {
         // The Add Button
         const addButton = (
             (withAdd)?
-                <FloatingActionButton style={styles.buttonAdd} onClick={() => addClickMethod()}>
+                <FloatingActionButton style={styles.buttonAdd} title={"Add a new element"} onClick={() => addClickMethod()}>
                       <ContentAdd />
                 </FloatingActionButton>
             :
