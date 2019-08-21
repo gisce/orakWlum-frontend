@@ -199,12 +199,12 @@ export class ElementsDashboard extends Component {
     }
 
     //Toggle selection of element
-    toggleSelectElement = (count, element, title) => {
+    toggleSelectElement = (count, element, title, type, status) => {
         //console.log("toggle", count, element, title);
         (element in this.state.selectedElements) ?
             this.unselectElement(count, element)
             :
-            this.selectElement(count, element, title)
+            this.selectElement(count, element, title, type, status)
     }
 
     //Dispatch two elements comparation
@@ -237,26 +237,16 @@ export class ElementsDashboard extends Component {
         dispatchNewRoute(location);
     }
 
-    //Dispatch elements delete
-    deleteSelectedElements = () => {
+    //Dispatch elements buy
+    buySelectedElements = () => {
         const {selectedElements} = this.state;
 
         if (Object.keys(selectedElements).length >= 1){
             for ( let [key, value] of Object.entries(selectedElements)) {
-                this.props.deleteElement(key);
-            }
-            this.unselectAllElements()
-            this.toggleMultiElementSelection();
-        }
-    }
-
-    //Dispatch elements reprocess
-    reprocessSelectedElements = () => {
-        const {selectedElements} = this.state;
-
-        if (Object.keys(selectedElements).length >= 1){
-            for ( let [key, value] of Object.entries(selectedElements)) {
-                this.props.runElement(key);
+                if (value['type'] == 'proposal' && value['status']['lite'] == 'OK'){
+                    //TODO: Warning dialog
+                    this.props.buyElement(key);
+                }
             }
             this.unselectAllElements()
             this.toggleMultiElementSelection();
@@ -266,10 +256,48 @@ export class ElementsDashboard extends Component {
         }
     }
 
+    //Dispatch elements reprocess
+    reprocessSelectedElements = () => {
+        const {selectedElements} = this.state;
+
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                if ((value['type'] == 'proposal' && value['status']['lite'] != 'BUY') || value['type'] == 'historical'){
+                    //TODO: Warning dialog
+                    this.props.runElement(key);
+                }
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+            setTimeout(() => {
+                this.refreshData();
+            }, 3000)
+        }
+    }
+
+    //Dispatch elements delete
+    deleteSelectedElements = () => {
+        const {selectedElements} = this.state;
+
+        if (Object.keys(selectedElements).length >= 1){
+            for ( let [key, value] of Object.entries(selectedElements)) {
+                if ((value['type'] == 'proposal' && value['status']['lite'] != 'RUN') || value['type'] == 'historical'){
+                    //TODO: Warning dialog
+                    this.props.deleteElement(key);
+                }
+            }
+            this.unselectAllElements()
+            this.toggleMultiElementSelection();
+        }
+    }
+
     //Select an element
-    selectElement = (count, element, title) => {
+    selectElement = (count, element, title, type, status) => {
         let currentElements = this.state.selectedElements;
-        currentElements[element] = title;
+        currentElements[element] = {};
+        currentElements[element]['title'] = title
+        currentElements[element]['type'] = type
+        currentElements[element]['status'] = status
 
         this.elements_matched[count].selected = true
 
@@ -468,7 +496,7 @@ export class ElementsDashboard extends Component {
             selectedElementsList.push(
                 <ListItem
                     key={key}
-                    primaryText={value}
+                    primaryText={value['title']}
                     rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(count, key)}/>}
                 />
             );
@@ -650,7 +678,7 @@ export class ElementsDashboard extends Component {
                 views={this.calendar_settings.views}
                 eventPropGetter={e => this.colorizeEvents(e)}
                 onSelectEvent={
-                    (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title) : (event) => dispatchNewRoute(event.url)
+                    (multiElementMode)? (element) => this.toggleSelectElement(element.count, element.id, element.title, element.type, element.status) : (event) => dispatchNewRoute(event.url)
                 }
                 onSelectSlot={slotInfo => this.setRangeOfDates(slotInfo)}
                 components={{
@@ -726,6 +754,16 @@ export class ElementsDashboard extends Component {
                             }
                             {selectedElementsList}
                         </List>
+
+                        <div className="row" style={styles.row}>
+                            <div ref="selected_type" className="col-md-4">
+                                <RaisedButton
+                                    label="Buy"
+                                    onClick={(event) => this.buySelectedElements()}
+                                    disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
+                                />
+                            </div>
+                        </div>
 
                         <div className="row" style={styles.row}>
                             <div ref="selected_type" className="col-md-4">
