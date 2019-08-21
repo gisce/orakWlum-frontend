@@ -247,7 +247,7 @@ export class ElementsDashboard extends Component {
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if (value['type'] == 'proposal' && value['status']['lite'] == 'OK'){
                     //TODO: Warning dialog
-                    this.props.buyElement(key);
+                    this.props.buyElementFromCalendar(key);
                 }
             }
             this.unselectAllElements()
@@ -266,7 +266,7 @@ export class ElementsDashboard extends Component {
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if ((value['type'] == 'proposal' && value['status']['lite'] != 'BUY') || value['type'] == 'historical'){
                     //TODO: Warning dialog
-                    this.props.runElement(key);
+                    this.props.runElementFromCalendar(key);
                 }
             }
             this.unselectAllElements()
@@ -285,7 +285,7 @@ export class ElementsDashboard extends Component {
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if ((value['type'] == 'proposal' && value['status']['lite'] != 'RUN') || value['type'] == 'historical'){
                     //TODO: Warning dialog
-                    this.props.deleteElement(key);
+                    this.props.deleteElementFromCalendar(key);
                 }
             }
             this.unselectAllElements()

@@ -475,8 +475,12 @@ export function runElement(a_filter=null) {
     };
 }
 
-
-
+export function runElementFromCalendar(a_filter=null) {
+    return (dispatch) => {
+        dispatch(runElementRequest());
+        ask_the_api("elements.run.from.calendar", a_filter);
+    };
+}
 
 export function updateElementlRequest() {
     return {
@@ -549,6 +553,16 @@ export function deleteElement(element, historical) {
     };
 }
 
+export function deleteElementFromCalendar(element, historical) {
+    return (dispatch) => {
+        dispatch(deleteElementRequest());
+        ask_the_api("elements.delete.from.calendar", element, historical);
+        setTimeout(() => {
+            dispatch(fetchElements());
+        }, 5000)
+    };
+}
+
 export function buyElementRequest() {
     return {
         type: BUY_PROPOSAL_REQUEST,
@@ -562,7 +576,12 @@ export function buyElement(element) {
     };
 }
 
-
+export function buyElementFromCalendar(element) {
+    return (dispatch) => {
+        dispatch(buyElementRequest());
+        ask_the_api("elements.buy.from.calendar", element, "elements.buy.from.calendar");
+    };
+}
 
 /********
  PROFILE
