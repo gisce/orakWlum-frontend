@@ -295,6 +295,7 @@ export class ElementsDashboard extends Component {
     selectElement = (count, element, title, type, status) => {
         let currentElements = this.state.selectedElements;
         currentElements[element] = {};
+        currentElements[element]['count'] = count
         currentElements[element]['title'] = title
         currentElements[element]['type'] = type
         currentElements[element]['status'] = status
@@ -497,7 +498,7 @@ export class ElementsDashboard extends Component {
                 <ListItem
                     key={key}
                     primaryText={value['title']}
-                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(count, key)}/>}
+                    rightIcon={<DeleteIcon onClick={(event) => this.unselectElement(value['count'], key)}/>}
                 />
             );
             count++;
@@ -518,7 +519,7 @@ export class ElementsDashboard extends Component {
                 'allDay': true,
                 'url': value.url,
                 'type': value.element_type,
-                count,
+                'count': count,
                 'id': value.id,
                 'status': 0,
             }
