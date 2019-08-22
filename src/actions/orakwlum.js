@@ -38,6 +38,7 @@ import {
     RECEIVE_VERSION_ERROR,
 
     UPDATE_CALENDAR_DATE,
+
 } from '../constants/index'
 
 import {
@@ -51,7 +52,6 @@ import {
 import {
     logoutAndRedirect
 } from './auth'
-
 
 export function fetchAggregationsRequest(initial) {
     const message = (initial)?null:"Refreshing aggregations list";
@@ -215,8 +215,6 @@ export function overrideMessage(response, initial) {
 
 }
 
-
-
 export function update_calendar_date(newDate) {
     console.log("SETTING DATE", newDate)
     return {
@@ -226,6 +224,7 @@ export function update_calendar_date(newDate) {
         },
     };
 }
+
 //Handle how to reduce aggregations
 export function overrideAggregations(response, initial) {
     const message = (initial)?null:"Aggregations list updated";
@@ -257,10 +256,10 @@ export function overrideAggregations(response, initial) {
 }
 
 
-
 /**********
   SOURCES
 **********/
+
 
 export function fetchSettingsRequest() {
     return {
@@ -274,7 +273,6 @@ export function fetchSettings(a_filter=null, silent=false, override=false) {
         ask_the_api("sources.get", a_filter, silent);
     };
 }
-
 
 //Reduce Sources
 export function overrideSources(response, initial) {
@@ -306,8 +304,6 @@ export function overrideSources(response, initial) {
     };
 }
 
-
-
 export function updateSettingsRequest() {
     return {
         type: UPDATE_SETTINGS_REQUEST,
@@ -329,11 +325,10 @@ export function toggleSourceSettings(data, silent=false) {
 }
 
 
-
-
 /**************
  The Fetchers!
 **************/
+
 
 export function fetchConcatenate(ids_list, initial=false) {
     return (dispatch) => {
@@ -402,11 +397,6 @@ export function exportElementDetail(a_filter=null, initial=false) {
     };
 }
 
-
-
-
-
-
 export function duplicateElementRequest() {
     return {
         type: DUPLICATE_PROPOSAL_REQUEST,
@@ -418,14 +408,10 @@ export function duplicateElement(element, initial) {
         dispatch(duplicateElementRequest());
         ask_the_api("elements.duplicate", element, initial);
         setTimeout(() => {
-            dispatch(fetchElements());
+            dispatch(fetchElementsDetail());
         }, 5000)
     };
 }
-
-
-
-
 
 export function createElementlRequest() {
     return {
@@ -450,12 +436,10 @@ export function createElement(element) {
 }
 
 
-
-
-
 /**************
 The Updaters !
 **************/
+
 
 export function runElementRequest() {
     const message = "(re)Processing proposal";
@@ -583,6 +567,7 @@ export function buyElementFromCalendar(element) {
     };
 }
 
+
 /********
  PROFILE
 ********/
@@ -617,7 +602,6 @@ export function overrideProfile(response, initial) {
     };
 }
 
-
 export function receiveProfileError(data) {
     return {
         type: RECEIVE_PROFILE_KO,
@@ -632,7 +616,6 @@ export function fetchProfileRequest() {
         type: FETCH_PROFILE_REQUEST,
     };
 }
-
 
 export function receiveUpdateProfile(data) {
     return {
@@ -676,14 +659,10 @@ export function updateProfile(email, data=null, initial=false) {
 }
 
 
-
-
-
-
-
 /********
  VERSION
 ********/
+
 
 export function fetchVersionRequest(initial) {
     const message = (initial)?null:"Fetching current version detail";
@@ -732,12 +711,10 @@ export function overrideVersion(response, initial) {
 }
 
 
-
-
-
 /**************
-Session synch !
+Session sync !
 **************/
+
 
 export function synchronizePendingElementsRequest() {
     const message = "(re)Processing proposal";

@@ -176,13 +176,14 @@ export class Header extends Component {
                                     primaryText="Aggregations"
                                 />
 
-                                <Divider />
-
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/sources')}
                                     leftIcon={<SettingsIcon/>}
                                     primaryText="Sources"
                                 />
+
+                                <Divider />
+
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/profile')}
                                     leftIcon={<ProfileIcon/>}

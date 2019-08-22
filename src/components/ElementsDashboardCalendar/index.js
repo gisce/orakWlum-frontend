@@ -457,7 +457,7 @@ export class ElementsDashboard extends Component {
         if (elements_volatile) {
             //Validate type for volatile elements
     		for ( let [id, element] of Object.entries(elements_volatile)) {
-                if (selected_type_id == "all" || element.element_type == selected_type_id) {
+                if (selected_type_id == "all") {
                     this.elements_matched.push(element);
                 }
             }
