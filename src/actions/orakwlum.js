@@ -408,7 +408,7 @@ export function duplicateElement(element, initial) {
         dispatch(duplicateElementRequest());
         ask_the_api("elements.duplicate", element, initial);
         setTimeout(() => {
-            dispatch(fetchElementsRequest(initial));
+            dispatch(fetchElementsDetail());
         }, 5000)
     };
 }
