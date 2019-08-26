@@ -22,7 +22,7 @@ import { App } from './containers/App';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 //Translation
-import {IntlProvider, FormattedHTMLMessage} from 'react-intl';
+import {IntlProvider, addLocaleData} from 'react-intl';
 import messages_es from "./translations/es.json";
 
 import './style.scss';
@@ -89,6 +89,7 @@ const messages = {
     'es': messages_es
 };
 const language = navigator.language.split(/[-_]/)[0];  // language without region code
+addLocaleData({ locale: language, pluralRuleFunction: () => {}, });
 
 //Render the app!
 ReactDOM.render(

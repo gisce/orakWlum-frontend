@@ -9,6 +9,8 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         aggregations: state.orakwlum.aggregations,
@@ -38,16 +40,20 @@ export default class AggregationsView extends React.Component {
         if (aggregations && Object.keys(aggregations).length > 0) {
             const headers = [
                 {
-                    title: 'Name',
+                    title: <FormattedHTMLMessage id="AggregationsView.name"
+                           defaultMessage="Name"/>,
                     width: null,
                 },                {
-                    title: 'Short name',
+                    title: <FormattedHTMLMessage id="AggregationsView.shortname"
+                           defaultMessage="Short name"/>,
                     width: null,
                 },                {
-                    title: 'DB Fields',
+                    title: <FormattedHTMLMessage id="AggregationsView.dbfields"
+                           defaultMessage="DB Fields"/>,
                     width: '30%',
                 },                {
-                    title: 'Status',
+                    title: <FormattedHTMLMessage id="AggregationsView.status"
+                           defaultMessage="Status"/>,
                     width: null,
                 },
             ];
@@ -85,7 +91,10 @@ export default class AggregationsView extends React.Component {
                             </div>
                     :
                         <div>
-                            <h1>Aggregations</h1>
+                            <h1>
+                            <FormattedHTMLMessage id="AggregationsView.aggregations"
+                           defaultMessage="Aggregations"/>
+                            </h1>
                             {Aggregations}
                         </div>
                 }

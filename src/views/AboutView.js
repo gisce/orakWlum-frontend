@@ -50,7 +50,6 @@ export default class ProfileView extends React.Component {
         let the_version
 
         if (about && Object.keys(about).length > 0) {
-            console.log("entroooooo")
             const {api, frontend} = this.props.about;
 
             the_version = (
@@ -60,8 +59,12 @@ export default class ProfileView extends React.Component {
                             <div>
                                 <br/>
 
-                                <p>oraKWlum suite was created by <a target="_blank" href="http://gisce.net">GISCE</a>.</p>
-                                <p>It provides a tool desired to support and speed up the energy provisioning process.</p>
+                                <p><FormattedHTMLMessage id="AboutView.desc1"
+                                    defaultMessage="oraKWlum suite was created by "/>
+                                    <a target="_blank" href="http://gisce.net">GISCE</a>.</p>
+                                <p><FormattedHTMLMessage id="AboutView.desc2"
+                                    defaultMessage="It provides a tool desired to support and speed up the energy provisioning process."/>
+                                </p>
 
                                 <br/>
 
@@ -83,7 +86,10 @@ export default class ProfileView extends React.Component {
                                     message={this.props.about.message_text}
                                     open={this.props.about.message_open}
                                 />
-                                <p>There was an error fetching the current version details.</p>
+                                <p>
+                                    <FormattedHTMLMessage id="AboutView.error"
+                                    defaultMessage="There was an error fetching the current version details."/>
+                                </p>
                             </div>
 
 
@@ -101,7 +107,7 @@ export default class ProfileView extends React.Component {
         return (
             <div>
                 <h1>
-                    <FormattedHTMLMessage id="about.title"
+                    <FormattedHTMLMessage id="AboutView.title"
                       defaultMessage="About orakWlum"/>
                 </h1>
                 {the_version}
