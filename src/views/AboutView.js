@@ -14,6 +14,8 @@ import { PRDetail } from '../components/PRDetail';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         about: state.orakwlum.version,
@@ -98,7 +100,10 @@ export default class ProfileView extends React.Component {
 
         return (
             <div>
-                <h1>About orakWlum</h1>
+                <h1>
+                    <FormattedHTMLMessage id="about.title"
+                      defaultMessage="About orakWlum"/>
+                </h1>
                 {the_version}
             </div>
         )

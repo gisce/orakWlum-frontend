@@ -21,6 +21,9 @@ import { asyncSessionStorage } from 'redux-persist/storages'
 import { App } from './containers/App';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
+//Translation
+import {IntlProvider, FormattedHTMLMessage} from 'react-intl';
+import messages_es from "./translations/es.json";
 
 import './style.scss';
 require('expose?$!expose?jQuery!jquery');
@@ -82,8 +85,15 @@ class AppProvider extends React.Component {
 
 const the_app = <AppProvider />;
 
+const messages = {
+    'es': messages_es
+};
+const language = navigator.language.split(/[-_]/)[0];  // language without region code
+
 //Render the app!
 ReactDOM.render(
-	the_app,
+    <IntlProvider locale={language} messages={messages[language]}>
+	<AppProvider />
+	</IntlProvider>,
     document.getElementById('root')
 );
