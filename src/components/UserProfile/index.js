@@ -318,8 +318,10 @@ export class UserProfile extends Component {
                                   <div className="col-md-4">
                                       <TextField
                                         autoFocus={true}
-                                        hintText="Your name..."
-                                        floatingLabelText="Name"
+                                        hintText={<FormattedHTMLMessage id="ProfileView.yourname"
+                                                            defaultMessage="Your name..."/>}
+                                        floatingLabelText={<FormattedHTMLMessage id="ProfileView.name"
+                                                            defaultMessage="Name"/>}
                                         defaultValue={profile.name}
                                         floatingLabelFixed={true}
                                         onChange={(e) => this.tmpChangeValue(e, 'name')}
@@ -328,8 +330,10 @@ export class UserProfile extends Component {
 
                                   <div className="col-md-4">
                                       <TextField
-                                        hintText="Your surname..."
-                                        floatingLabelText="Surname"
+                                        hintText={<FormattedHTMLMessage id="ProfileView.yoursurname"
+                                                            defaultMessage="Your surname..."/>}
+                                        floatingLabelText={<FormattedHTMLMessage id="ProfileView.surname"
+                                                            defaultMessage="Surname"/>}
                                         defaultValue={profile.surname}
                                         floatingLabelFixed={true}
                                         onChange={(e) => this.tmpChangeValue(e, 'surname')}
@@ -340,7 +344,8 @@ export class UserProfile extends Component {
                               <div className="row">
                                   <div className="col-md-12">
                                       <TextField
-                                        hintText="user@domain.com"
+                                        hintText={<FormattedHTMLMessage id="ProfileView.youremail"
+                                                            defaultMessage="user@domain.com"/>}
                                         floatingLabelText="Email"
                                         defaultValue={profile.email}
                                         floatingLabelFixed={true}
@@ -352,7 +357,8 @@ export class UserProfile extends Component {
                       </CardText>
 
                       <CardTitle
-                        title="Groups"
+                        title={<FormattedHTMLMessage id="ProfileView.groups"
+                                                            defaultMessage="Groups"/>}
                       />
                       <CardText>
                           <div style={styles.wrapper}>
@@ -381,7 +387,8 @@ export class UserProfile extends Component {
                                       <TextField
                                         hintText="************"
                                         value="************"
-                                        floatingLabelText="Your password"
+                                        floatingLabelText={<FormattedHTMLMessage id="ProfileView.yourpassword"
+                                                            defaultMessage="Your password"/>}
                                         floatingLabelFixed={true}
                                         readOnly onDoubleClick={(e) => this.edit_password(e)}
                                       />
@@ -393,17 +400,20 @@ export class UserProfile extends Component {
                       <CardActions>
                         <FlatButton
                             onClick={(e) => this.save_profile(e)}
-                            label="Save"
+                            label={<FormattedHTMLMessage id="ProfileView.save"
+                                    defaultMessage="Save"/>}
                             icon={<SaveIcon/>}
                         />
                         <FlatButton
                             onClick={(e) => this.discard_edit_profile(e)}
-                            label="Cancel"
+                            label={<FormattedHTMLMessage id="ProfileView.cancel"
+                                    defaultMessage="Cancel"/>}
                             icon={<CancelIcon/>}
                         />
                         <FlatButton
                             onClick={(e) => this.delete_profile(e)}
-                            label="Delete"
+                            label={<FormattedHTMLMessage id="ProfileView.delete"
+                                    defaultMessage="Delete"/>}
                             icon={<DeleteIcon/>}
                         />
                       </CardActions>

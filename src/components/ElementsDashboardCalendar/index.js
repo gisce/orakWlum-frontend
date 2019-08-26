@@ -718,12 +718,12 @@ export class ElementsDashboard extends Component {
             <Toolbar>
                 <ToolbarGroup>
                     <div style={styles['calendarNavigation']}>
-                        <FlatButton title={<FormattedHTMLMessage id="CalendarView.previousyear" defaultMessage="Previous year"/>} className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
-                        <FlatButton title={<FormattedHTMLMessage id="CalendarView.previousmonth" defaultMessage="Previous month"/>} className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
-                        <FlatButton title={<FormattedHTMLMessage id="CalendarView.gototoday" defaultMessage="Go to today"/>} className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
+                        <FlatButton title='Previous year' className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                        <FlatButton title='Previous month' className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                        <FlatButton title='Go to today' className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
                         <FormattedHTMLMessage id="CalendarView.today" defaultMessage="Today"/>&nbsp;&nbsp;&nbsp;</strong></FlatButton>
-                        <FlatButton title={<FormattedHTMLMessage id="CalendarView.nextmonth" defaultMessage="Next month"/>} className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
-                        <FlatButton title={<FormattedHTMLMessage id="CalendarView.nextyear" defaultMessage="Next year"/>} className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
+                        <FlatButton title='Next month' className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                        <FlatButton title='Next year' className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
                     </div>
                 </ToolbarGroup>
 
@@ -742,12 +742,12 @@ export class ElementsDashboard extends Component {
           return (
               <div className="row">
                   <div className="col-md-4" style={styles['alignLeft']}>
-                      <FlatButton title={<FormattedHTMLMessage id="CalendarView.previousyear" defaultMessage="Previous year"/>} className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
-                      <FlatButton title={<FormattedHTMLMessage id="CalendarView.previousmonth" defaultMessage="Previous month"/>} className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
-                      <FlatButton title={<FormattedHTMLMessage id="CalendarView.gototoday" defaultMessage="Go to today"/>} className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
+                      <FlatButton title='Previous year' className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                      <FlatButton title='Previous month' className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                      <FlatButton title='Go to today' className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
                       <FormattedHTMLMessage id="CalendarView.today" defaultMessage="Today"/>&nbsp;&nbsp;&nbsp;</strong></FlatButton>
-                      <FlatButton title={<FormattedHTMLMessage id="CalendarView.nextmonth" defaultMessage="Next month"/>} className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
-                      <FlatButton title={<FormattedHTMLMessage id="CalendarView.nextyear" defaultMessage="Next year"/>} className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
+                      <FlatButton title='Next month' className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                      <FlatButton title='Next year' className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
                   </div>
 
                   <div className="col-md-4" style={styles['alignCenter']}>
