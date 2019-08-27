@@ -86,7 +86,8 @@ export default class AggregationsView extends React.Component {
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
-                                <h1>There was an error</h1>
+                                <h1><FormattedHTMLMessage id="AggregationsView.error"
+                                    defaultMessage="There was an error"/></h1>
                                 {this.props.errorMessage.message}
                             </div>
                     :

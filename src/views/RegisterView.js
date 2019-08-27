@@ -12,6 +12,8 @@ import * as actionCreators from '../actions/auth';
 
 import { validateEmail } from '../utils/misc';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         isRegistering: state.auth.isRegistering,
@@ -150,7 +152,7 @@ export default class RegisterView extends React.Component {
                         <RaisedButton
                           disabled={this.state.disabled}
                           style={{ marginTop: 50 }}
-                          label="Submit"
+                          label={<FormattedHTMLMessage id="RegisterView.submit" defaultMessage="Submit"/>}
                           onClick={(e) => this.login(e)}
                         />
 

@@ -12,6 +12,8 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 import { debug } from '../utils/debug';
 import { socket, ask_the_api } from '../utils/http_functions';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         elements: state.orakwlum.elements,
@@ -56,7 +58,7 @@ export default class ElementsList extends React.Component {
         return (
             <div>
                 <ElementsDashboard
-                    title="Last proposals"
+                    title={<FormattedHTMLMessage id="ElementsList.lastproposals" defaultMessage="Last proposals"/>}
                     path={the_path}
                 />
             </div>

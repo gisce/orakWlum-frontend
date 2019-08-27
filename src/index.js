@@ -29,6 +29,8 @@ import './style.scss';
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 //SW installation handling version updates!
 OfflinePluginRuntime.install({
     onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
@@ -64,7 +66,9 @@ class AppProvider extends React.Component {
             <Provider store={store}>
                  <App>
                      <div>
-                         <h1>Starting orakWlum!</h1>
+                         <h1>
+                            <FormattedHTMLMessage id="Index.startingokw" defaultMessage="Starting orakWlum!"/>
+                         </h1>
                          <LoadingAnimation />
                      </div>
                  </App>

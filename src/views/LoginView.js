@@ -65,7 +65,7 @@ export default class LoginView extends React.Component {
 
         } else {
             this.setState({
-                email_error_text: 'Sorry, this is not a valid email',
+                email_error_text: <FormattedHTMLMessage id="LoginView.invalidemail" defaultMessage="Sorry, this is not a valid email"/>
             });
         }
 
@@ -80,7 +80,7 @@ export default class LoginView extends React.Component {
             });
         } else {
             this.setState({
-                password_error_text: 'Your password must be at least 6 characters',
+                password_error_text: <FormattedHTMLMessage id="LoginView.passwordlength" defaultMessage="Your password must be at least 6 characters"/>
             });
 
         }

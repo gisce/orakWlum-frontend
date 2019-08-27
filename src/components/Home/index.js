@@ -3,6 +3,8 @@ import React from 'react';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 const styles = {
   root: {
     display: 'flex',
@@ -19,33 +21,33 @@ const styles = {
 const tilesData = [
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart.png',
-    title: 'Multiarea chart',
+    title: <FormattedHTMLMessage id="Index.multiareachart" defaultMessage="Multiarea chart"/>,
     featured: true,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart2.png',
-    title: 'Multiline chart',
+    title: <FormattedHTMLMessage id="Index.multiline" defaultMessage="Multiline chart"/>,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart3.png',
-    title: 'Bars chart',
+    title: <FormattedHTMLMessage id="Index.barschart" defaultMessage="Bars chart"/>,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart4.png',
-    title: 'All types',
+    title: <FormattedHTMLMessage id="Index.alltypes" defaultMessage="All Types"/>,
     featured: true,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table.png',
-    title: 'Text table',
+    title: <FormattedHTMLMessage id="Index.texttable" defaultMessage="Text table"/>,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table2.png',
-    title: 'Visual table',
+    title: <FormattedHTMLMessage id="Index.visualtable" defaultMessage="Visual table"/>,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table3.png',
-    title: 'Combined table',
+    title: <FormattedHTMLMessage id="Index.combinedtable" defaultMessage="Combined table"/>,
     featured: true,
   },
 ]
@@ -82,9 +84,12 @@ const OkwScreenshots = () => (
 export const Home = () =>
     <section>
         <div className="container text-center">
-            <h2>An <i>energy forecasting tool</i> for predicting future consumption!</h2>
+            <h2>
+                <FormattedHTMLMessage id="Index.slogan" defaultMessage="An <b>energy forecasting tool</b> for predicting future consumption!"/>
+            </h2>
             <p><br/></p>
-            <p>See some examples of processed proposals:</p>
+            <p>
+                <FormattedHTMLMessage id="Index.examples" defaultMessage="See some examples of processed proposals:"/></p>
             <OkwScreenshots/>
         </div>
     </section>;
