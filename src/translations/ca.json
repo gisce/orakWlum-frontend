@@ -120,6 +120,7 @@
     "ProposalView.edit": "Editar",
     "ProposalView.export": "Exportar",
     "ProposalView.friday": "Divendres",
+    "ProposalView.hour": "Hora",
     "ProposalView.lastexecution": "Es va processar per darrer cop el ",
     "ProposalView.lastupdate": "Es va acutalitzar per darrer cop el ",
     "ProposalView.legend": "*Totes les entrades de la taula es troben en",

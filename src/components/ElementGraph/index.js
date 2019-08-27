@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import {ComposedChart, AreaChart, Area, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
 
-
+import {FormattedHTMLMessage} from 'react-intl';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -40,7 +40,7 @@ export class CustomTooltip extends Component {
       const { payload, label } = this.props;
       return (
         <div style={styles.tooltip} className="custom-tooltip">
-          <h4 className="desc"><strong>Hour #{label}</strong></h4>
+          <h4 className="desc"><strong><FormattedHTMLMessage id="ProposalView.hour" defaultMessage="Hour"/> #{label}</strong></h4>
           {
             Object.keys(payload).map(function(comp, i) {
               const component = payload[i];
