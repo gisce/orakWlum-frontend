@@ -24,6 +24,7 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 //Translation
 import {IntlProvider, addLocaleData} from 'react-intl';
 import messages_es from "./translations/es.json";
+import messages_ca from "./translations/ca.json";
 
 import './style.scss';
 require('expose?$!expose?jQuery!jquery');
@@ -90,7 +91,8 @@ class AppProvider extends React.Component {
 const the_app = <AppProvider />;
 
 const messages = {
-    'es': messages_es
+    'es': messages_es,
+    'ca': messages_ca
 };
 const language = navigator.language.split(/[-_]/)[0];  // language without region code
 addLocaleData({ locale: language, pluralRuleFunction: () => {}, });
