@@ -129,6 +129,7 @@ const locale_override_conf = {
     },
 }
 moment.locale('en', locale_override_conf);
+moment.lang('es');  // deprecated in moment 2.8.1 (use moment.locale('es') instead)
 export const localized_time = moment;
 
 export const day_format = "L";
