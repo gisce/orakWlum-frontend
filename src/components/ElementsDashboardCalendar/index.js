@@ -39,7 +39,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import { localized_time, colors_combo, colors_by_elements_type } from '../../constants'
 
-import {FormattedHTMLMessage} from 'react-intl';
+import {FormattedHTMLMessage, FormattedMessage} from 'react-intl';
 
 //Define the localizer for the Calendar
 BigCalendar.momentLocalizer(localized_time);
@@ -244,9 +244,12 @@ export class ElementsDashboard extends Component {
     //Dispatch elements buy
     buyElementsQuestion = () => {
         this.creation_dialog['body'] =  <div>
-                                        <p>The selected proposals will change their status to "bought". This process can't be undone.</p>
-                                        <p>Bought proposals can't be processed, edited, tuned or saved.</p>
-                                        <p>Are you sure about to <b>buy those Proposals</b>?</p>
+                                        <FormattedHTMLMessage id="CalendarView.buyconfirmation2"
+                                        defaultMessage="<p>The selected proposals will change their status to <b>bought</b>. This process can't be undone.</p>"/>
+                                        <FormattedHTMLMessage id="CalendarView.buyconfirmation3"
+                                        defaultMessage="<p>Bought proposals can't be processed, edited, tuned or saved.</p>"/>
+                                        <FormattedHTMLMessage id="CalendarView.buyconfirmation4"
+                                        defaultMessage="<p>Are you sure about to <b>buy those Proposals</b>?</p>"/>
                                         </div>;
         this.creation_dialog['title'] = "Buy selected Proposals";
 
@@ -293,9 +296,12 @@ export class ElementsDashboard extends Component {
     //Dispatch elements reprocess
     reprocessElementsQuestion = () => {
         this.creation_dialog['body'] =  <div>
-                                        <p>The selected Elements will be reprocessed. This process can take a while...</p>
-                                        <p>Concatenations, Comparations and Bought proposals can't be reprocessed.</p>
-                                        <p>Are you sure about to&nbsp; <b>reprocess those Elements</b>?</p>
+                                        <FormattedHTMLMessage id="CalendarView.processconfirmation2"
+                                        defaultMessage="<p>The selected Elements will be <b>reprocessed</b>. This process can take a while...</p>"/>
+                                        <FormattedHTMLMessage id="CalendarView.processconfirmation3"
+                                        defaultMessage="<p>Concatenations, Comparations and Bought proposals can't be reprocessed.</p>"/>
+                                        <FormattedHTMLMessage id="CalendarView.processconfirmation4"
+                                        defaultMessage="<p>Are you sure about to&nbsp; <b>reprocess those Elements</b>?</p>"/>
                                         </div>;
         this.creation_dialog['title'] = "Reprocess selected Elements";
 
@@ -343,9 +349,12 @@ export class ElementsDashboard extends Component {
     //Dispatch elements delete
     deleteElementsQuestion = () => {
         this.creation_dialog['body'] =  <div>
-                                        <p>The selected Elements will be deleted. This process can't be undone.</p>
-                                        <p>Concatenations, Comparations and running Elements will not be affected.</p>
-                                        <p>Are you sure about to <b>delete those Elements</b>?</p>
+                                        <FormattedHTMLMessage id="CalendarView.deleteconfirmation2"
+                                        defaultMessage="<p>The selected Elements will be <b>deleted</b>. This process can't be undone.</p>"/>
+                                        <FormattedHTMLMessage id="CalendarView.deleteconfirmation3"
+                                        defaultMessage="<p>Concatenations, Comparations and running Elements will not be affected.</p>"/>
+                                        <FormattedHTMLMessage id="CalendarView.deleteconfirmation4"
+                                        defaultMessage="<p>Are you sure about to <b>delete those Elements</b>?</p>"/>
                                         </div>;
         this.creation_dialog['title'] = "Delete selected Elements";
 

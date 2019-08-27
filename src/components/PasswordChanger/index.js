@@ -47,8 +47,7 @@ export class PasswordChanger extends Component {
 
         return (
             <Dialog
-              title={<FormattedHTMLMessage id="ProfileView.changeyourpassword"
-                                defaultMessage="Change your password"/>}
+              title='Change your password'
               actions={actions}
               contentStyle={styles.dialog}
               open={open}
