@@ -39,7 +39,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import { localized_time, colors_combo, colors_by_elements_type } from '../../constants'
 
-import {FormattedHTMLMessage, FormattedMessage} from 'react-intl';
+import {FormattedHTMLMessage} from 'react-intl';
 
 //Define the localizer for the Calendar
 BigCalendar.momentLocalizer(localized_time);

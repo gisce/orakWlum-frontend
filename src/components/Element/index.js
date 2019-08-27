@@ -716,7 +716,7 @@ export class Elementt extends Component {
 
         const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
 
-        const subtitle = <span><FormattedHTMLMessage id="ProposalView.using" deafultMessage="Using "/> {days[dayOfElement]}&nbsp;
+        const subtitle = <span><FormattedHTMLMessage id="ProposalView.using" deafultMessage="Using"/> {days[dayOfElement]}&nbsp;
             {daysRangeStringPastString}</span>;
 
         const offset = (withPicture)
