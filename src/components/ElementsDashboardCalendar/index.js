@@ -253,12 +253,14 @@ export class ElementsDashboard extends Component {
         // The object to handle the creation dialog
         const creation_dialog_actions = [
           <FlatButton
-            label="No"
+            label={<FormattedHTMLMessage id="CalendarView.no"
+                           defaultMessage="No"/>}
             primary={true}
             onClick={() => this.creation_dialog_close()}
           />,
           <FlatButton
-            label="Yes"
+            label={<FormattedHTMLMessage id="CalendarView.yes"
+                    defaultMessage="Yes"/>}
             primary={true}
             keyboardFocused={true}
             onClick={(event) => this.buySelectedElements()}
@@ -300,12 +302,14 @@ export class ElementsDashboard extends Component {
         // The object to handle the creation dialog
         const creation_dialog_actions = [
           <FlatButton
-            label="No"
+            label={<FormattedHTMLMessage id="CalendarView.no"
+                           defaultMessage="No"/>}
             primary={true}
             onClick={() => this.creation_dialog_close()}
           />,
           <FlatButton
-            label="Yes"
+            label={<FormattedHTMLMessage id="CalendarView.yes"
+                           defaultMessage="Yes"/>}
             primary={true}
             keyboardFocused={true}
             onClick={(event) => this.reprocessSelectedElements()}
@@ -348,12 +352,14 @@ export class ElementsDashboard extends Component {
         // The object to handle the creation dialog
         const creation_dialog_actions = [
           <FlatButton
-            label="No"
+            label={<FormattedHTMLMessage id="CalendarView.no"
+                    defaultMessage="No"/>}
             primary={true}
             onClick={() => this.creation_dialog_close()}
           />,
           <FlatButton
-            label="Yes"
+            label={<FormattedHTMLMessage id="CalendarView.yes"
+                    defaultMessage="Yes"/>}
             primary={true}
             keyboardFocused={true}
             onClick={(event) => this.deleteSelectedElements()}
@@ -492,12 +498,14 @@ export class ElementsDashboard extends Component {
         // The object to handle the creation dialog
         const creation_dialog_actions = [
           <FlatButton
-            label="Cancel"
+            label={<FormattedHTMLMessage id="CalendarView.cancel"
+                           defaultMessage="Cancel"/>}
             primary={true}
             onClick={() => this.creation_dialog_close()}
           />,
           <FlatButton
-            label="Submit"
+            label={<FormattedHTMLMessage id="CalendarView.submit"
+                           defaultMessage="Submit"/>}
             primary={true}
             keyboardFocused={true}
             onClick={(event) => this.addElement(event, this.creation_dialog['days_range'])}
@@ -540,7 +548,8 @@ export class ElementsDashboard extends Component {
             <div>
                 <div ref="selected_type" className="col-md-12">
                     <AutoComplete
-                      floatingLabelText={"Type"}
+                      floatingLabelText={<FormattedHTMLMessage id="CalendarView.type"
+                                          defaultMessage="Type"/>}
                       filter={AutoComplete.noFilter}
                       openOnFocus={true}
                       dataSource={this.filter_types}
@@ -567,7 +576,7 @@ export class ElementsDashboard extends Component {
                 <div ref="selected_type" className="col-md-4">
                     <RaisedButton
                         label={<FormattedHTMLMessage id="CalendarView.concatenate"
-                           defaultMessage="Concatenate"/>}
+                                defaultMessage="Concatenate"/>}
                         title={"Create a concatenation from a selection of elements"}
                         onClick={(event) => this.concatenateSelectedElements()}
                         disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
@@ -577,7 +586,7 @@ export class ElementsDashboard extends Component {
                 <div ref="selected_type" className="col-md-4">
                     <RaisedButton
                         label={<FormattedHTMLMessage id="CalendarView.compare"
-                           defaultMessage="Compare"/>}
+                                defaultMessage="Compare"/>}
                         title={"Create a comparison between two elements"}
                         onClick={(event) => this.compareSelectedElements()}
                         disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
@@ -800,7 +809,7 @@ export class ElementsDashboard extends Component {
 
                 <ContentHeader
                     title={<FormattedHTMLMessage id="CalendarView.elements"
-                           defaultMessage="Elements"/>}
+                            defaultMessage="Elements"/>}
                     addButton={true}
                     addClickMethod={(event) => this.addElement(event)}
 
@@ -836,7 +845,10 @@ export class ElementsDashboard extends Component {
                     </div>
 
                     <div ref="the_selected_elements" className="col-md-3">
-                        <h3>Selected Elements</h3>
+                        <h3>
+                        {<FormattedHTMLMessage id="CalendarView.selectedelements"
+                          defaultMessage="Selected Elements"/>}
+                        </h3>
 
                         <List>
                             {
@@ -845,7 +857,8 @@ export class ElementsDashboard extends Component {
                                     <div>
                                         <ListItem
                                             key={"unSelectAllElementsListItem"}
-                                            primaryText={"Clear list"}
+                                            primaryText={<FormattedHTMLMessage id="CalendarView.clear"
+                                                          defaultMessage="Clear list"/>}
                                             onClick={(event) => this.unselectAllElements()}
                                         />
                                         <Divider />
@@ -860,7 +873,7 @@ export class ElementsDashboard extends Component {
                                 <RaisedButton
                                     icon={<BuyIcon/>}
                                     label={<FormattedHTMLMessage id="CalendarView.buy"
-                                    defaultMessage="Buy"/>}
+                                            defaultMessage="Buy"/>}
                                     title={"Buy selected proposals"}
                                     onClick={(event) => this.buyElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
@@ -872,7 +885,7 @@ export class ElementsDashboard extends Component {
                                 <RaisedButton
                                     icon={<RunIcon/>}
                                     label={<FormattedHTMLMessage id="CalendarView.process"
-                                    defaultMessage="Process"/>}
+                                            defaultMessage="Process"/>}
                                     title={"Reprocess selected elements"}
                                     onClick={(event) => this.reprocessElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
@@ -884,7 +897,7 @@ export class ElementsDashboard extends Component {
                                 <RaisedButton
                                     icon={<DeleteIcon/>}
                                     label={<FormattedHTMLMessage id="CalendarView.delete"
-                                    defaultMessage="Delete"/>}
+                                            defaultMessage="Delete"/>}
                                     title={"Delete selected elements"}
                                     onClick={(event) => this.deleteElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}

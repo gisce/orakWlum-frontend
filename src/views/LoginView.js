@@ -10,6 +10,8 @@ import Paper from 'material-ui/Paper';
 import * as actionCreators from '../actions/auth';
 import { validateEmail } from '../utils/misc';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         isAuthenticating: state.auth.isAuthenticating,
@@ -132,7 +134,10 @@ export default class LoginView extends React.Component {
                 <Paper style={style}>
                     <form role="form">
                         <div className="text-center">
-                            <h2>Login to oKW!</h2>
+                            <h2>
+                            {<FormattedHTMLMessage id="HeaderView.loginokw"
+                              defaultMessage="Login to oKw"/>}
+                            </h2>
                             {
                                 this.props.statusText &&
                                     <div className={"alert alert-info alert-" + this.props.statusType}>
@@ -142,7 +147,8 @@ export default class LoginView extends React.Component {
 
                             <div className="col-md-12">
                                 <TextField
-                                  hintText="user@domain.com"
+                                  hintText={<FormattedHTMLMessage id="HeaderView.youremail"
+                                                  defaultMessage="user@domain.com"/>}
                                   floatingLabelText="Email"
                                   type="email"
                                   errorText={this.state.email_error_text}
@@ -162,13 +168,15 @@ export default class LoginView extends React.Component {
                             <RaisedButton
                               disabled={this.state.disabled}
                               style={{ marginTop: 50 }}
-                              label="Login"
+                              label={<FormattedHTMLMessage id="HeaderView.login"
+                                                  defaultMessage="Login"/>}
                               onClick={(e) => this.login(e)}
                             />
                             <RaisedButton
                               disabled={this.state.enabled}
                               style={{ marginTop: 50 }}
-                              label="Help"
+                              label={<FormattedHTMLMessage id="HeaderView.help"
+                                                  defaultMessage="Help"/>}
                               onClick={(e) => this.help(e)}
                             />
 

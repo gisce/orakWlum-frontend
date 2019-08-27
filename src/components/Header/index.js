@@ -31,6 +31,8 @@ import { dispatchNewRoute} from '../../utils/http_functions';
 
 import * as actionCreators from '../../actions/auth';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         token: state.auth.token,
@@ -116,12 +118,14 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/login')}
                                     leftIcon={<LoginIcon/>}
-                                    primaryText="Login"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.login"
+                                                  defaultMessage="Login"/>}
                                 />
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/register')}
                                     leftIcon={<RegisterIcon/>}
-                                    primaryText="Register"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.register"
+                                                  defaultMessage="Register"/>}
                                 />
                             </div>
                             :
@@ -139,7 +143,8 @@ export class Header extends Component {
 
                                 <MenuItem
                                     leftIcon={<DashboardIcon/>}
-                                    primaryText={"Elements"}
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.elements"
+                                                  defaultMessage="Elements"/>}
                                     onClick={(event) => this.dispatchRoute(event, '/elements')}
                                 />
 
@@ -154,17 +159,20 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/elements/type/proposal')}
                                     leftIcon={<ProposalIcon/>}
-                                    primaryText="Proposals"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.proposals"
+                                                  defaultMessage="Proposals"/>}
                                 />
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/elements/type/historical')}
                                     leftIcon={<HistoryIcon/>}
-                                    primaryText="Historicals"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.historicals"
+                                                  defaultMessage="Historicals"/>}
                                 />
                                 <MenuItem
 //                                    onClick={(event) => this.dispatchRoute(event,'/buys')}
                                     leftIcon={<EuroIcon/>}
-                                    primaryText="Buys"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.buys"
+                                                  defaultMessage="Buys"/>}
                                     disabled
                                 />
 
@@ -173,13 +181,15 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/aggregations')}
                                     leftIcon={<AggregationsIcon/>}
-                                    primaryText="Aggregations"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.aggregations"
+                                                  defaultMessage="Aggregations"/>}
                                 />
 
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/sources')}
                                     leftIcon={<SettingsIcon/>}
-                                    primaryText="Sources"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.sources"
+                                                  defaultMessage="Sources"/>}
                                 />
 
                                 <Divider />
@@ -187,12 +197,14 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/profile')}
                                     leftIcon={<ProfileIcon/>}
-                                    primaryText="Profile"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.profile"
+                                                  defaultMessage="Profile"/>}
                                 />
                                 <MenuItem
                                     onClick={(event) => this.dispatchRoute(event,'/about')}
                                     leftIcon={<AboutIcon/>}
-                                    primaryText="About"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.about"
+                                                  defaultMessage="About"/>}
                                 />
 
                                 <Divider />
@@ -200,7 +212,8 @@ export class Header extends Component {
                                 <MenuItem
                                     onClick={(e) => this.logout(e)}
                                     leftIcon={<LogoutIcon/>}
-                                    primaryText="Logout"
+                                    primaryText={<FormattedHTMLMessage id="HeaderView.logout"
+                                                  defaultMessage="Logout"/>}
                                 />
                             </div>
                     }
