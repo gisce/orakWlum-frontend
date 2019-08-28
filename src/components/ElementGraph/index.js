@@ -88,8 +88,6 @@ export class ElementGraph extends Component {
         };
     }
 
-    // toDo review why the hour 0 stills appears
-
     render() {
         const data = this.props.data;
         const components = this.props.components;

@@ -218,10 +218,8 @@ export class ElementTable extends Component {
                         <TableRow key="headersRow">
                             <TableRowColumn
                                 key={"headerHour"}
-                                style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}
-
-                            >
-                                <b>Hour</b>
+                                style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}>
+                                    <b><FormattedHTMLMessage id="ProposalView.hour" defaultMessage="Hour"/></b>
                             </TableRowColumn>
                             {headers}
                             {headerTotal}

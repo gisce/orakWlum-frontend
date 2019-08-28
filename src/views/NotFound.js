@@ -27,7 +27,9 @@ class NotFound extends React.Component { // eslint-disable-line react/prefer-sta
                 <FormattedHTMLMessage id="NotFound.notfound" defaultMessage="Not Found"/>
                 </h1>
 
-                <h3>Detail:</h3>
+                <h3>
+                <FormattedHTMLMessage id="NotFound.detail" defaultMessage="Detail:"/>
+                </h3>
                 <pre>{ JSON.stringify(this.props, null, 2) }</pre>
 
 

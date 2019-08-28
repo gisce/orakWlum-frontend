@@ -1,7 +1,9 @@
 {
     "AboutView.desc1": "La suite d'orakWlum ha sigut creada per ",
     "AboutView.desc2": "Proporciona una eina idònia per donar suport i accelerar el procés d'aprovisionament d'energia.",
+    "AboutView.details": "Detalls",
     "AboutView.error": "S'ha produït un error a l'obtenir els detalls de la versió actual.",
+    "AboutView.notavailable": "La informació de {title} no està disponible.",
     "AboutView.title": "Sobre orakWlum",
     "AggregationsView.aggregations": "Agregacions",
     "AggregationsView.dbfields": "Camps BDD",
@@ -75,6 +77,7 @@
     "LoginView.credentials": "Les credencials proporcionades no són correctes.",
     "LoginView.invalidemail": "Ho sentim, aquest no és un email vàlid.",
     "LoginView.passwordlength": "El password ha de tenir al menys 6 caràcters.",
+    "NotFound.detail": "Detall:",
     "NotFound.notfound": "No trobat",
     "ProfileView.back": "Enrere",
     "ProfileView.cancel": "Cancel·lar",
