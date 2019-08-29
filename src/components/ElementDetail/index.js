@@ -16,6 +16,8 @@ import { ElementTable } from '../ElementTable';
 
 import {colors} from '../../constants';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 const styles = {
     center: {
         textAlign: 'center',
@@ -69,7 +71,7 @@ export class ElementDetail extends Component {
         const num_invoices =  (total_invoices) &&
             (
                 <Indicator
-                    title="Invoices"
+                    title={<FormattedHTMLMessage id="ProposalView.invoices" defaultMessage="Invoices"/>}
                     value={total_invoices}
                     icon={<InvoicesIcon style={styles.icon}/>}
                     valueInfo="Amount of energy in kW"
@@ -81,7 +83,7 @@ export class ElementDetail extends Component {
           const loss_versions = (loss_versions_list) &&
               (
                   <Indicator
-                      title="Loss Version"
+                      title={<FormattedHTMLMessage id="ProposalView.lossversion" defaultMessage="Loss Version"/>}
                       value={loss_versions_list}
                       icon={<LossIcon style={styles.icon}/>}
                   />
@@ -187,13 +189,17 @@ export class ElementDetail extends Component {
                     <br/>
 
                     <div>
-                        <h2>ORIGINS</h2>
+                        <h2>
+                        <FormattedHTMLMessage id="ProposalView.origins" defaultMessage="ORIGINS"/>
+                        </h2>
                         {invoice_types}
                     </div>
                     <br/>
 
                     <div>
-                        <h2>TARIFFS</h2>
+                        <h2>
+                        <FormattedHTMLMessage id="ProposalView.tariffs" defaultMessage="TARIFFS"/>
+                        </h2>
                         {tariffs}
                     </div>
 
@@ -201,7 +207,9 @@ export class ElementDetail extends Component {
                     <br/>
 
                     <div>
-                        <h2>AVERAGE</h2>
+                        <h2>
+                        <FormattedHTMLMessage id="ProposalView.average" defaultMessage="AVERAGE"/>
+                        </h2>
                         {avg_table}
                     </div>
 
