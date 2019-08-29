@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import {ComposedChart, AreaChart, Area, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend} from 'recharts';
 
-import {FormattedHTMLMessage} from 'react-intl';
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
 
 //import { updatePaths, toggleName, removeNode, changeOffset } from '../../actions/proposalGraph';
 
@@ -80,8 +80,7 @@ CustomTooltip.propTypes = {
   label: PropTypes.any,
 };
 
-
-export class ElementGraph extends Component {
+class ElementGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -89,6 +88,7 @@ export class ElementGraph extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         const data = this.props.data;
         const components = this.props.components;
         const scale = (this.props.scale)?parseFloat(this.props.scale) : "auto";
@@ -185,7 +185,7 @@ export class ElementGraph extends Component {
                 :
                 null;
 
-              const xaxis = <XAxis dataKey="name" label={"Hour"}/>;
+              const xaxis = <XAxis dataKey="name" label={intl.formatMessage({id: "ProposalView.hour", defaultMessage: "Hour"})}/>;
               const xaxisLite = <XAxis dataKey="name"/>;
 
               const yaxis = (scale != null)? <YAxis label={unit} type={"number"} domain={[0, scale]}/> : <YAxis label={unit}/>;
@@ -237,6 +237,7 @@ export class ElementGraph extends Component {
 }
 
 ElementGraph.propTypes = {
+    intl: intlShape.isRequired,
     data: PropTypes.array,
     components: PropTypes.object,
     stacked: PropTypes.bool,
@@ -247,3 +248,5 @@ ElementGraph.propTypes = {
     height: PropTypes.number,
     unit: PropTypes.string,
 };
+
+export default injectIntl(ElementGraph);

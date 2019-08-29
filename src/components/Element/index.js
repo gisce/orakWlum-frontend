@@ -32,7 +32,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import {Tag} from '../Tag';
 
-import {ElementGraph} from '../ElementGraph';
+import ElementGraph from '../ElementGraph';
 import {ElementTable} from '../ElementTable';
 import {ElementDetail} from '../ElementDetail';
 import {ElementDefinition} from '../ElementDefinition';
@@ -63,7 +63,7 @@ import {capitalize} from '../../utils/misc';
 
 import {localized_time, day_format, parse_day_format} from '../../constants'
 
-import {FormattedHTMLMessage} from 'react-intl';
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
 
 const locale = 'es';
 const dateOptions = {
@@ -151,7 +151,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class Elementt extends Component {
+class Elementt extends Component {
     constructor(props) {
         super(props);
 
@@ -626,6 +626,7 @@ export class Elementt extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         const readOnly = (this.props.readOnly)
             ? this.props.readOnly
             : false;
@@ -777,7 +778,7 @@ export class Elementt extends Component {
         ];
 
         // The Element status!
-        const proposalStatus = (proposal.status && <div className={"col-md-2 col-lg-2"} style={styles.wrapper} title={"Element status"}>
+        const proposalStatus = (proposal.status && <div className={"col-md-2 col-lg-2"} style={styles.wrapper} title={intl.formatMessage({id: "ProposalView.elementstatus", defaultMessage: "Element status"})}>
             <Tag tag={proposal.status}/>
         </div>)
 
@@ -789,7 +790,7 @@ export class Elementt extends Component {
         const proposalAggregations = (aggregations && <div id="aggregationsList" className={"col-md-offset-" + (offset) + " col-md-" + size + " col-lg-offset-" + (offset) + " col-lg-" + size} style={aggregationsStyle}>
             {aggregations.map(function(agg, i) {
                 return (
-                    <div key={"aggregationDivTag_" + i} onClick={(e) => changeElementAggregation(e, agg)} title={"Select aggregation view"}>
+                    <div key={"aggregationDivTag_" + i} onClick={(e) => changeElementAggregation(e, agg)} title={intl.formatMessage({id: "ProposalView.selectaggregationview", defaultMessage: "Select aggregation view"})}>
                         <Tag key={"aggregationTag_" + i} tag={agg.lite} selected={agg.selected} readOnly/>
                     </div>
                 );
@@ -816,7 +817,7 @@ export class Elementt extends Component {
                         <b><FormattedHTMLMessage id="ProposalView.chart" defaultMessage="Chart"/></b>
                     </div>
                     <div id="toogleElement" className="col-xs-3">
-                        <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable} title={"Toggle view mode"}/>
+                        <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable} title={intl.formatMessage({id: "ProposalView.toggleviewmode", defaultMessage: "Toggle view mode"})}/>
                     </div>
                     <div className="col-xs-2" style={styles.toggle}>
                         <FormattedHTMLMessage id="ProposalView.table" defaultMessage="Table"/>
@@ -825,7 +826,7 @@ export class Elementt extends Component {
 }
         </div>)
 
-        const LossesHelp = "Render an Element with their related losses or just their measures"
+        const LossesHelp = intl.formatMessage({id: "ProposalView.togglelosses", defaultMessage: "Render an Element with their related losses or just their measures"})
 
         // The Element graph toogle! //to switch between table and chart
         const withLossesToggle = (withPicture) && <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
@@ -960,18 +961,18 @@ export class Elementt extends Component {
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.refresh" defaultMessage="Refresh"/>} icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.process" defaultMessage="Process"/>} icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"} disabled={boughtProposal || disableExportDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.summary" defaultMessage="Summary"/>} icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.notes" defaultMessage="Notes"/>} icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.edit" defaultMessage="Edit"/>} icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal || historical || disableExportDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.tune" defaultMessage="Tune"/>} icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal  || historical || disableExportDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.save" defaultMessage="Save"/>} icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Save tuned changes"} disabled={boughtProposal  || historical || disableExportDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.export" defaultMessage="Export"/>} icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.detail" defaultMessage="Detail"/>} icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.duplicate" defaultMessage="Duplicate"/>} icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"} disabled={disableExportDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.delete" defaultMessage="Delete"/>} icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={"Delete current proposal"}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.buy" defaultMessage="Buy"/>} icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.refresh" defaultMessage="Refresh"/>} icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.refreshhelper", defaultMessage: "Refresh current proposal"})}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.process" defaultMessage="Process"/>} icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.processhelper", defaultMessage: "Reprocess current proposal"})} disabled={boughtProposal || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.summary" defaultMessage="Summary"/>} icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={intl.formatMessage({id: "ProposalView.summaryhelper", defaultMessage: "Toggle summary view"})} disabled={disableDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.notes" defaultMessage="Notes"/>} icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={intl.formatMessage({id: "ProposalView.noteshelper", defaultMessage: "Toggle notes view"})}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.edit" defaultMessage="Edit"/>} icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={intl.formatMessage({id: "ProposalView.edithelper", defaultMessage: "Toggle edit view"})} disabled={boughtProposal || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.tune" defaultMessage="Tune"/>} icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={intl.formatMessage({id: "ProposalView.tunehelper", defaultMessage: "Toggle tune view"})} disabled={boughtProposal  || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.save" defaultMessage="Save"/>} icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={intl.formatMessage({id: "ProposalView.savehelper", defaultMessage: "Save tuned changes"})} disabled={boughtProposal  || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.export" defaultMessage="Export"/>} icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.exporthelper", defaultMessage: "Export Element to an XLS file"})} disabled={disableExport}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.detail" defaultMessage="Detail"/>} icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.detailhelper", defaultMessage: "Export Element Detail to a CSV file"})} disabled={disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.duplicate" defaultMessage="Duplicate"/>} icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.duplicatehelper", defaultMessage: "Duplicate current proposal to a new one"})} disabled={disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.delete" defaultMessage="Delete"/>} icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={intl.formatMessage({id: "ProposalView.deletehelper", defaultMessage: "Delete current proposal"})}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.buy" defaultMessage="Buy"/>} icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.buyhelper", defaultMessage: "Buy current proposal"})} disabled={boughtProposal || historical || disableExportDetail}/>
                 </CardActions>
             : null;
 
@@ -1140,7 +1141,10 @@ export class Elementt extends Component {
 }
 
 Elementt.propTypes = {
+    intl: intlShape.isRequired,
     readOnly: PropTypes.bool,
     proposalOld: PropTypes.bool,
     comparation: PropTypes.bool
 };
+
+export default injectIntl(Elementt);

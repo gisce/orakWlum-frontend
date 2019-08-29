@@ -23,7 +23,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
-import {Elementt} from '../Element'
+import Elementt from '../Element'
 
 import * as actionCreators from '../../actions/orakwlum';
 

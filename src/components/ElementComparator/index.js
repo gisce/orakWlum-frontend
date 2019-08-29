@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Elementt } from '../Element';
+import Elementt from '../Element';
 
 const styles = {
     container: {
