@@ -28,7 +28,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import { ElementList } from '../ElementList';
-import { ContentHeader } from '../ContentHeader';
+import ContentHeader from '../ContentHeader';
 
 import { capitalize} from '../../utils/misc';
 
@@ -39,7 +39,7 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import { localized_time, colors_combo, colors_by_elements_type } from '../../constants'
 
-import {FormattedHTMLMessage} from 'react-intl';
+import {FormattedHTMLMessage, injectIntl} from 'react-intl';
 
 //Define the localizer for the Calendar
 BigCalendar.momentLocalizer(localized_time);
@@ -110,7 +110,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class ElementsDashboard extends Component {
+class ElementsDashboard extends Component {
     constructor(props) {
         super(props);
         this.todayDate = (typeof props.calendar_date  === "string") ?
@@ -546,6 +546,7 @@ export class ElementsDashboard extends Component {
     }
 
     render = () => {
+        const { intl } = this.props;
         const {selected_type, searchText, selectedElements, multiElementMode} = this.state;
 
         // Filter elements by current criteria with current target elements
@@ -577,7 +578,7 @@ export class ElementsDashboard extends Component {
                     <RaisedButton
                         label={<FormattedHTMLMessage id="CalendarView.selectmode"
                            defaultMessage="Select Mode"/>}
-                        title={"Toggle multiple selection mode"}
+                        title={intl.formatMessage({id: "CalendarView.selectmodehelper", defaultMessage: "Toggle multiple selection mode"})}
                         onClick={(value) => this.toggleMultiElementSelection()}
                         primary={multiElementMode}
                     />
@@ -586,7 +587,7 @@ export class ElementsDashboard extends Component {
                     <RaisedButton
                         label={<FormattedHTMLMessage id="CalendarView.concatenate"
                                 defaultMessage="Concatenate"/>}
-                        title={"Create a concatenation from a selection of elements"}
+                        title={intl.formatMessage({id: "CalendarView.concatenationhelper", defaultMessage: "Create a concatenation from a selection of elements"})}
                         onClick={(event) => this.concatenateSelectedElements()}
                         disabled={!multiElementMode || Object.keys(selectedElements).length <= 1}
                     />
@@ -596,7 +597,7 @@ export class ElementsDashboard extends Component {
                     <RaisedButton
                         label={<FormattedHTMLMessage id="CalendarView.compare"
                                 defaultMessage="Compare"/>}
-                        title={"Create a comparison between two elements"}
+                        title={intl.formatMessage({id: "CalendarView.comparehelper", defaultMessage: "Create a comparison between two elements"})}
                         onClick={(event) => this.compareSelectedElements()}
                         disabled={!multiElementMode || Object.keys(selectedElements).length != 2}
                     />
@@ -736,12 +737,12 @@ export class ElementsDashboard extends Component {
             <Toolbar>
                 <ToolbarGroup>
                     <div style={styles['calendarNavigation']}>
-                        <FlatButton title='Previous year' className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
-                        <FlatButton title='Previous month' className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
-                        <FlatButton title='Go to today' className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
+                        <FlatButton title={intl.formatMessage({id: "CalendarView.previousyear", defaultMessage: "Previous year"})} className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                        <FlatButton title={intl.formatMessage({id: "CalendarView.previousmonth", defaultMessage: "Previous month"})} className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                        <FlatButton title={intl.formatMessage({id: "CalendarView.gototoday", defaultMessage: "Go to today"})} className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
                         <FormattedHTMLMessage id="CalendarView.today" defaultMessage="Today"/>&nbsp;&nbsp;&nbsp;</strong></FlatButton>
-                        <FlatButton title='Next month' className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
-                        <FlatButton title='Next year' className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
+                        <FlatButton title={intl.formatMessage({id: "CalendarView.nextmonth", defaultMessage: "Next month"})} className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                        <FlatButton title={intl.formatMessage({id: "CalendarView.nextyear", defaultMessage: "Next year"})} className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
                     </div>
                 </ToolbarGroup>
 
@@ -760,12 +761,12 @@ export class ElementsDashboard extends Component {
           return (
               <div className="row">
                   <div className="col-md-4" style={styles['alignLeft']}>
-                      <FlatButton title='Previous year' className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
-                      <FlatButton title='Previous month' className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
-                      <FlatButton title='Go to today' className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
+                      <FlatButton title={intl.formatMessage({id: "CalendarView.previousyear", defaultMessage: "Previous year"})} className={'btn-yearAgo'} onClick={goToPrevYear} style={styles['calendarNavigationButtons']}><strong>&#8249;&#8249;</strong></FlatButton>
+                      <FlatButton title={intl.formatMessage({id: "CalendarView.previousmonth", defaultMessage: "Previous month"})} className={'btn-back'} onClick={goToBack} style={styles['calendarNavigationButtons']}><strong>&#8249;</strong></FlatButton>
+                      <FlatButton title={intl.formatMessage({id: "CalendarView.gototoday", defaultMessage: "Go to today"})} className={'btn-current'} onClick={goToCurrent} style={styles['calendarNavigationButtons']}><strong>&nbsp;&nbsp;
                       <FormattedHTMLMessage id="CalendarView.today" defaultMessage="Today"/>&nbsp;&nbsp;&nbsp;</strong></FlatButton>
-                      <FlatButton title='Next month' className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
-                      <FlatButton title='Next year' className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
+                      <FlatButton title={intl.formatMessage({id: "CalendarView.nextmonth", defaultMessage: "Next month"})} className={'btn-next'} onClick={goToNext} style={styles['calendarNavigationButtons']}><strong>&#8250;</strong></FlatButton>
+                      <FlatButton title={intl.formatMessage({id: "CalendarView.nextyear", defaultMessage: "Next year"})} className={'btn-yearMore'} onClick={goToNextYear} style={styles['calendarNavigationButtons']}><strong>&#8250;&#8250;</strong></FlatButton>
                   </div>
 
                   <div className="col-md-4" style={styles['alignCenter']}>
@@ -883,7 +884,7 @@ export class ElementsDashboard extends Component {
                                     icon={<BuyIcon/>}
                                     label={<FormattedHTMLMessage id="CalendarView.buy"
                                             defaultMessage="Buy"/>}
-                                    title={"Buy selected proposals"}
+                                    title={intl.formatMessage({id: "CalendarView.buyconfirmation1", defaultMessage: "Buy selected proposals"})}
                                     onClick={(event) => this.buyElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
@@ -895,7 +896,7 @@ export class ElementsDashboard extends Component {
                                     icon={<RunIcon/>}
                                     label={<FormattedHTMLMessage id="CalendarView.process"
                                             defaultMessage="Process"/>}
-                                    title={"Reprocess selected elements"}
+                                    title={intl.formatMessage({id: "CalendarView.processconfirmation1", defaultMessage: "Reprocess selected elements"})}
                                     onClick={(event) => this.reprocessElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
@@ -907,7 +908,7 @@ export class ElementsDashboard extends Component {
                                     icon={<DeleteIcon/>}
                                     label={<FormattedHTMLMessage id="CalendarView.delete"
                                             defaultMessage="Delete"/>}
-                                    title={"Delete selected elements"}
+                                    title={intl.formatMessage({id: "CalendarView.deleteconfirmation1", defaultMessage: "Delete selected elements"})}
                                     onClick={(event) => this.deleteElementsQuestion()}
                                     disabled={!multiElementMode || Object.keys(selectedElements).length < 1}
                                 />
@@ -924,3 +925,5 @@ export class ElementsDashboard extends Component {
 
 ElementsDashboard.propTypes = {
 };
+
+export default injectIntl(ElementsDashboard);

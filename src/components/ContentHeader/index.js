@@ -4,6 +4,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Refresh from 'material-ui/svg-icons/navigation/refresh';
 
+import { intlShape, injectIntl } from 'react-intl';
+
 const styles = {
     buttonAdd: {
         marginRight: 20,
@@ -13,7 +15,7 @@ const styles = {
     }
 };
 
-export class ContentHeader extends Component {
+class ContentHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +23,7 @@ export class ContentHeader extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         const title = this.props.title;
         const withAdd = (this.props.addButton)?this.props.addButton:false;
         const withRefresh = (this.props.refreshButton)?this.props.refreshButton:false;
@@ -33,7 +36,7 @@ export class ContentHeader extends Component {
         // The Refresh Button
         const refreshButton = (
             (withRefresh)?
-                <FloatingActionButton style={styles.buttonAdd} title={"Refresh"} onClick={() => refreshClickMethod()}>
+                <FloatingActionButton style={styles.buttonAdd} title={intl.formatMessage({id: "CalendarView.refresh", defaultMessage: "Refresh"})} onClick={() => refreshClickMethod()}>
                       <Refresh />
                 </FloatingActionButton>
             :
@@ -43,7 +46,7 @@ export class ContentHeader extends Component {
         // The Add Button
         const addButton = (
             (withAdd)?
-                <FloatingActionButton style={styles.buttonAdd} title={"Add a new element"} onClick={() => addClickMethod()}>
+                <FloatingActionButton style={styles.buttonAdd} title={intl.formatMessage({id: "CalendarView.addnewelement", defaultMessage: "Add a new element"})} onClick={() => addClickMethod()}>
                       <ContentAdd />
                 </FloatingActionButton>
             :
@@ -67,9 +70,12 @@ export class ContentHeader extends Component {
 }
 
 ContentHeader.propTypes = {
+    intl: intlShape.isRequired,
     title: PropTypes.string.isRequired,
     addButton: PropTypes.bool,
     refreshButton: PropTypes.bool,
     addClickMethod: PropTypes.func,
     refreshClickMethod: PropTypes.func,
 };
+
+export default injectIntl(ContentHeader);
