@@ -677,7 +677,7 @@ class ElementsDashboard extends Component {
         for ( let [key, value] of Object.entries(colors_by_elements_type)) {
             // Define the current legend entry extending base style with tunned backgroundColor (following the colors constant definition)
             const name = (key == "default")?"All":capitalize(key);
-            const shortname = (key == "default")?"*":name.slice(0,3);
+            const shortname = (key == "default")?"*":name.slice(0,4);
 
             the_legend.push(
                 <RaisedButton
