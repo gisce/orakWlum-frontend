@@ -683,7 +683,7 @@ class ElementsDashboard extends Component {
                 <RaisedButton
                   backgroundColor={styles.element_style[value]['backgroundColor']}
                   label={shortname}
-                  title={name}
+                  title={intl.formatMessage({id: "CalendarView."+name, defaultMessage: name})}
                   style={styles['calendarLegendEntry']}
                   onClick={(e) => this.updateType(name)}
                   key={"legend_button_" + shortname}
