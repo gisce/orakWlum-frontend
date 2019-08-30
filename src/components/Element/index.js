@@ -715,7 +715,7 @@ class Elementt extends Component {
             ? ""
             : capitalize(element_type);
 
-        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
+        const title = <span>{intl.formatMessage({id: "ProposalView."+title_type, defaultMessage: title_type})} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
 
         const subtitle = <span><FormattedHTMLMessage id="ProposalView.using" deafultMessage="Using"/> {days[dayOfElement]}&nbsp;
             {daysRangeStringPastString}</span>;

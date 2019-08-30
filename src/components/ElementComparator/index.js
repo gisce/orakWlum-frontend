@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import Elementt from '../Element';
 
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
+
 const styles = {
     container: {
         textAlign: 'center',
@@ -20,7 +22,7 @@ const styles = {
     },
 };
 
-export class ElementComparator extends Component {
+class ElementComparator extends Component {
 
     constructor(props) {
         super(props);
@@ -51,6 +53,7 @@ export class ElementComparator extends Component {
 
 
     render() {
+        const { intl } = this.props;
         const {title, elementA, elementB, comparison} = this.props;
 
         const {mode} = this.state;
@@ -77,7 +80,7 @@ export class ElementComparator extends Component {
 
         const change_mode_button  = (
             <RaisedButton
-              label="Change view"
+              label={<FormattedHTMLMessage id="ElementComparator.changeview" defaultMessage="Change view"/>}
               onTouchTap={this.toggleMode}
               style={styles.change_mode_button}
             />
@@ -130,9 +133,12 @@ export class ElementComparator extends Component {
 }
 
 ElementComparator.propTypes = {
+    intl: intlShape.isRequired,
     elementA: PropTypes.object.isRequired,
     elementB: PropTypes.object.isRequired,
     comparison: PropTypes.object.isRequired,
     title: PropTypes.string,
     mode: PropTypes.string.isRequired,
 };
+
+export default injectIntl(ElementComparator);

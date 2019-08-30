@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
-import { ElementComparator } from '../components/ElementComparator';
+import ElementComparator from '../components/ElementComparator';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
