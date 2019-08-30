@@ -357,9 +357,9 @@ class Elementt extends Component {
 
         this.confirmation.text =
             <div>
-                <p>The Element will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p>
-                <p>Are you sure about to&nbsp;
-                <b>refresh this Element</b>?</p>
+                <p><FormattedHTMLMessage id="ProposalView.refreshconfirmation" defaultMessage="The Element will be refreshed fetching the last changes at DB. Unsaved changes will be discarted."/></p>
+                <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+                <b><FormattedHTMLMessage id="ProposalView.refreshelement" defaultMessage="refresh this Element"/></b>?</p>
             </div>;
 
         this.confirmation.actionsButtons = actionsButtons;
@@ -400,9 +400,9 @@ class Elementt extends Component {
         this.confirmation.title = "Reprocess current Element";
         this.confirmation.text =
             <div>
-                <p>The Element will be reprocessed using the last data on DB. It can take a few seconds...</p>
-                <p>Are you sure about to&nbsp;
-                <b>reprocess this Element</b>?</p>
+                <p><FormattedHTMLMessage id="ProposalView.reprocessconfirmation" defaultMessage="The Element will be reprocessed using the last data on DB. It can take a few seconds..."/></p>
+                <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+                <b><FormattedHTMLMessage id="ProposalView.reprocesselement" defaultMessage="reprocess this Element"/></b>?</p>
             </div>;
 
         this.confirmation.actionsButtons = actionsButtons;
@@ -496,9 +496,9 @@ class Elementt extends Component {
 
         this.confirmation.title = "Duplicate current Element";
         this.confirmation.text = <div>
-            <p>The Element will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Element once it's cloned.</p>
-            <p>Are you sure about to&nbsp;
-                <b>duplicate this Element</b>?</p>
+            <p><FormattedHTMLMessage id="ProposalView.duplicateconfirmation" defaultMessage="The Element will generate a duplicate. The consumptions will not be reprocessed. If needed 'reprocess' the new Element once it's cloned."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+            <b><FormattedHTMLMessage id="ProposalView.duplicateelement" defaultMessage="duplicate this Element"/></b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
 
@@ -532,9 +532,9 @@ class Elementt extends Component {
 
         this.confirmation.title = "Delete current Element";
         this.confirmation.text = <div>
-            <p>The Element will be deleted. This process can't be undone...</p>
-            <p>Are you sure about to&nbsp;
-                <b>delete this Element</b>?</p>
+            <p><FormattedHTMLMessage id="ProposalView.deleteconfirmation" defaultMessage="The Element will be deleted. This process can't be undone..."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+            <b><FormattedHTMLMessage id="ProposalView.deleteelement" defaultMessage="delete this Element"/></b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
 
@@ -568,10 +568,10 @@ class Elementt extends Component {
 
         this.confirmation.title = "Buy current Element";
         this.confirmation.text = <div>
-            <p>The Element will change its status to "bought". This process can't be undone.</p>
-            <p>Bought elements can't be processed, edited, tunned or saved.</p>
-            <p>Are you sure about to&nbsp;
-                <b>buy this Element</b>?</p>
+            <p><FormattedHTMLMessage id="ProposalView.buyconfirmation1" defaultMessage="The Proposal will change its status to 'bought'. This process can't be undone."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.buyconfirmation2" defaultMessage="Bought proposals can't be processed, edited, tunned or saved."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+            <b><FormattedHTMLMessage id="ProposalView.buyelement" defaultMessage="buy this Proposal"/></b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
 
