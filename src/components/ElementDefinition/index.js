@@ -106,7 +106,10 @@ const texts = {
     'step0': {
         'key_title': <FormattedHTMLMessage id="CreateElementView.dates" defaultMessage="Dates"/>,
         'title': <FormattedHTMLMessage id="CreateElementView.needdetails" defaultMessage="We need some details to create a new element."/>,
-        'note': "* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.",
+        'title1':  <FormattedHTMLMessage id="CreateElementView.infirstplace" defaultMessage="In fist place introduce your desired"/>,
+        'title1_component':  <FormattedHTMLMessage id="CreateElementView.rangeofdates" defaultMessage="range of dates"/>,
+        'note': <FormattedHTMLMessage id="CreateElementView.note"
+                 defaultMessage="* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day."/>,
         'element1_floatingLabel': <FormattedHTMLMessage id="CreateElementView.elementtype" defaultMessage="Element type"/>,
         'element1_hint': <FormattedHTMLMessage id="CreateElementView.elementname" defaultMessage="Element name"/>,
         'element2_floatingLabel': <FormattedHTMLMessage id="CreateElementView.startdate" defaultMessage="Start date"/>,
@@ -117,8 +120,6 @@ const texts = {
     },
     'step1': {
         'key_title': <FormattedHTMLMessage id="CreateElementView.name" defaultMessage="Name"/>,
-        'title1':  <FormattedHTMLMessage id="CreateElementView.perfect" defaultMessage="Perfect! Now introduce your desired"/>,
-        'title1_component':  <FormattedHTMLMessage id="CreateElementView.rangeofdates" defaultMessage="range of dates"/>,
         'title2_1':  <FormattedHTMLMessage id="CreateElementView.please" defaultMessage="Please"/>,
         'title2_2':  <FormattedHTMLMessage id="CreateElementView.insertname" defaultMessage="insert the name"/>,
         'title2_3':  <FormattedHTMLMessage id="CreateElementView.ofyourproposal" defaultMessage="of your element"/>,
@@ -128,7 +129,7 @@ const texts = {
     },
     'step2': {
         'key_title': <FormattedHTMLMessage id="CreateElementView.aggregations" defaultMessage="Aggregations"/>,
-        'title1': <FormattedHTMLMessage id="CreateElementView.great" defaultMessage="Great! Now"/>,
+        'title1': <FormattedHTMLMessage id="CreateElementView.now" defaultMessage="Now"/>,
         'title1_component': <FormattedHTMLMessage id="CreateElementView.selectaggregations" defaultMessage="select the aggregations"/>,
         'title1_2': <FormattedHTMLMessage id="CreateElementView.toperform" defaultMessage="to perform"/>,
     },
@@ -309,7 +310,7 @@ class ElementDefinition extends Component {
                 content: (
                     <div>
                         <p>{this.texts.step0.title}</p>
-
+                        <p>{this.texts.step0.title1} <b>{this.texts.step0.title1_component}</b>:</p>
                         <SelectField
                             floatingLabelText={this.texts.step0.element1_floatingLabel}
                             value={this.state.element_type}
@@ -343,7 +344,7 @@ class ElementDefinition extends Component {
                         />
 
                         <p style={styles.disclamer}>
-                            {this.texts.step0.title}
+                            {this.texts.step0.note}
                         </p>
                     </div>
                 )
@@ -354,7 +355,7 @@ class ElementDefinition extends Component {
                 title: this.texts.step1.key_title,
                 content: (
                     <div>
-                        <p>{this.texts.step1.title1} <b>{this.texts.step1.title1_component}</b>:</p>
+
                         <p>{this.texts.step1.title2_1}, <b>{this.texts.step1.title2_2}</b> {this.texts.step1.title2_3} {this.state.type.name} {this.texts.step1.title2_4}</p>
                         <TextField
                             style={{marginTop: 0}}
