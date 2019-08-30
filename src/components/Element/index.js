@@ -35,7 +35,7 @@ import {Tag} from '../Tag';
 import ElementGraph from '../ElementGraph';
 import {ElementTable} from '../ElementTable';
 import {ElementDetail} from '../ElementDetail';
-import {ElementDefinition} from '../ElementDefinition';
+import ElementDefinition from '../ElementDefinition';
 import {ElementTableEditable} from '../ElementTableEditable';
 
 import {Notification} from '../Notification';

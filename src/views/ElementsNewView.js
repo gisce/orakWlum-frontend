@@ -6,9 +6,11 @@ import { debug } from '../utils/debug';
 
 import * as actionCreators from '../actions/orakwlum';
 
-import { ElementDefinition } from '../components/ElementDefinition';
+import ElementDefinition from '../components/ElementDefinition';
 
 import { localized_time } from '../constants'
+
+import {FormattedHTMLMessage, injectIntl} from 'react-intl';
 
 function mapStateToProps(state) {
     return {
@@ -61,7 +63,9 @@ export default class ProfileView extends React.Component {
         return (
             <div>
                 <div>
-                    <h1>New element</h1>
+                    <h1>
+                    <FormattedHTMLMessage id="CreateElementView.newelement" defaultMessage="New element"/>
+                    </h1>
 
                     { Object.entries(aggregations).length > 0  &&  Object.entries(sources).length > 0  &&  "measures" in sources &&
                         <ElementDefinition
