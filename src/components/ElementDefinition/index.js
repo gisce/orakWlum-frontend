@@ -316,8 +316,8 @@ class ElementDefinition extends Component {
                             onChange={this.handleChangeElementType}
                             key={"element_type"}
                         >
-                            <MenuItem key={1} value={"proposal"} primaryText={<FormattedHTMLMessage id="CreateElementView.Proposal" defaultMessage="Proposal"/>} />
-                            <MenuItem key={2} value={"historical"} primaryText={<FormattedHTMLMessage id="CreateElementView.Historical" defaultMessage="Historical"/>} />
+                            <MenuItem key={1} value={"proposal"} primaryText={<FormattedHTMLMessage id="CreateElementView.proposal1" defaultMessage="Proposal"/>} />
+                            <MenuItem key={2} value={"historical"} primaryText={<FormattedHTMLMessage id="CreateElementView.historical1" defaultMessage="Historical"/>} />
                         </SelectField>
 
                         <DatePicker
