@@ -13,7 +13,7 @@ const styles = {
   },
   gridList: {
     width: 1024,
-    height: 600,
+    height: 1024,
     overflowY: 'none',
   },
 };
@@ -35,7 +35,7 @@ const tilesData = [
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/chart4.png',
     title: <FormattedHTMLMessage id="Index.alltypes" defaultMessage="All Types"/>,
-    featured: true,
+//    featured: true,
   },
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table.png',
@@ -48,7 +48,7 @@ const tilesData = [
   {
     img: 'https://raw.githubusercontent.com/gisce/oraKWlum-frontend-pilot/master/screenshots/table3.png',
     title: <FormattedHTMLMessage id="Index.combinedtable" defaultMessage="Combined table"/>,
-    featured: true,
+//    featured: true,
   },
 ]
 
@@ -57,7 +57,7 @@ const OkwScreenshots = () => (
   <div style={styles.root}>
     <GridList
       cols={2}
-      cellHeight={200}
+      cellWidth={256}
       padding={1}
       style={styles.gridList}
     >
