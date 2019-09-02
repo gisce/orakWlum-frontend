@@ -10,6 +10,8 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         auth: state.auth,
@@ -49,12 +51,18 @@ export default class ProfileView extends React.Component {
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
-                                <h1>There was an error</h1>
+                                <h1>
+                                <FormattedHTMLMessage id="ProfileView.error"
+                                    defaultMessage="There was an error"/>
+                                </h1>
                                 {this.props.errorMessage.message}
                             </div>
                     :
                         <div>
-                            <h1>Your profile</h1>
+                            <h1>
+                            <FormattedHTMLMessage id="ProfileView.title"
+                                defaultMessage="Your profile"/>
+                            </h1>
                             <UserProfile onUpdate={(changed_data) => this.updateData(changed_data)}/>
                         </div>
                 }

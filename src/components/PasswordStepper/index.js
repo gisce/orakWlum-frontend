@@ -19,6 +19,8 @@ import Divider from 'material-ui/Divider';
 
 import Snackbar from 'material-ui/Snackbar';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 //import changePassword from '../../actions/profile';
 
 
@@ -233,7 +235,7 @@ export class PasswordStepper extends Component {
         }
         else {
             this.setState({
-              new_passwd_error_text: "New password " + passwd_validation.errors[0].message,
+              new_passwd_error_text: <FormattedHTMLMessage id="ProfileView.newpassword" defaultMessage="New password "/> + passwd_validation.errors[0].message,
               new_passwd_validation: false,
               readyToNext: false,
             });
@@ -289,30 +291,30 @@ export class PasswordStepper extends Component {
         case 0:
             return (
                 <div>
-                  <p><b>Insert twice</b> your desired <b>new password</b>:</p>
+                  <p><FormattedHTMLMessage id="ProfileView.insertpassword" defaultMessage="<b>Insert twice</b> your desired <b>new password</b>:"/></p>
                   <TextField
                       style={{marginTop: 0}}
-                      floatingLabelText="Your new password"
+                      floatingLabelText={<FormattedHTMLMessage id="ProfileView.yournewpassword" defaultMessage="Your new password"/>}
                       type="password"
                       onChange={this.handleChangeNewPasswd1}
                       />
                   <br/>
                   <TextField
                       style={{marginTop: 0}}
-                      floatingLabelText="Your new password again..."
+                      floatingLabelText={<FormattedHTMLMessage id="ProfileView.yournewpasswordagain" defaultMessage="Your new password again..."/>}
                       type="password"
                       onChange={this.handleChangeNewPasswd2}
                       errorText={this.state.new_passwd_error_text}
                       />
 
-                  <p><br/>Your new password must accomplish:</p>
+                  <p><br/><FormattedHTMLMessage id="ProfileView.passwordrules1" defaultMessage="Your new password must accomplish:"/></p>
                   <ul style={styles.withoutBullet}>
-                      <li>{this.state.validSize} Larger than <strong>{PASSWD_MIN-1} chars</strong> <i>[{PASSWD_MIN + " <= len(password) <= " + PASSWD_MAX}]</i></li>
-                      <li>{this.state.validPasswdCombi} Assert at least one of the following:</li>
+                      <li>{this.state.validSize} {<FormattedHTMLMessage id="ProfileView.passwordrules2" defaultMessage='Larger than <strong>{PASSWD_MIN-1} chars</strong> <i>[{PASSWD_MIN + " <= len(password) <= " + PASSWD_MAX}]</i>'/>}</li>
+                      <li>{this.state.validPasswdCombi} {<FormattedHTMLMessage id="ProfileView.passwordrules3" defaultMessage='Assert at least one of the following:'/>}</li>
                       <ul style={styles.withoutBullet}>
-                          <li>{this.state.validUpper} Include an <strong>UPPER</strong> case character <i>[A-Z]</i></li>
-                          <li>{this.state.validNumber} Include a <strong>n1mb3r</strong> <i>[0-9]</i></li>
-                          <li>{this.state.validSymbol} Include a <strong>symbol</strong> <i>{"[-!$%^&*()_+|~=`{}[]:\";'\<>?,.\/)]"}</i></li>
+                          <li>{this.state.validUpper} {<FormattedHTMLMessage id="ProfileView.passwordrules4" defaultMessage='Include an <strong>UPPER</strong> case character <i>[A-Z]</i>'/>}</li>
+                          <li>{this.state.validNumber} {<FormattedHTMLMessage id="ProfileView.passwordrules5" defaultMessage='Include a <strong>n1mb3r</strong> <i>[0-9]</i>'/>}</li>
+                          <li>{this.state.validSymbol} {<FormattedHTMLMessage id="ProfileView.passwordrules6" defaultMessage="Include a <strong>symbol</strong> <i>[-!$%^&*()_+|~=`{}[]:'';'<>?,./)]</i>"/>}</li>
                       </ul>
                   </ul>
                 </div>
@@ -321,11 +323,11 @@ export class PasswordStepper extends Component {
         case 1:
             return (
                 <div>
-                    <p>Great! Now <b>insert your password</b> in the following field:</p>
-                    <p>Your current password is needed to ensure that you're authorized to change it.</p>
+                    <p><FormattedHTMLMessage id="ProfileView.passwordrules7" defaultMessage='<p>Great! Now <b>insert your password</b> in the following field:</p>'/></p>
+                    <p><FormattedHTMLMessage id="ProfileView.passwordrules8" defaultMessage="Your current password is needed to ensure that you're authorized to change it."/></p>
                     <TextField
                         style={{marginTop: 0}}
-                        floatingLabelText="Your current password"
+                        floatingLabelText={<FormattedHTMLMessage id="ProfileView.yourcurrentpassword" defaultMessage='Your current password'/>}
                         type="password"
                         onChange={this.handleChangeCurrentPasswd}
                         />
@@ -364,13 +366,13 @@ export class PasswordStepper extends Component {
         <div>{this.getStepContent(stepIndex)}</div>
         <div style={{marginTop: 24, marginBottom: 12}}>
           <FlatButton
-            label="Back"
+            label={<FormattedHTMLMessage id="ProfileView.back" defaultMessage="Back"/>}
             disabled={stepIndex === 0}
             onTouchTap={this.handlePrev}
             style={{marginRight: 12}}
           />
           <RaisedButton
-            label={stepIndex === 1 ? 'Finish' : 'Next'}
+            label={stepIndex === 1 ? <FormattedHTMLMessage id="ProfileView.finish" defaultMessage="Finish"/> : <FormattedHTMLMessage id="ProfileView.next" defaultMessage="Next"/>}
             primary={true}
             onTouchTap={stepIndex === 1 ? this.applyPasswdChange : this.handleNext}
             disabled={!readyToNext}
@@ -413,10 +415,10 @@ export class PasswordStepper extends Component {
 
         <Stepper activeStep={stepIndex}>
           <Step>
-              <StepLabel>New password</StepLabel>
+              <StepLabel><FormattedHTMLMessage id="ProfileView.passwordnew" defaultMessage="New password"/></StepLabel>
           </Step>
           <Step>
-              <StepLabel>Current password</StepLabel>
+              <StepLabel><FormattedHTMLMessage id="ProfileView.currentpassword" defaultMessage="Current password"/></StepLabel>
           </Step>
         </Stepper>
 

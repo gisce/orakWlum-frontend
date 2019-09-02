@@ -10,6 +10,8 @@ import {adaptProposalData} from '../../utils/graph';
 import {roundUp} from '../../utils/misc';
 import {colors} from '../../constants';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 const styles = {
     selectedElement: {
         color: 'white',
@@ -56,7 +58,7 @@ export class ElementTable extends Component {
         //Add totals by default
         const totals = (typeof this.props.totals !== 'undefined')?this.props.totals:true;
 
-        const disclamer = (typeof this.props.unit != 'undefined' && this.props.unit != null)?<div style={styles.disclamer}><span>*All table entries are <u>{this.props.unit}</u></span></div>:null;
+        const disclamer = (typeof this.props.unit != 'undefined' && this.props.unit != null)?<div style={styles.disclamer}><span><FormattedHTMLMessage id="ProposalView.legend" defaultMessage="*All table entries are"/> <u>{this.props.unit}</u></span></div>:null;
 
         const howManyComponents = Object.keys(components).length;
 
@@ -216,10 +218,8 @@ export class ElementTable extends Component {
                         <TableRow key="headersRow">
                             <TableRowColumn
                                 key={"headerHour"}
-                                style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}
-
-                            >
-                                <b>Hour</b>
+                                style={ Object.assign({},styles.hourColor, {width:styles.hourColumn.width})}>
+                                    <b><FormattedHTMLMessage id="ProposalView.hour" defaultMessage="Hour"/></b>
                             </TableRowColumn>
                             {headers}
                             {headerTotal}

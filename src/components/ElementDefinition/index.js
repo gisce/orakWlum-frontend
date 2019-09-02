@@ -23,9 +23,11 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 
-import {Elementt} from '../Element'
+import Elementt from '../Element'
 
 import * as actionCreators from '../../actions/orakwlum';
+
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
 
 const revalidator = require('revalidator');
 
@@ -78,12 +80,12 @@ const validations = {
 
 const types = {
     "proposal": {
-        "name": "proposal",
-        "plural": "proposals",
+        "name": <FormattedHTMLMessage id="CreateElementView.proposal" defaultMessage="proposal"/>,
+        "plural": <FormattedHTMLMessage id="CreateElementView.proposals" defaultMessage="proposals"/>,
     },
     "historic": {
-        "name": "historic",
-        "plural": "historics",
+        "name": <FormattedHTMLMessage id="CreateElementView.historical" defaultMessage="historical"/>,
+        "plural": <FormattedHTMLMessage id="CreateElementView.historicals" defaultMessage="historicals"/>,
     },
 }
 
@@ -99,55 +101,54 @@ function mapDispatchToProps(dispatch) {
 
 const texts = {
     'actions': {
-        'applyChanges': 'Create',
+        'applyChanges': <FormattedHTMLMessage id="CreateElementView.create" defaultMessage="Create"/>,
     },
     'step0': {
-        'key_title': 'Dates',
-        'title': "We need some details to create a new element.",
-        'note': "* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day.",
-        'element1_floatingLabel': "Element type",
-        'element1_floatingLabel': "Element type",
-        'element1_floatingLabel': "Element name",
-        'element1_hint': "Element name",
-        'element2_floatingLabel': "Start date",
-        'element2_hint': "Start date",
-        'element3_floatingLabel': "End date",
-        'element3_hint': "End date",
+        'key_title': <FormattedHTMLMessage id="CreateElementView.dates" defaultMessage="Dates"/>,
+        'title': <FormattedHTMLMessage id="CreateElementView.needdetails" defaultMessage="We need some details to create a new element."/>,
+        'title1':  <FormattedHTMLMessage id="CreateElementView.infirstplace" defaultMessage="In fist place introduce your desired"/>,
+        'title1_component':  <FormattedHTMLMessage id="CreateElementView.rangeofdates" defaultMessage="range of dates"/>,
+        'note': <FormattedHTMLMessage id="CreateElementView.note"
+                 defaultMessage="* Dates are inclusive, so if you mark start:day1 and end:day2, will produce two elements, one for each day."/>,
+        'element1_floatingLabel': <FormattedHTMLMessage id="CreateElementView.elementtype" defaultMessage="Element type"/>,
+        'element1_hint': <FormattedHTMLMessage id="CreateElementView.elementname" defaultMessage="Element name"/>,
+        'element2_floatingLabel': <FormattedHTMLMessage id="CreateElementView.startdate" defaultMessage="Start date"/>,
+        'element2_hint': <FormattedHTMLMessage id="CreateElementView.startdate" defaultMessage="Start date"/>,
+        'element3_floatingLabel': <FormattedHTMLMessage id="CreateElementView.enddate" defaultMessage="End date"/>,
+        'element3_hint': <FormattedHTMLMessage id="CreateElementView.enddate" defaultMessage="End date"/>,
 
     },
     'step1': {
-        'key_title': 'Name',
-        'title1': "Perfect! Now insert the desired",
-        'title1_component': "range of dates",
-        'title2_1': "Please",
-        'title2_2': "insert the name",
-        'title2_3': "of your",
-        'title2_4': "in the following field:",
-        'element1_floatingLabel': "Name",
+        'key_title': <FormattedHTMLMessage id="CreateElementView.name" defaultMessage="Name"/>,
+        'title2_1':  <FormattedHTMLMessage id="CreateElementView.please" defaultMessage="Please"/>,
+        'title2_2':  <FormattedHTMLMessage id="CreateElementView.insertname" defaultMessage="insert the name"/>,
+        'title2_3':  <FormattedHTMLMessage id="CreateElementView.ofyourproposal" defaultMessage="of your element"/>,
+        'title2_4':  <FormattedHTMLMessage id="CreateElementView.inthefollowingfield" defaultMessage="in the following field:"/>,
+        'element1_floatingLabel':  <FormattedHTMLMessage id="CreateElementView.name" defaultMessage="Name"/>,
 
     },
     'step2': {
-        'key_title': 'Aggregations',
-        'title1': "Great! Now",
-        'title1_component': "select the aggregations",
-        'title1_2': "to perform:",
+        'key_title': <FormattedHTMLMessage id="CreateElementView.aggregations" defaultMessage="Aggregations"/>,
+        'title1': <FormattedHTMLMessage id="CreateElementView.now" defaultMessage="Now"/>,
+        'title1_component': <FormattedHTMLMessage id="CreateElementView.selectaggregations" defaultMessage="select the aggregations"/>,
+        'title1_2': <FormattedHTMLMessage id="CreateElementView.toperform" defaultMessage="to perform"/>,
     },
     'step3': {
-        'key_title': 'Sources',
-        'title1': "Finally",
-        'title1_component': "select the origins",
-        'title1_2': "to analyze:",
+        'key_title': <FormattedHTMLMessage id="CreateElementView.sources" defaultMessage="Sources"/>,
+        'title1': <FormattedHTMLMessage id="CreateElementView.finally" defaultMessage="Finally"/>,
+        'title1_component': <FormattedHTMLMessage id="CreateElementView.selectsources" defaultMessage="select the sources"/>,
+        'title1_2': <FormattedHTMLMessage id="CreateElementView.toanalyze" defaultMessage="to analyze"/>,
     },
     'step4': {
-        'key_title': 'Confirmation',
-        'title1': "Amazing! Just one more step is needed,",
-        'title1_component': "review all the defined data",
-        'title1_2': "and confirm it:",
+        'key_title':  <FormattedHTMLMessage id="CreateElementView.confirmation" defaultMessage="Confirmation"/>,
+        'title1':  <FormattedHTMLMessage id="CreateElementView.amazing" defaultMessage="Amazing! Just one more step is needed,"/>,
+        'title1_component': <FormattedHTMLMessage id="CreateElementView.review" defaultMessage="review all the defined data"/>,
+        'title1_2': <FormattedHTMLMessage id="CreateElementView.confirm" defaultMessage="and confirm it:"/>,
     },
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class ElementDefinition extends Component {
+class ElementDefinition extends Component {
     constructor(props) {
         super(props);
 
@@ -309,15 +310,15 @@ export class ElementDefinition extends Component {
                 content: (
                     <div>
                         <p>{this.texts.step0.title}</p>
-
+                        <p>{this.texts.step0.title1} <b>{this.texts.step0.title1_component}</b>:</p>
                         <SelectField
                             floatingLabelText={this.texts.step0.element1_floatingLabel}
                             value={this.state.element_type}
                             onChange={this.handleChangeElementType}
                             key={"element_type"}
                         >
-                            <MenuItem key={1} value={"proposal"} primaryText="Proposal" />
-                            <MenuItem key={2} value={"historical"} primaryText="Historical" />
+                            <MenuItem key={1} value={"proposal"} primaryText={<FormattedHTMLMessage id="CreateElementView.proposal1" defaultMessage="Proposal"/>} />
+                            <MenuItem key={2} value={"historical"} primaryText={<FormattedHTMLMessage id="CreateElementView.historical1" defaultMessage="Historical"/>} />
                         </SelectField>
 
                         <DatePicker
@@ -343,7 +344,7 @@ export class ElementDefinition extends Component {
                         />
 
                         <p style={styles.disclamer}>
-                            {this.texts.step0.title}
+                            {this.texts.step0.note}
                         </p>
                     </div>
                 )
@@ -354,7 +355,7 @@ export class ElementDefinition extends Component {
                 title: this.texts.step1.key_title,
                 content: (
                     <div>
-                        <p>{this.texts.step1.title1} <b>{this.texts.step1.title1_component}</b>:</p>
+
                         <p>{this.texts.step1.title2_1}, <b>{this.texts.step1.title2_2}</b> {this.texts.step1.title2_3} {this.state.type.name} {this.texts.step1.title2_4}</p>
                         <TextField
                             style={{marginTop: 0}}
@@ -386,7 +387,7 @@ export class ElementDefinition extends Component {
                                 enableSelectAll={false}
                             >
                               <TableRow>
-                                <TableHeaderColumn>Name</TableHeaderColumn>
+                                <TableHeaderColumn><FormattedHTMLMessage id="CreateElementView.name" defaultMessage="Name"/></TableHeaderColumn>
                               </TableRow>
                             </TableHeader>
 
@@ -444,7 +445,7 @@ export class ElementDefinition extends Component {
                                     enableSelectAll={false}
                                 >
                                   <TableRow>
-                                    <TableHeaderColumn>Name</TableHeaderColumn>
+                                    <TableHeaderColumn><FormattedHTMLMessage id="CreateElementView.name" defaultMessage="Name"/></TableHeaderColumn>
                                   </TableRow>
                                 </TableHeader>
 
@@ -856,7 +857,7 @@ export class ElementDefinition extends Component {
             <div>{this.getStepContent(stepIndex)}</div>
             <div style={{marginTop: 24, marginBottom: 12}}>
               <FlatButton
-                label="Back"
+                label={<FormattedHTMLMessage id="CreateElementView.back" defaultMessage="Back"/>}
                 disabled={stepIndex === 0}
                 onTouchTap={this.handlePrev}
                 style={{marginRight: 12}}
@@ -872,7 +873,7 @@ export class ElementDefinition extends Component {
               />
           :
               <RaisedButton
-                label='Next'
+                label={<FormattedHTMLMessage id="CreateElementView.next" defaultMessage="Next"/>}
                 primary={true}
                 onTouchTap={this.handleNext}
                 disabled={!readyToNext && stepIndex !== this.stepsLength-1}
@@ -927,6 +928,7 @@ export class ElementDefinition extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         const {loading, stepIndex, readyToNext} = this.state;
         const steps = this.getSteps();
 
@@ -948,9 +950,12 @@ export class ElementDefinition extends Component {
 }
 
 ElementDefinition.propTypes = {
+    intl: intlShape.isRequired,
     editMode: PropTypes.bool,
     aggregationsList: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     sourcesList: PropTypes.array,
     defaultValue: PropTypes.object,
     endingParentMethod: PropTypes.func,
 };
+
+export default injectIntl(ElementDefinition);

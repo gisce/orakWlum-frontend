@@ -6,9 +6,11 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
-import { ElementComparator } from '../components/ElementComparator';
+import ElementComparator from '../components/ElementComparator';
 
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
+
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
 
 function mapStateToProps(state) {
 
@@ -24,7 +26,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ElementsComparationView extends React.Component {
+class ElementsComparationView extends React.Component {
     constructor(props){
         super(props);
 
@@ -58,6 +60,7 @@ export default class ElementsComparationView extends React.Component {
     }
 
     render() {
+        const { intl } = this.props;
         const {elements, aggregations, elements_volatile} = this.props;
 
         if (elements != null && this.idA in elements && this.idB in elements && elements_volatile && this.idComp in elements_volatile) {
@@ -108,7 +111,7 @@ export default class ElementsComparationView extends React.Component {
                 <div>
                     <div>
                         <ElementComparator
-                            title={"Comparation '" + typeA + titleA + "' vs '" + typeB + titleB + "'" }
+                            title={intl.formatMessage({id:"ComparationView.comparation", defaultMessage:"comparation "}) + typeA + titleA + "' vs '" + typeB + titleB + "'" }
                             elementA={elementA_merged}
                             elementB={elementB_merged}
                             comparison={comparison_merged}
@@ -128,7 +131,10 @@ export default class ElementsComparationView extends React.Component {
 }
 
 ElementsComparationView.propTypes = {
+    intl: intlShape.isRequired,
     loaded: PropTypes.bool,
     data: PropTypes.any,
     token: PropTypes.string,
 };
+
+export default injectIntl(ElementsComparationView)

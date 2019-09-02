@@ -21,10 +21,16 @@ import { asyncSessionStorage } from 'redux-persist/storages'
 import { App } from './containers/App';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
+//Translation
+import {IntlProvider, addLocaleData} from 'react-intl';
+import messages_es from "./translations/es.json";
+import messages_ca from "./translations/ca.json";
 
 import './style.scss';
 require('expose?$!expose?jQuery!jquery');
 require('bootstrap-webpack');
+
+import {FormattedHTMLMessage} from 'react-intl';
 
 //SW installation handling version updates!
 OfflinePluginRuntime.install({
@@ -61,7 +67,9 @@ class AppProvider extends React.Component {
             <Provider store={store}>
                  <App>
                      <div>
-                         <h1>Starting orakWlum!</h1>
+                         <h1>
+                            <FormattedHTMLMessage id="Index.startingokw" defaultMessage="Starting orakWlum!"/>
+                         </h1>
                          <LoadingAnimation />
                      </div>
                  </App>
@@ -82,8 +90,17 @@ class AppProvider extends React.Component {
 
 const the_app = <AppProvider />;
 
+const messages = {
+    'es': messages_es,
+    'ca': messages_ca
+};
+const language = navigator.language.split(/[-_]/)[0];  // language without region code
+addLocaleData({ locale: language, pluralRuleFunction: () => {}, });
+
 //Render the app!
 ReactDOM.render(
-	the_app,
+    <IntlProvider locale={language} messages={messages[language]}>
+	<AppProvider />
+	</IntlProvider>,
     document.getElementById('root')
 );

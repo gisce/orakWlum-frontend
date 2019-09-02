@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/orakwlum';
 import { debug } from '../utils/debug';
 
-import { Elementt } from '../components/Element';
+import Elementt from '../components/Element';
 import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 function mapStateToProps(state) {

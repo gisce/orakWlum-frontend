@@ -10,6 +10,8 @@ import { LoadingAnimation } from 'materialized-reactions/LoadingAnimation';
 
 import { debug } from '../utils/debug';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 function mapStateToProps(state) {
     return {
         sources: state.orakwlum.sources,
@@ -59,12 +61,18 @@ export default class SettingsView extends React.Component {
                         <LoadingAnimation /> ||
                         this.props.error &&
                             <div>
-                                <h1>There was an error fetching data</h1>
+                                <h1>
+                                <FormattedHTMLMessage id="SettingsView.error"
+                                defaultMessage="There was an error fetching data."/>
+                                </h1>
                                 {this.props.errorMessage.message}
                             </div>
                     :
                         <div>
-                            <h1>Sources</h1>
+                            <h1>
+                            <FormattedHTMLMessage id="SettingsView.sources"
+                                  defaultMessage="Sources"/>
+                            </h1>
 
                             {Settings}
                         </div>

@@ -16,6 +16,10 @@ module.exports = {
         loaders: [{
             test: /\.scss$/,
             loader: 'style!css!postcss-loader!sass',
+        },
+        {
+            test: /\.json$/,
+            loader: "json-loader"
         }],
     },
 

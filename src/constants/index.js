@@ -129,6 +129,7 @@ const locale_override_conf = {
     },
 }
 moment.locale('en', locale_override_conf);
+moment.locale('en');  //Change to desired language
 export const localized_time = moment;
 
 export const day_format = "L";

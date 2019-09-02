@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SmartTable } from 'materialized-reactions/SmartTable';
+import {FormattedHTMLMessage} from 'react-intl';
 
 const styles = {
 };
@@ -71,25 +72,31 @@ export class SettingsSources extends React.Component {
                     width: null,
                     hide: true,
                 },{
-                    title: 'Name',
+                    title: <FormattedHTMLMessage id="SettingsView.name"
+                           defaultMessage="Name"/>,
                     width: null,
                 },{
                     title: 'Alias',
                     width: null,
                 },{
-                    title: 'Type',
+                    title: <FormattedHTMLMessage id="SettingsView.type"
+                           defaultMessage="Type"/>,
                     width: '10%',
                 },{
-                    title: 'Unit',
+                    title: <FormattedHTMLMessage id="SettingsView.unit"
+                           defaultMessage="Unit"/>,
                     width: '10%',
                 },{
-                    title: 'DB',
+                    title: <FormattedHTMLMessage id="SettingsView.db"
+                           defaultMessage="DB"/>,
                     width: '30%',
                 },{
-                    title: 'Priority',
+                    title: <FormattedHTMLMessage id="SettingsView.priority"
+                           defaultMessage="Priority"/>,
                     width: '10%',
                 },{
-                    title: 'Status',
+                    title: <FormattedHTMLMessage id="SettingsView.status"
+                           defaultMessage="Status"/>,
                     width: null,
                 },
             ];
@@ -131,23 +138,29 @@ export class SettingsSources extends React.Component {
             :
             (
                 <div>
-                    <h2>Available sources</h2>
+                    <h2>
+                    <FormattedHTMLMessage id="SettingsView.availablesources"
+                    defaultMessage="Available sources"/>
+                    </h2>
                     <SmartTable
-                        title="Measures"
+                        title={<FormattedHTMLMessage id="SettingsView.measures"
+                           defaultMessage="Measures"/>}
                         header={headers}
                         data={measures_adapted}
 //                        appendButtons={toggle_active}
 //                        onUpdate={(changed_data) => onToggle(changed_data)}
                     />
                     <SmartTable
-                        title="Static Data"
+                        title={<FormattedHTMLMessage id="SettingsView.staticdata"
+                           defaultMessage="Static Data"/>}
                         header={headers}
                         data={static_data_adapted}
 //                        appendButtons={toggle_active}
 //                        onUpdate={(changed_data) => onToggle(changed_data)}
                     />
                     <SmartTable
-                        title="Losses"
+                        title={<FormattedHTMLMessage id="SettingsView.losses"
+                           defaultMessage="Losses"/>}
                         header={headers}
                         data={losses_adapted}
 //                        appendButtons={toggle_active}

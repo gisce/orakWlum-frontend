@@ -8,7 +8,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import { CheckedTag } from '../CheckedTag';
 import { Tag } from '../Tag';
-import { ElementGraph } from '../ElementGraph';
+import ElementGraph from '../ElementGraph';
 
 import {adaptProposalData} from '../../utils/graph';
 import { dispatchNewRoute} from '../../utils/http_functions';

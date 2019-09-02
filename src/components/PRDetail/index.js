@@ -8,6 +8,8 @@ import OpenDetailIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseDetailIcon from 'material-ui/svg-icons/navigation/expand-less';
 import LinkIcon from 'material-ui/svg-icons/content/link';
 
+import {FormattedHTMLMessage} from 'react-intl';
+
 const styles = {
     wrapper: {
       display: 'flex',
@@ -73,14 +75,18 @@ export class PRDetail extends Component {
                                 }
 
                                 <CardActions>
-                                  <FlatButton label="Detail" icon={detailIcon} onClick={(e) => this.toggleOpen(e)} />
+                                  <FlatButton label={<FormattedHTMLMessage id="AboutView.details"
+                                    defaultMessage="Details"/>} icon={detailIcon} onClick={(e) => this.toggleOpen(e)} />
                                   <a target="_blank" href={PR.url}><FlatButton label="Github" icon={<LinkIcon/>} /></a>
                                 </CardActions>
                             </Card>
                         </div>
 
                     :
-                    <div>That's embracing, but {title} info not available...</div>
+                    <div>
+                        <FormattedHTMLMessage id="AboutView.notavailable"
+                         defaultMessage="That's embarrasing, but {title} info not available..."/>
+                    </div>
                 }
             </div>
         );

@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import { PasswordStepper } from '../PasswordStepper';
 
+import {FormattedHTMLMessage} from 'react-intl';
 
 const styles = {
     dialog: {
@@ -37,7 +38,8 @@ export class PasswordChanger extends Component {
 
         const actions = [
           <FlatButton
-            label="Cancel"
+            label={<FormattedHTMLMessage id="ProfileView.cancel"
+                                defaultMessage="Cancel"/>}
             primary={true}
             onTouchTap={this.handleClose}
           />,
@@ -45,7 +47,7 @@ export class PasswordChanger extends Component {
 
         return (
             <Dialog
-              title="Change your password"
+              title='Change your password'
               actions={actions}
               contentStyle={styles.dialog}
               open={open}

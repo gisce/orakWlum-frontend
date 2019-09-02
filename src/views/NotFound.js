@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/auth';
 
+import {FormattedHTMLMessage} from 'react-intl';
 
 function mapStateToProps(state) {
     return {
@@ -22,9 +23,13 @@ class NotFound extends React.Component { // eslint-disable-line react/prefer-sta
     render() {
         return (
             <div className="col-md-8">
-                <h1>Not Found</h1>
+                <h1>
+                <FormattedHTMLMessage id="NotFound.notfound" defaultMessage="Not Found"/>
+                </h1>
 
-                <h3>Detail:</h3>
+                <h3>
+                <FormattedHTMLMessage id="NotFound.detail" defaultMessage="Detail:"/>
+                </h3>
                 <pre>{ JSON.stringify(this.props, null, 2) }</pre>
 
 

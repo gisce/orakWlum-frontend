@@ -32,10 +32,10 @@ import * as actionCreators from '../../actions/orakwlum';
 
 import {Tag} from '../Tag';
 
-import {ElementGraph} from '../ElementGraph';
+import ElementGraph from '../ElementGraph';
 import {ElementTable} from '../ElementTable';
 import {ElementDetail} from '../ElementDetail';
-import {ElementDefinition} from '../ElementDefinition';
+import ElementDefinition from '../ElementDefinition';
 import {ElementTableEditable} from '../ElementTableEditable';
 
 import {Notification} from '../Notification';
@@ -62,6 +62,8 @@ import {adaptProposalData} from '../../utils/graph';
 import {capitalize} from '../../utils/misc';
 
 import {localized_time, day_format, parse_day_format} from '../../constants'
+
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
 
 const locale = 'es';
 const dateOptions = {
@@ -149,7 +151,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export class Elementt extends Component {
+class Elementt extends Component {
     constructor(props) {
         super(props);
 
@@ -338,26 +340,26 @@ export class Elementt extends Component {
 
         const actionsButtons = [
             <FlatButton
-                label = "Cancel"
+                label = {<FormattedHTMLMessage id="ProposalView.cancel" defaultMessage="Cancel"/>}
                 primary = {true}
                 onTouchTap = {this.handleCloseConfirmation}
             />
             ,
             <FlatButton
-                label = "Submit"
+                label = {<FormattedHTMLMessage id="ProposalView.submit" defaultMessage="Submit"/>}
                 primary = {true}
                 keyboardFocused = {true}
                 onTouchTap = {() => this.refreshElement(proposalID)}
             />
         ];
 
-        this.confirmation.title = "Refresh current proposal";
+        this.confirmation.title = <h3><FormattedHTMLMessage id="ProposalView.refreshhelper" defaultMessage="Refresh current proposal"/></h3>;
 
         this.confirmation.text =
             <div>
-                <p>The Element will be refreshed fetching the last changes at DB. Unsaved changes will be discarted.</p>
-                <p>Are you sure about to&nbsp;
-                <b>refresh this Element</b>?</p>
+                <p><FormattedHTMLMessage id="ProposalView.refreshconfirmation" defaultMessage="The Element will be refreshed fetching the last changes at DB. Unsaved changes will be discarted."/></p>
+                <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+                <b><FormattedHTMLMessage id="ProposalView.refreshelement" defaultMessage="refresh this Element"/></b>?</p>
             </div>;
 
         this.confirmation.actionsButtons = actionsButtons;
@@ -382,25 +384,25 @@ export class Elementt extends Component {
 
         const actionsButtons = [
             <FlatButton
-                label = "Cancel"
+                label = {<FormattedHTMLMessage id="ProposalView.cancel" defaultMessage="Cancel"/>}
                 primary = {true}
                 onTouchTap = {this.handleCloseConfirmation}
             />
             ,
             <FlatButton
-                label = "Submit"
+                label = {<FormattedHTMLMessage id="ProposalView.submit" defaultMessage="Submit"/>}
                 primary = {true}
                 keyboardFocused = {true}
                 onTouchTap = {() => this.reRunElement(proposalID)}
             />
         ];
 
-        this.confirmation.title = "Reprocess current Element";
+        this.confirmation.title = <h3><FormattedHTMLMessage id="ProposalView.processhelper" defaultMessage="Reprocess current Element"/></h3>;
         this.confirmation.text =
             <div>
-                <p>The Element will be reprocessed using the last data on DB. It can take a few seconds...</p>
-                <p>Are you sure about to&nbsp;
-                <b>reprocess this Element</b>?</p>
+                <p><FormattedHTMLMessage id="ProposalView.reprocessconfirmation" defaultMessage="The Element will be reprocessed using the last data on DB. It can take a few seconds..."/></p>
+                <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+                <b><FormattedHTMLMessage id="ProposalView.reprocesselement" defaultMessage="reprocess this Element"/></b>?</p>
             </div>;
 
         this.confirmation.actionsButtons = actionsButtons;
@@ -476,12 +478,12 @@ export class Elementt extends Component {
         event.preventDefault();
         this.confirmation.confirmation_open = true;
 
-        const actionsButtons = [ <FlatButton label = "Cancel" primary = {
+        const actionsButtons = [ <FlatButton label = {<FormattedHTMLMessage id="ProposalView.cancel" defaultMessage="Cancel"/>} primary = {
                 true
             }
             onTouchTap = {
                 this.handleCloseConfirmation
-            } />, <FlatButton label = "Submit" primary = {
+            } />, <FlatButton label = {<FormattedHTMLMessage id="ProposalView.submit" defaultMessage="Submit"/>} primary = {
                 true
             }
             keyboardFocused = {
@@ -492,11 +494,11 @@ export class Elementt extends Component {
             } />
         ];
 
-        this.confirmation.title = "Duplicate current Element";
+        this.confirmation.title = <h3><FormattedHTMLMessage id="ProposalView.duplicatehelper" defaultMessage="Duplicate current Element"/></h3>;
         this.confirmation.text = <div>
-            <p>The Element will be duplicated. The consumptions will not be reprocessed, if needed "Run" the new Element once it's cloned.</p>
-            <p>Are you sure about to&nbsp;
-                <b>duplicate this Element</b>?</p>
+            <p><FormattedHTMLMessage id="ProposalView.duplicateconfirmation" defaultMessage="The Element will generate a duplicate. The consumptions will not be reprocessed. If needed 'reprocess' the new Element once it's cloned."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+            <b><FormattedHTMLMessage id="ProposalView.duplicateelement" defaultMessage="duplicate this Element"/></b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
 
@@ -516,23 +518,23 @@ export class Elementt extends Component {
 
         const actionsButtons = [
             <FlatButton
-                label = "Cancel"
+                label = {<FormattedHTMLMessage id="ProposalView.cancel" defaultMessage="Cancel"/>}
                 primary = {true}
                 onTouchTap = {this.handleCloseConfirmation}
             />
             ,
-            <FlatButton label = "Submit"
+            <FlatButton label = {<FormattedHTMLMessage id="ProposalView.submit" defaultMessage="Submit"/>}
                 primary = {true}
                 keyboardFocused = {true}
                 onTouchTap = {() => this.deleteElement(proposalID, historical)}
             />
         ];
 
-        this.confirmation.title = "Delete current Element";
+        this.confirmation.title = <h3><FormattedHTMLMessage id="ProposalView.deletehelper" defaultMessage="Delete current Element"/></h3>;
         this.confirmation.text = <div>
-            <p>The Element will be deleted. This process can't be undone...</p>
-            <p>Are you sure about to&nbsp;
-                <b>delete this Element</b>?</p>
+            <p><FormattedHTMLMessage id="ProposalView.deleteconfirmation" defaultMessage="The Element will be deleted. This process can't be undone..."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+            <b><FormattedHTMLMessage id="ProposalView.deleteelement" defaultMessage="delete this Element"/></b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
 
@@ -552,24 +554,24 @@ export class Elementt extends Component {
 
         const actionsButtons = [
             <FlatButton
-                label = "Cancel"
+                label = {<FormattedHTMLMessage id="ProposalView.cancel" defaultMessage="Cancel"/>}
                 primary = {true}
                 onTouchTap = {this.handleCloseConfirmation}
             />
             ,
-            <FlatButton label = "Submit"
+            <FlatButton label = {<FormattedHTMLMessage id="ProposalView.submit" defaultMessage="Submit"/>}
                 primary = {true}
                 keyboardFocused = {true}
                 onTouchTap = {() => this.buyElement(proposalID)}
             />
         ];
 
-        this.confirmation.title = "Buy current Element";
+        this.confirmation.title = <h3><FormattedHTMLMessage id="ProposalView.buyhelper" defaultMessage="Buy current Element"/></h3>;
         this.confirmation.text = <div>
-            <p>The Element will change its status to "bought". This process can't be undone.</p>
-            <p>Bought elements can't be processed, edited, tunned or saved.</p>
-            <p>Are you sure about to&nbsp;
-                <b>buy this Element</b>?</p>
+            <p><FormattedHTMLMessage id="ProposalView.buyconfirmation1" defaultMessage="The Proposal will change its status to 'bought'. This process can't be undone."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.buyconfirmation2" defaultMessage="Bought proposals can't be processed, edited, tunned or saved."/></p>
+            <p><FormattedHTMLMessage id="ProposalView.sureabout" defaultMessage="Are you sure about to"/>&nbsp;
+            <b><FormattedHTMLMessage id="ProposalView.buyelement" defaultMessage="buy this Proposal"/></b>?</p>
         </div>;
         this.confirmation.actionsButtons = actionsButtons;
 
@@ -608,7 +610,7 @@ export class Elementt extends Component {
     }
 
     addNewNote = () => {
-        this.new_note.author = "Xavi"
+        this.new_note.author = "David"
         this.new_note.creation_date = localized_time().unix()
 
         //Create a new tmp note element with a new memspace
@@ -624,6 +626,7 @@ export class Elementt extends Component {
     }
 
     render() {
+        const { intl } = this.props;
         const readOnly = (this.props.readOnly)
             ? this.props.readOnly
             : false;
@@ -640,13 +643,13 @@ export class Elementt extends Component {
             : true;
 
         const days = [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
+            <FormattedHTMLMessage id="ProposalView.sunday" defaultMessage="Sunday"/>,
+            <FormattedHTMLMessage id="ProposalView.monday" defaultMessage="Monday"/>,
+            <FormattedHTMLMessage id="ProposalView.tuesday" defaultMessage="Tuesday"/>,
+            <FormattedHTMLMessage id="ProposalView.wednesday" defaultMessage="Wednesday"/>,
+            <FormattedHTMLMessage id="ProposalView.thursday" defaultMessage="Thursday"/>,
+            <FormattedHTMLMessage id="ProposalView.friday" defaultMessage="Friday"/>,
+            <FormattedHTMLMessage id="ProposalView.saturday" defaultMessage="Saturday"/>
         ];
 
         const lastExecution = new Date(proposal.execution_date * 1000).toLocaleString(locale, hourOptions);
@@ -712,9 +715,9 @@ export class Elementt extends Component {
             ? ""
             : capitalize(element_type);
 
-        const title = <span>{title_type} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
+        const title = <span>{intl.formatMessage({id: "ProposalView."+title_type, defaultMessage: title_type})} {proposal.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{daysRangeString}]</span>
 
-        const subtitle = <span>Using {days[dayOfElement]}&nbsp;
+        const subtitle = <span><FormattedHTMLMessage id="ProposalView.using" deafultMessage="Using"/> {days[dayOfElement]}&nbsp;
             {daysRangeStringPastString}</span>;
 
         const offset = (withPicture)
@@ -758,12 +761,12 @@ export class Elementt extends Component {
             ? CollapseIcon
             : ExpandIcon;
 
-        const actionsButtons = [ <FlatButton label = "Cancel" primary = {
+        const actionsButtons = [ <FlatButton label = {<FormattedHTMLMessage id="ProposalView.cancel" defaultMessage="Cancel"/>} primary = {
                 true
             }
             onTouchTap = {
                 this.handleCloseConfirmation
-            } />, <FlatButton label = "Submit" primary = {
+            } />, <FlatButton label = {<FormattedHTMLMessage id="ProposalView.submit" defaultMessage="Submit"/>} primary = {
                 true
             }
             keyboardFocused = {
@@ -775,7 +778,7 @@ export class Elementt extends Component {
         ];
 
         // The Element status!
-        const proposalStatus = (proposal.status && <div className={"col-md-2 col-lg-2"} style={styles.wrapper} title={"Element status"}>
+        const proposalStatus = (proposal.status && <div className={"col-md-2 col-lg-2"} style={styles.wrapper} title={intl.formatMessage({id: "ProposalView.elementstatus", defaultMessage: "Element status"})}>
             <Tag tag={proposal.status}/>
         </div>)
 
@@ -787,7 +790,7 @@ export class Elementt extends Component {
         const proposalAggregations = (aggregations && <div id="aggregationsList" className={"col-md-offset-" + (offset) + " col-md-" + size + " col-lg-offset-" + (offset) + " col-lg-" + size} style={aggregationsStyle}>
             {aggregations.map(function(agg, i) {
                 return (
-                    <div key={"aggregationDivTag_" + i} onClick={(e) => changeElementAggregation(e, agg)} title={"Select aggregation view"}>
+                    <div key={"aggregationDivTag_" + i} onClick={(e) => changeElementAggregation(e, agg)} title={intl.formatMessage({id: "ProposalView.selectaggregationview", defaultMessage: "Select aggregation view"})}>
                         <Tag key={"aggregationTag_" + i} tag={agg.lite} selected={agg.selected} readOnly/>
                     </div>
                 );
@@ -800,30 +803,30 @@ export class Elementt extends Component {
             {(proposalTable)
                 ? <div id="togglePicture" className="row" style={styles.aggregationsCenter}>
                         <div className="col-xs-2" style={styles.labelToggle}>
-                            Chart
+                            <FormattedHTMLMessage id="ProposalView.chart" defaultMessage="Chart"/>
                         </div>
                         <div id="toogleElement" className="col-xs-3">
                             <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable}/>
                         </div>
                         <div className="col-xs-2" style={styles.toggle}>
-                            <b>Table</b>
+                            <b><FormattedHTMLMessage id="ProposalView.table" defaultMessage="Table"/></b>
                         </div>
                     </div>
                 : <div id="togglePicture" className="row" style={styles.aggregationsCenter}>
                     <div className="col-xs-2" style={styles.labelToggle}>
-                        <b>Chart</b>
+                        <b><FormattedHTMLMessage id="ProposalView.chart" defaultMessage="Chart"/></b>
                     </div>
                     <div id="toogleElement" className="col-xs-3">
-                        <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable} title={"Toggle view mode"}/>
+                        <Toggle onToggle={this.toogleElementRender} style={styles.toggle} toggled={proposalTable} title={intl.formatMessage({id: "ProposalView.toggleviewmode", defaultMessage: "Toggle view mode"})}/>
                     </div>
                     <div className="col-xs-2" style={styles.toggle}>
-                        Table
+                        <FormattedHTMLMessage id="ProposalView.table" defaultMessage="Table"/>
                     </div>
                 </div>
 }
         </div>)
 
-        const LossesHelp = "Render an Element with their related losses or just their measures"
+        const LossesHelp = intl.formatMessage({id: "ProposalView.togglelosses", defaultMessage: "Render an Element with their related losses or just their measures"})
 
         // The Element graph toogle! //to switch between table and chart
         const withLossesToggle = (withPicture) && <div className="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-3 col-md-2 col-md-offset-0 col-lg-offset-0 col-lg-2" style={styles.to_ri}>
@@ -835,7 +838,7 @@ export class Elementt extends Component {
                             <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
                         </div>
                         <div className="col-xs-2" style={styles.toggle}>
-                            <b>Losses</b>
+                            <b><FormattedHTMLMessage id="ProposalView.losses" defaultMessage="Losses"/></b>
                         </div>
                     </div>
                 : <div id="toggleLosses" className="row" style={styles.aggregationsCenter}>
@@ -845,7 +848,7 @@ export class Elementt extends Component {
                         <Toggle onToggle={this.toogleElementTotals} style={styles.toggle} toggled={withLosses} title={LossesHelp}/>
                     </div>
                     <div className="col-xs-2" style={styles.toggle}>
-                        Losses
+                        <FormattedHTMLMessage id="ProposalView.losses" defaultMessage="Losses"/>
                     </div>
                 </div>
 }
@@ -958,18 +961,18 @@ export class Elementt extends Component {
 
         const proposalActions = (!readOnly && !this.comparation)
             ? <CardActions>
-                <FlatButton label="Refresh" icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={"Refresh current proposal"}/>
-                <FlatButton label="Process" icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={"Reprocess current proposal"} disabled={boughtProposal || disableExportDetail}/>
-                <FlatButton label="Detail" icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={"Toggle detailed view"} disabled={disableDetail}/>
-                <FlatButton label="Notes" icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={"Toggle notes view"}/>
-                <FlatButton label="Edit" icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={"Toggle edit view"} disabled={boughtProposal || historical || disableExportDetail}/>
-                <FlatButton label="Tune" icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={"Toggle tune view"} disabled={boughtProposal  || historical || disableExportDetail}/>
-                <FlatButton label="Save" icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={"Save tuned changes"} disabled={boughtProposal  || historical || disableExportDetail}/>
-                <FlatButton label="Export" icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={"Export Element to an XLS file"} disabled={disableExport}/>
-                <FlatButton label="Detail" icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={"Export Element Detail to a CSV file"} disabled={disableExportDetail}/>
-                <FlatButton label="Duplicate" icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={"Duplicate current proposal to a new one"} disabled={disableExportDetail}/>
-                <FlatButton label="Delete" icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={"Delete current proposal"}/>
-                <FlatButton label="Buy" icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={"Buy current proposal"} disabled={boughtProposal || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.refresh" defaultMessage="Refresh"/>} icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.refreshhelper", defaultMessage: "Refresh current proposal"})}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.process" defaultMessage="Process"/>} icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.processhelper", defaultMessage: "Reprocess current proposal"})} disabled={boughtProposal || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.summary" defaultMessage="Summary"/>} icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={intl.formatMessage({id: "ProposalView.summaryhelper", defaultMessage: "Toggle summary view"})} disabled={disableDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.notes" defaultMessage="Notes"/>} icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={intl.formatMessage({id: "ProposalView.noteshelper", defaultMessage: "Toggle notes view"})}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.edit" defaultMessage="Edit"/>} icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={intl.formatMessage({id: "ProposalView.edithelper", defaultMessage: "Toggle edit view"})} disabled={boughtProposal || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.tune" defaultMessage="Tune"/>} icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={intl.formatMessage({id: "ProposalView.tunehelper", defaultMessage: "Toggle tune view"})} disabled={boughtProposal  || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.save" defaultMessage="Save"/>} icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={intl.formatMessage({id: "ProposalView.savehelper", defaultMessage: "Save tuned changes"})} disabled={boughtProposal  || historical || disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.export" defaultMessage="Export"/>} icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.exporthelper", defaultMessage: "Export Element to an XLS file"})} disabled={disableExport}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.detail" defaultMessage="Detail"/>} icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.detailhelper", defaultMessage: "Export Element Detail to a CSV file"})} disabled={disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.duplicate" defaultMessage="Duplicate"/>} icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.duplicatehelper", defaultMessage: "Duplicate current proposal to a new one"})} disabled={disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.delete" defaultMessage="Delete"/>} icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={intl.formatMessage({id: "ProposalView.deletehelper", defaultMessage: "Delete current proposal"})}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.buy" defaultMessage="Buy"/>} icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.buyhelper", defaultMessage: "Buy current proposal"})} disabled={boughtProposal || historical || disableExportDetail}/>
                 </CardActions>
             : null;
 
@@ -1089,16 +1092,16 @@ export class Elementt extends Component {
 
                 <CardText>
                     {proposal.creation_date && <p>
-                        <span>Element was created on {creationDate}
+                        <span><FormattedHTMLMessage id="ProposalView.created" defaultMessage="Element was created on "/> {creationDate}
                             </span>
                     </p>
 }
                     {proposal.execution_date && <p>
-                        <span>Last execution was performed at {lastExecution}</span>
+                        <span><FormattedHTMLMessage id="ProposalView.lastexecution" defaultMessage="Last execution was performed at "/> {lastExecution}</span>
                     </p>
 }
                     {proposal.update_date && <p>
-                        <span>Last update was applied at {updateDate}</span>
+                        <span><FormattedHTMLMessage id="ProposalView.lastupdate" defaultMessage="Last update was applied at "/>{updateDate}</span>
                     </p>
 }
                 </CardText>
@@ -1138,7 +1141,10 @@ export class Elementt extends Component {
 }
 
 Elementt.propTypes = {
+    intl: intlShape.isRequired,
     readOnly: PropTypes.bool,
     proposalOld: PropTypes.bool,
     comparation: PropTypes.bool
 };
+
+export default injectIntl(Elementt);
