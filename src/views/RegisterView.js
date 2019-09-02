@@ -122,7 +122,9 @@ export default class RegisterView extends React.Component {
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2>Sign up to oKW!</h2>
+                        <h2>
+                            <FormattedHTMLMessage id="RegisterView.signup" defaultMessage="Sign up to orakWlum"/>
+                        </h2>
                         {
                             this.props.registerStatusText &&
                                 <div className={"alert alert-info alert-" + this.props.statusType}>
