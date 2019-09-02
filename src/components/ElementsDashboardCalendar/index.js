@@ -160,7 +160,7 @@ class ElementsDashboard extends Component {
 
 
         this.creation_dialog = {
-            title: "Create new element?",
+            title: <h3><FormattedHTMLMessage id="CalendarView.createnewelement" defaultMessage="Create new element?"/></h3>,
             body: "Did you want to create a new Element",
         };
 
@@ -251,7 +251,7 @@ class ElementsDashboard extends Component {
                                         <FormattedHTMLMessage id="CalendarView.buyconfirmation4"
                                         defaultMessage="<p>Are you sure about to <b>buy those Proposals</b>?</p>"/>
                                         </div>;
-        this.creation_dialog['title'] = "Buy selected Proposals";
+        this.creation_dialog['title'] = <h3><FormattedHTMLMessage id="CalendarView.buyconfirmation1" defaultMessage="Buy selected Proposals"/></h3>;
 
         // The object to handle the creation dialog
         const creation_dialog_actions = [
@@ -303,7 +303,7 @@ class ElementsDashboard extends Component {
                                         <FormattedHTMLMessage id="CalendarView.processconfirmation4"
                                         defaultMessage="<p>Are you sure about to&nbsp; <b>reprocess those Elements</b>?</p>"/>
                                         </div>;
-        this.creation_dialog['title'] = "Reprocess selected Elements";
+        this.creation_dialog['title'] = <h3><FormattedHTMLMessage id="CalendarView.processconfirmation1" defaultMessage="Reprocess selected Elements"/></h3>;
 
         // The object to handle the creation dialog
         const creation_dialog_actions = [
@@ -356,7 +356,7 @@ class ElementsDashboard extends Component {
                                         <FormattedHTMLMessage id="CalendarView.deleteconfirmation4"
                                         defaultMessage="<p>Are you sure about to <b>delete those Elements</b>?</p>"/>
                                         </div>;
-        this.creation_dialog['title'] = "Delete selected Elements";
+        this.creation_dialog['title'] = <h3><FormattedHTMLMessage id="CalendarView.deleteconfirmation1" defaultMessage="Delete selected Elements"/></h3>;
 
         // The object to handle the creation dialog
         const creation_dialog_actions = [
@@ -496,7 +496,7 @@ class ElementsDashboard extends Component {
         const range_string = (start_hour.isSame(end_hour))?
             " for '" + start_hour.format("L") + "'"
             :
-            " between '" + start_hour.format("L") + " - " + end_hour.format("L") + "'"
+            " between '" + start_hour.format("L") + " and " + end_hour.format("L") + "'"
         ;
 
         //rolferrr
