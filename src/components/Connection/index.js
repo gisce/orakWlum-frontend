@@ -61,7 +61,6 @@ export class Connection extends Component {
             if (!('level' in content)) {
                 switch (content.code) {
                     case 200:
-                        console.log("entro");
                         the_message.level = "info";
                         break;
 
