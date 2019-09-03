@@ -49,16 +49,16 @@ const styles = {
     },
 
     row: {
-        marginTop: 20,
+        //marginTop: 20,
         verticalAlign: 'bottom !important',
     },
     rowCalendar: {
-        marginTop: 50,
+        //marginTop: 50,
         verticalAlign: 'bottom !important',
-        height: "60%",
+        height: "75%",
     },
     actions: {
-        marginTop: 27,
+        //marginTop: 27,
     },
     element_style: colors_combo,
     alignLeft: {
@@ -624,8 +624,9 @@ class ElementsDashboard extends Component {
         count=0;
         for ( let [key, value] of Object.entries(elements_matched)) {
             let name = value.name;
-            if (name.length>25) {
-                name = name.substring(0,22)+"...";
+            // Strip for long element names
+            if (name.length>28) {
+                name = name.substring(0,25)+"...";
             }
 
             let an_entry = {
