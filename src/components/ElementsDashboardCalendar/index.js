@@ -58,7 +58,7 @@ const styles = {
         height: "75%",
     },
     actions: {
-        //marginTop: 27,
+        marginTop: 27,
     },
     element_style: colors_combo,
     alignLeft: {
