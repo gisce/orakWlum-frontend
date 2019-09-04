@@ -49,7 +49,7 @@ const styles = {
     },
 
     row: {
-        //marginTop: 20,
+        marginTop: 10,
         verticalAlign: 'bottom !important',
     },
     rowCalendar: {
