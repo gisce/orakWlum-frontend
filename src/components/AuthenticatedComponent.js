@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import * as actionCreators from '../actions/auth';
 
 import { validate_token, createSocket } from '../utils/http_functions'
-import {Connection} from './Connection';
+import Connection from './Connection';
 
 function mapStateToProps(state) {
     return {

@@ -15,6 +15,8 @@ import saveAs from 'file-saver';
 
 import { localized_time } from '../../constants'
 
+import {FormattedHTMLMessage, injectIntl, intlShape} from 'react-intl';
+
 
 function mapStateToProps(state) {
     return {
@@ -28,7 +30,7 @@ function mapDispatchToProps(dispatch) {
 
 //The Connection component that handles the Websocket and the related main listeners
 @connect(mapStateToProps, mapDispatchToProps)
-export class Connection extends Component {
+class Connection extends Component {
     constructor(props) {
         super(props)
         this._notificationSystem = null;
@@ -51,7 +53,7 @@ export class Connection extends Component {
             //Integrate a "view it" button that redirects to the related URL (if exist)
             if ('url' in content && content.url)
                 the_message.action = {
-                    label: 'View it!',
+                    label: <FormattedHTMLMessage id="Connection.viewit" defaultMessage='View it!'/>,
                     callback: (event) => {
                       dispatchNewRoute(content.url, event);
                     }
@@ -346,6 +348,7 @@ export class Connection extends Component {
 	}
 
     render() {
+        const { intl } = this.props;
         //Activate Offline mode if needed
         setTimeout(() => {
             if (!window.socket.connected) {
@@ -365,4 +368,7 @@ export class Connection extends Component {
 }
 
 Connection.propTypes = {
+    intl: intlShape.isRequired
 };
+
+export default injectIntl(Connection)

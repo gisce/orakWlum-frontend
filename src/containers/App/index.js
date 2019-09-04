@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 /* theme creation */
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Connection} from '../../components/Connection';
+import Connection from '../../components/Connection';
 
 import {
     deepOrange500,
