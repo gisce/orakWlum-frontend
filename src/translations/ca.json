@@ -65,6 +65,7 @@
     "Connection.connected": "¡Conectat!",
     "Connection.connectedhelper": "Connexió establerta",
     "Connection.disconnected": "Desconectat",
+    "Connection.disconnectedhelper": "No es pot accedir al servidor",
     "Connection.offlinemode": "Mode Offline",
     "Connection.offlinehelper": "orakWlum es troba en mode sense connexió",
     "Connection.viewit": "¡Mira-ho!",

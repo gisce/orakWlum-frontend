@@ -294,8 +294,8 @@ class Connection extends Component {
                 this.cleanNotifications();
                 this.prepareNotification({
                     code: 200,
-                    title: 'Connected!',
-                    message: 'Connection established!',
+                    title: <FormattedHTMLMessage id="Connection.connected" defaultMessage='Connected!'/>,
+                    message: <FormattedHTMLMessage id="Connection.connectedhelper" defaultMessage='Connection established!'/>,
                 });
 
                 const todayDate = localized_time();
@@ -329,8 +329,8 @@ class Connection extends Component {
                 this.cleanNotifications();
 
                 this.prepareNotification({
-                    title: 'Offline mode',
-                    message: "okW is in offline mode",
+                    title: <FormattedHTMLMessage id="Connection.offlinemode" defaultMessage='Offline mode'/>,
+                    message: <FormattedHTMLMessage id="Connection.offlinehelper" defaultMessage='okW is in offline mode'/>,
                     code: 200,
                     autoDismiss: 0,
                     level: "warning",
@@ -339,8 +339,8 @@ class Connection extends Component {
 
                 this.prepareNotification({
                     code: -1,
-                    title: 'Disconnected',
-                    message: 'Can\'t reach the server',
+                    title: <FormattedHTMLMessage id="Connection.disconnected" defaultMessage='Disconnected'/>,
+                    message: <FormattedHTMLMessage id="Connection.disconnectedhelper" defaultMessage="Can\'t reach the server"/>,
                     level: "error",
                 })
             })
@@ -353,8 +353,8 @@ class Connection extends Component {
         setTimeout(() => {
             if (!window.socket.connected) {
                 this.prepareNotification({
-                    title: 'Offline mode',
-                    message: "okW is in offline mode",
+                    title: <FormattedHTMLMessage id="Connection.offlinemode" defaultMessage='Offline mode'/>,
+                    message: <FormattedHTMLMessage id="Connection.offlinehelper" defaultMessage='okW is in offline mode'/>,
                     code: 200,
                     autoDismiss: 0,
                     level: "warning",

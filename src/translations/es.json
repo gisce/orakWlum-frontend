@@ -65,6 +65,7 @@
     "Connection.connected": "¡Conectado!",
     "Connection.connectedhelper": "Conexión establecida",
     "Connection.disconnected": "Desconectado",
+    "Connection.disconnectedhelper": "No se puede acceder al servidor",
     "Connection.offlinemode": "Modo Offline",
     "Connection.offlinehelper": "orakWlum se encuentra en modo sin conexión",
     "Connection.viewit": "¡Míralo!",
