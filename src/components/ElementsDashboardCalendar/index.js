@@ -53,12 +53,12 @@ const styles = {
         verticalAlign: 'bottom !important',
     },
     rowCalendar: {
-        //marginTop: 50,
+        marginTop: 25,
         verticalAlign: 'bottom !important',
         height: "75%",
     },
     actions: {
-        marginTop: 27,
+        marginTop: 25,
     },
     element_style: colors_combo,
     alignLeft: {
@@ -76,7 +76,7 @@ const styles = {
     calendarNavigation: {
     },
     calendarLabel: {
-      paddingLeft: 32,
+      paddingLeft: 25,
       paddingRight: 0,
       color: "black",
     },
