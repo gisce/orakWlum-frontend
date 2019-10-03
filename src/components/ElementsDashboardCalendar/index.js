@@ -388,7 +388,7 @@ class ElementsDashboard extends Component {
         if (Object.keys(selectedElements).length >= 1){
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if ((value['type'] == 'proposal' && value['status']['lite'] != 'RUN') || value['type'] == 'historical'){
-                    this.props.deleteElementFromCalendar(key);
+                    this.props.deleteElementFromCalendar(key, value['type'] == 'historical');
                 }
             }
             this.unselectAllElements()
