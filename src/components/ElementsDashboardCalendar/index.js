@@ -388,7 +388,7 @@ class ElementsDashboard extends Component {
         if (Object.keys(selectedElements).length >= 1){
             for ( let [key, value] of Object.entries(selectedElements)) {
                 if ((value['type'] == 'proposal' && value['status']['lite'] != 'RUN') || value['type'] == 'historical'){
-                    this.props.deleteElementFromCalendar(key);
+                    this.props.deleteElementFromCalendar(key, value['type'] == 'historical');
                 }
             }
             this.unselectAllElements()
@@ -643,32 +643,15 @@ class ElementsDashboard extends Component {
             let start_date, end_date;
 
             // If that's a proposal
-            if (value.element_type == "proposal") {
-                //set status to proposals
-                an_entry.status = value.status;
-                //add entry to the past
-                let past_entry = Object.assign({}, an_entry)
-                start_date = value.days_range[0]
-                end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
-                past_entry['start'] = localized_time(start_date),
-                past_entry['end'] = localized_time(end_date),
-                events.push(past_entry);
-
-                //add entry to the past!
-                start_date = value.days_range_past[0];
-                end_date = (value.days_range_past.length == 1)? start_date : value.days_range_past[1];
-
-                an_entry['title'] = '[Future] ' + an_entry['title'];
-
-            } else {
-                start_date = value.days_range[0]
-                end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
-            }
-
-            an_entry['start'] = localized_time(start_date),
-            an_entry['end'] = localized_time(end_date),
-
-            events.push(an_entry);
+            //set status to proposals
+            an_entry.status = value.status;
+            //add entry to the past
+            let past_entry = Object.assign({}, an_entry)
+            start_date = value.days_range[0]
+            end_date = (value.days_range.length == 1)? start_date : value.days_range[1]
+            past_entry['start'] = localized_time(start_date),
+            past_entry['end'] = localized_time(end_date),
+            events.push(past_entry);
 
             count++;
         }
