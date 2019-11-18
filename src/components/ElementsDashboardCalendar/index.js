@@ -393,6 +393,9 @@ class ElementsDashboard extends Component {
             }
             this.unselectAllElements()
             this.toggleMultiElementSelection();
+            setTimeout(() => {
+                this.refreshData();
+            }, 3000)
         }
     }
 
