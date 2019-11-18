@@ -541,9 +541,6 @@ export function deleteElementFromCalendar(element, historical) {
     return (dispatch) => {
         dispatch(deleteElementRequest());
         ask_the_api("elements.delete.from.calendar", element, historical);
-        setTimeout(() => {
-            dispatch(fetchElements());
-        }, 5000)
     };
 }
 
