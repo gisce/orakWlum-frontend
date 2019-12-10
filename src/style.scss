@@ -57,3 +57,59 @@
     padding: 0px 1px 1px 1px;
   }
 }
+
+/* Historical status icon in calendar */
+
+.historicalOK {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #4caf50;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.historicalKO {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #f44336;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.historicalWIP {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #ffb74d;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.historicalRUN {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #ffb74d;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.historicalERR {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #f44336;
+    padding: 0px 1px 1px 1px;
+  }
+}
+
+.historicalBUY {
+  :after {
+    float:right;
+    content: "\25CF";
+    color: #2196f3;
+    padding: 0px 1px 1px 1px;
+  }
+}

@@ -536,7 +536,7 @@ class ElementsDashboard extends Component {
         let current_type = e.type;
         let class_name = "";
 
-        if (current_type == 'proposal') {
+        if (current_type == 'proposal' || current_type == 'historical') {
             class_name = current_type + e.status['lite'];
         }
 
