@@ -247,7 +247,7 @@ class ElementsDashboard extends Component {
                                         <FormattedHTMLMessage id="CalendarView.buyconfirmation2"
                                         defaultMessage="<p>The selected proposals will change their status to <b>bought</b>. This process can't be undone.</p>"/>
                                         <FormattedHTMLMessage id="CalendarView.buyconfirmation3"
-                                        defaultMessage="<p>Bought proposals can't be processed, edited, tuned or saved.</p>"/>
+                                        defaultMessage="<p>Bought proposals can't be processed, tuned or saved.</p>"/>
                                         <FormattedHTMLMessage id="CalendarView.buyconfirmation4"
                                         defaultMessage="<p>Are you sure about to <b>buy those Proposals</b>?</p>"/>
                                         </div>;

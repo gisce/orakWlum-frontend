@@ -16,7 +16,7 @@
     "CalendarView.buy": "Comprar",
     "CalendarView.buyconfirmation1": "Comprar las propuestas seleccionadas",
     "CalendarView.buyconfirmation2": "<p>Las propuestas seleccionadas cambiarán su estado a <b>compradas</b>. Este proceso es irreversible.</p>",
-    "CalendarView.buyconfirmation3": "<p>Las propuestas compradas no se pueden procesar, editar, modificar ni guardar.</p>",
+    "CalendarView.buyconfirmation3": "<p>Las propuestas compradas no se pueden procesar, modificar ni guardar.</p>",
     "CalendarView.buyconfirmation4": "<p>¿Estás seguro de que quieres <b>comprar estas propuestas</b>?</p>",
     "CalendarView.cancel": "Cancelar",
     "CalendarView.clear": "Vaciar lista",

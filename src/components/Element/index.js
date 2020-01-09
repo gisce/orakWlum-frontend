@@ -46,7 +46,6 @@ import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
 import RunIcon from 'material-ui/svg-icons/av/play-circle-outline';
 import ExpandIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CollapseIcon from 'material-ui/svg-icons/navigation/expand-less';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
@@ -108,14 +107,6 @@ const styles = {
         marginTop: 50,
         marginBottom: 20
     },
-    notes: {
-        field: {
-            marginLeft: 20,
-        },
-        creator: {
-            marginTop: -30,
-        }
-    },
 };
 
 const colors = {
@@ -175,16 +166,12 @@ class Elementt extends Component {
 
         this.animateChart = true;
 
-        this.edit_open = false;
         this.tune_open = false;
         this.detail_open = false;
-        this.notes_open = false;
 
         props.aggregations[0].selected = true;
 
         if (props.comparation) {
-            this.notes_open = false;
-            this.edit_open = false;
             this.tune_open = false;
             this.detail_open = true;
             this.comparation = true;
@@ -203,9 +190,6 @@ class Elementt extends Component {
         //Initialize dataset
         //this.prepareData(props.proposal.prediction, props.aggregations)
 
-        //Notes and new note initialization
-        this.notes = (props.proposal.notes)? props.proposal.notes : [];
-        this.new_note = {content: ""}
     }
 
     prepareData = (prediction, aggregations) => {
@@ -427,28 +411,9 @@ class Elementt extends Component {
     toggleDetail = () => {
         this.detail_open = !this.detail_open;
         this.animateChart = false;
-        this.edit_open = false;
 
         this.setState({detail_open: this.detail_open});
     };
-
-    toggleNotes = () => {
-        this.notes_open = !this.notes_open;
-        this.animateChart = false;
-        this.edit_open = false;
-
-        this.setState({notes_open: this.notes_open});
-    };
-
-    toggleEdit = () => {
-        this.edit_open = !this.edit_open;
-        this.tune_open = false;
-
-        this.animateChart = false;
-
-        this.setState({edit_open: this.edit_open});
-    };
-
 
     saveTuned = () => {
         this.props.saveTunedValues(this.id, this.modifications)
@@ -456,7 +421,6 @@ class Elementt extends Component {
 
     toggleTune = () => {
         this.tune_open = !this.tune_open;
-        this.edit_open = false;
 
         this.animateChart = false;
 
@@ -609,22 +573,6 @@ class Elementt extends Component {
         this.open_confirmation = true;
     }
 
-    addNewNote = () => {
-        this.new_note.author = "David"
-        this.new_note.creation_date = localized_time().unix()
-
-        //Create a new tmp note element with a new memspace
-        const the_new_note = Object.assign({}, this.new_note);
-        console.debug("Adding new note", the_new_note);
-
-        this.notes = [the_new_note, ...this.notes];
-
-        this.props.updateElement({id: this.id, notes: this.notes})    }
-
-    updateNewNote = (event) => {
-        this.new_note.content = event.target.value;
-    }
-
     render() {
         const { intl } = this.props;
         const readOnly = (this.props.readOnly)
@@ -633,8 +581,6 @@ class Elementt extends Component {
 
         const proposal = this.props.proposal;
         this.prepareData(this.props.proposal.prediction, this.props.aggregations)
-
-        const {notes} = proposal;
 
         const {proposalTable, withLosses} = this.state;
 
@@ -744,20 +690,12 @@ class Elementt extends Component {
 
         const {
             detail_open,
-            notes_open,
-            edit_open,
             tune_open,
             toggleDetail,
-            toggleEdit,
             toggleTune,
-            toggleNotes,
         } = this;
 
         const DetailIcon = (detail_open == true)
-            ? CollapseIcon
-            : ExpandIcon;
-
-        const NotesIcon = (notes_open == true)
             ? CollapseIcon
             : ExpandIcon;
 
@@ -877,21 +815,7 @@ class Elementt extends Component {
 
         let proposalPicture;
 
-        // Handle EDIT
-        if (edit_open) {
-            const proposalEdit = <div>
-                <ElementDefinition
-                    aggregationsList={this.props.aggregations}
-                    sourcesList={this.props.sources.measures}
-                    defaultValue={adaptedElement}
-                    editMode={true}
-                    endingParentMethod={() => this.toggleEdit()}
-                />
-            </div>;
-
-            proposalPicture =// Handle TUNE
-            proposalEdit;
-        } else if (tune_open) {
+         if (tune_open) {
             const the_components = this.components;
 
             const proposalTuneHeaders = Object.keys(the_components[aggregationSelected]).map(function(component, index) {
@@ -964,8 +888,6 @@ class Elementt extends Component {
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.refresh" defaultMessage="Refresh"/>} icon={<RefreshIcon />} onClick={(e) => refreshElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.refreshhelper", defaultMessage: "Refresh current proposal"})}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.process" defaultMessage="Process"/>} icon={<RunIcon />} onClick={(e) => reRunElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.processhelper", defaultMessage: "Reprocess current proposal"})} disabled={boughtProposal || disableExportDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.summary" defaultMessage="Summary"/>} icon={<DetailIcon />} onClick={(e) => toggleDetail(e)} title={intl.formatMessage({id: "ProposalView.summaryhelper", defaultMessage: "Toggle summary view"})} disabled={disableDetail}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.notes" defaultMessage="Notes"/>} icon={<NotesIcon />} onClick={(e) => toggleNotes(e)} title={intl.formatMessage({id: "ProposalView.noteshelper", defaultMessage: "Toggle notes view"})}/>
-                <FlatButton label={<FormattedHTMLMessage id="ProposalView.edit" defaultMessage="Edit"/>} icon={<EditIcon />} onClick={(e) => toggleEdit(e)} title={intl.formatMessage({id: "ProposalView.edithelper", defaultMessage: "Toggle edit view"})} disabled={boughtProposal || historical || disableExportDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.tune" defaultMessage="Tune"/>} icon={<TuneIcon />} onClick={(e) => toggleTune(e)} title={intl.formatMessage({id: "ProposalView.tunehelper", defaultMessage: "Toggle tune view"})} disabled={boughtProposal  || historical || disableExportDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.save" defaultMessage="Save"/>} icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={intl.formatMessage({id: "ProposalView.savehelper", defaultMessage: "Save tuned changes"})} disabled={boughtProposal  || historical || disableExportDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.export" defaultMessage="Export"/>} icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.exporthelper", defaultMessage: "Export Element to an XLS file"})} disabled={disableExport}/>
@@ -991,80 +913,6 @@ class Elementt extends Component {
                     />
                 </div>
             </div>;
-
-
-
-
-        let the_notes = [];
-
-        //The Add note form
-        the_notes.push(
-            <div key={"card_creator_div"}>
-                <Card key={"card_creator"}>
-                    <CardHeader
-                      title={"Create a new note"}
-                      showExpandableButton={true}
-                    />
-
-                    <CardText expandable={true}>
-                        <TextField
-                            style={styles.notes.creator}
-                            hintText="Insert your message..."
-                            floatingLabelText="Message"
-                            multiLine={true}
-                            rows={5}
-                            fullWidth={true}
-                            onChange={this.updateNewNote}
-                        />
-                    </CardText>
-
-                    <CardActions
-                        style={styles.notes.creator}
-                        expandable={true}
-                    >
-
-                      <FlatButton label="Add" title={"Add new note"} onClick={(e) => this.addNewNote()}/>
-                    </CardActions>
-                </Card>
-            </div>
-        )
-
-        if (true || notes != null) {
-            for (let [key, a_note]of Object.entries(this.notes)) {
-
-                const note_date = localized_time(a_note.creation_date * 1000).format("L LT")
-
-                the_notes.push(
-                    <div key={"card_div_" + key}>
-                        <Card key={"card_" + key}>
-                            <CardHeader
-                              title={a_note.author}
-                              subtitle={note_date}
-                              avatar="https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
-                              showExpandableButton={true}
-                            />
-
-                            <CardText>
-                                {a_note.content}
-                            </CardText>
-
-                            <CardActions expandable={true}>
-                              <FlatButton label="Mark as readed" />
-                              <FlatButton label="Delete" />
-                            </CardActions>
-                        </Card>
-                    </div>
-                )
-            };
-        }
-
-        const proposalNotes = (notes_open == true) &&
-            <div>
-                {proposalActions}
-                <div>
-                    {the_notes}
-                </div>
-            </div>
 
         // The resulting Element element
         const Element = () => (
@@ -1109,8 +957,6 @@ class Elementt extends Component {
                 <br/> {proposalPicture}
 
                 <br/> {proposalDetail}
-
-                <br/> {proposalNotes}
 
                 {proposalActions}
 
