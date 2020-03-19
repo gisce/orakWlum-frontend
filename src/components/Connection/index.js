@@ -49,7 +49,13 @@ class Connection extends Component {
                 ...{autoDismiss: 10},
                 ...content,
             }
-
+            if ('download_url' in content && content.download_url)
+                the_message.action = {
+                    label: <FormattedHTMLMessage id="Connection.downloadit" defaultMessage='Download it!'/>,
+                    callback: (event) => {
+                      window.open(content.download_url, "_blank");
+                    }
+                };
             //Integrate a "view it" button that redirects to the related URL (if exist)
             if ('url' in content && content.url)
                 the_message.action = {
