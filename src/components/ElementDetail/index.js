@@ -68,7 +68,7 @@ export class ElementDetail extends Component {
 
 
         //Prepare Invoices count
-        const num_invoices =  (total_invoices) &&
+        const num_invoices =
             (
                 <Indicator
                     title={<FormattedHTMLMessage id="ProposalView.invoices" defaultMessage="Invoices"/>}
