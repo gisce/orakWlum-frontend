@@ -397,6 +397,13 @@ export function exportElementDetail(a_filter=null, initial=false) {
     };
 }
 
+export function exportElementPricelistDetail(a_filter=null, initial=false) {
+    return (dispatch) => {
+        dispatch(fetchElementsExportRequest(initial));
+        ask_the_api("elements.export_pricelist_detail", a_filter, window.socket.id);
+    };
+}
+
 export function duplicateElementRequest() {
     return {
         type: DUPLICATE_PROPOSAL_REQUEST,

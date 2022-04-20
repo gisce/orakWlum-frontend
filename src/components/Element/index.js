@@ -50,6 +50,7 @@ import DuplicateIcon from 'material-ui/svg-icons/content/content-copy';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import ExportIcon from 'material-ui/svg-icons/file/file-download';
 import ExportDetailIcon from 'material-ui/svg-icons/file/cloud-download';
+import ExportPricelistDetailIcon from 'material-ui/svg-icons/file/cloud-download';
 import ElementIcon from 'material-ui/svg-icons/image/switch-camera';
 import TuneIcon from 'material-ui/svg-icons/editor/border-all';
 import SaveIcon from 'material-ui/svg-icons/content/save';
@@ -566,6 +567,14 @@ class Elementt extends Component {
         this.props.exportElementDetail(proposalID);
     };
 
+    exportElementPricelistDetail = (event, proposalID) => {
+        event.preventDefault();
+
+        this.setState({animateChart: false, message_text: "Exporting current proposal", confirmation_open: false});
+
+        this.props.exportElementPricelistDetail(proposalID);
+    };
+
     handleConfirmation = (what, message, text) => {
         this.next = what;
         this.message = message
@@ -687,6 +696,7 @@ class Elementt extends Component {
         const buyElement = this.buyElementQuestion;
         const exportElement = this.exportElement;
         const exportElementDetail = this.exportElementDetail;
+        const exportElementPricelistDetail = this.exportElementPricelistDetail;
 
         const {
             detail_open,
@@ -879,6 +889,9 @@ class Elementt extends Component {
         const disableExportDetail = (element_type == "comparation" || element_type == "concatenation" )
             ? true
             : false;
+        const disableExportPricelistDetail = (element_type == "comparation" || element_type == "concatenation" )
+            ? true
+            : false;
         const boughtProposal = (proposal.status["lite"] == "BUY")
             ? true
             : false;
@@ -892,6 +905,7 @@ class Elementt extends Component {
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.save" defaultMessage="Save"/>} icon={<SaveIcon />} onClick={(e) => this.saveTuned(e)} title={intl.formatMessage({id: "ProposalView.savehelper", defaultMessage: "Save tuned changes"})} disabled={boughtProposal  || historical || disableExportDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.export" defaultMessage="Export"/>} icon={<ExportIcon />} onClick={(e) => exportElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.exporthelper", defaultMessage: "Export Element to an XLS file"})} disabled={disableExport}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.detail" defaultMessage="Detail"/>} icon={<ExportDetailIcon />} onClick={(e) => exportElementDetail(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.detailhelper", defaultMessage: "Export Element Detail to a CSV file"})} disabled={disableExportDetail}/>
+                <FlatButton label={<FormattedHTMLMessage id="ProposalView.pricelist.detail" defaultMessage="Pricelist Detail"/>} icon={<ExportPricelistDetailIcon />} onClick={(e) => exportElementPricelistDetail(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.pricelistdetailhelper", defaultMessage: "Export Element Detail to a CSV file grouped by pricelist"})} disabled={disableExportPricelistDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.duplicate" defaultMessage="Duplicate"/>} icon={<DuplicateIcon />} onClick={(e) => duplicateElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.duplicatehelper", defaultMessage: "Duplicate current proposal to a new one"})} disabled={disableExportDetail}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.delete" defaultMessage="Delete"/>} icon={<DeleteIcon />} onClick={(e) => deleteElement(e, proposal.id, historical)} title={intl.formatMessage({id: "ProposalView.deletehelper", defaultMessage: "Delete current proposal"})}/>
                 <FlatButton label={<FormattedHTMLMessage id="ProposalView.buy" defaultMessage="Buy"/>} icon={<BuyIcon />} onClick={(e) => buyElement(e, proposal.id)} title={intl.formatMessage({id: "ProposalView.buyhelper", defaultMessage: "Buy current proposal"})} disabled={boughtProposal || historical || disableExportDetail}/>
