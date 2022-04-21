@@ -187,6 +187,8 @@
     "ProposalView.deletehelper": "Eliminar el elemento actual",
     "ProposalView.detail": "Detalle",
     "ProposalView.detailhelper": "Exportar el detalle de la propuesta actual a un archivo CSV",
+    "ProposalView.pricelist.detail": "Detalle Extra",
+    "ProposalView.pricelistdetailhelper": "Exportar el detalle de la propuesta actual a un archivo CSV agrupado por lista de precios",
     "ProposalView.duplicate": "Duplicar",
     "ProposalView.duplicateconfirmation": "El Elemento generará un duplicado. Los consumos no serán reprocesados. Si es necesario, 'reprocesa' el nuevo Elemento una vez se haya clonado.",
     "ProposalView.duplicateelement": "duplicar este elemento",

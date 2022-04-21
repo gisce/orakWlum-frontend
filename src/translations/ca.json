@@ -187,6 +187,8 @@
     "ProposalView.deletehelper": "Eliminar l'element actual",
     "ProposalView.detail": "Detall",
     "ProposalView.detailhelper": "Exportar el detall de la proposta actual a un fitxer CSV",
+    "ProposalView.pricelist.detail": "Detall Extra",
+    "ProposalView.pricelistdetailhelper": "Exportar el detall de la proposta actual a un fitxer CSV agrupat per llista de preus",
     "ProposalView.duplicate": "Duplicar",
     "ProposalView.duplicateconfirmation": "L'Element generarà un duplicat. Els consums no seran reprocessats. Si és necessari, 'reprocessa' el nou Element un cop s'hagi clonat.",
     "ProposalView.duplicateelement": "duplicar aquest element",
